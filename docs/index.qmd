@@ -6,7 +6,6 @@ subtitle: "Interactive Forest Plots for R"
 ```{r}
 #| include: false
 library(webforest)
-library(dplyr)
 ```
 
 ## Overview
