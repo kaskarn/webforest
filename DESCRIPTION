@@ -1,0 +1,44 @@
+Package: webforest
+Title: Web-Native Interactive Forest Plots
+Version: 0.0.0.9000
+Authors@R:
+    person("Antoine", "Sachet", , "antoine@example.com", role = c("aut", "cre"))
+Description: Create interactive, web-native forest plots and tables. Forest plots
+    visualize point estimates with intervals for any domain: meta-analysis,
+    regression results, QC measurements, and more. Rendered using modern web
+    technologies (Svelte, D3.js) for R Markdown, Quarto, Shiny, and standalone
+    HTML. Features include collapsible groups, customizable columns, sorting,
+    filtering, and rich theming.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Collate:
+    'webforest-package.R'
+    'classes-core.R'
+    'classes-theme.R'
+    'classes-annotations.R'
+    'classes-components.R'
+    'utils-serialize.R'
+    'web_spec.R'
+    'forest_plot.R'
+    'webtable.R'
+    'shiny.R'
+    'regenerate_examples.R'
+Imports:
+    htmlwidgets (>= 1.6.0),
+    jsonlite (>= 1.8.0),
+    rlang (>= 1.1.0),
+    S7 (>= 0.2.0),
+    cli (>= 3.6.0)
+Suggests:
+    shiny (>= 1.8.0),
+    data.table,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://github.com/kaskarn/webforest, https://kaskarn.github.io/webforest/
+BugReports: https://github.com/kaskarn/webforest/issues

@@ -1,0 +1,101 @@
+<script lang="ts">
+  import type { SparklineColumnOptions } from "$types";
+  import { scaleLinear } from "d3-scale";
+  import { line as d3line, area as d3area, curveCatmullRom } from "d3-shape";
+
+  interface Props {
+    data: number[] | undefined | null;
+    options?: SparklineColumnOptions;
+  }
+
+  let { data, options }: Props = $props();
+
+  const chartType = $derived(options?.type ?? "line");
+  const chartHeight = $derived(options?.height ?? 20);
+  const chartColor = $derived(options?.color ?? "var(--wf-primary, #2563eb)");
+  const chartWidth = 60;
+
+  const points = $derived.by(() => {
+    if (!data || !Array.isArray(data) || data.length === 0) return [];
+
+    const yMin = Math.min(...data);
+    const yMax = Math.max(...data);
+    const yPadding = (yMax - yMin) * 0.1 || 1;
+
+    const xScale = scaleLinear()
+      .domain([0, data.length - 1])
+      .range([2, chartWidth - 2]);
+
+    const yScale = scaleLinear()
+      .domain([yMin - yPadding, yMax + yPadding])
+      .range([chartHeight - 2, 2]);
+
+    return data.map((d, i) => [xScale(i), yScale(d)] as [number, number]);
+  });
+
+  const linePath = $derived.by(() => {
+    if (points.length === 0) return "";
+    const lineGen = d3line<[number, number]>()
+      .x((d) => d[0])
+      .y((d) => d[1])
+      .curve(curveCatmullRom.alpha(0.5));
+    return lineGen(points) ?? "";
+  });
+
+  const areaPath = $derived.by(() => {
+    if (points.length === 0) return "";
+    const areaGen = d3area<[number, number]>()
+      .x((d) => d[0])
+      .y0(chartHeight - 2)
+      .y1((d) => d[1])
+      .curve(curveCatmullRom.alpha(0.5));
+    return areaGen(points) ?? "";
+  });
+
+  const barWidth = $derived(points.length > 0 ? (chartWidth - 8) / points.length - 1 : 0);
+</script>
+
+<svg class="cell-sparkline" width={chartWidth} height={chartHeight} viewBox="0 0 {chartWidth} {chartHeight}">
+  {#if points.length > 0}
+    {#if chartType === "bar"}
+      {#each points as [x, y], i (i)}
+        <rect
+          x={x - barWidth / 2}
+          y={y}
+          width={barWidth}
+          height={chartHeight - 2 - y}
+          fill={chartColor}
+          opacity="0.8"
+        />
+      {/each}
+    {:else if chartType === "area"}
+      <path d={areaPath} fill={chartColor} opacity="0.3" />
+      <path d={linePath} fill="none" stroke={chartColor} stroke-width="1.5" />
+    {:else}
+      <path d={linePath} fill="none" stroke={chartColor} stroke-width="1.5" />
+      <!-- End dot -->
+      {#if points.length > 0}
+        {@const lastPoint = points[points.length - 1]}
+        <circle cx={lastPoint[0]} cy={lastPoint[1]} r="2" fill={chartColor} />
+      {/if}
+    {/if}
+  {:else}
+    <text
+      x={chartWidth / 2}
+      y={chartHeight / 2}
+      text-anchor="middle"
+      dominant-baseline="middle"
+      fill="var(--wf-muted, #94a3b8)"
+      font-size="8"
+    >
+      --
+    </text>
+  {/if}
+</svg>
+
+<style>
+  .cell-sparkline {
+    display: block;
+    flex-shrink: 0;
+  }
+</style>

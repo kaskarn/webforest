@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Base webforest styles */
+.webforest-container {
+  @apply font-sans;
+}
+
+/* Ensure SVG text inherits font */
+.webforest-canvas text {
+  font-family: inherit;
+}

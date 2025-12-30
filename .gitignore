@@ -1,0 +1,23 @@
+# R
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+*.Rproj
+
+# Node/Bun
+srcjs/node_modules/
+srcjs/.bun/
+srcjs/bun.lockb
+
+# Test artifacts
+tests/testthat/_snaps/
+examples_output/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
