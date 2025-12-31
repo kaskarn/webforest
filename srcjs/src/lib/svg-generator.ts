@@ -129,8 +129,9 @@ function computeLayout(spec: WebSpec, options: ExportOptions): InternalLayout {
   const footnoteHeight = hasFootnote ? TYPOGRAPHY.FOOTNOTE_HEIGHT : 0;
   const footerTextHeight = captionHeight + footnoteHeight + (hasCaption || hasFootnote ? padding : 0);
 
-  // Compute display rows (simplified - no collapsed groups for export)
-  const displayRowCount = spec.data.rows.length;
+  // Compute display rows (includes group headers)
+  const displayRows = buildDisplayRows(spec);
+  const displayRowCount = displayRows.length;
   const hasOverall = !!spec.data.overall;
 
   const plotHeight = displayRowCount * rowHeight +
@@ -182,6 +183,116 @@ function computeLayout(spec: WebSpec, options: ExportOptions): InternalLayout {
     mainY: headerTextHeight + padding,
     footerY: headerTextHeight + padding + headerHeight + plotHeight + LAYOUT.AXIS_HEIGHT + padding,
   };
+}
+
+// ============================================================================
+// Display Row Types (for interleaving group headers with data rows)
+// ============================================================================
+
+interface GroupHeaderDisplayRow {
+  type: "group_header";
+  groupId: string;
+  label: string;
+  depth: number;
+  rowCount: number;
+}
+
+interface DataDisplayRow {
+  type: "data";
+  row: Row;
+  depth: number;
+}
+
+type DisplayRow = GroupHeaderDisplayRow | DataDisplayRow;
+
+/**
+ * Build display rows with group headers interleaved
+ * This mimics the Svelte store's displayRows logic for consistent rendering
+ */
+function buildDisplayRows(spec: WebSpec): DisplayRow[] {
+  const rows = spec.data.rows;
+  const groups = Array.isArray(spec.data.groups) ? spec.data.groups : [];
+
+  // If no groups, return flat data rows
+  if (groups.length === 0) {
+    return rows.map(row => ({ type: "data" as const, row, depth: 0 }));
+  }
+
+  // Build group lookup maps
+  const groupMap = new Map<string, { id: string; label: string; depth: number; parentId?: string }>();
+  for (const group of groups) {
+    groupMap.set(group.id, group);
+  }
+
+  // Group rows by groupId
+  const rowsByGroup = new Map<string | null, Row[]>();
+  for (const row of rows) {
+    const key = row.groupId ?? null;
+    if (!rowsByGroup.has(key)) rowsByGroup.set(key, []);
+    rowsByGroup.get(key)!.push(row);
+  }
+
+  // Collect all groups that need headers
+  const groupsWithHeaders = new Set<string>();
+  for (const groupId of rowsByGroup.keys()) {
+    if (!groupId) continue;
+    let current: string | undefined = groupId;
+    while (current) {
+      groupsWithHeaders.add(current);
+      current = groupMap.get(current)?.parentId;
+    }
+  }
+
+  // Get child groups of a parent
+  function getChildGroups(parentId: string | null): typeof groups {
+    return groups.filter(g => (g.parentId ?? null) === parentId && groupsWithHeaders.has(g.id));
+  }
+
+  // Get row depth based on group
+  function getRowDepth(groupId: string | null | undefined): number {
+    if (!groupId) return 0;
+    const group = groupMap.get(groupId);
+    return group ? group.depth + 1 : 0;
+  }
+
+  const result: DisplayRow[] = [];
+
+  // Recursive function to output a group and its descendants
+  function outputGroup(groupId: string | null) {
+    if (groupId) {
+      const group = groupMap.get(groupId);
+      if (!group) return;
+
+      const rowCount = rowsByGroup.get(groupId)?.length ?? 0;
+      result.push({
+        type: "group_header",
+        groupId: group.id,
+        label: group.label,
+        depth: group.depth,
+        rowCount,
+      });
+    }
+
+    // Output child groups (maintaining hierarchy)
+    for (const childGroup of getChildGroups(groupId)) {
+      outputGroup(childGroup.id);
+    }
+
+    // Output direct data rows for this group
+    const directRows = rowsByGroup.get(groupId) ?? [];
+    for (const row of directRows) {
+      result.push({
+        type: "data",
+        row,
+        depth: getRowDepth(row.groupId),
+      });
+    }
+  }
+
+  // Start from root (groups with no parent)
+  outputGroup(null);
+
+  return result;
 }
 
 // ============================================================================
@@ -582,6 +693,35 @@ function renderColumnHeaders(
   return lines.join("\n");
 }
 
+function renderGroupHeader(
+  label: string,
+  depth: number,
+  x: number,
+  y: number,
+  rowHeight: number,
+  totalWidth: number,
+  theme: WebTheme
+): string {
+  const lines: string[] = [];
+  const fontSize = parseFontSize(theme.typography.fontSizeBase);
+  const textY = y + rowHeight / 2 + fontSize * TYPOGRAPHY.TEXT_BASELINE_ADJUSTMENT;
+  const indent = depth * SPACING.INDENT_PER_LEVEL;
+
+  // Group header background
+  lines.push(`<rect x="${x}" y="${y}"
+    width="${totalWidth}" height="${rowHeight}"
+    fill="${theme.colors.muted}" opacity="0.15"/>`);
+
+  // Group header text (bold)
+  lines.push(`<text x="${x + SPACING.TEXT_PADDING + indent}" y="${textY}"
+    font-family="${theme.typography.fontFamily}"
+    font-size="${fontSize}px"
+    font-weight="${theme.typography.fontWeightBold}"
+    fill="${theme.colors.foreground}">${escapeXml(label)}</text>`);
+
+  return lines.join("\n");
+}
+
 function renderTableRow(
   row: Row,
   columns: ColumnSpec[],
@@ -590,7 +730,8 @@ function renderTableRow(
   rowHeight: number,
   theme: WebTheme,
   includeLabel: boolean,
-  labelWidth: number = LAYOUT.DEFAULT_LABEL_WIDTH
+  labelWidth: number = LAYOUT.DEFAULT_LABEL_WIDTH,
+  depth: number = 0
 ): string {
   const lines: string[] = [];
   const fontSize = parseFontSize(theme.typography.fontSizeBase);
@@ -599,7 +740,8 @@ function renderTableRow(
 
   // Label
   if (includeLabel) {
-    const indent = (row.style?.indent ?? 0) * SPACING.INDENT_PER_LEVEL;
+    // Use depth for indentation (overrides row.style.indent for grouped rows)
+    const indent = depth * SPACING.INDENT_PER_LEVEL + (row.style?.indent ?? 0) * SPACING.INDENT_PER_LEVEL;
     const fontWeight = row.style?.bold ? theme.typography.fontWeightBold : theme.typography.fontWeightNormal;
     const fontStyle = row.style?.italic ? "italic" : "normal";
 
@@ -965,6 +1107,9 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     y1="${headerY + layout.headerHeight}" y2="${headerY + layout.headerHeight}"
     stroke="${theme.colors.border}" stroke-width="1"/>`);
 
+  // Build display rows (used for both forest intervals and table rendering)
+  const displayRows = buildDisplayRows(spec);
+
   // Forest plot area
   if (spec.data.includeForest && layout.forestWidth > 0) {
     const plotY = layout.mainY + layout.headerHeight;
@@ -995,10 +1140,12 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       }
     }
 
-    // Row intervals
-    spec.data.rows.forEach((row, i) => {
-      const yPos = plotY + i * layout.rowHeight + layout.rowHeight / 2;
-      parts.push(renderInterval(row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue));
+    // Row intervals (only render for data rows, skip group headers)
+    displayRows.forEach((displayRow, i) => {
+      if (displayRow.type === "data") {
+        const yPos = plotY + i * layout.rowHeight + layout.rowHeight / 2;
+        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue));
+      }
     });
 
     // Overall summary diamond
@@ -1020,24 +1167,41 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     parts.push(renderAxis(xScale, layout, theme, spec.data.axisLabel, forestX));
   }
 
-  // Table rows
+  // Table rows (uses display rows to interleave group headers with data)
   const rowsY = layout.mainY + layout.headerHeight;
-  spec.data.rows.forEach((row, i) => {
+  displayRows.forEach((displayRow, i) => {
     const y = rowsY + i * layout.rowHeight;
 
-    // Row background (alternating)
-    if (i % 2 === 1) {
-      parts.push(`<rect x="${padding}" y="${y}"
-        width="${layout.totalWidth - padding * 2}" height="${layout.rowHeight}"
-        fill="${theme.colors.muted}" opacity="0.1"/>`);
-    }
+    if (displayRow.type === "group_header") {
+      // Render group header
+      parts.push(renderGroupHeader(
+        displayRow.label,
+        displayRow.depth,
+        padding,
+        y,
+        layout.rowHeight,
+        layout.totalWidth - padding * 2,
+        theme
+      ));
+    } else {
+      // Render data row
+      const row = displayRow.row;
+      const depth = displayRow.depth;
 
-    // Left table
-    parts.push(renderTableRow(row, leftColumns, padding, y, layout.rowHeight, theme, true, LAYOUT.DEFAULT_LABEL_WIDTH));
+      // Row background (alternating for data rows)
+      if (i % 2 === 1) {
+        parts.push(`<rect x="${padding}" y="${y}"
+          width="${layout.totalWidth - padding * 2}" height="${layout.rowHeight}"
+          fill="${theme.colors.muted}" opacity="0.1"/>`);
+      }
 
-    // Right table
-    if (rightColumns.length > 0) {
-      parts.push(renderTableRow(row, rightColumns, rightTableX, y, layout.rowHeight, theme, false, 0));
+      // Left table
+      parts.push(renderTableRow(row, leftColumns, padding, y, layout.rowHeight, theme, true, LAYOUT.DEFAULT_LABEL_WIDTH, depth));
+
+      // Right table
+      if (rightColumns.length > 0) {
+        parts.push(renderTableRow(row, rightColumns, rightTableX, y, layout.rowHeight, theme, false, 0, depth));
+      }
     }
 
     // Row border

@@ -1,572 +1,354 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="950" height="594"
-  viewBox="0 0 950 594">
-<rect width="100%" height="100%" fill="#fafafa"/>
-<text x="14" y="34"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+  width="800" height="400"
+  viewBox="0 0 800 400">
+<rect width="100%" height="100%" fill="#1e1e2e"/>
+<text x="12" y="32"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="16px"
       font-weight="600"
-      fill="#18181b">Cardiovascular Outcomes in Diabetes Medications</text>
-<text x="14" y="58"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
-      font-size="14px"
-      fill="#52525b">Major Adverse Cardiovascular Events (MACE)</text>
-<text x="24" y="100"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">Cardiovascular Outcomes in Diabetes Trials</text>
+<text x="22" y="74"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="12px"
         font-weight="500"
-        fill="#18181b">Trial</text>
-<text x="234" y="100"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="12px"
-        font-weight="500"
-        text-anchor="end"
-        fill="#18181b">Year</text>
-<text x="314" y="100"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="12px"
-        font-weight="500"
-        text-anchor="end"
-        fill="#18181b">N</text>
-<text x="334" y="100"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">Study</text>
+<text x="172" y="74"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="12px"
         font-weight="500"
         text-anchor="start"
-        fill="#18181b">HR (95% CI)</text>
-<line x1="14" x2="936"
-    y1="116" y2="116"
-    stroke="#e4e4e7" stroke-width="1"/>
-<line x1="582.75" x2="582.75" y1="116" y2="548"
-    stroke="#a1a1aa" stroke-width="1" stroke-dasharray="6,4"/>
+        fill="#cdd6f4">HR (95% CI)</text>
+<line x1="12" x2="788"
+    y1="88" y2="88"
+    stroke="#45475a" stroke-width="1"/>
+<line x1="402" x2="402" y1="88" y2="438"
+    stroke="#6c7086" stroke-width="1" stroke-dasharray="6,4"/>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="567.2212667180535" x2="582.231679358459" y1="132" y2="132"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="371.0196080028513" x2="390.6490725172482" y1="130" y2="130"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="567.2212667180535" x2="567.2212667180535" y1="128" y2="136"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="582.231679358459" x2="582.231679358459" y1="128" y2="136"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="371.0196080028513" x2="371.0196080028513" y1="126" y2="134"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="390.6490725172482" x2="390.6490725172482" y1="126" y2="134"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="567.9716910851737" y="125"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="375.2391689498254" y="124"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="567.9135250277644" x2="581.1791434441166" y1="164" y2="164"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="389.50612633917" x2="400.6771734266245" y1="158" y2="158"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="567.9135250277644" x2="567.9135250277644" y1="160" y2="168"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="581.1791434441166" x2="581.1791434441166" y1="160" y2="168"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="389.50612633917" x2="389.50612633917" y1="154" y2="162"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="400.6771734266245" x2="400.6771734266245" y1="154" y2="162"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="567.9716910851737" y="157"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="389.4498451243568" y="152"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="573.7581652198485" x2="584.2744204337392" y1="196" y2="196"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="394.4279286061882" x2="403.2837224705172" y1="186" y2="186"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="573.7581652198485" x2="573.7581652198485" y1="192" y2="200"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="584.2744204337392" x2="584.2744204337392" y1="192" y2="200"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="394.4279286061882" x2="394.4279286061882" y1="182" y2="190"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="403.2837224705172" x2="403.2837224705172" y1="182" y2="190"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="572.0073501407797" y="189"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="392.84829485539353" y="180"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="562.0963828207232" x2="580.1046781280506" y1="228" y2="228"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="385.25089127062364" x2="397.4242509439325" y1="242" y2="242"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="562.0963828207232" x2="562.0963828207232" y1="224" y2="232"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="580.1046781280506" x2="580.1046781280506" y1="224" y2="232"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="385.25089127062364" x2="385.25089127062364" y1="238" y2="246"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="397.4242509439325" x2="397.4242509439325" y1="238" y2="246"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="564.2419359552933" y="221"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="385.209460269048" y="236"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="569.9362340694945" x2="581.1791434441166" y1="260" y2="260"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="378.34279935629377" x2="399.77236052888475" y1="270" y2="270"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="569.9362340694945" x2="569.9362340694945" y1="256" y2="264"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="581.1791434441166" x2="581.1791434441166" y1="256" y2="264"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="378.34279935629377" x2="378.34279935629377" y1="266" y2="274"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="399.77236052888475" x2="399.77236052888475" y1="266" y2="274"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="568.567911248461" y="253"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="382.9231719730976" y="264"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="554.6570742355988" x2="580.1046781280506" y1="292" y2="292"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="385.25089127062364" x2="397.4242509439325" y1="298" y2="298"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="554.6570742355988" x2="554.6570742355988" y1="288" y2="296"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="580.1046781280506" x2="580.1046781280506" y1="288" y2="296"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="385.25089127062364" x2="385.25089127062364" y1="294" y2="302"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="397.4242509439325" x2="397.4242509439325" y1="294" y2="302"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="560.2212667180535" y="285"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="385.209460269048" y="292"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="570.5932170907399" x2="582.231679358459" y1="324" y2="324"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="396.9390006644913" x2="406.92180226701817" y1="354" y2="354"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="570.5932170907399" x2="570.5932170907399" y1="320" y2="328"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="582.231679358459" x2="582.231679358459" y1="320" y2="328"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="396.9390006644913" x2="396.9390006644913" y1="350" y2="358"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="406.92180226701817" x2="406.92180226701817" y1="350" y2="358"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="569.1573173178325" y="317"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="396" y="348"
+        width="12" height="12" fill="#6c7086"/>
     </g>
 
     <g class="interval">
       <!-- CI line -->
-      <line x1="553.7601391111084" x2="588.1321037309156" y1="356" y2="356"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="391.76270912904414" x2="408.44579892269184" y1="382" y2="382"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Whiskers -->
-      <line x1="553.7601391111084" x2="553.7601391111084" y1="352" y2="360"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="588.1321037309156" x2="588.1321037309156" y1="352" y2="360"
-        stroke="#3f3f46" stroke-width="1.5"/>
+      <line x1="391.76270912904414" x2="391.76270912904414" y1="378" y2="386"
+        stroke="#bac2de" stroke-width="1.5"/>
+      <line x1="408.44579892269184" x2="408.44579892269184" y1="378" y2="386"
+        stroke="#bac2de" stroke-width="1.5"/>
       <!-- Point -->
-      <rect x="563.5932170907399" y="349"
-        width="14" height="14" fill="#dc2626"/>
+      <rect x="394.22712330395683" y="376"
+        width="12" height="12" fill="#f38ba8"/>
     </g>
-
-    <g class="interval">
-      <!-- CI line -->
-      <line x1="576.7400632890834" x2="588.5946401920841" y1="388" y2="388"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Whiskers -->
-      <line x1="576.7400632890834" x2="576.7400632890834" y1="384" y2="392"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="588.5946401920841" x2="588.5946401920841" y1="384" y2="392"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Point -->
-      <rect x="575.75" y="381"
-        width="14" height="14" fill="#a1a1aa"/>
-    </g>
-
-    <g class="interval">
-      <!-- CI line -->
-      <line x1="571.2419359552933" x2="589.9578685419914" y1="420" y2="420"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Whiskers -->
-      <line x1="571.2419359552933" x2="571.2419359552933" y1="416" y2="424"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="589.9578685419914" x2="589.9578685419914" y1="416" y2="424"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Point -->
-      <rect x="573.6447089234488" y="413"
-        width="14" height="14" fill="#dc2626"/>
-    </g>
-
-    <g class="interval">
-      <!-- CI line -->
-      <line x1="576.7400632890834" x2="586.7190709640753" y1="452" y2="452"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Whiskers -->
-      <line x1="576.7400632890834" x2="576.7400632890834" y1="448" y2="456"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="586.7190709640753" x2="586.7190709640753" y1="448" y2="456"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Point -->
-      <rect x="574.7080964884838" y="445"
-        width="14" height="14" fill="#dc2626"/>
-    </g>
-
-    <g class="interval">
-      <!-- CI line -->
-      <line x1="576.7400632890834" x2="590.8470710823567" y1="484" y2="484"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Whiskers -->
-      <line x1="576.7400632890834" x2="576.7400632890834" y1="480" y2="488"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <line x1="590.8470710823567" x2="590.8470710823567" y1="480" y2="488"
-        stroke="#3f3f46" stroke-width="1.5"/>
-      <!-- Point -->
-      <rect x="576.7712703967277" y="477"
-        width="14" height="14" fill="#16a34a"/>
-    </g>
-<polygon points="464,516 464,510.5 464,516 464,521.5"
-    fill="#2563eb"
-    stroke="#1d4ed8"
+<polygon points="302,410 302,405 302,410 302,415"
+    fill="#89b4fa"
+    stroke="#74c7ec"
     stroke-width="1"/>
-<g transform="translate(0, 548)"><line x1="464" x2="701.5"
-    y1="0" y2="0" stroke="#e4e4e7" stroke-width="1"/>
-<line x1="464" x2="464" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="464" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+<g transform="translate(0, 438)"><line x1="302" x2="502"
+    y1="0" y2="0" stroke="#45475a" stroke-width="1"/>
+<line x1="302" x2="302" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="302" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">0.10</text>
-<line x1="499.7473119850978" x2="499.7473119850978" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="499.7473119850978" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">0.10</text>
+<line x1="332.1029995663981" x2="332.1029995663981" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="332.1029995663981" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">0.20</text>
-<line x1="547.0026880149022" x2="547.0026880149022" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="547.0026880149022" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">0.20</text>
+<line x1="371.8970004336019" x2="371.8970004336019" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="371.8970004336019" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">0.50</text>
-<line x1="582.75" x2="582.75" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="582.75" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">0.50</text>
+<line x1="402" x2="402" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="402" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">1.00</text>
-<line x1="618.4973119850978" x2="618.4973119850978" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="618.4973119850978" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">1.00</text>
+<line x1="432.1029995663981" x2="432.1029995663981" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="432.1029995663981" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">2.00</text>
-<line x1="665.7526880149022" x2="665.7526880149022" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="665.7526880149022" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">2.00</text>
+<line x1="471.8970004336019" x2="471.8970004336019" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="471.8970004336019" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">5.00</text>
-<line x1="701.5" x2="701.5" y1="0" y2="4"
-      stroke="#e4e4e7" stroke-width="1"/>
-<text x="701.5" y="16" text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">5.00</text>
+<line x1="502" x2="502" y1="0" y2="4"
+      stroke="#45475a" stroke-width="1"/>
+<text x="502" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
-      fill="#52525b">10.0</text>
-<text x="582.75" y="28"
+      fill="#a6adc8">10.0</text>
+<text x="402" y="28"
       text-anchor="middle"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
       font-weight="500"
-      fill="#52525b">Hazard Ratio (95% CI)</text></g>
-<text x="24" y="136.66666666666666"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#a6adc8">Estimate</text></g>
+<rect x="12" y="88"
+    width="776" height="28"
+    fill="#6c7086" opacity="0.15"/>
+<text x="22" y="106.66666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="600"
+    fill="#cdd6f4">SGLT2 Inhibitors</text>
+<line x1="12" x2="788"
+      y1="116" y2="116"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="116"
+          width="776" height="28"
+          fill="#6c7086" opacity="0.1"/>
+<text x="34" y="134.66666666666666"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">EMPA-REG OUTCOME</text>
-<text x="234" y="136.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2015.00</text>
-<text x="314" y="136.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">7020.00</text>
-<text x="334" y="136.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">EMPA-REG</text>
+<text x="172" y="134.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.86 (0.74, 0.99)</text>
-<line x1="14" x2="936"
-      y1="148" y2="148"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<rect x="14" y="148"
-        width="922" height="32"
-        fill="#a1a1aa" opacity="0.1"/>
-<text x="24" y="168.66666666666666"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">0.62 (0.49, 0.77)</text>
+<line x1="12" x2="788"
+      y1="144" y2="144"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<text x="34" y="162.66666666666666"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">CANVAS Program</text>
-<text x="234" y="168.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2017.00</text>
-<text x="314" y="168.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">10142.00</text>
-<text x="334" y="168.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">CANVAS</text>
+<text x="172" y="162.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.86 (0.75, 0.97)</text>
-<line x1="14" x2="936"
-      y1="180" y2="180"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<text x="24" y="200.66666666666666"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">0.86 (0.75, 0.97)</text>
+<line x1="12" x2="788"
+      y1="172" y2="172"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="172"
+          width="776" height="28"
+          fill="#6c7086" opacity="0.1"/>
+<text x="34" y="190.66666666666666"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">DECLARE-TIMI 58</text>
-<text x="234" y="200.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2019.00</text>
-<text x="314" y="200.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">17160.00</text>
-<text x="334" y="200.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">DECLARE</text>
+<text x="172" y="190.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.93 (0.84, 1.03)</text>
-<line x1="14" x2="936"
-      y1="212" y2="212"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<rect x="14" y="212"
-        width="922" height="32"
-        fill="#a1a1aa" opacity="0.1"/>
-<text x="24" y="232.66666666666666"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">0.93 (0.84, 1.03)</text>
+<line x1="12" x2="788"
+      y1="200" y2="200"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="200"
+    width="776" height="28"
+    fill="#6c7086" opacity="0.15"/>
+<text x="22" y="218.66666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="600"
+    fill="#cdd6f4">GLP-1 Receptor Agonists</text>
+<line x1="12" x2="788"
+      y1="228" y2="228"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="228"
+          width="776" height="28"
+          fill="#6c7086" opacity="0.1"/>
+<text x="34" y="246.66666666666666"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">CREDENCE</text>
-<text x="234" y="232.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2019.00</text>
-<text x="314" y="232.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">4401.00</text>
-<text x="334" y="232.66666666666666"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">LEADER</text>
+<text x="172" y="246.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.80 (0.67, 0.95)</text>
-<line x1="14" x2="936"
-      y1="244" y2="244"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<text x="24" y="264.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">0.78 (0.68, 0.90)</text>
+<line x1="12" x2="788"
+      y1="256" y2="256"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<text x="34" y="274.6666666666667"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">LEADER</text>
-<text x="234" y="264.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2016.00</text>
-<text x="314" y="264.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">9340.00</text>
-<text x="334" y="264.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">SUSTAIN-6</text>
+<text x="172" y="274.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.87 (0.78, 0.97)</text>
-<line x1="14" x2="936"
-      y1="276" y2="276"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<rect x="14" y="276"
-        width="922" height="32"
-        fill="#a1a1aa" opacity="0.1"/>
-<text x="24" y="296.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">0.74 (0.58, 0.95)</text>
+<line x1="12" x2="788"
+      y1="284" y2="284"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="284"
+          width="776" height="28"
+          fill="#6c7086" opacity="0.1"/>
+<text x="34" y="302.6666666666667"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">SUSTAIN-6</text>
-<text x="234" y="296.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2016.00</text>
-<text x="314" y="296.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">3297.00</text>
-<text x="334" y="296.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">HARMONY</text>
+<text x="172" y="302.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.74 (0.58, 0.95)</text>
-<line x1="14" x2="936"
-      y1="308" y2="308"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<text x="24" y="328.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
-      font-size="14px"
-      font-weight="400"
-      font-style="normal"
-      fill="#18181b">REWIND</text>
-<text x="234" y="328.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2019.00</text>
-<text x="314" y="328.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">9901.00</text>
-<text x="334" y="328.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="start"
-        fill="#18181b">0.88 (0.79, 0.99)</text>
-<line x1="14" x2="936"
+        fill="#cdd6f4">0.78 (0.68, 0.90)</text>
+<line x1="12" x2="788"
+      y1="312" y2="312"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="312"
+    width="776" height="28"
+    fill="#6c7086" opacity="0.15"/>
+<text x="22" y="330.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="600"
+    fill="#cdd6f4">DPP-4 Inhibitors</text>
+<line x1="12" x2="788"
       y1="340" y2="340"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<rect x="14" y="340"
-        width="922" height="32"
-        fill="#a1a1aa" opacity="0.1"/>
-<text x="24" y="360.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<rect x="12" y="340"
+          width="776" height="28"
+          fill="#6c7086" opacity="0.1"/>
+<text x="34" y="358.6666666666667"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">PIONEER 6</text>
-<text x="234" y="360.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2019.00</text>
-<text x="314" y="360.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">3183.00</text>
-<text x="334" y="360.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">SAVOR</text>
+<text x="172" y="358.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">0.79 (0.57, 1.11)</text>
-<line x1="14" x2="936"
-      y1="372" y2="372"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<text x="24" y="392.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
+        fill="#cdd6f4">1.00 (0.89, 1.12)</text>
+<line x1="12" x2="788"
+      y1="368" y2="368"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
+<text x="34" y="386.6666666666667"
+      font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       font-weight="400"
       font-style="normal"
-      fill="#18181b">SAVOR-TIMI 53</text>
-<text x="234" y="392.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2013.00</text>
-<text x="314" y="392.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">16492.00</text>
-<text x="334" y="392.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
+      fill="#cdd6f4">EXAMINE</text>
+<text x="172" y="386.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="start"
-        fill="#18181b">1.00 (0.89, 1.12)</text>
-<line x1="14" x2="936"
-      y1="404" y2="404"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<rect x="14" y="404"
-        width="922" height="32"
-        fill="#a1a1aa" opacity="0.1"/>
-<text x="24" y="424.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
-      font-size="14px"
-      font-weight="400"
-      font-style="normal"
-      fill="#18181b">EXAMINE</text>
-<text x="234" y="424.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2013.00</text>
-<text x="314" y="424.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">5380.00</text>
-<text x="334" y="424.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="start"
-        fill="#18181b">0.96 (0.80, 1.15)</text>
-<line x1="14" x2="936"
-      y1="436" y2="436"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<text x="24" y="456.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
-      font-size="14px"
-      font-weight="400"
-      font-style="normal"
-      fill="#18181b">TECOS</text>
-<text x="234" y="456.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2015.00</text>
-<text x="314" y="456.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">14671.00</text>
-<text x="334" y="456.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="start"
-        fill="#18181b">0.98 (0.89, 1.08)</text>
-<line x1="14" x2="936"
-      y1="468" y2="468"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
-<rect x="14" y="468"
-        width="922" height="32"
-        fill="#a1a1aa" opacity="0.1"/>
-<text x="24" y="488.6666666666667"
-      font-family="Inter, system-ui, -apple-system, sans-serif"
-      font-size="14px"
-      font-weight="400"
-      font-style="normal"
-      fill="#18181b">CARMELINA</text>
-<text x="234" y="488.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">2018.00</text>
-<text x="314" y="488.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="end"
-        fill="#18181b">6979.00</text>
-<text x="334" y="488.6666666666667"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="14px"
-        text-anchor="start"
-        fill="#18181b">1.02 (0.89, 1.17)</text>
-<line x1="14" x2="936"
-      y1="500" y2="500"
-      stroke="#e4e4e7" stroke-width="1" opacity="0.5"/>
+        fill="#cdd6f4">0.96 (0.79, 1.16)</text>
+<line x1="12" x2="788"
+      y1="396" y2="396"
+      stroke="#45475a" stroke-width="1" opacity="0.5"/>
 
 </svg>
