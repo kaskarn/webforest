@@ -18,10 +18,25 @@ export function niceDomain(
   isLog: boolean
 ): [number, number] {
   if (isLog) {
-    // For log scale, round to powers of 10
-    const logMin = Math.floor(Math.log10(Math.max(domain[0], 0.001)));
-    const logMax = Math.ceil(Math.log10(Math.max(domain[1], 0.001)));
-    return [Math.pow(10, logMin), Math.pow(10, logMax)];
+    // For log scale, use nice values: 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100...
+    // This provides finer granularity than pure powers of 10
+    const niceLogValues = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100];
+
+    // Find nice min (largest nice value <= domain min)
+    let niceMin = niceLogValues[0];
+    for (const val of niceLogValues) {
+      if (val <= domain[0]) niceMin = val;
+      else break;
+    }
+
+    // Find nice max (smallest nice value >= domain max)
+    let niceMax = niceLogValues[niceLogValues.length - 1];
+    for (let i = niceLogValues.length - 1; i >= 0; i--) {
+      if (niceLogValues[i] >= domain[1]) niceMax = niceLogValues[i];
+      else break;
+    }
+
+    return [niceMin, niceMax];
   }
 
   // For linear scale, round to nice step intervals

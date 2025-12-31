@@ -374,9 +374,13 @@ function escapeXml(text: string): string {
     .replace(/'/g, "&apos;");
 }
 
-/** Format number for display */
+/** Format number for display - integers show no decimals, others show 2 */
 function formatNumber(value: number | undefined | null): string {
   if (value === undefined || value === null || Number.isNaN(value)) return "";
+  // If it's an integer (or very close to one), don't show decimals
+  if (Number.isInteger(value) || Math.abs(value - Math.round(value)) < 0.0001) {
+    return Math.round(value).toString();
+  }
   return value.toFixed(2);
 }
 
@@ -722,6 +726,24 @@ function renderGroupHeader(
   return lines.join("\n");
 }
 
+/** Compute max values for bar columns from all rows */
+function computeBarMaxValues(rows: Row[], columns: ColumnSpec[]): Map<string, number> {
+  const maxValues = new Map<string, number>();
+  for (const col of columns) {
+    if (col.type === "bar") {
+      let max = 0;
+      for (const row of rows) {
+        const val = row.metadata[col.field];
+        if (typeof val === "number" && val > max) {
+          max = val;
+        }
+      }
+      maxValues.set(col.field, max > 0 ? max : 1); // Avoid division by zero
+    }
+  }
+  return maxValues;
+}
+
 function renderTableRow(
   row: Row,
   columns: ColumnSpec[],
@@ -731,7 +753,8 @@ function renderTableRow(
   theme: WebTheme,
   includeLabel: boolean,
   labelWidth: number = LAYOUT.DEFAULT_LABEL_WIDTH,
-  depth: number = 0
+  depth: number = 0,
+  barMaxValues?: Map<string, number>
 ): string {
   const lines: string[] = [];
   const fontSize = parseFontSize(theme.typography.fontSizeBase);
@@ -761,9 +784,10 @@ function renderTableRow(
     const { textX, anchor } = getTextPosition(currentX, width, col.align);
 
     if (col.type === "bar" && typeof row.metadata[col.field] === "number") {
-      // Render bar
+      // Render bar - use computed max from data, or explicit maxValue, or default to 100
       const barValue = row.metadata[col.field] as number;
-      const maxValue = col.options?.bar?.maxValue ?? 100;
+      const computedMax = barMaxValues?.get(col.field);
+      const maxValue = col.options?.bar?.maxValue ?? computedMax ?? 100;
       const barPadding = SPACING.TEXT_PADDING * 2;
       const barWidth = Math.min((barValue / maxValue) * (width - barPadding), width - barPadding);
       const barColor = col.options?.bar?.color ?? theme.colors.primary;
@@ -1169,6 +1193,12 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
 
   // Table rows (uses display rows to interleave group headers with data)
   const rowsY = layout.mainY + layout.headerHeight;
+
+  // Compute bar max values from all data rows for proper scaling
+  const allDataRows = spec.data.rows;
+  const leftBarMaxValues = computeBarMaxValues(allDataRows, leftColumns);
+  const rightBarMaxValues = computeBarMaxValues(allDataRows, rightColumns);
+
   displayRows.forEach((displayRow, i) => {
     const y = rowsY + i * layout.rowHeight;
 
@@ -1196,11 +1226,11 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       }
 
       // Left table
-      parts.push(renderTableRow(row, leftColumns, padding, y, layout.rowHeight, theme, true, LAYOUT.DEFAULT_LABEL_WIDTH, depth));
+      parts.push(renderTableRow(row, leftColumns, padding, y, layout.rowHeight, theme, true, LAYOUT.DEFAULT_LABEL_WIDTH, depth, leftBarMaxValues));
 
       // Right table
       if (rightColumns.length > 0) {
-        parts.push(renderTableRow(row, rightColumns, rightTableX, y, layout.rowHeight, theme, false, 0, depth));
+        parts.push(renderTableRow(row, rightColumns, rightTableX, y, layout.rowHeight, theme, false, 0, depth, rightBarMaxValues));
       }
     }
 
