@@ -3,15 +3,6 @@
 \name{Spacing}
 \alias{Spacing}
 \title{Spacing: Layout spacing values}
-\usage{
-Spacing(
-  row_height = 28,
-  header_height = 36,
-  column_gap = 8,
-  section_gap = 16,
-  padding = 12
-)
-}
 \description{
 Spacing: Layout spacing values
 }

@@ -3,6 +3,7 @@
 
 #' ColorPalette: Colors for visualizations
 #'
+#' @usage NULL
 #' @export
 ColorPalette <- new_class(
   "ColorPalette",
@@ -27,6 +28,7 @@ ColorPalette <- new_class(
 
 #' Typography: Font settings
 #'
+#' @usage NULL
 #' @export
 Typography <- new_class(
   "Typography",
@@ -47,6 +49,7 @@ Typography <- new_class(
 
 #' Spacing: Layout spacing values
 #'
+#' @usage NULL
 #' @export
 Spacing <- new_class(
   "Spacing",
@@ -61,6 +64,7 @@ Spacing <- new_class(
 
 #' Shapes: Shape rendering settings
 #'
+#' @usage NULL
 #' @export
 Shapes <- new_class(
   "Shapes",

@@ -3,14 +3,6 @@
 \name{Shapes}
 \alias{Shapes}
 \title{Shapes: Shape rendering settings}
-\usage{
-Shapes(
-  point_size = 6,
-  summary_height = 10,
-  line_width = 1.5,
-  border_radius = 4
-)
-}
 \description{
 Shapes: Shape rendering settings
 }
