@@ -784,18 +784,30 @@ function renderTableRow(
     const { textX, anchor } = getTextPosition(currentX, width, col.align);
 
     if (col.type === "bar" && typeof row.metadata[col.field] === "number") {
-      // Render bar - use computed max from data, or explicit maxValue, or default to 100
+      // Render bar with value label (bar on left, number on right)
       const barValue = row.metadata[col.field] as number;
       const computedMax = barMaxValues?.get(col.field);
       const maxValue = col.options?.bar?.maxValue ?? computedMax ?? 100;
-      const barPadding = SPACING.TEXT_PADDING * 2;
-      const barWidth = Math.min((barValue / maxValue) * (width - barPadding), width - barPadding);
       const barColor = col.options?.bar?.color ?? theme.colors.primary;
       const barHeight = theme.shapes.pointSize * 2;
 
+      // Reserve space for the text label on the right
+      const textWidth = 50; // Space for the number
+      const barAreaWidth = width - SPACING.TEXT_PADDING * 2 - textWidth;
+      const barWidth = Math.min((barValue / maxValue) * barAreaWidth, barAreaWidth);
+
+      // Draw bar
       lines.push(`<rect x="${currentX + SPACING.TEXT_PADDING}" y="${y + rowHeight / 2 - barHeight / 2}"
         width="${Math.max(0, barWidth)}" height="${barHeight}"
         fill="${barColor}" opacity="0.7" rx="2"/>`);
+
+      // Draw value label to the right of the bar area
+      const labelX = currentX + width - SPACING.TEXT_PADDING;
+      lines.push(`<text x="${labelX}" y="${textY}"
+        font-family="${theme.typography.fontFamily}"
+        font-size="${fontSize}px"
+        text-anchor="end"
+        fill="${theme.colors.foreground}">${formatNumber(barValue)}</text>`);
     } else if (col.type === "sparkline" && Array.isArray(row.metadata[col.field])) {
       // Render sparkline
       const data = row.metadata[col.field] as number[];
