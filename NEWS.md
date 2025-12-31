@@ -1,5 +1,10 @@
 # webforest (development version)
 
+## 0.0.0.9001
+
+* Unified axis scaling between web view and SVG export using shared `niceDomain()` logic for consistent, sensible tick values
+* Improved SVG generator code quality: extracted constants, added input validation, reduced code duplication
+
 ## New Features
 
 * Interactive forest plots rendered with Svelte 5 and D3.js
@@ -11,8 +16,8 @@
 * Reference line annotations
 * Direct visual overrides on `forest_plot()`: `axis_range`, `axis_ticks`, `axis_gridlines`, `plot_position`, `row_height`
 * Shiny integration with `forestOutput()` and `renderForest()`
-* **Static image export**: New `save_plot()` function for exporting to SVG, PDF, or PNG using native R graphics
-* **Web download button**: Interactive plots now include a download button (appears on hover) with SVG/PNG export options
+* **Static image export**: New `save_plot()` function for exporting to SVG, PDF, or PNG using a unified JavaScript renderer (via V8)
+* **Web download button**: Interactive plots now include a download button (appears on hover) with SVG/PNG export options, using the same renderer as `save_plot()` for consistent output
 * New `enable_export` option in `web_interaction()` to control download button visibility
 
 ## Documentation

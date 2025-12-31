@@ -13,6 +13,7 @@ import type {
   GroupHeaderRow,
   DataRow,
 } from "$types";
+import { niceDomain, DOMAIN_PADDING } from "$lib/scale-utils";
 
 // Svelte 5 runes-based store
 export function createForestStore() {
@@ -64,7 +65,6 @@ export function createForestStore() {
 
     const rows = spec.data.rows;
     const axisConfig = spec.theme.axis;
-    const padding = 0.15;
 
     // Check if explicit range is provided in theme
     const hasExplicitMin = axisConfig?.rangeMin != null;
@@ -82,8 +82,8 @@ export function createForestStore() {
       const range = maxVal - minVal;
 
       domain = [
-        hasExplicitMin ? axisConfig.rangeMin! : minVal - range * padding,
-        hasExplicitMax ? axisConfig.rangeMax! : maxVal + range * padding,
+        hasExplicitMin ? axisConfig.rangeMin! : minVal - range * DOMAIN_PADDING,
+        hasExplicitMax ? axisConfig.rangeMax! : maxVal + range * DOMAIN_PADDING,
       ];
     }
 
@@ -94,16 +94,19 @@ export function createForestStore() {
       ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
       : 0;
 
+    // Apply consistent nice domain rounding (shared with SVG generator)
+    const nicedDomain = niceDomain(domain, isLog);
+
     if (isLog) {
       // Ensure domain is positive for log scale
       const safeDomain: [number, number] = [
-        Math.max(domain[0], 0.01),
-        Math.max(domain[1], 0.02),
+        Math.max(nicedDomain[0], 0.01),
+        Math.max(nicedDomain[1], 0.02),
       ];
-      return scaleLog().domain(safeDomain).range([0, forestWidth]).nice();
+      return scaleLog().domain(safeDomain).range([0, forestWidth]);
     }
 
-    return scaleLinear().domain(domain).range([0, forestWidth]).nice();
+    return scaleLinear().domain(nicedDomain).range([0, forestWidth]);
   });
 
   // Helper to flatten column groups into flat ColumnSpec array

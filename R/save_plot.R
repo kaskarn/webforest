@@ -1,23 +1,21 @@
-# Static image export for forest plots
+# Static image export for forest plots using V8 JavaScript engine
 
 #' Save a forest plot as a static image
 #'
 #' Exports a forest plot to a static file format (SVG, PDF, or PNG).
-#' Uses native R graphics via the grid package for high-quality output.
+#' Uses a shared JavaScript SVG generator via the V8 package for consistent
+#' output between R and web exports.
 #'
 #' @param x A WebSpec object or forest_plot() htmlwidget output
 #' @param file Output file path. Extension determines format:
-#'   - `.svg` - Scalable Vector Graphics (requires svglite package)
-#'   - `.pdf` - PDF document
-#'   - `.png` - PNG image (requires ragg package for best quality)
-#' @param width Plot width in inches (default: 10)
-#' @param height Plot height in inches. If NULL (default), auto-calculated
-#'   based on the number of rows
-#' @param scale Scaling factor for all elements (default: 1). Values > 1
-#'   increase font sizes, line widths, etc.
-#' @param bg Background color. If NULL, uses theme background
-#' @param dpi Resolution for PNG output (default: 300)
-#' @param ... Additional arguments passed to the graphics device
+#'   - `.svg` - Scalable Vector Graphics
+#'   - `.pdf` - PDF document (requires rsvg package)
+#'   - `.png` - PNG image (requires rsvg package)
+#' @param width Plot width in pixels (default: 800)
+#' @param height Plot height in pixels. If NULL (default), auto-calculated
+#'   based on content
+#' @param scale Scaling factor for PNG output (default: 2 for retina quality)
+#' @param ... Additional arguments (currently unused)
 #'
 #' @return Invisibly returns the file path
 #'
@@ -40,8 +38,8 @@
 #' # Save as SVG
 #' save_plot(spec, "forest.svg")
 #'
-#' # Save as PDF with custom dimensions
-#' save_plot(spec, "forest.pdf", width = 8, height = 6)
+#' # Save as PNG with custom dimensions
+#' save_plot(spec, "forest.png", width = 1200)
 #'
 #' # Save from htmlwidget output
 #' p <- forest_plot(spec)
@@ -49,11 +47,18 @@
 #' }
 #'
 #' @export
-save_plot <- function(x, file, width = 10, height = NULL, scale = 1,
-                      bg = NULL, dpi = 300, ...) {
- # Validate inputs
+save_plot <- function(x, file, width = 800, height = NULL, scale = 2, ...) {
+  # Validate inputs
   if (missing(file) || is.null(file)) {
     cli::cli_abort("{.arg file} is required")
+  }
+
+  # Check for V8 package
+  if (!requireNamespace("V8", quietly = TRUE)) {
+    cli::cli_abort(c(
+      "Package {.pkg V8} is required for {.fn save_plot}",
+      "i" = "Install it with: {.code install.packages(\"V8\")}"
+    ))
   }
 
   # Extract WebSpec from input
@@ -77,40 +82,90 @@ save_plot <- function(x, file, width = 10, height = NULL, scale = 1,
     ))
   }
 
-  # Compute layout
-  layout <- compute_layout(spec, width = width, height = height, scale = scale)
-
-  # Use theme background if not specified
-  if (is.null(bg)) {
-    bg <- spec@theme@colors@background
-  }
-
-  # Get graphics parameters from theme
-  gpar_list <- theme_to_gpar(spec@theme)
-
-  # Open appropriate device
-  open_device(
-    file = file,
-    ext = ext,
-    width = layout$total_width,
-    height = layout$total_height,
-    bg = bg,
-    dpi = dpi,
-    ...
+  # Serialize spec to JSON
+  spec_json <- jsonlite::toJSON(
+    serialize_spec(spec),
+    auto_unbox = TRUE,
+    null = "null",
+    na = "null"
   )
 
-  # Ensure device is closed on exit
-  on.exit(grDevices::dev.off(), add = TRUE)
+  # Build options
+  options_list <- list()
+  if (!is.null(width)) options_list$width <- width
+  if (!is.null(height)) options_list$height <- height
 
-  # Create new page
-  grid::grid.newpage()
+  # Generate SVG using V8
+  svg_string <- generate_svg_v8(spec_json, options_list)
 
-  # Render the forest plot
-  render_forest_grid(spec, layout, gpar_list)
+  # Output based on format
+  if (ext == "svg") {
+    # Write SVG directly
+    writeLines(svg_string, file)
+  } else if (ext %in% c("pdf", "png")) {
+    # Convert SVG to raster/PDF using rsvg
+    if (!requireNamespace("rsvg", quietly = TRUE)) {
+      cli::cli_abort(c(
+        "Package {.pkg rsvg} is required for {.file .{ext}} output",
+        "i" = "Install it with: {.code install.packages(\"rsvg\")}"
+      ))
+    }
+
+    # Write temporary SVG
+    temp_svg <- tempfile(fileext = ".svg")
+    on.exit(unlink(temp_svg), add = TRUE)
+    writeLines(svg_string, temp_svg)
+
+    if (ext == "pdf") {
+      rsvg::rsvg_pdf(temp_svg, file)
+    } else {
+      # PNG with scaling
+      rsvg::rsvg_png(temp_svg, file, width = width * scale, height = height * scale)
+    }
+  }
 
   cli::cli_alert_success("Saved plot to {.file {file}}")
 
   invisible(file)
+}
+
+#' Generate SVG using V8 JavaScript engine
+#'
+#' @param spec_json JSON string of WebSpec
+#' @param options List of export options (width, height)
+#' @return SVG string
+#' @noRd
+generate_svg_v8 <- function(spec_json, options = list()) {
+  # Get path to bundled JS
+  js_file <- system.file("js/svg-generator.js", package = "webforest")
+
+  if (js_file == "" || !file.exists(js_file)) {
+    # Fallback for development
+    js_file <- file.path(
+      system.file(package = "webforest"),
+      "..", "..", "inst", "js", "svg-generator.js"
+    )
+    if (!file.exists(js_file)) {
+      cli::cli_abort(c(
+        "SVG generator JavaScript file not found",
+        "i" = "Run {.code npm run build} in the {.file srcjs} directory"
+      ))
+    }
+  }
+
+  # Create V8 context
+  ctx <- V8::v8()
+
+  # Load the SVG generator
+  ctx$source(js_file)
+
+  # Convert options to JSON
+  options_json <- jsonlite::toJSON(options, auto_unbox = TRUE)
+
+  # Call generateSVG
+  svg_string <- ctx$call("generateSVG", spec_json, V8::JS(options_json))
+
+  svg_string
 }
 
 #' Extract WebSpec from various input types
@@ -144,67 +199,4 @@ extract_webspec <- function(x) {
   }
 
   NULL
-}
-
-#' Open graphics device based on file extension
-#'
-#' @param file File path
-#' @param ext File extension
-#' @param width Width in inches
-#' @param height Height in inches
-#' @param bg Background color
-#' @param dpi DPI for raster output
-#' @param ... Additional arguments
-#' @noRd
-open_device <- function(file, ext, width, height, bg, dpi, ...) {
-  switch(
-    ext,
-    svg = {
-      if (!requireNamespace("svglite", quietly = TRUE)) {
-        cli::cli_abort(c(
-          "Package {.pkg svglite} is required for SVG output",
-          "i" = "Install it with: {.code install.packages(\"svglite\")}"
-        ))
-      }
-      svglite::svglite(
-        filename = file,
-        width = width,
-        height = height,
-        bg = bg,
-        ...
-      )
-    },
-    pdf = {
-      grDevices::pdf(
-        file = file,
-        width = width,
-        height = height,
-        bg = bg,
-        ...
-      )
-    },
-    png = {
-      if (requireNamespace("ragg", quietly = TRUE)) {
-        ragg::agg_png(
-          filename = file,
-          width = width,
-          height = height,
-          units = "in",
-          res = dpi,
-          background = bg,
-          ...
-        )
-      } else {
-        grDevices::png(
-          filename = file,
-          width = width,
-          height = height,
-          units = "in",
-          res = dpi,
-          bg = bg,
-          ...
-        )
-      }
-    }
-  )
 }

@@ -50,6 +50,7 @@ forest_plot(data,
 - **Flexible columns** — numeric, interval, bar charts, p-values, sparklines
 - **Hierarchical groups** — collapsible sections with nested subgroups
 - **Interactive** — hover highlights, row selection, tooltips
+- **Static export** — `save_plot()` for SVG/PDF/PNG; web download button on hover
 - **Customizable** — fluent API for theme modification
 
 ```r

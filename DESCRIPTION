@@ -1,6 +1,6 @@
 Package: webforest
 Title: Web-Native Interactive Forest Plots
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R:
     person("Antoine", "Baldassari", , "baldassarian@gmail.com", role = c("aut", "cre"))
 Description: Create interactive, web-native forest plots and tables. Forest plots
@@ -22,8 +22,6 @@ Collate:
     'classes-components.R'
     'utils-serialize.R'
     'web_spec.R'
-    'grid-helpers.R'
-    'grid-render.R'
     'save_plot.R'
     'forest_plot.R'
     'webtable.R'
@@ -35,8 +33,6 @@ Imports:
     rlang (>= 1.1.0),
     S7 (>= 0.2.0),
     cli (>= 3.6.0),
-    grid,
-    grDevices,
     tools
 Suggests:
     shiny (>= 1.8.0),
@@ -45,8 +41,8 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    svglite (>= 2.1.0),
-    ragg (>= 1.2.0)
+    V8 (>= 4.0.0),
+    rsvg (>= 2.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://github.com/kaskarn/webforest, https://kaskarn.github.io/webforest/

@@ -39,9 +39,6 @@
   const selectedRowIds = $derived(store.selectedRowIds);
   const hoveredRowId = $derived(store.hoveredRowId);
 
-  // Container reference for export
-  let containerRef: HTMLElement | null = $state(null);
-
   // Check if export is enabled (default true)
   const enableExport = $derived(spec?.interaction?.enableExport !== false);
 
@@ -146,11 +143,11 @@
   });
 </script>
 
-<div class="webforest-container" style={cssVars} bind:this={containerRef}>
+<div class="webforest-container" style={cssVars}>
   {#if spec}
     <!-- Download button (appears on hover) -->
     {#if enableExport}
-      <DownloadButton {store} container={containerRef} />
+      <DownloadButton {store} />
     {/if}
 
     <!-- Plot header (title, subtitle) -->

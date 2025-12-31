@@ -1,0 +1,271 @@
+---
+title: "Export System Architecture"
+description: "How webforest generates static images from both R and the browser"
+---
+
+## Overview
+
+webforest uses a **unified rendering architecture** for static image export. The same JavaScript SVG generator powers both:
+
+- **R-side**: `save_plot()` function (via the V8 package)
+- **Web-side**: Download button in interactive plots
+
+This ensures consistent output regardless of where the export is triggered.
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   svg-generator.ts                       │
+│         (Pure-data SVG generator, no DOM needed)         │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+       ┌───────────────┴───────────────┐
+       │                               │
+       ▼                               ▼
+┌──────────────────┐         ┌──────────────────┐
+│  Web (browser)   │         │   R (via V8)     │
+│  DownloadButton  │         │   save_plot()    │
+└──────────────────┘         └──────────────────┘
+```
+
+## Why This Design?
+
+### Single Source of Truth
+
+Instead of maintaining two separate renderers (one in R, one in JavaScript), we have a single TypeScript implementation that:
+
+- Reduces code duplication
+- Guarantees visual consistency between exports
+- Makes bug fixes and improvements apply to both platforms
+
+### No Browser Dependency in R
+
+The SVG generator is **DOM-free** — it takes WebSpec JSON data and outputs an SVG string through pure computation. This means:
+
+- Works in R via the lightweight V8 JavaScript engine
+- No need for headless Chrome/Chromium
+- Fast execution without browser overhead
+- Works offline without any system dependencies beyond V8
+
+## Components
+
+### svg-generator.ts
+
+Located at `srcjs/src/lib/svg-generator.ts`, this is the core rendering engine.
+
+**Key functions:**
+
+```typescript
+// Main entry point
+generateSVG(spec: WebSpec, options?: ExportOptions): string
+
+// Internal helpers
+computeLayout(spec: WebSpec): Layout
+renderTableColumns(rows, columns, layout): string
+renderForestPlot(rows, xScale, layout, theme): string
+renderInterval(row, yPosition, xScale, theme): string
+renderDiamond(point, lower, upper, yPosition, ...): string
+renderAxis(xScale, layout, theme, axisLabel): string
+```
+
+**Design constraints:**
+
+1. **No DOM access** — Cannot use `document`, `window`, `canvas.measureText()`, etc.
+2. **No external dependencies** — Pure TypeScript, bundled as standalone IIFE
+3. **Deterministic output** — Same input always produces same SVG
+
+### Text Measurement
+
+Since V8 has no DOM, we can't use `canvas.measureText()` for precise text width calculation. Instead, we use an approximation:
+
+```typescript
+function measureText(text: string, fontSize: number): number {
+  // Average character width is roughly 0.55 of font size
+  return text.length * fontSize * 0.55;
+}
+```
+
+This works well for most cases. For pixel-perfect layouts, users can adjust column widths explicitly.
+
+### Build Outputs
+
+The SVG generator is bundled twice:
+
+| File | Purpose | Size |
+|------|---------|------|
+| `inst/htmlwidgets/webforest.js` | Full widget bundle (includes Svelte UI) | ~142 KB |
+| `inst/js/svg-generator.js` | Standalone for V8 (export only) | ~11 KB |
+
+Build commands:
+
+```bash
+cd srcjs
+npm run build          # Both bundles
+npm run build:widget   # Widget only
+npm run build:v8       # V8 bundle only
+```
+
+## R Integration
+
+### save_plot()
+
+```r
+save_plot(spec, "output.svg", width = 800, height = NULL)
+```
+
+**Process:**
+
+1. Serialize WebSpec to JSON via `serialize_spec()`
+2. Create V8 context and load `svg-generator.js`
+3. Call `generateSVG(specJson, options)`
+4. Write SVG string to file (or convert to PDF/PNG via rsvg)
+
+**Dependencies:**
+
+- `V8` — JavaScript engine (Suggests)
+- `rsvg` — SVG to PDF/PNG conversion (Suggests, optional)
+
+### Code Path
+
+```
+save_plot(spec, file)
+    │
+    ├── serialize_spec(spec)     # R: WebSpec → JSON
+    │
+    ├── generate_svg_v8(json)    # R: Load V8, call JS
+    │       │
+    │       └── generateSVG()    # JS: JSON → SVG string
+    │
+    └── writeLines() / rsvg      # R: Save to file
+```
+
+## Web Integration
+
+### DownloadButton.svelte
+
+The download button calls the same generator directly:
+
+```typescript
+import { exportToSVG, exportToPNG } from "$lib/export";
+
+async function handleExportSVG() {
+  const svgString = exportToSVG(store.spec);
+  // Create blob and trigger download
+}
+```
+
+### export.ts
+
+Thin wrapper around svg-generator:
+
+```typescript
+import { generateSVG, svgToBlob } from "./svg-generator";
+
+export function exportToSVG(spec: WebSpec): string {
+  return generateSVG(spec);
+}
+
+export async function exportToPNG(spec: WebSpec, scale = 2): Promise<Blob> {
+  const svgString = generateSVG(spec);
+  return svgToBlob(svgString, scale);  // Render to canvas, export
+}
+```
+
+## SVG Output Structure
+
+The generated SVG follows this structure:
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400">
+  <!-- Background -->
+  <rect fill="#ffffff" width="100%" height="100%"/>
+
+  <!-- Title/Subtitle -->
+  <text x="12" y="24" font-size="16" font-weight="bold">Title</text>
+
+  <!-- Column headers -->
+  <text x="22" y="52">Study</text>
+  <text x="320" y="52">Effect (95% CI)</text>
+
+  <!-- Header border -->
+  <line x1="12" x2="788" y1="60" y2="60" stroke="#e2e8f0"/>
+
+  <!-- Reference line (null value) -->
+  <line x1="400" y1="60" x2="400" y2="340"
+        stroke="#94a3b8" stroke-dasharray="4"/>
+
+  <!-- Data rows -->
+  <g class="interval">
+    <line x1="350" x2="450" y1="80" y2="80" stroke="#475569"/>
+    <rect x="394" y="74" width="12" height="12" fill="#22c55e"/>
+  </g>
+
+  <!-- Summary diamond -->
+  <polygon points="360,320 400,310 440,320 400,330"
+           fill="#2563eb" stroke="#1d4ed8"/>
+
+  <!-- Axis -->
+  <line x1="200" x2="600" y1="360" y2="360" stroke="#e2e8f0"/>
+  <text x="400" y="380" text-anchor="middle">Odds Ratio</text>
+</svg>
+```
+
+## Extending the System
+
+### Adding New Column Types
+
+To support a new column type in exports:
+
+1. Add rendering logic in `svg-generator.ts`:
+
+```typescript
+function renderTableRow(...) {
+  // ...existing code...
+
+  if (col.type === "myNewType") {
+    // Render your custom SVG elements
+    lines.push(`<rect .../>`);
+  }
+}
+```
+
+2. Rebuild both bundles:
+
+```bash
+npm run build
+```
+
+### Customizing Export Options
+
+The `ExportOptions` interface can be extended:
+
+```typescript
+interface ExportOptions {
+  width?: number;
+  height?: number;
+  scale?: number;
+  backgroundColor?: string;
+  // Add new options here
+}
+```
+
+## Troubleshooting
+
+### "SVG generator JavaScript file not found"
+
+The V8 bundle hasn't been built. Run:
+
+```bash
+cd srcjs && npm run build
+```
+
+### Text alignment looks off
+
+The text width approximation may be inaccurate for certain fonts. Solutions:
+
+1. Explicitly set column widths in your spec
+2. Use a monospace font family in the theme
+3. For R exports, consider post-processing with rsvg
+
+### Colors don't match the interactive plot
+
+Ensure you're using the same theme. The generator resolves all CSS variables to literal color values at export time.

@@ -4,10 +4,9 @@
 
   interface Props {
     store: ForestStore;
-    container: HTMLElement | null;
   }
 
-  let { store, container }: Props = $props();
+  let { store }: Props = $props();
 
   let dropdownOpen = $state(false);
   let isExporting = $state(false);
@@ -17,11 +16,11 @@
   }
 
   async function handleExportSVG() {
-    if (!container || !store.spec?.theme) return;
+    if (!store.spec) return;
 
     try {
       isExporting = true;
-      const svgString = exportToSVG(container, store.spec.theme);
+      const svgString = exportToSVG(store.spec);
       const blob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
       triggerDownload(blob, generateFilename("svg"));
     } catch (error) {
@@ -33,11 +32,11 @@
   }
 
   async function handleExportPNG() {
-    if (!container || !store.spec?.theme) return;
+    if (!store.spec) return;
 
     try {
       isExporting = true;
-      const blob = await exportToPNG(container, store.spec.theme, 2);
+      const blob = await exportToPNG(store.spec, 2);
       triggerDownload(blob, generateFilename("png"));
     } catch (error) {
       console.error("Failed to export PNG:", error);
