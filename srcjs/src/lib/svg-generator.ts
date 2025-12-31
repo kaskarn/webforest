@@ -14,70 +14,15 @@ import type {
   ComputedLayout,
 } from "$types";
 import { niceDomain, DOMAIN_PADDING } from "./scale-utils";
-
-// ============================================================================
-// Constants
-// ============================================================================
-
-/** Layout constants */
-const LAYOUT = {
-  /** Default column width when not specified */
-  DEFAULT_COLUMN_WIDTH: 80,
-  /** Default label column width */
-  DEFAULT_LABEL_WIDTH: 150,
-  /** Height of the axis area (line + ticks) */
-  AXIS_HEIGHT: 32,
-  /** Height for axis label text below axis */
-  AXIS_LABEL_HEIGHT: 20,
-  /** Bottom margin buffer */
-  BOTTOM_MARGIN: 16,
-  /** Minimum forest plot width when auto-calculated */
-  MIN_FOREST_WIDTH: 200,
-  /** Default width when not specified */
-  DEFAULT_WIDTH: 800,
-  /** Gap between columns and forest plot */
-  COLUMN_GAP: 16,
-} as const;
-
-/** Typography constants */
-const TYPOGRAPHY = {
-  /** Title height in pixels */
-  TITLE_HEIGHT: 28,
-  /** Subtitle height in pixels */
-  SUBTITLE_HEIGHT: 20,
-  /** Caption height in pixels */
-  CAPTION_HEIGHT: 16,
-  /** Footnote height in pixels */
-  FOOTNOTE_HEIGHT: 14,
-  /** Default font size fallback */
-  DEFAULT_FONT_SIZE: 14,
-  /** Base rem size for font calculations */
-  REM_BASE: 16,
-  /** Vertical text centering adjustment (fraction of font size) */
-  TEXT_BASELINE_ADJUSTMENT: 1 / 3,
-} as const;
-
-/** Spacing constants */
-const SPACING = {
-  /** Text padding from edges */
-  TEXT_PADDING: 10,
-  /** Indent multiplier per level */
-  INDENT_PER_LEVEL: 12,
-  /** Whisker half-height */
-  WHISKER_HALF_HEIGHT: 4,
-  /** Default tick count for axis */
-  DEFAULT_TICK_COUNT: 5,
-} as const;
-
-/** Rendering constants */
-const RENDERING = {
-  /** Multiplier for header height when column groups present */
-  GROUP_HEADER_HEIGHT_MULTIPLIER: 1.5,
-  /** Multiplier for overall summary row height */
-  OVERALL_ROW_HEIGHT_MULTIPLIER: 1.5,
-  /** Forest width as fraction of total when auto-calculated */
-  AUTO_FOREST_WIDTH_FRACTION: 0.25,
-} as const;
+import {
+  LAYOUT,
+  TYPOGRAPHY,
+  SPACING,
+  RENDERING,
+  ROW_ODD_OPACITY,
+  GROUP_HEADER_OPACITY,
+  getDepthOpacity,
+} from "./rendering-constants";
 
 // ============================================================================
 // Export Options
@@ -169,9 +114,9 @@ function computeLayout(spec: WebSpec, options: ExportOptions): InternalLayout {
     forestWidth = Math.max(availableForForest, LAYOUT.MIN_FOREST_WIDTH);
   }
 
-  // Total width: expand if forest needs more space than available
+  // Total width: expand if content needs more space than requested width
   const neededWidth = padding * 2 + totalTableWidth + forestWidth + LAYOUT.COLUMN_GAP * 2;
-  const totalWidth = options.width ?? Math.max(baseWidth, neededWidth);
+  const totalWidth = Math.max(options.width ?? baseWidth, neededWidth);
 
   // Total height: include axis label height and bottom margin
   const totalHeight = headerTextHeight + padding +
@@ -727,10 +672,10 @@ function renderGroupHeader(
   const textY = y + rowHeight / 2 + fontSize * TYPOGRAPHY.TEXT_BASELINE_ADJUSTMENT;
   const indent = depth * SPACING.INDENT_PER_LEVEL;
 
-  // Group header background
+  // Group header background - uses shared GROUP_HEADER_OPACITY constant
   lines.push(`<rect x="${x}" y="${y}"
     width="${totalWidth}" height="${rowHeight}"
-    fill="${theme.colors.muted}" opacity="0.15"/>`);
+    fill="${theme.colors.primary}" opacity="${GROUP_HEADER_OPACITY}"/>`);
 
   // Group header text (bold)
   lines.push(`<text x="${x + SPACING.TEXT_PADDING + indent}" y="${textY}"
@@ -1246,11 +1191,15 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       const row = displayRow.row;
       const depth = displayRow.depth;
 
-      // Row background (alternating for data rows)
-      if (i % 2 === 1) {
+      // Row background - depth-based or alternating (uses shared constants)
+      const depthOpacity = getDepthOpacity(depth);
+      const oddOpacity = i % 2 === 1 ? ROW_ODD_OPACITY : 0;
+      const bgOpacity = Math.max(depthOpacity, oddOpacity);
+
+      if (bgOpacity > 0) {
         parts.push(`<rect x="${padding}" y="${y}"
           width="${layout.totalWidth - padding * 2}" height="${layout.rowHeight}"
-          fill="${theme.colors.muted}" opacity="0.1"/>`);
+          fill="${theme.colors.muted}" opacity="${bgOpacity}"/>`);
       }
 
       // Left table

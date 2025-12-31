@@ -1,0 +1,186 @@
+---
+title: "Themes"
+---
+
+```{r}
+#| include: false
+library(webforest)
+
+# Sample data for examples
+meta_data <- data.frame(
+  study = c("Smith 2020", "Jones 2021", "Lee 2022", "Chen 2023", "Park 2024"),
+  hr = c(0.72, 0.85, 0.91, 0.68, 0.79),
+  lower = c(0.55, 0.70, 0.75, 0.52, 0.61),
+  upper = c(0.95, 1.03, 1.10, 0.89, 1.02)
+)
+```
+
+## Preset Themes
+
+webforest includes several preset themes designed for different use cases:
+
+::: {.panel-tabset}
+
+### Default
+
+```{r}
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = web_theme_default())
+```
+
+### JAMA
+
+Clean, minimal styling for JAMA-style publications.
+
+```{r}
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = web_theme_jama())
+```
+
+### Lancet
+
+Serif fonts and blue palette for academic publications.
+
+```{r}
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = web_theme_lancet())
+```
+
+### Modern
+
+Contemporary styling with subtle colors.
+
+```{r}
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = web_theme_modern())
+```
+
+### Presentation
+
+Large fonts and bold colors for slides.
+
+```{r}
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = web_theme_presentation())
+```
+
+### Dark
+
+Dark mode for presentations or dashboards.
+
+```{r}
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = web_theme_dark())
+```
+
+:::
+
+## Customizing Themes
+
+Modify any preset theme using pipe-friendly `set_*()` functions:
+
+```{r}
+custom_theme <- web_theme_jama() |>
+  set_colors(primary = "#0066cc", interval_line = "#0066cc") |>
+  set_spacing(row_height = 24) |>
+  set_axis(gridlines = TRUE, gridline_style = "dotted")
+
+forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  theme = custom_theme)
+```
+
+## Theme Components
+
+Each theme has several components that can be customized:
+
+### Colors
+
+```r
+set_colors(
+  background = "#ffffff",
+  foreground = "#1a1a1a",
+  primary = "#2563eb",
+  secondary = "#64748b",
+  muted = "#94a3b8",
+  border = "#e2e8f0",
+  interval_positive = "#22c55e",
+  interval_negative = "#ef4444",
+  interval_line = "#475569"
+)
+```
+
+### Typography
+
+```r
+set_typography(
+  font_family = "system-ui, sans-serif",
+  font_size_sm = "0.75rem",
+  font_size_base = "0.875rem",
+  font_size_lg = "1rem",
+  font_weight_normal = 400,
+  font_weight_medium = 500,
+  font_weight_bold = 600
+)
+```
+
+### Spacing
+
+```r
+set_spacing(
+  row_height = 28,
+  header_height = 36,
+  column_gap = 8,
+  padding = 12
+)
+```
+
+### Shapes
+
+```r
+set_shapes(
+  point_size = 6,
+  summary_height = 10,
+  line_width = 1.5,
+  border_radius = 4
+)
+```
+
+### Axis
+
+```r
+set_axis(
+  range_min = NULL,    # Auto-calculate
+  range_max = NULL,
+  tick_count = 5,
+  tick_values = NULL,  # Custom tick positions
+  gridlines = FALSE,
+  gridline_style = "solid"  # or "dotted", "dashed"
+)
+```
+
+### Layout
+
+```r
+set_layout(
+  plot_position = "center",  # "left", "center", "right"
+  row_border = TRUE
+)
+```
+
+## Component Summary
+
+| Component | Function | Key Properties |
+|-----------|----------|----------------|
+| Colors | `set_colors()` | background, foreground, primary, interval_positive/negative |
+| Typography | `set_typography()` | font_family, font_size_*, font_weight_* |
+| Spacing | `set_spacing()` | row_height, header_height, column_gap, padding |
+| Shapes | `set_shapes()` | point_size, summary_height, line_width |
+| Axis | `set_axis()` | range_min/max, tick_count, tick_values, gridlines |
+| Layout | `set_layout()` | plot_position, row_border |

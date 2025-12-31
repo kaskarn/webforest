@@ -1,0 +1,153 @@
+/**
+ * Shared rendering constants for forest plots
+ *
+ * These constants are used by both the web-native Svelte renderer
+ * and the pure-data SVG generator to ensure visual consistency.
+ *
+ * IMPORTANT: When changing any of these values, both renderers will
+ * automatically use the new values. For CSS-based values in Svelte,
+ * these are injected as CSS custom properties.
+ */
+
+// ============================================================================
+// Row Background Opacity
+// ============================================================================
+
+/** Opacity for alternating (odd) row backgrounds */
+export const ROW_ODD_OPACITY = 0.06; // 6%
+
+/** Opacity for group header row backgrounds (uses primary color) */
+export const GROUP_HEADER_OPACITY = 0.05; // 5%
+
+/** Base opacity for depth-based row backgrounds (multiplied by depth) */
+export const DEPTH_BASE_OPACITY = 0.04; // 4% per depth level
+
+/**
+ * Get opacity for a row at a given depth
+ * depth 0 = 0%, depth 1 = 8%, depth 2 = 12%, depth 3 = 16%, depth 4+ = 20%
+ */
+export function getDepthOpacity(depth: number): number {
+  if (depth <= 0) return 0;
+  return DEPTH_BASE_OPACITY + depth * DEPTH_BASE_OPACITY;
+}
+
+// ============================================================================
+// Interactive State Opacity (web renderer only - SVG is static)
+// ============================================================================
+
+/** Opacity for hovered rows */
+export const ROW_HOVER_OPACITY = 0.08; // 8%
+
+/** Opacity for selected rows */
+export const ROW_SELECTED_OPACITY = 0.12; // 12%
+
+/** Opacity for selected + hovered rows */
+export const ROW_SELECTED_HOVER_OPACITY = 0.18; // 18%
+
+/** Opacity for group header hover state */
+export const GROUP_HEADER_HOVER_OPACITY = 0.10; // 10%
+
+// ============================================================================
+// Layout Constants
+// ============================================================================
+
+export const LAYOUT = {
+  /** Default width for label column (Study names) */
+  DEFAULT_LABEL_WIDTH: 150,
+
+  /** Default width for data columns */
+  DEFAULT_COLUMN_WIDTH: 80,
+
+  /** Height reserved for x-axis line and ticks */
+  AXIS_HEIGHT: 32,
+
+  /** Height reserved for axis label text below axis */
+  AXIS_LABEL_HEIGHT: 20,
+
+  /** Bottom margin buffer */
+  BOTTOM_MARGIN: 16,
+
+  /** Minimum width for forest plot area */
+  MIN_FOREST_WIDTH: 200,
+
+  /** Default total width when not specified */
+  DEFAULT_WIDTH: 800,
+
+  /** Gap between table sections and forest plot */
+  COLUMN_GAP: 16,
+} as const;
+
+// ============================================================================
+// Typography Constants
+// ============================================================================
+
+export const TYPOGRAPHY = {
+  /** Height for title text area */
+  TITLE_HEIGHT: 28,
+
+  /** Height for subtitle text area */
+  SUBTITLE_HEIGHT: 20,
+
+  /** Height for caption text area */
+  CAPTION_HEIGHT: 16,
+
+  /** Height for footnote text area */
+  FOOTNOTE_HEIGHT: 14,
+
+  /** Default font size fallback (px) */
+  DEFAULT_FONT_SIZE: 14,
+
+  /** Base rem size for font calculations */
+  REM_BASE: 16,
+
+  /** Baseline adjustment factor for vertical text centering */
+  TEXT_BASELINE_ADJUSTMENT: 1 / 3,
+} as const;
+
+// ============================================================================
+// Spacing Constants
+// ============================================================================
+
+export const SPACING = {
+  /** Indentation per hierarchy level */
+  INDENT_PER_LEVEL: 12,
+
+  /** Padding inside cells */
+  TEXT_PADDING: 10,
+
+  /** Whisker half-height for confidence intervals */
+  WHISKER_HALF_HEIGHT: 4,
+
+  /** Default tick count for axis */
+  DEFAULT_TICK_COUNT: 5,
+} as const;
+
+// ============================================================================
+// Rendering Constants
+// ============================================================================
+
+export const RENDERING = {
+  /** Height multiplier for header when column groups exist */
+  GROUP_HEADER_HEIGHT_MULTIPLIER: 1.5,
+
+  /** Height multiplier for overall summary row */
+  OVERALL_ROW_HEIGHT_MULTIPLIER: 1.5,
+} as const;
+
+// ============================================================================
+// CSS Custom Property Generation (for Svelte components)
+// ============================================================================
+
+/**
+ * Generate CSS custom properties for rendering constants
+ * Used by ForestPlot.svelte to inject consistent values
+ */
+export function generateCSSVariables(): string {
+  return `
+    --wf-row-odd-opacity: ${ROW_ODD_OPACITY};
+    --wf-group-header-opacity: ${GROUP_HEADER_OPACITY};
+    --wf-row-hover-opacity: ${ROW_HOVER_OPACITY};
+    --wf-row-selected-opacity: ${ROW_SELECTED_OPACITY};
+    --wf-depth-base-opacity: ${DEPTH_BASE_OPACITY};
+  `.trim();
+}

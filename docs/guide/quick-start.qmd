@@ -1,0 +1,96 @@
+---
+title: "Quick Start"
+---
+
+```{r}
+#| include: false
+library(webforest)
+```
+
+## Installation
+
+```r
+# install.packages("pak")
+pak::pak("kaskarn/webforest")
+```
+
+## Basic Usage
+
+Create a forest plot with a single function call:
+
+```{r}
+# Sample meta-analysis data
+meta_data <- data.frame(
+  study = c("Smith 2020", "Jones 2021", "Lee 2022", "Chen 2023", "Park 2024"),
+  hr = c(0.72, 0.85, 0.91, 0.68, 0.79),
+  lower = c(0.55, 0.70, 0.75, 0.52, 0.61),
+  upper = c(0.95, 1.03, 1.10, 0.89, 1.02),
+  n = c(245, 180, 320, 156, 210),
+  events = c(42, 38, 55, 28, 45)
+)
+
+forest_plot(meta_data,
+  point = "hr",
+  lower = "lower",
+  upper = "upper",
+  label = "study",
+  null_value = 1,
+  scale = "log",
+  axis_label = "Hazard Ratio (95% CI)"
+)
+```
+
+### Required Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `data` | Data frame with your study data |
+| `point` | Column name for point estimates |
+| `lower` | Column name for lower CI bounds |
+| `upper` | Column name for upper CI bounds |
+| `label` | Column name for row labels (study names) |
+
+### Common Options
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `null_value` | Reference line value (e.g., 1 for ratios, 0 for differences) | `NULL` |
+| `scale` | `"linear"` or `"log"` | `"linear"` |
+| `axis_label` | X-axis label text | `NULL` |
+| `theme` | Theme object from `web_theme_*()` | `web_theme_default()` |
+
+## Two-Step Workflow
+
+For more control, create a `WebSpec` first, then render it:
+
+```{r}
+# Step 1: Create the spec
+spec <- web_spec(meta_data,
+  point = "hr",
+  lower = "lower",
+  upper = "upper",
+  label = "study",
+  null_value = 1,
+  scale = "log",
+  columns = list(
+    col_numeric("n", header = "N", width = 60),
+    col_numeric("events", header = "Events", width = 70)
+  )
+)
+
+# Step 2: Render the plot
+forest_plot(spec, axis_label = "Hazard Ratio")
+```
+
+The two-step workflow is useful when you want to:
+
+- Reuse the same spec with different themes
+- Export to multiple formats
+- Inspect or modify the spec programmatically
+
+## Next Steps
+
+- [Themes](themes.qmd) - Customize appearance with preset and custom themes
+- [Columns](columns.qmd) - Add data columns with special formatting
+- [Grouping & Rows](grouping-rows.qmd) - Organize studies into groups
+- [Exporting](exporting.qmd) - Save plots as SVG, PNG, or PDF

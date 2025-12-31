@@ -1,5 +1,11 @@
 # webforest (development version)
 
+## 0.0.0.9002
+
+* Restructured documentation into chapters: Quick Start, Themes, Columns, Grouping & Rows, Exporting, Axis & Annotations
+* Added Cookbook with task-oriented recipes for common patterns
+* Harmonized theming between web and SVG renderers via shared `rendering-constants.ts`
+
 ## 0.0.0.9001
 
 * Unified axis scaling between web view and SVG export using shared `niceDomain()` logic for consistent, sensible tick values

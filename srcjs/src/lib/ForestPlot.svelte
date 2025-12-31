@@ -14,6 +14,14 @@
   import CellPvalue from "$components/table/CellPvalue.svelte";
   import CellSparkline from "$components/table/CellSparkline.svelte";
   import DownloadButton from "$components/ui/DownloadButton.svelte";
+  import {
+    ROW_ODD_OPACITY,
+    GROUP_HEADER_OPACITY,
+    ROW_HOVER_OPACITY,
+    ROW_SELECTED_OPACITY,
+    ROW_SELECTED_HOVER_OPACITY,
+    DEPTH_BASE_OPACITY,
+  } from "$lib/rendering-constants";
 
   interface Props {
     store: ForestStore;
@@ -105,7 +113,7 @@
     document.removeEventListener("pointerup", stopPlotResize);
   }
 
-  // CSS variable style string
+  // CSS variable style string (includes shared rendering constants for consistency)
   const cssVars = $derived.by(() => {
     if (!theme) return "";
     return `
@@ -139,6 +147,12 @@
       --wf-line-width: ${theme.shapes.lineWidth}px;
       --wf-border-radius: ${theme.shapes.borderRadius}px;
       --wf-container-border-radius: ${theme.layout.containerBorderRadius}px;
+      --wf-row-odd-opacity: ${ROW_ODD_OPACITY};
+      --wf-group-header-opacity: ${GROUP_HEADER_OPACITY};
+      --wf-row-hover-opacity: ${ROW_HOVER_OPACITY};
+      --wf-row-selected-opacity: ${ROW_SELECTED_OPACITY};
+      --wf-row-selected-hover-opacity: ${ROW_SELECTED_HOVER_OPACITY};
+      --wf-depth-base-opacity: ${DEPTH_BASE_OPACITY};
     `.trim();
   });
 </script>
@@ -565,6 +579,21 @@
 </script>
 
 <style>
+  /*
+   * IMPORTANT: Opacity percentages in color-mix() below must match the shared
+   * rendering constants in src/lib/rendering-constants.ts:
+   *
+   *   5%  = GROUP_HEADER_OPACITY (0.05)
+   *   6%  = ROW_ODD_OPACITY (0.06)
+   *   8%  = ROW_HOVER_OPACITY / DEPTH_BASE_OPACITY * 2 (0.08)
+   *  12%  = ROW_SELECTED_OPACITY / DEPTH_BASE_OPACITY * 3 (0.12)
+   *  16%  = DEPTH_BASE_OPACITY * 4 (0.16)
+   *  18%  = ROW_SELECTED_HOVER_OPACITY (0.18)
+   *
+   * CSS color-mix() doesn't support CSS custom properties for the percentage,
+   * so these values are hardcoded but should be kept in sync with the constants.
+   */
+
   /* Ensure consistent box-sizing for all elements */
   .webforest-container,
   .webforest-container *,

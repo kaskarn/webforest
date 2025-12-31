@@ -1,0 +1,176 @@
+---
+title: "Columns"
+---
+
+```{r}
+#| include: false
+library(webforest)
+```
+
+## Overview
+
+Columns display data alongside the forest plot. Each column type has specialized formatting for different kinds of data.
+
+```{r}
+demo_data <- data.frame(
+  study = c("Alpha", "Beta", "Gamma", "Delta"),
+  or = c(1.2, 0.8, 1.5, 0.95),
+  lower = c(0.9, 0.5, 1.1, 0.7),
+  upper = c(1.6, 1.3, 2.0, 1.3),
+  n = c(500, 320, 180, 420),
+  weight = c(28, 22, 15, 35),
+  pval = c(0.042, 0.23, 0.008, 0.61)
+)
+
+forest_plot(demo_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study", null_value = 1,
+  columns = list(
+    col_numeric("n", header = "N", width = 60),
+    col_bar("weight", header = "Weight %", width = 80),
+    col_pvalue("pval", header = "P-value", width = 80),
+    col_interval(header = "OR (95% CI)", width = 120, position = "right")
+  ),
+  theme = web_theme_modern()
+)
+```
+
+## Column Types
+
+| Type | Function | Use Case |
+|------|----------|----------|
+| `col_text()` | Text values | Study names, categories |
+| `col_numeric()` | Formatted numbers | Sample sizes, counts |
+| `col_interval()` | Point (CI) format | Effect size display |
+| `col_bar()` | Horizontal bar | Weights, percentages |
+| `col_pvalue()` | P-value formatting | Significance stars |
+| `col_sparkline()` | Mini chart | Trends, distributions |
+| `col_group()` | Group header | Organize related columns |
+
+## Column Positioning
+
+Columns can appear on the left or right side of the forest plot:
+
+```r
+columns = list(
+  col_numeric("n", "N", position = "left"),       # Left of forest
+  col_interval("OR (95% CI)", position = "right") # Right of forest
+)
+```
+
+The default position is `"right"` for most column types.
+
+## Text Columns
+
+Display text values from any column:
+
+```r
+col_text(field = "category", header = "Category", width = 100)
+```
+
+## Numeric Columns
+
+Format numbers with automatic decimal places:
+
+```r
+col_numeric(field = "n", header = "N", width = 60)
+col_numeric(field = "mean", header = "Mean", width = 80, decimals = 2)
+```
+
+## Interval Columns
+
+Show the point estimate and confidence interval in formatted text:
+
+```r
+col_interval(header = "OR (95% CI)", width = 120)
+```
+
+This automatically formats as `"0.85 (0.70, 1.03)"` using the `point`, `lower`, and `upper` values from each row.
+
+## Bar Columns
+
+Display horizontal bars for weights or percentages:
+
+```r
+col_bar(field = "weight", header = "Weight %", width = 80)
+col_bar(field = "weight", header = "Weight", width = 100, color = "#2563eb")
+```
+
+## P-value Columns
+
+Format p-values with optional significance stars:
+
+```r
+col_pvalue(field = "pvalue", header = "P", width = 70)
+```
+
+By default, stars are added: `*` for p < 0.05, `**` for p < 0.01, `***` for p < 0.001.
+
+Customize thresholds:
+
+```r
+col_pvalue("pvalue", "P",
+  options = list(
+    thresholds = c(0.05, 0.01, 0.001),
+    show_stars = TRUE
+  )
+)
+```
+
+## Sparkline Columns
+
+Display mini charts for trends or distributions:
+
+```r
+col_sparkline(field = "trend_data", header = "Trend", width = 80)
+col_sparkline(field = "dist", header = "Distribution",
+  options = list(type = "bar", color = "#22c55e"))
+```
+
+Sparkline types: `"line"` (default), `"area"`, `"bar"`.
+
+## Column Groups
+
+Group related columns under a shared header:
+
+```{r}
+set.seed(321)
+outcomes_data <- data.frame(
+  study = c("PARADIGM-HF", "DAPA-HF", "EMPEROR-Reduced"),
+  primary_hr = c(0.80, 0.74, 0.75),
+  primary_lower = c(0.73, 0.65, 0.65),
+  primary_upper = c(0.87, 0.85, 0.86),
+  primary_p = c(0.001, 0.001, 0.001),
+  cvdeath_hr = c(0.80, 0.82, 0.92),
+  cvdeath_p = c(0.001, 0.029, 0.382)
+)
+
+forest_plot(outcomes_data,
+  point = "primary_hr", lower = "primary_lower", upper = "primary_upper",
+  label = "study", null_value = 1, scale = "log",
+  columns = list(
+    col_group("Primary Endpoint",
+      col_interval("HR (95% CI)"),
+      col_pvalue("primary_p", "P"),
+      position = "right"
+    ),
+    col_group("CV Death",
+      col_numeric("cvdeath_hr", "HR"),
+      col_pvalue("cvdeath_p", "P"),
+      position = "right"
+    )
+  ),
+  theme = web_theme_modern()
+)
+```
+
+## Column Width
+
+Set explicit widths in pixels:
+
+```r
+col_numeric("n", "N", width = 60)      # Narrow
+col_text("notes", "Notes", width = 200) # Wide
+```
+
+If not specified, columns use sensible defaults based on their type.

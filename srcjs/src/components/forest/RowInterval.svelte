@@ -74,7 +74,7 @@
       {x2}
       y1={yPosition}
       y2={yPosition}
-      stroke="var(--wf-ci-line, #475569)"
+      stroke="var(--wf-interval-line, #475569)"
       stroke-width={theme?.shapes.lineWidth ?? 1.5}
     />
 
@@ -84,7 +84,7 @@
       x2={x1}
       y1={yPosition - 4}
       y2={yPosition + 4}
-      stroke="var(--wf-ci-line, #475569)"
+      stroke="var(--wf-interval-line, #475569)"
       stroke-width={theme?.shapes.lineWidth ?? 1.5}
     />
     <line
@@ -92,7 +92,7 @@
       x2={x2}
       y1={yPosition - 4}
       y2={yPosition + 4}
-      stroke="var(--wf-ci-line, #475569)"
+      stroke="var(--wf-interval-line, #475569)"
       stroke-width={theme?.shapes.lineWidth ?? 1.5}
     />
 

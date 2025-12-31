@@ -9,7 +9,21 @@ website:
     background: light
     left:
       - text: "Guide"
-        href: index.qmd
+        menu:
+          - text: "Quick Start"
+            href: guide/quick-start.qmd
+          - text: "Themes"
+            href: guide/themes.qmd
+          - text: "Columns"
+            href: guide/columns.qmd
+          - text: "Grouping & Rows"
+            href: guide/grouping-rows.qmd
+          - text: "Exporting Plots"
+            href: guide/exporting.qmd
+          - text: "Axis & Annotations"
+            href: guide/axis-annotations.qmd
+      - text: "Cookbook"
+        href: cookbook.qmd
       - text: "Gallery"
         href: gallery.qmd
       - text: "Reference"
