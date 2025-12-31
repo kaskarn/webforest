@@ -13,6 +13,7 @@
   import CellBar from "$components/table/CellBar.svelte";
   import CellPvalue from "$components/table/CellPvalue.svelte";
   import CellSparkline from "$components/table/CellSparkline.svelte";
+  import DownloadButton from "$components/ui/DownloadButton.svelte";
 
   interface Props {
     store: ForestStore;
@@ -37,6 +38,12 @@
   const tooltipPosition = $derived(store.tooltipPosition);
   const selectedRowIds = $derived(store.selectedRowIds);
   const hoveredRowId = $derived(store.hoveredRowId);
+
+  // Container reference for export
+  let containerRef: HTMLElement | null = $state(null);
+
+  // Check if export is enabled (default true)
+  const enableExport = $derived(spec?.interaction?.enableExport !== false);
 
   // Check if the data has any groups
   const hasGroups = $derived((spec?.data.groups?.length ?? 0) > 0);
@@ -139,8 +146,13 @@
   });
 </script>
 
-<div class="webforest-container" style={cssVars}>
+<div class="webforest-container" style={cssVars} bind:this={containerRef}>
   {#if spec}
+    <!-- Download button (appears on hover) -->
+    {#if enableExport}
+      <DownloadButton {store} container={containerRef} />
+    {/if}
+
     <!-- Plot header (title, subtitle) -->
     <PlotHeader title={spec.labels?.title} subtitle={spec.labels?.subtitle} />
 

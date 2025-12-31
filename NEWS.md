@@ -1,4 +1,5 @@
 # webforest (development version)
+
 ## New Features
 
 * Interactive forest plots rendered with Svelte 5 and D3.js
@@ -10,9 +11,16 @@
 * Reference line annotations
 * Direct visual overrides on `forest_plot()`: `axis_range`, `axis_ticks`, `axis_gridlines`, `plot_position`, `row_height`
 * Shiny integration with `forestOutput()` and `renderForest()`
+* **Static image export**: New `save_plot()` function for exporting to SVG, PDF, or PNG using native R graphics
+* **Web download button**: Interactive plots now include a download button (appears on hover) with SVG/PNG export options
+* New `enable_export` option in `web_interaction()` to control download button visibility
 
 ## Documentation
 
 * Package guide with interactive examples
 * Example gallery with 11 interactive demos (dark theme, nested groups, multiple effects, column groups, journal styles, and more)
 * Enhanced README with visual hero image and simplified quick-start example
+
+## Bug Fixes
+
+* Fixed navbar visibility on documentation site caused by Tailwind/Bootstrap CSS conflict

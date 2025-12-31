@@ -259,7 +259,8 @@ serialize_interaction <- function(interaction) {
     enableCollapse = interaction@enable_collapse,
     enableSelect = interaction@enable_select,
     enableHover = interaction@enable_hover,
-    enableResize = interaction@enable_resize
+    enableResize = interaction@enable_resize,
+    enableExport = interaction@enable_export
   )
 }
 

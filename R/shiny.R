@@ -55,17 +55,19 @@ forestProxy <- function(id, session = shiny::getDefaultReactiveDomain()) {
 #' Update forest plot data via proxy
 #'
 #' @param proxy A forest_proxy object
-#' @param data New data (same format as forest_plot)
-#' @param ... Additional arguments passed to coerce_to_studies
+#' @param spec A WebSpec object (from `web_spec()`)
 #'
 #' @return The proxy object (invisibly), for chaining
 #' @export
-forest_update_data <- function(proxy, data, ...) {
-  studies <- coerce_to_studies(data, ...)
-  forest_data <- ForestData(studies = studies)
+forest_update_data <- function(proxy, spec) {
+ if (!S7_inherits(spec, WebSpec)) {
+    cli_abort("{.arg spec} must be a WebSpec object from {.fn web_spec}")
+  }
+
+  payload <- serialize_spec(spec, include_forest = TRUE)
 
   invoke_proxy_method(proxy, "updateData", list(
-    spec = list(data = serialize_data(forest_data))
+    spec = payload
   ))
 }
 

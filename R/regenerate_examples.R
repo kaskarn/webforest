@@ -74,7 +74,7 @@ regenerate_examples <- function(output_dir = "examples_output", open_browser = F
   if (open_browser && n_success > 0) {
     first_success <- Filter(function(x) x$status == "success", results)
     if (length(first_success) > 0) {
-      browseURL(first_success[[1]]$file)
+      utils::browseURL(first_success[[1]]$file)
     }
   }
 

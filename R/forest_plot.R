@@ -104,7 +104,7 @@ forest_plot <- function(
   payload <- serialize_spec(spec, include_forest = TRUE)
 
   # Create widget
-  htmlwidgets::createWidget(
+  widget <- htmlwidgets::createWidget(
     name = "webforest",
     x = payload,
     width = width,
@@ -121,6 +121,12 @@ forest_plot <- function(
       knitr.defaultHeight = 400
     )
   )
+
+  # Attach WebSpec for save_plot() to use
+
+  attr(widget, "webspec") <- spec
+
+  widget
 }
 
 #' Plot method for WebSpec

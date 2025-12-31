@@ -2,9 +2,12 @@
 ^\.Rproj\.user$
 ^\.git$
 ^\.github$
+^\.claude$
 ^srcjs$
 ^scripts$
 ^pkgdown$
+^docs$
+^examples_output$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^\.lintr$

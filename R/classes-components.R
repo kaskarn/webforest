@@ -338,6 +338,7 @@ col_group <- function(header, ..., position = c("left", "right")) {
 #' @param enable_select Enable row selection
 #' @param enable_hover Enable hover effects
 #' @param enable_resize Enable column resizing
+#' @param enable_export Enable download/export button
 #'
 #' @export
 InteractionSpec <- new_class(
@@ -349,7 +350,8 @@ InteractionSpec <- new_class(
     enable_collapse = new_property(class_logical, default = TRUE),
     enable_select = new_property(class_logical, default = TRUE),
     enable_hover = new_property(class_logical, default = TRUE),
-    enable_resize = new_property(class_logical, default = TRUE)
+    enable_resize = new_property(class_logical, default = TRUE),
+    enable_export = new_property(class_logical, default = TRUE)
   )
 )
 
@@ -362,6 +364,7 @@ InteractionSpec <- new_class(
 #' @param enable_select Enable row selection
 #' @param enable_hover Enable hover effects
 #' @param enable_resize Enable column resizing
+#' @param enable_export Enable download/export button
 #'
 #' @return An InteractionSpec object
 #' @export
@@ -372,7 +375,8 @@ web_interaction <- function(
     enable_collapse = TRUE,
     enable_select = TRUE,
     enable_hover = TRUE,
-    enable_resize = TRUE) {
+    enable_resize = TRUE,
+    enable_export = TRUE) {
   InteractionSpec(
     show_filters = show_filters,
     show_legend = show_legend,
@@ -380,7 +384,8 @@ web_interaction <- function(
     enable_collapse = enable_collapse,
     enable_select = enable_select,
     enable_hover = enable_hover,
-    enable_resize = enable_resize
+    enable_resize = enable_resize,
+    enable_export = enable_export
   )
 }
 

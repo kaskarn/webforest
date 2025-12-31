@@ -12,7 +12,8 @@ web_interaction(
   enable_collapse = TRUE,
   enable_select = TRUE,
   enable_hover = TRUE,
-  enable_resize = TRUE
+  enable_resize = TRUE,
+  enable_export = TRUE
 )
 
 forest_interaction(...)
@@ -31,6 +32,8 @@ forest_interaction(...)
 \item{enable_hover}{Enable hover effects}
 
 \item{enable_resize}{Enable column resizing}
+
+\item{enable_export}{Enable download/export button}
 
 \item{...}{Arguments passed to web_interaction}
 }

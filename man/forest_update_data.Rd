@@ -4,14 +4,12 @@
 \alias{forest_update_data}
 \title{Update forest plot data via proxy}
 \usage{
-forest_update_data(proxy, data, ...)
+forest_update_data(proxy, spec)
 }
 \arguments{
 \item{proxy}{A forest_proxy object}
 
-\item{data}{New data (same format as forest_plot)}
-
-\item{...}{Additional arguments passed to coerce_to_studies}
+\item{spec}{A WebSpec object (from \code{web_spec()})}
 }
 \value{
 The proxy object (invisibly), for chaining

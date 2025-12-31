@@ -11,7 +11,8 @@ InteractionSpec(
   enable_collapse = TRUE,
   enable_select = TRUE,
   enable_hover = TRUE,
-  enable_resize = TRUE
+  enable_resize = TRUE,
+  enable_export = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ InteractionSpec(
 \item{enable_hover}{Enable hover effects}
 
 \item{enable_resize}{Enable column resizing}
+
+\item{enable_export}{Enable download/export button}
 }
 \description{
 InteractionSpec: Interaction settings
