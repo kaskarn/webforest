@@ -12,6 +12,7 @@ import type {
   ColumnSpec,
   ColumnDef,
   ComputedLayout,
+  EffectSpec,
 } from "$types";
 import { niceDomain, DOMAIN_PADDING } from "./scale-utils";
 import {
@@ -833,23 +834,72 @@ function renderSparklinePath(data: number[], x: number, y: number, width: number
   return `M${points.join("L")}`;
 }
 
+// Vertical spacing between multiple effects on same row
+const EFFECT_SPACING = 6;
+
+// Helper to get numeric value from row (primary or metadata)
+function getEffectValue(row: Row, colName: string, fallback: number | null): number | null {
+  // Check metadata first (for additional effects)
+  const metaVal = row.metadata[colName];
+  if (metaVal != null && typeof metaVal === "number" && !Number.isNaN(metaVal)) {
+    return metaVal;
+  }
+  return fallback;
+}
+
+// Calculate vertical offset for each effect (centered around yPosition)
+function getEffectYOffset(index: number, total: number): number {
+  if (total <= 1) return 0;
+  const totalHeight = (total - 1) * EFFECT_SPACING;
+  return -totalHeight / 2 + index * EFFECT_SPACING;
+}
+
 function renderInterval(
   row: Row,
   yPosition: number,
   xScale: Scale,
   theme: WebTheme,
-  nullValue: number
+  nullValue: number,
+  effects: EffectSpec[] = []
 ): string {
-  // Skip rows without valid values
-  if (row.point == null || Number.isNaN(row.point) ||
-      row.lower == null || Number.isNaN(row.lower) ||
-      row.upper == null || Number.isNaN(row.upper)) {
-    return "";
+  // Build effective effects to render
+  interface ResolvedEffect {
+    point: number | null;
+    lower: number | null;
+    upper: number | null;
+    color: string | null;
   }
 
-  const x1 = xScale(row.lower);
-  const x2 = xScale(row.upper);
-  const cx = xScale(row.point);
+  let effectsToRender: ResolvedEffect[];
+
+  if (effects.length === 0) {
+    // Default effect from primary columns
+    effectsToRender = [{
+      point: row.point,
+      lower: row.lower,
+      upper: row.upper,
+      color: null,
+    }];
+  } else {
+    // Map effects with resolved values from metadata
+    effectsToRender = effects.map(effect => ({
+      point: getEffectValue(row, effect.pointCol, row.point),
+      lower: getEffectValue(row, effect.lowerCol, row.lower),
+      upper: getEffectValue(row, effect.upperCol, row.upper),
+      color: effect.color ?? null,
+    }));
+  }
+
+  // Filter to only valid effects
+  const validEffects = effectsToRender.filter(e =>
+    e.point != null && !Number.isNaN(e.point) &&
+    e.lower != null && !Number.isNaN(e.lower) &&
+    e.upper != null && !Number.isNaN(e.upper)
+  );
+
+  if (validEffects.length === 0) {
+    return "";
+  }
 
   const baseSize = theme.shapes.pointSize;
   const weight = row.metadata.weight as number | undefined;
@@ -859,31 +909,44 @@ function renderInterval(
     pointSize = Math.min(Math.max(baseSize * scale, 3), baseSize * 2.5);
   }
 
-  const pointColor = row.point > nullValue
-    ? theme.colors.intervalPositive
-    : row.point < nullValue
-      ? theme.colors.intervalNegative
-      : theme.colors.muted;
-
   const lineWidth = theme.shapes.lineWidth;
-  const lineColor = theme.colors.intervalLine;
-
+  const defaultLineColor = theme.colors.intervalLine;
   const whiskerHalf = SPACING.WHISKER_HALF_HEIGHT;
 
-  return `
-    <g class="interval">
-      <!-- CI line -->
-      <line x1="${x1}" x2="${x2}" y1="${yPosition}" y2="${yPosition}"
-        stroke="${lineColor}" stroke-width="${lineWidth}"/>
-      <!-- Whiskers -->
-      <line x1="${x1}" x2="${x1}" y1="${yPosition - whiskerHalf}" y2="${yPosition + whiskerHalf}"
-        stroke="${lineColor}" stroke-width="${lineWidth}"/>
-      <line x1="${x2}" x2="${x2}" y1="${yPosition - whiskerHalf}" y2="${yPosition + whiskerHalf}"
-        stroke="${lineColor}" stroke-width="${lineWidth}"/>
-      <!-- Point -->
-      <rect x="${cx - pointSize}" y="${yPosition - pointSize}"
-        width="${pointSize * 2}" height="${pointSize * 2}" fill="${pointColor}"/>
-    </g>`;
+  // Render each effect
+  const parts: string[] = [];
+  validEffects.forEach((effect, idx) => {
+    const effectY = yPosition + getEffectYOffset(idx, validEffects.length);
+    const x1 = xScale(effect.lower!);
+    const x2 = xScale(effect.upper!);
+    const cx = xScale(effect.point!);
+
+    // Use effect's color or theme-based color
+    const lineColor = effect.color ?? defaultLineColor;
+    const pointColor = effect.color ??
+      (effect.point! > nullValue
+        ? theme.colors.intervalPositive
+        : effect.point! < nullValue
+          ? theme.colors.intervalNegative
+          : theme.colors.muted);
+
+    parts.push(`
+      <g class="interval effect-${idx}">
+        <!-- CI line -->
+        <line x1="${x1}" x2="${x2}" y1="${effectY}" y2="${effectY}"
+          stroke="${lineColor}" stroke-width="${lineWidth}"/>
+        <!-- Whiskers -->
+        <line x1="${x1}" x2="${x1}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}"
+          stroke="${lineColor}" stroke-width="${lineWidth}"/>
+        <line x1="${x2}" x2="${x2}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}"
+          stroke="${lineColor}" stroke-width="${lineWidth}"/>
+        <!-- Point -->
+        <rect x="${cx - pointSize}" y="${effectY - pointSize}"
+          width="${pointSize * 2}" height="${pointSize * 2}" fill="${pointColor}"/>
+      </g>`);
+  });
+
+  return parts.join("");
 }
 
 function renderDiamond(
@@ -1141,7 +1204,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     displayRows.forEach((displayRow, i) => {
       if (displayRow.type === "data") {
         const yPos = plotY + i * layout.rowHeight + layout.rowHeight / 2;
-        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue));
+        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue, spec.data.effects));
       }
     });
 

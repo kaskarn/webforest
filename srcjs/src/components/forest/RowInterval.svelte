@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Row, WebTheme, ComputedLayout } from "$types";
+  import type { Row, WebTheme, ComputedLayout, EffectSpec } from "$types";
   import type { ScaleLinear, ScaleLogarithmic } from "d3-scale";
 
   interface Props {
@@ -8,6 +8,7 @@
     xScale: ScaleLinear<number, number> | ScaleLogarithmic<number, number>;
     layout: ComputedLayout;
     theme: WebTheme | undefined;
+    effects?: EffectSpec[];
     onRowClick?: () => void;
     onRowHover?: (hovered: boolean, event?: MouseEvent) => void;
   }
@@ -18,21 +19,70 @@
     xScale,
     layout,
     theme,
+    effects = [],
     onRowClick,
     onRowHover,
   }: Props = $props();
 
-  // Check if row has valid numeric values for rendering
-  const hasValidValues = $derived(
-    row.point != null && !Number.isNaN(row.point) &&
-    row.lower != null && !Number.isNaN(row.lower) &&
-    row.upper != null && !Number.isNaN(row.upper)
-  );
+  // Helper to get numeric value from row (primary or metadata)
+  function getValue(row: Row, colName: string, primary: "point" | "lower" | "upper"): number | null {
+    // Check metadata first (for additional effects)
+    const metaVal = row.metadata[colName];
+    if (metaVal != null && typeof metaVal === "number" && !Number.isNaN(metaVal)) {
+      return metaVal;
+    }
+    // Fall back to primary columns if colName matches
+    if (colName === row.pointCol || primary === "point") return row.point;
+    if (colName === row.lowerCol || primary === "lower") return row.lower;
+    if (colName === row.upperCol || primary === "upper") return row.upper;
+    return null;
+  }
 
-  // Computed positions (only valid when hasValidValues is true)
-  const x1 = $derived(hasValidValues ? xScale(row.lower!) : 0);
-  const x2 = $derived(hasValidValues ? xScale(row.upper!) : 0);
-  const cx = $derived(hasValidValues ? xScale(row.point!) : 0);
+  // Compute effective effects to render
+  // If no effects specified, create a default one from primary columns
+  const effectsToRender = $derived.by(() => {
+    if (effects.length === 0) {
+      // Default effect from primary columns
+      return [{
+        id: "primary",
+        pointCol: "point",
+        lowerCol: "lower",
+        upperCol: "upper",
+        label: null,
+        color: null,
+        point: row.point,
+        lower: row.lower,
+        upper: row.upper,
+      }];
+    }
+
+    // Map effects with resolved values
+    return effects.map(effect => ({
+      ...effect,
+      point: getValue(row, effect.pointCol, "point"),
+      lower: getValue(row, effect.lowerCol, "lower"),
+      upper: getValue(row, effect.upperCol, "upper"),
+    }));
+  });
+
+  // Vertical offset between multiple effects
+  const EFFECT_SPACING = 6; // pixels between effects
+
+  // Calculate vertical offset for each effect (centered around yPosition)
+  function getEffectYOffset(index: number, total: number): number {
+    if (total <= 1) return 0;
+    const totalHeight = (total - 1) * EFFECT_SPACING;
+    return -totalHeight / 2 + index * EFFECT_SPACING;
+  }
+
+  // Check if any effect has valid values
+  const hasAnyValidValues = $derived(
+    effectsToRender.some(e =>
+      e.point != null && !Number.isNaN(e.point) &&
+      e.lower != null && !Number.isNaN(e.lower) &&
+      e.upper != null && !Number.isNaN(e.upper)
+    )
+  );
 
   // Point size scaled by weight if available
   const pointSize = $derived.by(() => {
@@ -46,19 +96,24 @@
     return baseSize;
   });
 
-  // Color based on point direction relative to null
-  const pointColor = $derived.by(() => {
+  // Get color for an effect
+  function getEffectColor(effect: typeof effectsToRender[0]): string {
+    // Use effect's specified color if available
+    if (effect.color) return effect.color;
+
+    // Fall back to theme-based coloring
     if (!theme) return "#2563eb";
     const nullValue = layout.nullValue;
-    return row.point > nullValue
+    const point = effect.point ?? 0;
+    return point > nullValue
       ? theme.colors.intervalPositive
-      : row.point < nullValue
+      : point < nullValue
         ? theme.colors.intervalNegative
         : theme.colors.muted;
-  });
+  }
 </script>
 
-{#if hasValidValues}
+{#if hasAnyValidValues}
   <g
     class="interval-row"
     role="button"
@@ -68,43 +123,57 @@
     onmouseleave={(e) => onRowHover?.(false, e)}
     onkeydown={(e) => e.key === "Enter" && onRowClick?.()}
   >
-    <!-- CI line -->
-    <line
-      {x1}
-      {x2}
-      y1={yPosition}
-      y2={yPosition}
-      stroke="var(--wf-interval-line, #475569)"
-      stroke-width={theme?.shapes.lineWidth ?? 1.5}
-    />
+    {#each effectsToRender as effect, idx}
+      {@const hasValidEffect = effect.point != null && !Number.isNaN(effect.point) &&
+                               effect.lower != null && !Number.isNaN(effect.lower) &&
+                               effect.upper != null && !Number.isNaN(effect.upper)}
+      {#if hasValidEffect}
+        {@const effectY = yPosition + getEffectYOffset(idx, effectsToRender.length)}
+        {@const x1 = xScale(effect.lower!)}
+        {@const x2 = xScale(effect.upper!)}
+        {@const cx = xScale(effect.point!)}
+        {@const color = getEffectColor(effect)}
+        {@const lineColor = effect.color ?? "var(--wf-interval-line, #475569)"}
 
-    <!-- CI whiskers (caps) -->
-    <line
-      x1={x1}
-      x2={x1}
-      y1={yPosition - 4}
-      y2={yPosition + 4}
-      stroke="var(--wf-interval-line, #475569)"
-      stroke-width={theme?.shapes.lineWidth ?? 1.5}
-    />
-    <line
-      x1={x2}
-      x2={x2}
-      y1={yPosition - 4}
-      y2={yPosition + 4}
-      stroke="var(--wf-interval-line, #475569)"
-      stroke-width={theme?.shapes.lineWidth ?? 1.5}
-    />
+        <!-- CI line -->
+        <line
+          {x1}
+          {x2}
+          y1={effectY}
+          y2={effectY}
+          stroke={lineColor}
+          stroke-width={theme?.shapes.lineWidth ?? 1.5}
+        />
 
-    <!-- Point estimate (square) -->
-    <rect
-      x={cx - pointSize}
-      y={yPosition - pointSize}
-      width={pointSize * 2}
-      height={pointSize * 2}
-      fill={pointColor}
-      class="point-estimate"
-    />
+        <!-- CI whiskers (caps) -->
+        <line
+          x1={x1}
+          x2={x1}
+          y1={effectY - 4}
+          y2={effectY + 4}
+          stroke={lineColor}
+          stroke-width={theme?.shapes.lineWidth ?? 1.5}
+        />
+        <line
+          x1={x2}
+          x2={x2}
+          y1={effectY - 4}
+          y2={effectY + 4}
+          stroke={lineColor}
+          stroke-width={theme?.shapes.lineWidth ?? 1.5}
+        />
+
+        <!-- Point estimate (square) -->
+        <rect
+          x={cx - pointSize}
+          y={effectY - pointSize}
+          width={pointSize * 2}
+          height={pointSize * 2}
+          fill={color}
+          class="point-estimate"
+        />
+      {/if}
+    {/each}
   </g>
 {/if}
 

@@ -1,5 +1,22 @@
 # webforest (development version)
 
+## 0.0.0.9003
+
+### New Features
+
+* **Multi-effect rendering**: Display multiple effects per row with color-coded intervals. Use `effects = list(web_effect(...), ...)` to show ITT, Per-Protocol, As-Treated or other analyses side by side.
+* **Hierarchical grouping**: Simple syntax for nested groups - `group = c("region", "country")` creates collapsible region > country hierarchy automatically.
+* **Expanded gallery**: Added 10 fun/creative examples beyond clinical research:
+  - Sports: NBA player efficiency, World Cup performance
+  - Entertainment: Oscar films, video games, streaming shows
+  - Finance: Stock sectors, cryptocurrency, housing markets
+  - Science: Climate anomalies, wildlife conservation
+
+### Improvements
+
+* Unified `group` parameter now accepts single column, vector of columns for hierarchy, or list of `web_group()` for explicit control
+* Multi-effect intervals render with vertical offset and custom colors in both web and SVG export
+
 ## 0.0.0.9002
 
 * Restructured documentation into chapters: Quick Start, Themes, Columns, Grouping & Rows, Exporting, Axis & Annotations

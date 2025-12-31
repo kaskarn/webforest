@@ -10,7 +10,11 @@
 #' @param upper Column name for upper bounds of intervals
 #' @param label Column name for row labels (optional)
 #' @param label_header Header text for the label column (default: "Study")
-#' @param group Column name for grouping/categories (optional)
+#' @param group Grouping specification. Can be:
+#'   - Single string: Column name for flat grouping, e.g., `"category"`
+#'   - Character vector: Column names for hierarchical nesting from outermost
+#'     to innermost, e.g., `c("region", "country")` creates region > country
+#'   - List of `web_group()` objects for explicit control over labels and structure
 #' @param columns List of column specifications (use `col_*()` helpers)
 #' @param scale Scale type: "linear" (default) or "log"
 #' @param null_value Reference value for null effect. Default: 0 for linear, 1 for log
@@ -135,25 +139,75 @@ web_spec <- function(
     }
   }
 
-  # Handle optional group column
-  group_col <- NA_character_
-  groups <- list()
-  if (!is.null(group)) {
-    group_col <- as.character(substitute(group))
-    if (length(group_col) > 1 || !group_col %in% names(data)) {
-      if (is.character(group) && group %in% names(data)) {
-        group_col <- group
-      } else {
-        cli_abort("Column {.arg group} not found in data")
-      }
-    }
+  # Handle grouping - supports three modes via the `group` parameter:
+  # 1. group = "col" - single flat grouping column
+  # 2. group = c("col1", "col2") - hierarchical grouping (col1 > col2)
+  # 3. group = list(web_group(...)) - explicit group definitions
 
-    # Extract unique groups
-    unique_groups <- unique(data[[group_col]])
-    unique_groups <- unique_groups[!is.na(unique_groups)]
-    groups <- lapply(unique_groups, function(g) {
-      GroupSpec(id = as.character(g), label = as.character(g))
-    })
+  group_col <- NA_character_
+  resolved_groups <- list()
+
+  if (!is.null(group)) {
+    # Mode 3: Explicit list of web_group() objects
+    if (is.list(group) && length(group) > 0) {
+      # Validate that all elements are GroupSpec objects
+      for (g in group) {
+        if (!S7::S7_inherits(g, GroupSpec)) {
+          cli_abort("{.arg group} list must contain {.fn web_group} objects")
+        }
+      }
+      resolved_groups <- group
+
+      # Use the first non-parent group's ID pattern to infer group column
+      # For explicit groups, user should also specify which column to use
+      # For now, we'll require at least one data column to match group IDs
+      all_ids <- sapply(group, function(g) g@id)
+      for (col in names(data)) {
+        if (all(unique(data[[col]]) %in% all_ids)) {
+          group_col <- col
+          break
+        }
+      }
+      if (is.na(group_col)) {
+        cli_abort("Could not find a data column matching group IDs. Ensure data has a column with values matching your web_group() IDs.")
+      }
+
+    # Mode 2: Hierarchical grouping with multiple column names
+    } else if (is.character(group) && length(group) > 1) {
+      # Validate all group columns exist
+      missing_cols <- setdiff(group, names(data))
+      if (length(missing_cols) > 0) {
+        cli_abort("Group columns not found in data: {.val {missing_cols}}")
+      }
+
+      # Use the deepest level (last column) as the row grouping column
+      group_col <- group[length(group)]
+
+      # Build hierarchical groups from data
+      resolved_groups <- build_hierarchical_groups(data, group)
+
+    # Mode 1: Single column flat grouping
+    } else if (is.character(group) && length(group) == 1) {
+      # Handle NSE (non-standard evaluation) or string
+      group_col <- as.character(substitute(group))
+      if (length(group_col) > 1 || !group_col %in% names(data)) {
+        if (group %in% names(data)) {
+          group_col <- group
+        } else {
+          cli_abort("Column {.arg group} not found in data")
+        }
+      }
+
+      # Extract unique groups from data column
+      unique_groups <- unique(data[[group_col]])
+      unique_groups <- unique_groups[!is.na(unique_groups)]
+      resolved_groups <- lapply(unique_groups, function(g) {
+        GroupSpec(id = as.character(g), label = as.character(g))
+      })
+
+    } else {
+      cli_abort("{.arg group} must be a column name, vector of column names, or list of {.fn web_group} objects")
+    }
   }
 
   # Process columns - ensure they're ColumnSpec or ColumnGroup objects
@@ -204,7 +258,7 @@ web_spec <- function(
     label_header = label_header,
     group_col = group_col,
     columns = columns,
-    groups = groups,
+    groups = resolved_groups,
     scale = scale,
     null_value = null_value,
     axis_label = axis_label,
@@ -214,6 +268,75 @@ web_spec <- function(
     labels = labels,
     annotations = annotations_list
   )
+}
+
+#' Build hierarchical groups from column names
+#'
+#' Given a data frame and a vector of column names representing hierarchy levels,
+#' creates GroupSpec objects with proper parent-child relationships.
+#'
+#' @param data The data frame
+#' @param group_cols Character vector of column names, from outermost to innermost
+#' @return List of GroupSpec objects
+#' @keywords internal
+build_hierarchical_groups <- function(data, group_cols) {
+  groups <- list()
+  seen_ids <- character()
+
+  # Process each level of the hierarchy
+  for (level in seq_along(group_cols)) {
+    col <- group_cols[level]
+
+    # Get unique values at this level, with their parent context
+    if (level == 1) {
+      # Top level - no parent
+      unique_vals <- unique(data[[col]])
+      unique_vals <- unique_vals[!is.na(unique_vals)]
+
+      for (val in unique_vals) {
+        id <- as.character(val)
+        if (!id %in% seen_ids) {
+          # Create nice label (title case)
+          label <- gsub("_", " ", id)
+          label <- tools::toTitleCase(label)
+
+          groups <- c(groups, list(GroupSpec(
+            id = id,
+            label = label,
+            parent_id = NA_character_
+          )))
+          seen_ids <- c(seen_ids, id)
+        }
+      }
+    } else {
+      # Nested level - need to determine parent from previous column
+      parent_col <- group_cols[level - 1]
+
+      # Get unique combinations of parent + current
+      combos <- unique(data[, c(parent_col, col), drop = FALSE])
+      combos <- combos[complete.cases(combos), , drop = FALSE]
+
+      for (i in seq_len(nrow(combos))) {
+        parent_val <- as.character(combos[i, parent_col])
+        current_val <- as.character(combos[i, col])
+
+        if (!current_val %in% seen_ids) {
+          # Create nice label (title case)
+          label <- gsub("_", " ", current_val)
+          label <- tools::toTitleCase(label)
+
+          groups <- c(groups, list(GroupSpec(
+            id = current_val,
+            label = label,
+            parent_id = parent_val
+          )))
+          seen_ids <- c(seen_ids, current_val)
+        }
+      }
+    }
+  }
+
+  groups
 }
 
 #' Extract data from a WebSpec

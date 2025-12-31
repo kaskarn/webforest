@@ -365,6 +365,7 @@
                   {xScale}
                   {layout}
                   {theme}
+                  effects={spec.data.effects}
                   onRowClick={() => store.selectRow(displayRow.row.id)}
                   onRowHover={(hovered, event) => {
                     store.setHovered(hovered ? displayRow.row.id : null);

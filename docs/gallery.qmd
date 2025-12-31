@@ -60,21 +60,28 @@ forest_plot(
 
 ## Nested Groups
 
-Multi-level hierarchy with continent > country structure. Rows are indented and shaded by nesting depth.
+Multi-level hierarchy with continent > country structure. Groups are collapsible and rows are indented by depth.
 
 ```{r}
 set.seed(789)
 regional_data <- tibble(
   study = c(
+    # North America
     "USA - Northeast", "USA - Southeast", "USA - Midwest", "USA - West",
     "Canada - Ontario", "Canada - Quebec",
+    # Europe
     "UK - England", "UK - Scotland",
     "Germany - North", "Germany - South",
     "France - Paris", "France - Lyon",
+    # Asia-Pacific
     "Japan - Tokyo", "Japan - Osaka",
     "China - Beijing", "China - Shanghai"
   ),
-  region = c(rep("north_america", 6), rep("europe", 6), rep("asia", 4)),
+  region = c(
+    rep("north_america", 6),
+    rep("europe", 6),
+    rep("asia", 4)
+  ),
   country = c(
     rep("usa", 4), rep("canada", 2),
     rep("uk", 2), rep("germany", 2), rep("france", 2),
@@ -89,10 +96,13 @@ regional_data <- tibble(
     upper = or * exp(1.96 * se)
   )
 
+# Simple hierarchical grouping: region > country
+# Just pass column names in order from outermost to innermost
 forest_plot(
   regional_data,
   point = "or", lower = "lower", upper = "upper",
-  label = "study", group = "country",
+  label = "study",
+  group = c("region", "country"),  # Hierarchical: region > country
   columns = list(
     col_numeric("n", "N", position = "left"),
     col_interval("OR (95% CI)", position = "right")
@@ -102,7 +112,7 @@ forest_plot(
   axis_label = "Odds Ratio (95% CI)",
   title = "Global Treatment Effect by Region",
   subtitle = "Hierarchical geographic analysis",
-  caption = "Rows indented and shaded by nesting depth"
+  caption = "Click continent headers to collapse. Rows indented by depth."
 )
 ```
 
@@ -493,5 +503,450 @@ forest_plot(
   subtitle = "Effect sizes grouped by cylinder count",
   caption = "Source: mtcars dataset (R)",
   footnote = "* Weights computed as inverse variance"
+)
+```
+
+---
+
+# Fun & Creative Examples
+
+Examples beyond clinical research showing forest plots for sports, entertainment, finance, and science.
+
+## NBA Player Efficiency
+
+Player efficiency ratings by position. Forest plots work great for comparing performance metrics with confidence intervals.
+
+```{r}
+nba_data <- tibble(
+  player = c(
+    "Nikola Jokic", "Joel Embiid", "Giannis Antetokounmpo",
+    "Luka Doncic", "Shai Gilgeous-Alexander", "Jayson Tatum",
+    "Stephen Curry", "Damian Lillard", "Tyrese Haliburton"
+  ),
+  position = c("Center", "Center", "Forward", "Guard", "Guard", "Forward", "Guard", "Guard", "Guard"),
+  per = c(31.5, 29.8, 28.2, 27.1, 26.8, 25.4, 24.8, 24.2, 23.5),
+  per_se = c(1.2, 1.5, 1.3, 1.4, 1.6, 1.5, 1.7, 1.8, 1.9),
+  ppg = c(26.4, 33.1, 29.9, 32.4, 30.1, 26.9, 26.4, 25.8, 20.1),
+  team = c("DEN", "PHI", "MIL", "DAL", "OKC", "BOS", "GSW", "POR", "IND")
+) |>
+  mutate(
+    lower = per - 1.96 * per_se,
+    upper = per + 1.96 * per_se
+  )
+
+forest_plot(
+  nba_data,
+  point = "per", lower = "lower", upper = "upper",
+  label = "player", group = "position",
+  columns = list(
+    col_text("team", "Team", position = "left"),
+    col_numeric("ppg", "PPG", position = "left"),
+    col_interval("PER (95% CI)", position = "right")
+  ),
+  theme = web_theme_modern(),
+  null_value = 20,  # League average PER
+  axis_label = "Player Efficiency Rating",
+  title = "NBA All-Star Candidates",
+  subtitle = "2023-24 Season Player Efficiency by Position",
+  caption = "Dashed line = league average (20.0)",
+  footnote = "PER: Player Efficiency Rating"
+)
+```
+
+## World Cup Performance
+
+Goal differentials by confederation. Comparing regional football performance across tournaments.
+
+```{r}
+set.seed(2022)
+worldcup_data <- tibble(
+  team = c(
+    "Argentina", "Brazil", "France", "England",
+    "Germany", "Spain", "Morocco", "Japan",
+    "South Korea", "USA", "Australia", "Senegal"
+  ),
+  confederation = c(
+    "CONMEBOL", "CONMEBOL", "UEFA", "UEFA",
+    "UEFA", "UEFA", "CAF", "AFC",
+    "AFC", "CONCACAF", "AFC", "CAF"
+  ),
+  gd = c(10, 5, 8, 6, -2, 5, 4, 1, 0, 1, -2, 2),
+  gd_se = c(1.5, 2.0, 1.8, 2.2, 2.5, 2.0, 2.3, 2.8, 3.0, 2.6, 3.2, 2.4),
+  matches = c(7, 5, 7, 5, 4, 4, 6, 4, 4, 4, 4, 4),
+  goals_scored = c(15, 8, 16, 13, 6, 9, 6, 5, 4, 3, 3, 5)
+) |>
+  mutate(
+    lower = gd - 1.96 * gd_se,
+    upper = gd + 1.96 * gd_se
+  )
+
+forest_plot(
+  worldcup_data,
+  point = "gd", lower = "lower", upper = "upper",
+  label = "team", group = "confederation",
+  columns = list(
+    col_numeric("matches", "GP", position = "left"),
+    col_numeric("goals_scored", "GF", position = "left"),
+    col_interval("GD (95% CI)", position = "right")
+  ),
+  theme = web_theme_modern(),
+  null_value = 0,
+  axis_label = "Goal Differential",
+  title = "FIFA World Cup 2022",
+  subtitle = "Team Performance by Confederation",
+  caption = "Dashed line = zero goal differential"
+)
+```
+
+## Oscar Best Picture
+
+Film ratings comparing Best Picture winners and nominees. Entertainment data visualized as effect estimates.
+
+```{r}
+oscar_data <- tibble(
+  film = c(
+    "Everything Everywhere", "The Banshees of Inisherin", "The Fabelmans",
+    "CODA", "The Power of the Dog", "Belfast",
+    "Nomadland", "The Father", "Promising Young Woman",
+    "Parasite", "1917", "Jojo Rabbit"
+  ),
+  year = c(2023, 2023, 2023, 2022, 2022, 2022, 2021, 2021, 2021, 2020, 2020, 2020),
+  status = c("Winner", "Nominee", "Nominee", "Winner", "Nominee", "Nominee",
+             "Winner", "Nominee", "Nominee", "Winner", "Nominee", "Nominee"),
+  imdb = c(7.8, 7.7, 7.6, 8.0, 6.8, 7.1, 7.3, 8.2, 7.5, 8.5, 8.2, 7.9),
+  imdb_se = c(0.15, 0.18, 0.20, 0.12, 0.22, 0.19, 0.16, 0.14, 0.21, 0.10, 0.11, 0.16),
+  rt_score = c(95, 97, 88, 95, 94, 86, 93, 98, 90, 99, 89, 80)
+) |>
+  mutate(
+    lower = imdb - 1.96 * imdb_se,
+    upper = imdb + 1.96 * imdb_se,
+    .row_bold = status == "Winner",
+    .row_badge = ifelse(status == "Winner", "Won", NA)
+  )
+
+forest_plot(
+  oscar_data,
+  point = "imdb", lower = "lower", upper = "upper",
+  label = "film", group = "year",
+  columns = list(
+    col_numeric("rt_score", "RT%", position = "left"),
+    col_interval("IMDb (95% CI)", position = "right")
+  ),
+  theme = web_theme_modern(),
+  null_value = 7.0,
+  axis_label = "IMDb Rating",
+  title = "Oscar Best Picture Contenders",
+  subtitle = "2020-2023 Winners and Nominees",
+  caption = "Winners shown in bold with badge",
+  footnote = "Dashed line = 7.0 (good film threshold)"
+)
+```
+
+## Video Game Reviews
+
+Metacritic scores by platform. Comparing game ratings across different gaming systems.
+
+```{r}
+games_data <- tibble(
+  game = c(
+    "Elden Ring", "God of War: Ragnarok", "Baldur's Gate 3",
+    "Zelda: TotK", "Metroid Prime Remastered", "Fire Emblem Engage",
+    "Starfield", "Diablo IV", "Final Fantasy XVI",
+    "Spider-Man 2", "Horizon: Burning Shores", "Ratchet & Clank"
+  ),
+  platform = c(
+    "PC", "PlayStation", "PC",
+    "Nintendo", "Nintendo", "Nintendo",
+    "PC", "PC", "PlayStation",
+    "PlayStation", "PlayStation", "PlayStation"
+  ),
+  metacritic = c(96, 94, 96, 96, 91, 80, 83, 88, 87, 90, 82, 88),
+  mc_se = c(1.5, 1.8, 1.4, 1.2, 2.0, 2.5, 2.8, 2.2, 2.4, 2.0, 2.6, 2.3),
+  user_score = c(8.0, 8.9, 8.8, 8.6, 8.5, 7.8, 7.0, 6.5, 8.1, 8.7, 7.4, 8.2)
+) |>
+  mutate(
+    lower = metacritic - 1.96 * mc_se,
+    upper = metacritic + 1.96 * mc_se
+  )
+
+forest_plot(
+  games_data,
+  point = "metacritic", lower = "lower", upper = "upper",
+  label = "game", group = "platform",
+  columns = list(
+    col_numeric("user_score", "User", position = "left"),
+    col_interval("Metacritic (95% CI)", position = "right")
+  ),
+  theme = web_theme_dark(),
+  null_value = 75,
+  axis_label = "Metacritic Score",
+  title = "Top Games of 2023",
+  subtitle = "Critic Scores by Platform",
+  caption = "Dashed line = 75 (good game threshold)"
+)
+```
+
+## Streaming Wars
+
+Show ratings across streaming platforms. Comparing content quality between services.
+
+```{r}
+streaming_data <- tibble(
+  show = c(
+    "Beef", "The Bear", "Succession",
+    "The Last of Us", "House of the Dragon", "The White Lotus",
+    "Wednesday", "Squid Game: The Challenge", "One Piece",
+    "For All Mankind", "Ted Lasso", "Slow Horses"
+  ),
+  platform = c(
+    "Netflix", "Hulu", "Max",
+    "Max", "Max", "Max",
+    "Netflix", "Netflix", "Netflix",
+    "Apple TV+", "Apple TV+", "Apple TV+"
+  ),
+  rating = c(8.4, 8.6, 8.9, 8.8, 8.4, 8.0, 8.1, 6.2, 8.4, 8.3, 8.8, 8.2),
+  rating_se = c(0.20, 0.18, 0.12, 0.15, 0.22, 0.25, 0.19, 0.35, 0.21, 0.24, 0.14, 0.28),
+  seasons = c(1, 2, 4, 1, 2, 2, 1, 1, 1, 4, 3, 3)
+) |>
+  mutate(
+    lower = rating - 1.96 * rating_se,
+    upper = rating + 1.96 * rating_se
+  )
+
+forest_plot(
+  streaming_data,
+  point = "rating", lower = "lower", upper = "upper",
+  label = "show", group = "platform",
+  columns = list(
+    col_numeric("seasons", "S", position = "left"),
+    col_interval("Rating (95% CI)", position = "right")
+  ),
+  theme = web_theme_presentation(),
+  null_value = 7.5,
+  axis_label = "IMDb Rating",
+  title = "Streaming Service Content Quality",
+  subtitle = "Top Shows by Platform (2023)",
+  caption = "Dashed line = 7.5 (recommended threshold)"
+)
+```
+
+## Stock Sector Returns
+
+S&P 500 sector performance during 2023. Financial data as effect estimates.
+
+```{r}
+sector_data <- tibble(
+  sector = c(
+    "Technology", "Communication Services", "Consumer Discretionary",
+    "Industrials", "Financials", "Materials",
+    "Health Care", "Energy", "Utilities",
+    "Consumer Staples", "Real Estate"
+  ),
+  market_cap = c("Large", "Large", "Large", "Mid", "Large", "Mid",
+                 "Large", "Mid", "Small", "Mid", "Small"),
+  return_2023 = c(57.8, 55.8, 42.4, 18.1, 12.2, 12.6, 2.1, -1.4, -7.1, -0.8, 12.4),
+  return_se = c(5.2, 4.8, 5.5, 3.2, 3.5, 4.1, 2.8, 4.5, 3.8, 2.5, 4.2),
+  weight = c(28.5, 8.7, 10.8, 8.4, 12.8, 2.5, 13.2, 4.4, 2.4, 6.3, 2.0)
+) |>
+  mutate(
+    lower = return_2023 - 1.96 * return_se,
+    upper = return_2023 + 1.96 * return_se
+  )
+
+forest_plot(
+  sector_data,
+  point = "return_2023", lower = "lower", upper = "upper",
+  label = "sector", group = "market_cap",
+  columns = list(
+    col_bar("weight", "S&P Wt%", position = "left"),
+    col_interval("Return% (95% CI)", position = "right")
+  ),
+  theme = web_theme_modern(),
+  null_value = 0,
+  axis_label = "Total Return (%)",
+  title = "S&P 500 Sector Performance",
+  subtitle = "2023 Annual Returns by Market Cap Category",
+  caption = "Dashed line = 0% return"
+)
+```
+
+## Cryptocurrency Returns
+
+Annual returns across different cryptocurrency categories.
+
+```{r}
+crypto_data <- tibble(
+  coin = c(
+    "Bitcoin", "Ethereum", "Solana",
+    "Dogecoin", "Shiba Inu", "Pepe",
+    "Chainlink", "Polygon", "Uniswap",
+    "Tether", "USDC", "DAI"
+  ),
+  category = c(
+    rep("Layer 1", 3),
+    rep("Meme", 3),
+    rep("DeFi", 3),
+    rep("Stablecoin", 3)
+  ),
+  return_2023 = c(155, 91, 918, 28, -24, 4200, 168, -12, -9, 0, 0, 0),
+  return_se = c(15, 12, 85, 18, 22, 520, 25, 15, 14, 0.1, 0.1, 0.1),
+  market_cap_b = c(839, 274, 43, 13, 5.2, 0.6, 9.3, 7.8, 4.5, 91, 24, 5.3)
+) |>
+  mutate(
+    lower = return_2023 - 1.96 * return_se,
+    upper = return_2023 + 1.96 * return_se
+  )
+
+forest_plot(
+  crypto_data,
+  point = "return_2023", lower = "lower", upper = "upper",
+  label = "coin", group = "category",
+  columns = list(
+    col_numeric("market_cap_b", "MCap $B", position = "left"),
+    col_interval("Return% (95% CI)", position = "right")
+  ),
+  theme = web_theme_dark(),
+  null_value = 0,
+  axis_label = "Annual Return (%)",
+  axis_range = c(-100, 500),
+  title = "Cryptocurrency Performance",
+  subtitle = "2023 Returns by Category (Pepe truncated)",
+  caption = "Note: Stablecoins designed for 0% return"
+)
+```
+
+## Housing Market Trends
+
+Home price changes by metro area. Real estate data visualized as effect estimates.
+
+```{r}
+housing_data <- tibble(
+  metro = c(
+    "San Jose", "San Francisco", "Austin",
+    "Denver", "Seattle", "Portland",
+    "Miami", "Tampa", "Phoenix",
+    "New York", "Boston", "Washington DC"
+  ),
+  region = c(
+    rep("West Coast", 3),
+    rep("Mountain", 3),
+    rep("Sun Belt", 3),
+    rep("East Coast", 3)
+  ),
+  price_change = c(-8.5, -10.2, -12.4, -3.1, -5.2, -4.8, 4.2, 1.8, -2.1, 2.5, 3.1, 1.5),
+  change_se = c(1.8, 2.1, 2.5, 1.4, 1.6, 1.5, 1.2, 1.3, 1.5, 0.9, 1.1, 1.0),
+  median_price_k = c(1450, 1250, 450, 550, 750, 520, 580, 410, 445, 680, 720, 580)
+) |>
+  mutate(
+    lower = price_change - 1.96 * change_se,
+    upper = price_change + 1.96 * change_se
+  )
+
+forest_plot(
+  housing_data,
+  point = "price_change", lower = "lower", upper = "upper",
+  label = "metro", group = "region",
+  columns = list(
+    col_numeric("median_price_k", "Median $K", position = "left"),
+    col_interval("Change% (95% CI)", position = "right")
+  ),
+  theme = web_theme_lancet(),
+  null_value = 0,
+  axis_label = "Year-over-Year Price Change (%)",
+  title = "US Housing Market Trends",
+  subtitle = "2023 Home Price Changes by Metro Area",
+  caption = "Dashed line = no change in prices"
+)
+```
+
+## Climate Anomalies
+
+Temperature anomalies by region over decades. Environmental science data as effect estimates.
+
+```{r}
+climate_data <- tibble(
+  region = c(
+    "Arctic", "Northern Europe", "North America",
+    "Central Europe", "Mediterranean", "Central Asia",
+    "East Asia", "South Asia", "Southeast Asia",
+    "Africa", "South America", "Australia"
+  ),
+  hemisphere = c(
+    rep("Northern", 6),
+    rep("Southern/Tropical", 6)
+  ),
+  temp_anomaly = c(3.2, 2.1, 1.8, 1.9, 2.0, 2.4, 1.5, 1.2, 0.9, 1.1, 1.0, 1.6),
+  anomaly_se = c(0.35, 0.22, 0.18, 0.20, 0.25, 0.28, 0.15, 0.14, 0.12, 0.16, 0.13, 0.21),
+  baseline = c("1951-1980", "1951-1980", "1951-1980", "1951-1980", "1951-1980", "1951-1980",
+               "1951-1980", "1951-1980", "1951-1980", "1951-1980", "1951-1980", "1951-1980")
+) |>
+  mutate(
+    lower = temp_anomaly - 1.96 * anomaly_se,
+    upper = temp_anomaly + 1.96 * anomaly_se
+  )
+
+forest_plot(
+  climate_data,
+  point = "temp_anomaly", lower = "lower", upper = "upper",
+  label = "region", group = "hemisphere",
+  columns = list(
+    col_interval("Anomaly C (95% CI)", position = "right")
+  ),
+  theme = web_theme_modern() |> set_colors(interval_positive = "#ef4444", interval_negative = "#3b82f6"),
+  null_value = 0,
+  axis_label = "Temperature Anomaly (C)",
+  title = "Global Temperature Anomalies",
+  subtitle = "2023 vs 1951-1980 Baseline by Region",
+  caption = "All regions show positive anomalies (warming)"
+)
+```
+
+## Wildlife Conservation
+
+Population changes by species group. Conservation biology data as effect estimates.
+
+```{r}
+wildlife_data <- tibble(
+  species = c(
+    "African Elephant", "Mountain Gorilla", "Giant Panda",
+    "Bengal Tiger", "Snow Leopard", "Amur Leopard",
+    "Blue Whale", "Humpback Whale", "North Atlantic Right Whale",
+    "Monarch Butterfly", "Bee Populations", "Coral Reefs"
+  ),
+  category = c(
+    rep("Mammals - Land", 3),
+    rep("Mammals - Big Cats", 3),
+    rep("Marine", 3),
+    rep("Invertebrates", 3)
+  ),
+  pop_change = c(8, 42, 17, -35, -20, 15, 145, 84, -40, -80, -45, -50),
+  change_se = c(5, 12, 8, 12, 15, 10, 25, 18, 15, 12, 10, 8),
+  iucn_status = c("EN", "EN", "VU", "EN", "VU", "CR", "EN", "LC", "CR", "EN", "NA", "NA")
+) |>
+  mutate(
+    lower = pop_change - 1.96 * change_se,
+    upper = pop_change + 1.96 * change_se,
+    .row_color = case_when(
+      iucn_status == "CR" ~ "#dc2626",
+      iucn_status == "EN" ~ "#f97316",
+      TRUE ~ NA_character_
+    )
+  )
+
+forest_plot(
+  wildlife_data,
+  point = "pop_change", lower = "lower", upper = "upper",
+  label = "species", group = "category",
+  columns = list(
+    col_text("iucn_status", "IUCN", position = "left"),
+    col_interval("Change% (95% CI)", position = "right")
+  ),
+  theme = web_theme_modern(),
+  null_value = 0,
+  axis_label = "Population Change (%)",
+  title = "Wildlife Population Trends",
+  subtitle = "Recent Changes by Species Group",
+  caption = "CR=Critically Endangered (red), EN=Endangered (orange)",
+  footnote = "Estimates from WWF Living Planet Report methodology"
 )
 ```
