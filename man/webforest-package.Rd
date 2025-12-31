@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Antoine Sachet \email{antoine@example.com}
+\strong{Maintainer}: Antoine Baldassari \email{baldassarian@gmail.com}
 
 }
 \keyword{internal}

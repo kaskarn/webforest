@@ -4,47 +4,34 @@
 \alias{save_plot}
 \title{Save a forest plot as a static image}
 \usage{
-save_plot(
-  x,
-  file,
-  width = 10,
-  height = NULL,
-  scale = 1,
-  bg = NULL,
-  dpi = 300,
-  ...
-)
+save_plot(x, file, width = 800, height = NULL, scale = 2, ...)
 }
 \arguments{
 \item{x}{A WebSpec object or forest_plot() htmlwidget output}
 
 \item{file}{Output file path. Extension determines format:
 \itemize{
-\item \code{.svg} - Scalable Vector Graphics (requires svglite package)
-\item \code{.pdf} - PDF document
-\item \code{.png} - PNG image (requires ragg package for best quality)
+\item \code{.svg} - Scalable Vector Graphics
+\item \code{.pdf} - PDF document (requires rsvg package)
+\item \code{.png} - PNG image (requires rsvg package)
 }}
 
-\item{width}{Plot width in inches (default: 10)}
+\item{width}{Plot width in pixels (default: 800)}
 
-\item{height}{Plot height in inches. If NULL (default), auto-calculated
-based on the number of rows}
+\item{height}{Plot height in pixels. If NULL (default), auto-calculated
+based on content}
 
-\item{scale}{Scaling factor for all elements (default: 1). Values > 1
-increase font sizes, line widths, etc.}
+\item{scale}{Scaling factor for PNG output (default: 2 for retina quality)}
 
-\item{bg}{Background color. If NULL, uses theme background}
-
-\item{dpi}{Resolution for PNG output (default: 300)}
-
-\item{...}{Additional arguments passed to the graphics device}
+\item{...}{Additional arguments (currently unused)}
 }
 \value{
 Invisibly returns the file path
 }
 \description{
 Exports a forest plot to a static file format (SVG, PDF, or PNG).
-Uses native R graphics via the grid package for high-quality output.
+Uses a shared JavaScript SVG generator via the V8 package for consistent
+output between R and web exports.
 }
 \examples{
 \dontrun{
@@ -65,8 +52,8 @@ spec <- web_spec(
 # Save as SVG
 save_plot(spec, "forest.svg")
 
-# Save as PDF with custom dimensions
-save_plot(spec, "forest.pdf", width = 8, height = 6)
+# Save as PNG with custom dimensions
+save_plot(spec, "forest.png", width = 1200)
 
 # Save from htmlwidget output
 p <- forest_plot(spec)
