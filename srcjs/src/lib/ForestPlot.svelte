@@ -13,7 +13,7 @@
   import CellBar from "$components/table/CellBar.svelte";
   import CellPvalue from "$components/table/CellPvalue.svelte";
   import CellSparkline from "$components/table/CellSparkline.svelte";
-  import DownloadButton from "$components/ui/DownloadButton.svelte";
+  import ControlToolbar from "$components/ui/ControlToolbar.svelte";
   import {
     ROW_ODD_OPACITY,
     GROUP_HEADER_OPACITY,
@@ -159,10 +159,8 @@
 
 <div class="webforest-container" style={cssVars}>
   {#if spec}
-    <!-- Download button (appears on hover) -->
-    {#if enableExport}
-      <DownloadButton {store} />
-    {/if}
+    <!-- Control toolbar (appears on hover) -->
+    <ControlToolbar {store} {enableExport} />
 
     <!-- Plot header (title, subtitle) -->
     <PlotHeader title={spec.labels?.title} subtitle={spec.labels?.subtitle} />

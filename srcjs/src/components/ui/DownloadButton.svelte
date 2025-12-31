@@ -101,10 +101,7 @@
 
 <style>
   .download-button-wrapper {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    z-index: 100;
+    position: relative;
   }
 
   .download-btn {
@@ -119,12 +116,7 @@
     background: var(--wf-bg, #ffffff);
     color: var(--wf-secondary, #64748b);
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.15s ease, color 0.15s ease;
-  }
-
-  :global(.webforest-container:hover) .download-btn {
-    opacity: 1;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
   .download-btn:hover {
@@ -133,7 +125,6 @@
   }
 
   .download-btn:disabled {
-    opacity: 0.5;
     cursor: wait;
   }
 
@@ -147,6 +138,7 @@
     border: 1px solid var(--wf-border, #e2e8f0);
     border-radius: 8px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    z-index: 101;
   }
 
   .dropdown-item {

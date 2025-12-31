@@ -14,6 +14,7 @@ import type {
   DataRow,
 } from "$types";
 import { niceDomain, DOMAIN_PADDING } from "$lib/scale-utils";
+import { THEME_PRESETS, type ThemeName } from "$lib/theme-presets";
 
 // Svelte 5 runes-based store
 export function createForestStore() {
@@ -388,6 +389,20 @@ export function createForestStore() {
     return plotWidthOverride;
   }
 
+  function setTheme(themeName: ThemeName) {
+    const newTheme = THEME_PRESETS[themeName];
+    if (!spec || !newTheme) return;
+    spec = { ...spec, theme: newTheme };
+  }
+
+  function toggleForestView() {
+    if (!spec) return;
+    spec = {
+      ...spec,
+      data: { ...spec.data, includeForest: !spec.data.includeForest },
+    };
+  }
+
   // Derived: tooltip row
   const tooltipRow = $derived.by((): Row | null => {
     if (!tooltipRowId || !spec) return null;
@@ -462,6 +477,8 @@ export function createForestStore() {
     setTooltip,
     setColumnWidth,
     setPlotWidth,
+    setTheme,
+    toggleForestView,
   };
 }
 
