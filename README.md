@@ -4,11 +4,9 @@
 
 Interactive, web-native forest plots for R. Built with Svelte 5 and D3.js.
 
-<a href="https://kaskarn.github.io/webforest/gallery.html">
-  <img src="docs/images/hero-dark-theme.png" alt="webforest dark theme example" width="100%">
-</a>
+[![webforest dark theme example](docs/images/hero-dark-theme.png)](https://kaskarn.github.io/webforest/gallery.html)
 
-<p align="center"><em>Click image to view interactive examples</em></p>
+*Click image to view interactive examples*
 
 ## Installation
 
