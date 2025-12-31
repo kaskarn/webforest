@@ -3,42 +3,6 @@
 \name{WebSpec}
 \alias{WebSpec}
 \title{WebSpec: Core specification for web-native table visualizations}
-\usage{
-WebSpec(
-  data = (function (.data = list(), row.names = NULL) 
- {
-     if (is.null(row.names)) {
-
-            list2DF(.data)
-     }
-     else {
-         out <- list2DF(.data,
-    length(row.names))
-         attr(out, "row.names") <- row.names
-         out
-     }
-
-    })(),
-  point_col = character(0),
-  lower_col = character(0),
-  upper_col = character(0),
-  label_col = NA_character_,
-  label_header = "Study",
-  group_col = NA_character_,
-  columns = list(),
-  groups = list(),
-  summaries = list(),
-  overall_summary = GroupSummary(),
-  scale = "linear",
-  null_value = 0,
-  axis_label = "Estimate",
-  effects = list(),
-  theme = NULL,
-  interaction = NULL,
-  labels = NULL,
-  annotations = list()
-)
-}
 \arguments{
 \item{data}{Processed data as a data.frame}
 

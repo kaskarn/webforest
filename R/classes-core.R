@@ -161,6 +161,7 @@ PlotLabels <- new_class(
 #' @param theme WebTheme object
 #' @param interaction InteractionSpec object
 #'
+#' @usage NULL
 #' @export
 WebSpec <- new_class(
   "WebSpec",
