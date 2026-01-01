@@ -381,8 +381,8 @@
           <line
             x1={0}
             x2={layout.forestWidth}
-            y1={layout.headerHeight}
-            y2={layout.headerHeight}
+            y1={layout.headerHeight - 0.5}
+            y2={layout.headerHeight - 0.5}
             stroke="var(--wf-border, #e2e8f0)"
             stroke-width="1"
           />
@@ -413,8 +413,8 @@
               <line
                 x1={0}
                 x2={layout.forestWidth}
-                y1={layout.headerHeight + rowY + 1}
-                y2={layout.headerHeight + rowY + 1}
+                y1={layout.headerHeight + rowY + 0.5}
+                y2={layout.headerHeight + rowY + 0.5}
                 stroke="var(--wf-border, #e2e8f0)"
                 stroke-width="2"
               />
@@ -424,8 +424,8 @@
               <line
                 x1={0}
                 x2={layout.forestWidth}
-                y1={layout.headerHeight + rowY + rowH}
-                y2={layout.headerHeight + rowY + rowH}
+                y1={layout.headerHeight + rowY + rowH - 0.5}
+                y2={layout.headerHeight + rowY + rowH - 0.5}
                 stroke="var(--wf-border, #e2e8f0)"
                 stroke-width="1"
               />
