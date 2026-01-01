@@ -163,6 +163,7 @@ web_spec <- function(
   # 3. group = list(web_group(...)) - explicit group definitions
 
   group_col <- NA_character_
+  group_cols <- character(0)  # For hierarchical grouping
   resolved_groups <- list()
 
   if (!is.null(group)) {
@@ -197,6 +198,9 @@ web_spec <- function(
       if (length(missing_cols) > 0) {
         cli_abort("Group columns not found in data: {.val {missing_cols}}")
       }
+
+      # Store all group columns for composite ID building in serialization
+      group_cols <- group
 
       # Use the deepest level (last column) as the row grouping column
       group_col <- group[length(group)]
@@ -275,6 +279,7 @@ web_spec <- function(
     label_col = label_col,
     label_header = label_header,
     group_col = group_col,
+    group_cols = group_cols,
     columns = columns,
     groups = resolved_groups,
     scale = scale,
@@ -346,17 +351,21 @@ build_hierarchical_groups <- function(data, group_cols) {
         parent_val <- as.character(combos[i, parent_col])
         current_val <- as.character(combos[i, col])
 
-        if (!current_val %in% seen_ids) {
+        # Use composite ID to handle same value under different parents
+        # e.g., Phase_II under program_a vs Phase_II under program_c
+        composite_id <- paste0(parent_val, "__", current_val)
+
+        if (!composite_id %in% seen_ids) {
           # Create nice label (title case)
           label <- gsub("_", " ", current_val)
           label <- tools::toTitleCase(label)
 
           groups <- c(groups, list(GroupSpec(
-            id = current_val,
+            id = composite_id,
             label = label,
             parent_id = parent_val
           )))
-          seen_ids <- c(seen_ids, current_val)
+          seen_ids <- c(seen_ids, composite_id)
         }
       }
     }

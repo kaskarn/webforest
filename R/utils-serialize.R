@@ -41,9 +41,19 @@ serialize_data <- function(spec, include_forest = TRUE) {
       paste0("Row ", i)
     }
 
-    # Get group ID
+    # Get group ID - use composite ID for hierarchical groups
     group_id <- if (!is.na(spec@group_col)) {
-      as.character(row[[spec@group_col]])
+      if (length(spec@group_cols) > 1) {
+        # Hierarchical grouping - build composite ID from all parent levels
+        # e.g., "program_a__Phase_II" for row with program=program_a, phase=Phase_II
+        parts <- vapply(spec@group_cols, function(col) {
+          as.character(row[[col]])
+        }, character(1))
+        paste(parts, collapse = "__")
+      } else {
+        # Simple grouping - just use the group column value
+        as.character(row[[spec@group_col]])
+      }
     } else {
       NULL
     }

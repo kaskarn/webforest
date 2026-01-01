@@ -336,6 +336,22 @@ function escapeXml(text: string): string {
     .replace(/'/g, "&apos;");
 }
 
+/**
+ * Truncate text to fit within a given width (approximate)
+ * Uses rough character width estimation for proportional fonts
+ */
+function truncateText(text: string, maxWidth: number, fontSize: number, padding: number = 0): string {
+  const avgCharWidth = fontSize * 0.55; // Rough estimate
+  const availableWidth = maxWidth - padding * 2;
+  const maxChars = Math.floor(availableWidth / avgCharWidth);
+
+  if (text.length <= maxChars) {
+    return text;
+  }
+  // Truncate with ellipsis
+  return text.slice(0, maxChars - 1) + "…";
+}
+
 /** Format number for display - integers show no decimals, others show 2 */
 function formatNumber(value: number | undefined | null): string {
   if (value === undefined || value === null || Number.isNaN(value)) return "";
@@ -596,12 +612,13 @@ function renderColumnHeaders(
         // Non-grouped column spans both rows
         const width = col.width ?? defaultColWidth;
         const { textX, anchor } = getTextPosition(currentX, width, col.align);
+        const truncatedHeader = truncateText(col.header, width, fontSize, SPACING.TEXT_PADDING);
         lines.push(`<text x="${textX}" y="${getTextY(y, headerHeight)}"
           font-family="${theme.typography.fontFamily}"
           font-size="${fontSize}px"
           font-weight="${fontWeight}"
           text-anchor="${anchor}"
-          fill="${theme.colors.foreground}">${escapeXml(col.header)}</text>`);
+          fill="${theme.colors.foreground}">${escapeXml(truncatedHeader)}</text>`);
         currentX += width;
       }
     }
@@ -645,13 +662,14 @@ function renderColumnHeaders(
     for (const col of leafColumns) {
       const width = col.width ?? defaultColWidth;
       const { textX, anchor } = getTextPosition(currentX, width, col.align);
+      const truncatedHeader = truncateText(col.header, width, fontSize, SPACING.TEXT_PADDING);
 
       lines.push(`<text x="${textX}" y="${getTextY(y, headerHeight)}"
         font-family="${theme.typography.fontFamily}"
         font-size="${fontSize}px"
         font-weight="${fontWeight}"
         text-anchor="${anchor}"
-        fill="${theme.colors.foreground}">${escapeXml(col.header)}</text>`);
+        fill="${theme.colors.foreground}">${escapeXml(truncatedHeader)}</text>`);
       currentX += width;
     }
   }
@@ -730,12 +748,40 @@ function renderTableRow(
     const fontWeight = row.style?.bold ? theme.typography.fontWeightBold : theme.typography.fontWeightNormal;
     const fontStyle = row.style?.italic ? "italic" : "normal";
 
+    // Truncate label if too long for column width
+    const availableLabelWidth = labelWidth - indent - SPACING.TEXT_PADDING * 2;
+    const truncatedLabel = truncateText(row.label, availableLabelWidth, fontSize, 0);
+
     lines.push(`<text x="${currentX + SPACING.TEXT_PADDING + indent}" y="${textY}"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
       font-weight="${fontWeight}"
       font-style="${fontStyle}"
-      fill="${row.style?.color ?? theme.colors.foreground}">${escapeXml(row.label)}</text>`);
+      fill="${row.style?.color ?? theme.colors.foreground}">${escapeXml(truncatedLabel)}</text>`);
+
+    // Badge (if present)
+    if (row.style?.badge) {
+      const badgeText = String(row.style.badge);
+      const badgeFontSize = fontSize * 0.8;
+      const badgePadding = 4;
+      const badgeHeight = badgeFontSize + badgePadding * 2;
+      // Estimate label text width (rough approximation)
+      const labelTextWidth = row.label.length * fontSize * 0.55;
+      const badgeX = currentX + SPACING.TEXT_PADDING + indent + labelTextWidth + 6;
+      const badgeTextWidth = badgeText.length * badgeFontSize * 0.6;
+      const badgeWidth = badgeTextWidth + badgePadding * 2;
+      const badgeY = y + (rowHeight - badgeHeight) / 2;
+
+      lines.push(`<rect x="${badgeX}" y="${badgeY}" width="${badgeWidth}" height="${badgeHeight}"
+        rx="3" fill="${theme.colors.primary}" opacity="0.15"/>`);
+      lines.push(`<text x="${badgeX + badgeWidth / 2}" y="${badgeY + badgeHeight / 2 + badgeFontSize * 0.35}"
+        text-anchor="middle"
+        font-family="${theme.typography.fontFamily}"
+        font-size="${badgeFontSize}px"
+        font-weight="500"
+        fill="${theme.colors.primary}">${escapeXml(badgeText)}</text>`);
+    }
+
     currentX += labelWidth;
   }
 
@@ -772,7 +818,11 @@ function renderTableRow(
         fill="${theme.colors.foreground}">${formatNumber(barValue)}</text>`);
     } else if (col.type === "sparkline" && Array.isArray(row.metadata[col.field])) {
       // Render sparkline
-      const data = row.metadata[col.field] as number[];
+      // Handle nested arrays from R list columns: [[1,2,3]] -> [1,2,3]
+      let data = row.metadata[col.field] as number[] | number[][];
+      if (Array.isArray(data[0])) {
+        data = data[0] as number[];
+      }
       const sparkHeight = col.options?.sparkline?.height ?? 16;
       const sparkColor = col.options?.sparkline?.color ?? theme.colors.primary;
       const sparkPadding = SPACING.TEXT_PADDING * 2;

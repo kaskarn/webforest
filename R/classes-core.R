@@ -150,7 +150,8 @@ PlotLabels <- new_class(
 #' @param lower_col Column name for lower bounds
 #' @param upper_col Column name for upper bounds
 #' @param label_col Column name for row labels
-#' @param group_col Column name for grouping (optional)
+#' @param group_col Column name for grouping (optional, deepest level)
+#' @param group_cols All group column names for hierarchical grouping (for composite ID building)
 #' @param columns List of ColumnSpec objects defining table columns
 #' @param groups List of GroupSpec objects
 #' @param summaries List of GroupSummary objects
@@ -173,6 +174,7 @@ WebSpec <- new_class(
     label_col = new_property(class_character, default = NA_character_),
     label_header = new_property(class_character, default = "Study"),
     group_col = new_property(class_character, default = NA_character_),
+    group_cols = new_property(class_character, default = character(0)),
     columns = new_property(class_list, default = list()),
     groups = new_property(class_list, default = list()),
     summaries = new_property(class_list, default = list()),

@@ -53,10 +53,10 @@ export const GROUP_HEADER_HOVER_OPACITY = 0.10; // 10%
 
 export const LAYOUT = {
   /** Default width for label column (Study names) */
-  DEFAULT_LABEL_WIDTH: 150,
+  DEFAULT_LABEL_WIDTH: 200,
 
   /** Default width for data columns */
-  DEFAULT_COLUMN_WIDTH: 80,
+  DEFAULT_COLUMN_WIDTH: 100,
 
   /** Height reserved for x-axis line and ticks */
   AXIS_HEIGHT: 32,
