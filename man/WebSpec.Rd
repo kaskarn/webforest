@@ -14,7 +14,9 @@
 
 \item{label_col}{Column name for row labels}
 
-\item{group_col}{Column name for grouping (optional)}
+\item{group_col}{Column name for grouping (optional, deepest level)}
+
+\item{group_cols}{All group column names for hierarchical grouping (for composite ID building)}
 
 \item{columns}{List of ColumnSpec objects defining table columns}
 

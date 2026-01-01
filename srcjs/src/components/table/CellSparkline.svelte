@@ -15,22 +15,32 @@
   const chartColor = $derived(options?.color ?? "var(--wf-primary, #2563eb)");
   const chartWidth = 60;
 
-  const points = $derived.by(() => {
+  // Handle nested arrays from R list columns (data may be [[values]] instead of [values])
+  const normalizedData = $derived.by(() => {
     if (!data || !Array.isArray(data) || data.length === 0) return [];
+    // If first element is an array, unwrap the nested structure
+    if (Array.isArray(data[0])) {
+      return data[0] as number[];
+    }
+    return data as number[];
+  });
 
-    const yMin = Math.min(...data);
-    const yMax = Math.max(...data);
+  const points = $derived.by(() => {
+    if (normalizedData.length === 0) return [];
+
+    const yMin = Math.min(...normalizedData);
+    const yMax = Math.max(...normalizedData);
     const yPadding = (yMax - yMin) * 0.1 || 1;
 
     const xScale = scaleLinear()
-      .domain([0, data.length - 1])
+      .domain([0, normalizedData.length - 1])
       .range([2, chartWidth - 2]);
 
     const yScale = scaleLinear()
       .domain([yMin - yPadding, yMax + yPadding])
       .range([chartHeight - 2, 2]);
 
-    return data.map((d, i) => [xScale(i), yScale(d)] as [number, number]);
+    return normalizedData.map((d, i) => [xScale(i), yScale(d)] as [number, number]);
   });
 
   const linePath = $derived.by(() => {

@@ -54,6 +54,45 @@
   // Check if the data has any groups
   const hasGroups = $derived((spec?.data.groups?.length ?? 0) > 0);
 
+  // Compute total height of the rows area (accounting for variable row heights like spacers)
+  const rowsAreaHeight = $derived.by(() => {
+    if (layout.rowPositions.length > 0 && layout.rowHeights.length > 0) {
+      const lastIdx = layout.rowPositions.length - 1;
+      return (layout.rowPositions[lastIdx] ?? 0) + (layout.rowHeights[lastIdx] ?? layout.rowHeight);
+    }
+    return displayRows.length * layout.rowHeight;
+  });
+
+  // Compute Y offsets for annotation labels to avoid collisions
+  // Labels that are too close in x-space get staggered vertically
+  const annotationLabelOffsets = $derived.by(() => {
+    const annotations = spec?.annotations ?? [];
+    const labeledAnnotations = annotations
+      .filter(a => a.type === "reference_line" && a.label)
+      .map(a => ({ id: a.id, x: xScale(a.x), label: a.label }))
+      .sort((a, b) => a.x - b.x);
+
+    const offsets: Record<string, number> = {};
+    const MIN_LABEL_SPACING = 60; // Minimum pixels between labels
+
+    for (let i = 0; i < labeledAnnotations.length; i++) {
+      const current = labeledAnnotations[i];
+      offsets[current.id] = 0;
+
+      // Check for collision with previous label
+      if (i > 0) {
+        const prev = labeledAnnotations[i - 1];
+        const xDiff = current.x - prev.x;
+        if (xDiff < MIN_LABEL_SPACING) {
+          // Alternate labels above/below to avoid overlap
+          offsets[current.id] = offsets[prev.id] === 0 ? -12 : 0;
+        }
+      }
+    }
+
+    return offsets;
+  });
+
   // Helper to check if a row is selected
   function isSelected(rowId: string): boolean {
     return selectedRowIds.has(rowId);
@@ -277,6 +316,7 @@
           width={layout.forestWidth}
           height={layout.headerHeight + layout.plotHeight + layout.axisHeight}
           viewBox="0 0 {layout.forestWidth} {layout.headerHeight + layout.plotHeight + layout.axisHeight}"
+          style="overflow: visible;"
         >
           <!-- Header border -->
           <line
@@ -294,9 +334,9 @@
           {#each displayRows as displayRow, i (getDisplayRowKey(displayRow, i))}
             <rect
               x={0}
-              y={layout.headerHeight + i * layout.rowHeight}
+              y={layout.headerHeight + (layout.rowPositions[i] ?? i * layout.rowHeight)}
               width={layout.forestWidth}
-              height={layout.rowHeight}
+              height={layout.rowHeights[i] ?? layout.rowHeight}
               class="row-band {getRowBandClass(displayRow, i, hasGroups)}"
               class:row-hovered={displayRow.type === 'data' && displayRow.row.id === hoveredRowId}
               class:row-selected={displayRow.type === 'data' && selectedRowIds.has(displayRow.row.id)}
@@ -309,8 +349,8 @@
             <line
               x1={0}
               x2={layout.forestWidth}
-              y1={layout.headerHeight + (i + 1) * layout.rowHeight}
-              y2={layout.headerHeight + (i + 1) * layout.rowHeight}
+              y1={layout.headerHeight + (layout.rowPositions[i] ?? i * layout.rowHeight) + (layout.rowHeights[i] ?? layout.rowHeight)}
+              y2={layout.headerHeight + (layout.rowPositions[i] ?? i * layout.rowHeight) + (layout.rowHeights[i] ?? layout.rowHeight)}
               stroke="var(--wf-border, #e2e8f0)"
               stroke-width="1"
               shape-rendering="crispEdges"
@@ -322,7 +362,7 @@
             x1={xScale(layout.nullValue)}
             x2={xScale(layout.nullValue)}
             y1={layout.headerHeight}
-            y2={layout.headerHeight + displayRows.length * layout.rowHeight}
+            y2={layout.headerHeight + rowsAreaHeight}
             stroke="var(--wf-muted)"
             stroke-width="1"
             stroke-dasharray="4,4"
@@ -335,15 +375,16 @@
                 x1={xScale(annotation.x)}
                 x2={xScale(annotation.x)}
                 y1={layout.headerHeight}
-                y2={layout.headerHeight + displayRows.length * layout.rowHeight}
+                y2={layout.headerHeight + rowsAreaHeight}
                 stroke={annotation.color ?? "var(--wf-accent)"}
                 stroke-width="1.5"
                 stroke-dasharray={annotation.style === "dashed" ? "6,4" : annotation.style === "dotted" ? "2,2" : "none"}
               />
               {#if annotation.label}
+                {@const yOffset = annotationLabelOffsets[annotation.id] ?? 0}
                 <text
                   x={xScale(annotation.x)}
-                  y={layout.headerHeight - 4}
+                  y={layout.headerHeight - 4 + yOffset}
                   text-anchor="middle"
                   fill={annotation.color ?? "var(--wf-secondary)"}
                   font-size="var(--wf-font-size-sm)"
@@ -359,9 +400,11 @@
           <g transform="translate(0, {layout.headerHeight})">
             {#each displayRows as displayRow, i (getDisplayRowKey(displayRow, i))}
               {#if displayRow.type === "data"}
+                {@const rowY = layout.rowPositions[i] ?? i * layout.rowHeight}
+                {@const rowH = layout.rowHeights[i] ?? layout.rowHeight}
                 <RowInterval
                   row={displayRow.row}
-                  yPosition={i * layout.rowHeight + layout.rowHeight / 2}
+                  yPosition={rowY + rowH / 2}
                   {xScale}
                   {layout}
                   {theme}
@@ -634,14 +677,15 @@
    */
 
   /* Ensure consistent box-sizing for all elements */
-  .webforest-container,
-  .webforest-container *,
-  .webforest-container *::before,
-  .webforest-container *::after {
+  :global(.webforest-container),
+  :global(.webforest-container) *,
+  :global(.webforest-container) *::before,
+  :global(.webforest-container) *::after {
     box-sizing: border-box;
   }
 
-  .webforest-container {
+  :global(.webforest-container) {
+    position: relative; /* Needed for toolbar positioning */
     font-family: var(--wf-font-family);
     font-size: var(--wf-font-size-base);
     color: var(--wf-fg);

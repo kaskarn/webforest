@@ -11,10 +11,12 @@
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "bun test",
     "lint": "eslint src --ext .ts,.svelte",
-    "format": "prettier --write 'src/**/*.{ts,svelte,css}'"
+    "format": "prettier --write 'src/**/*.{ts,svelte,css}'",
+    "screenshot": "node scripts/screenshot.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "puppeteer": "^24.0.0",
     "@tailwindcss/vite": "^4.0.0",
     "@types/d3-array": "^3.2.0",
     "@types/d3-format": "^3.0.0",

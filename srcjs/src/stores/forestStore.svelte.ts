@@ -60,6 +60,10 @@ export function createForestStore() {
     return rows;
   });
 
+  // Padding for axis labels at edges (prevents label clipping)
+  // 30px provides enough space for 4-char labels like "0.20"
+  const AXIS_LABEL_PADDING = 30;
+
   // Derived: x-scale
   const xScale = $derived.by(() => {
     if (!spec) return scaleLinear().domain([0, 1]).range([0, 100]);
@@ -98,16 +102,20 @@ export function createForestStore() {
     // Apply consistent nice domain rounding (shared with SVG generator)
     const nicedDomain = niceDomain(domain, isLog);
 
+    // Add padding to range so edge labels don't get clipped
+    const rangeStart = AXIS_LABEL_PADDING;
+    const rangeEnd = Math.max(forestWidth - AXIS_LABEL_PADDING, rangeStart + 50);
+
     if (isLog) {
       // Ensure domain is positive for log scale
       const safeDomain: [number, number] = [
         Math.max(nicedDomain[0], 0.01),
         Math.max(nicedDomain[1], 0.02),
       ];
-      return scaleLog().domain(safeDomain).range([0, forestWidth]);
+      return scaleLog().domain(safeDomain).range([rangeStart, rangeEnd]);
     }
 
-    return scaleLinear().domain(nicedDomain).range([0, forestWidth]);
+    return scaleLinear().domain(nicedDomain).range([rangeStart, rangeEnd]);
   });
 
   // Helper to flatten column groups into flat ColumnSpec array
@@ -283,6 +291,8 @@ export function createForestStore() {
         nullValue: 0,
         summaryYPosition: 0,
         showOverallSummary: false,
+        rowPositions: [],
+        rowHeights: [],
       };
     }
 
@@ -298,11 +308,26 @@ export function createForestStore() {
 
     const hasOverall = !!spec.data.overall;
 
-    // Plot height: displayRows already accounts for collapsed groups and cascade
-    const displayRowCount = displayRows.length;
-    const plotHeight =
-      displayRowCount * rowHeight +
-      (hasOverall ? rowHeight * 1.5 : 0);
+    // Calculate actual heights for each row (spacers are half-height)
+    const rowHeights: number[] = [];
+    for (const displayRow of displayRows) {
+      if (displayRow.type === "data" && displayRow.row.style?.type === "spacer") {
+        rowHeights.push(rowHeight / 2);
+      } else {
+        rowHeights.push(rowHeight);
+      }
+    }
+
+    // Calculate cumulative Y positions for each row
+    const rowPositions: number[] = [];
+    let cumulativeY = 0;
+    for (const h of rowHeights) {
+      rowPositions.push(cumulativeY);
+      cumulativeY += h;
+    }
+
+    // Plot height: sum of all row heights + space for overall summary
+    const plotHeight = cumulativeY + (hasOverall ? rowHeight * 1.5 : 0);
 
     return {
       totalWidth: width,
@@ -316,6 +341,8 @@ export function createForestStore() {
       nullValue: spec.data.nullValue,
       summaryYPosition: plotHeight - rowHeight,
       showOverallSummary: hasOverall,
+      rowPositions,
+      rowHeights,
     };
   });
 

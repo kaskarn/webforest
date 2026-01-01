@@ -18,6 +18,10 @@
   const showGridlines = $derived(axisConfig?.gridlines ?? false);
   const gridlineStyle = $derived(axisConfig?.gridlineStyle ?? "dotted");
 
+  // Edge threshold for text anchor adjustment (prevents clipping at boundaries)
+  // Should be >= AXIS_LABEL_PADDING from forestStore to ensure edge labels are detected
+  const EDGE_THRESHOLD = 35;
+
   // Generate nice tick values with spacing-aware filtering to prevent overlap
   const ticks = $derived.by(() => {
     // Use explicit tick values if provided
@@ -58,6 +62,27 @@
     gridlineStyle === "dashed" ? "4,4" :
     gridlineStyle === "dotted" ? "2,2" : "none"
   );
+
+  /**
+   * Get appropriate text-anchor to prevent label clipping at edges.
+   * Labels near the left edge use "start", near the right edge use "end",
+   * and labels in the middle use "middle" for centered alignment.
+   */
+  function getTextAnchor(tickX: number): "start" | "middle" | "end" {
+    if (tickX < EDGE_THRESHOLD) return "start";
+    if (tickX > layout.forestWidth - EDGE_THRESHOLD) return "end";
+    return "middle";
+  }
+
+  /**
+   * Get x-offset for text to ensure it doesn't extend outside SVG bounds.
+   * Used in combination with text-anchor for edge labels.
+   */
+  function getTextXOffset(tickX: number): number {
+    if (tickX < EDGE_THRESHOLD) return 2; // Slight offset from left edge
+    if (tickX > layout.forestWidth - EDGE_THRESHOLD) return -2; // Slight offset from right edge
+    return 0;
+  }
 </script>
 
 <g class="effect-axis">
@@ -89,7 +114,8 @@
 
   <!-- Ticks and labels -->
   {#each ticks as tick (tick)}
-    <g transform="translate({xScale(tick)}, 0)">
+    {@const tickX = xScale(tick)}
+    <g transform="translate({tickX}, 0)">
       <line
         y1={isBottom ? axisY : axisY - 4}
         y2={isBottom ? axisY + 4 : axisY}
@@ -97,8 +123,9 @@
         stroke-width="1"
       />
       <text
+        x={getTextXOffset(tickX)}
         y={isBottom ? axisY + 16 : axisY - 8}
-        text-anchor="middle"
+        text-anchor={getTextAnchor(tickX)}
         fill="var(--wf-secondary, #64748b)"
         font-size="var(--wf-font-size-sm, 0.75rem)"
       >

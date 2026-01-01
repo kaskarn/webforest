@@ -28,6 +28,7 @@ Collate:
     'webtable.R'
     'shiny.R'
     'regenerate_examples.R'
+    'screenshot.R'
 Imports:
     htmlwidgets (>= 1.6.0),
     jsonlite (>= 1.8.0),
@@ -43,7 +44,8 @@ Suggests:
     knitr,
     rmarkdown,
     V8 (>= 4.0.0),
-    rsvg (>= 2.0.0)
+    rsvg (>= 2.0.0),
+    processx (>= 3.8.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://github.com/kaskarn/webforest, https://kaskarn.github.io/webforest/

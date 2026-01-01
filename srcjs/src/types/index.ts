@@ -326,6 +326,10 @@ export interface ComputedLayout {
   nullValue: number;
   summaryYPosition: number;
   showOverallSummary: boolean;
+  // Cumulative Y positions for each row (accounts for variable heights like spacers)
+  rowPositions: number[];
+  // Heights for each row (spacers are half-height)
+  rowHeights: number[];
 }
 
 // ============================================================================
