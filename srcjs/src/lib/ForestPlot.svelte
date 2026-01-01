@@ -381,11 +381,10 @@
           <line
             x1={0}
             x2={layout.forestWidth}
-            y1={layout.headerHeight - 0.5}
-            y2={layout.headerHeight - 0.5}
+            y1={layout.headerHeight}
+            y2={layout.headerHeight}
             stroke="var(--wf-border, #e2e8f0)"
             stroke-width="1"
-            shape-rendering="crispEdges"
           />
 
 
@@ -414,11 +413,10 @@
               <line
                 x1={0}
                 x2={layout.forestWidth}
-                y1={layout.headerHeight + rowY + 0.5}
-                y2={layout.headerHeight + rowY + 0.5}
+                y1={layout.headerHeight + rowY + 1}
+                y2={layout.headerHeight + rowY + 1}
                 stroke="var(--wf-border, #e2e8f0)"
                 stroke-width="2"
-                shape-rendering="crispEdges"
               />
             {/if}
             <!-- Bottom border (aligns with CSS border-bottom) -->
@@ -426,11 +424,10 @@
               <line
                 x1={0}
                 x2={layout.forestWidth}
-                y1={layout.headerHeight + rowY + rowH - 0.5}
-                y2={layout.headerHeight + rowY + rowH - 0.5}
+                y1={layout.headerHeight + rowY + rowH}
+                y2={layout.headerHeight + rowY + rowH}
                 stroke="var(--wf-border, #e2e8f0)"
                 stroke-width="1"
-                shape-rendering="crispEdges"
               />
             {/if}
           {/each}
