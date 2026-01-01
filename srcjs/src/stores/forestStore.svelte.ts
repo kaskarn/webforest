@@ -81,15 +81,22 @@ export function createForestStore() {
       // Use fully explicit range
       domain = [axisConfig.rangeMin!, axisConfig.rangeMax!];
     } else {
-      // Calculate domain from data
-      const allValues = rows.flatMap((r) => [r.lower, r.upper]);
-      const [minVal, maxVal] = [Math.min(...allValues), Math.max(...allValues)];
-      const range = maxVal - minVal;
+      // Calculate domain from data (filter out null/undefined/NaN from header/spacer rows)
+      const allValues = rows
+        .flatMap((r) => [r.lower, r.upper])
+        .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
 
-      domain = [
-        hasExplicitMin ? axisConfig.rangeMin! : minVal - range * DOMAIN_PADDING,
-        hasExplicitMax ? axisConfig.rangeMax! : maxVal + range * DOMAIN_PADDING,
-      ];
+      if (allValues.length === 0) {
+        domain = spec.data.scale === "log" ? [0.1, 10] : [0, 1];
+      } else {
+        const [minVal, maxVal] = [Math.min(...allValues), Math.max(...allValues)];
+        const range = maxVal - minVal || 1;
+
+        domain = [
+          hasExplicitMin ? axisConfig.rangeMin! : minVal - range * DOMAIN_PADDING,
+          hasExplicitMax ? axisConfig.rangeMax! : maxVal + range * DOMAIN_PADDING,
+        ];
+      }
     }
 
     // Use log scale for log data

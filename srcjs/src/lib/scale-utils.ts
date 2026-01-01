@@ -18,9 +18,13 @@ export function niceDomain(
   isLog: boolean
 ): [number, number] {
   if (isLog) {
-    // For log scale, use nice values: 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100...
-    // This provides finer granularity than pure powers of 10
-    const niceLogValues = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100];
+    // For log scale, use fine-grained nice values for tight axis ranges
+    // Common in forest plots where HRs/ORs cluster around 0.5-2.0
+    const niceLogValues = [
+      0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
+      1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7, 8, 10,
+      12, 15, 20, 25, 30, 40, 50, 75, 100
+    ];
 
     // Find nice min (largest nice value <= domain min)
     let niceMin = niceLogValues[0];
