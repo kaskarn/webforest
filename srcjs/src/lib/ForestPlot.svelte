@@ -377,12 +377,12 @@
           viewBox="0 0 {layout.forestWidth} {layout.headerHeight + layout.plotHeight + layout.axisHeight}"
           style="overflow: visible;"
         >
-          <!-- Header border (-1px to align with CSS border-bottom) -->
+          <!-- Header border (aligns with CSS border-bottom) -->
           <line
             x1={0}
             x2={layout.forestWidth}
-            y1={layout.headerHeight - 1}
-            y2={layout.headerHeight - 1}
+            y1={layout.headerHeight - 0.5}
+            y2={layout.headerHeight - 0.5}
             stroke="var(--wf-border, #e2e8f0)"
             stroke-width="1"
             shape-rendering="crispEdges"
@@ -421,13 +421,13 @@
                 shape-rendering="crispEdges"
               />
             {/if}
-            <!-- Bottom border (-1px to align with CSS border-bottom) -->
+            <!-- Bottom border (aligns with CSS border-bottom) -->
             {#if !isSpacerRow}
               <line
                 x1={0}
                 x2={layout.forestWidth}
-                y1={layout.headerHeight + rowY + rowH - 1}
-                y2={layout.headerHeight + rowY + rowH - 1}
+                y1={layout.headerHeight + rowY + rowH - 0.5}
+                y2={layout.headerHeight + rowY + rowH - 0.5}
                 stroke="var(--wf-border, #e2e8f0)"
                 stroke-width="1"
                 shape-rendering="crispEdges"
