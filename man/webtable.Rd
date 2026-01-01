@@ -4,7 +4,15 @@
 \alias{webtable}
 \title{Create an interactive web table}
 \usage{
-webtable(x, ..., width = NULL, height = NULL, elementId = NULL)
+webtable(
+  x,
+  ...,
+  width_mode = c("fit", "fill", "responsive"),
+  height_mode = c("auto", "scroll"),
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
 }
 \arguments{
 \item{x}{Either a WebSpec object or a data.frame/data.table/tibble}
@@ -12,6 +20,10 @@ webtable(x, ..., width = NULL, height = NULL, elementId = NULL)
 \item{...}{Arguments passed to \code{web_spec()} when x is a data frame.
 Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{group},
 \code{columns}, \code{theme}, \code{interaction}}
+
+\item{width_mode}{Layout width mode: "fit" (shrink-wrap, default), "fill" (100\%), or "responsive" (100\% with scaling)}
+
+\item{height_mode}{Layout height mode: "auto" (natural height) or "scroll" (scroll if > viewport)}
 
 \item{width}{Widget width (default NULL for auto)}
 

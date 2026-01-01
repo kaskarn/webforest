@@ -8,6 +8,8 @@
 #' @param ... Arguments passed to `web_spec()` when x is a data frame.
 #'   Common arguments: `point`, `lower`, `upper`, `label`, `group`,
 #'   `columns`, `theme`, `interaction`
+#' @param width_mode Layout width mode: "fit" (shrink-wrap, default), "fill" (100%), or "responsive" (100% with scaling)
+#' @param height_mode Layout height mode: "auto" (natural height) or "scroll" (scroll if > viewport)
 #' @param width Widget width (default NULL for auto)
 #' @param height Widget height (default NULL for auto)
 #' @param elementId HTML element ID (optional)
@@ -47,9 +49,16 @@
 webtable <- function(
     x,
     ...,
+    width_mode = c("fit", "fill", "responsive"),
+    height_mode = c("auto", "scroll"),
     width = NULL,
     height = NULL,
     elementId = NULL) {
+
+  # Validate layout mode arguments
+  width_mode <- match.arg(width_mode)
+  height_mode <- match.arg(height_mode)
+
   # Handle WebSpec or raw data
   if (inherits(x, "webforest::WebSpec")) {
     spec <- x
@@ -61,6 +70,10 @@ webtable <- function(
 
   # Serialize to JSON-ready structure (without forest column)
   payload <- serialize_spec(spec, include_forest = FALSE)
+
+  # Add layout mode settings
+  payload$widthMode <- width_mode
+  payload$heightMode <- height_mode
 
   # Create widget (uses same JS, but with includeForest = FALSE)
   htmlwidgets::createWidget(

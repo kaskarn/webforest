@@ -48,6 +48,60 @@
   const selectedRowIds = $derived(store.selectedRowIds);
   const hoveredRowId = $derived(store.hoveredRowId);
 
+  // Layout mode state
+  const widthMode = $derived(store.widthMode);
+  const heightModeOverride = $derived(store.heightModeOverride);
+
+  // Container ref for height detection
+  let containerRef: HTMLDivElement | undefined = $state();
+  let contentHeight = $state(0);
+  let viewportHeight = $state(typeof window !== 'undefined' ? window.innerHeight : 800);
+
+  // Determine effective height mode (auto-detect or user override)
+  const effectiveHeightMode = $derived(
+    heightModeOverride ?? (contentHeight > viewportHeight ? 'scroll' : 'auto')
+  );
+
+  // Responsive mode: compute scale factor when content is wider than container
+  let containerWidth = $state(0);
+  let contentScrollWidth = $state(0);
+
+  const responsiveScale = $derived.by(() => {
+    if (widthMode !== 'responsive' || containerWidth <= 0 || contentScrollWidth <= 0) {
+      return 1;
+    }
+    // Scale down to fit content within container
+    const scale = Math.min(1, containerWidth / contentScrollWidth);
+    // Don't scale below 0.6 (text becomes unreadable)
+    return Math.max(0.6, scale);
+  });
+
+  // ResizeObserver for content height/width detection
+  $effect(() => {
+    if (!containerRef) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        contentHeight = entry.target.scrollHeight;
+        contentScrollWidth = entry.target.scrollWidth;
+        containerWidth = entry.contentRect.width;
+      }
+    });
+
+    observer.observe(containerRef);
+    viewportHeight = window.innerHeight;
+
+    const handleResize = () => {
+      viewportHeight = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
   // Check if export is enabled (default true)
   const enableExport = $derived(spec?.interaction?.enableExport !== false);
 
@@ -193,11 +247,16 @@
       --wf-row-selected-opacity: ${ROW_SELECTED_OPACITY};
       --wf-row-selected-hover-opacity: ${ROW_SELECTED_HOVER_OPACITY};
       --wf-depth-base-opacity: ${DEPTH_BASE_OPACITY};
+      --wf-responsive-scale: ${responsiveScale};
     `.trim();
   });
 </script>
 
-<div class="webforest-container" style={cssVars}>
+<div
+  bind:this={containerRef}
+  class="webforest-container width-{widthMode} height-{effectiveHeightMode}"
+  style={cssVars}
+>
   {#if spec}
     <!-- Control toolbar (appears on hover) -->
     <ControlToolbar {store} {enableExport} />
@@ -717,9 +776,39 @@
     border: 1px solid var(--wf-border);
     border-radius: 8px;
     overflow: hidden;
-    max-height: 100vh;
     display: flex;
     flex-direction: column;
+  }
+
+  /* Width modes */
+  :global(.webforest-container.width-fit) {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  :global(.webforest-container.width-fill) {
+    width: 100%;
+  }
+
+  :global(.webforest-container.width-responsive) {
+    width: 100%;
+  }
+
+  :global(.webforest-container.width-responsive) .webforest-main {
+    transform: scale(var(--wf-responsive-scale, 1));
+    transform-origin: top left;
+  }
+
+  /* Height modes */
+  :global(.webforest-container.height-auto) {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  :global(.webforest-container.height-scroll) {
+    max-height: 100vh;
+    overflow-y: auto;
   }
 
   .webforest-main {

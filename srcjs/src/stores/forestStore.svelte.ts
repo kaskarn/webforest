@@ -40,6 +40,10 @@ export function createForestStore() {
   // Plot width override (for resizing the forest plot area)
   let plotWidthOverride = $state<number | null>(null);
 
+  // Layout mode state
+  let widthMode = $state<'fit' | 'fill' | 'responsive'>('fit');
+  let heightModeOverride = $state<'auto' | 'scroll' | null>(null);
+
   // Derived: visible rows (all rows after filter/sort, but NOT collapsed filtering)
   // Collapsed filtering is handled by displayRows for proper group header display
   const visibleRows = $derived.by(() => {
@@ -437,6 +441,25 @@ export function createForestStore() {
     };
   }
 
+  // Layout mode controls
+  function setWidthMode(mode: 'fit' | 'fill' | 'responsive') {
+    widthMode = mode;
+  }
+
+  function toggleWidthMode() {
+    const modes: Array<'fit' | 'fill' | 'responsive'> = ['fit', 'fill', 'responsive'];
+    const currentIndex = modes.indexOf(widthMode);
+    widthMode = modes[(currentIndex + 1) % modes.length];
+  }
+
+  function setHeightMode(mode: 'auto' | 'scroll') {
+    heightModeOverride = mode;
+  }
+
+  function toggleHeightMode() {
+    heightModeOverride = heightModeOverride === 'scroll' ? 'auto' : 'scroll';
+  }
+
   // Derived: tooltip row
   const tooltipRow = $derived.by((): Row | null => {
     if (!tooltipRowId || !spec) return null;
@@ -496,6 +519,12 @@ export function createForestStore() {
     get columnWidths() {
       return columnWidths;
     },
+    get widthMode() {
+      return widthMode;
+    },
+    get heightModeOverride() {
+      return heightModeOverride;
+    },
     getRowDepth,
     getColumnWidth,
     getPlotWidth,
@@ -513,6 +542,10 @@ export function createForestStore() {
     setPlotWidth,
     setTheme,
     toggleForestView,
+    setWidthMode,
+    toggleWidthMode,
+    setHeightMode,
+    toggleHeightMode,
   };
 }
 

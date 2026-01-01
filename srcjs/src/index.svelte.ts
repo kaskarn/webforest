@@ -48,9 +48,17 @@ const binding: HTMLWidgetsBinding = {
     }
 
     return {
-      renderValue: (x: WebSpec) => {
+      renderValue: (x: WebSpec & { widthMode?: 'fit' | 'fill' | 'responsive'; heightMode?: 'auto' | 'scroll' }) => {
         store.setSpec(x);
         store.setDimensions(width, height);
+
+        // Apply initial layout modes from R
+        if (x.widthMode) {
+          store.setWidthMode(x.widthMode);
+        }
+        if (x.heightMode) {
+          store.setHeightMode(x.heightMode);
+        }
 
         if (component) {
           unmount(component);

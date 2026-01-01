@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ForestStore } from "$stores/forestStore.svelte";
+  import LayoutToggle from "./LayoutToggle.svelte";
   import ThemeSwitcher from "./ThemeSwitcher.svelte";
   import ViewToggle from "./ViewToggle.svelte";
   import DownloadButton from "./DownloadButton.svelte";
@@ -9,6 +10,7 @@
     enableExport?: boolean;
     enableThemeSwitcher?: boolean;
     enableViewToggle?: boolean;
+    enableLayoutToggle?: boolean;
   }
 
   let {
@@ -16,10 +18,14 @@
     enableExport = true,
     enableThemeSwitcher = true,
     enableViewToggle = true,
+    enableLayoutToggle = true,
   }: Props = $props();
 </script>
 
 <div class="control-toolbar">
+  {#if enableLayoutToggle}
+    <LayoutToggle {store} />
+  {/if}
   {#if enableThemeSwitcher}
     <ThemeSwitcher {store} />
   {/if}

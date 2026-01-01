@@ -12,6 +12,8 @@ forest_plot(
   axis_gridlines = NULL,
   plot_position = NULL,
   row_height = NULL,
+  width_mode = c("fit", "fill", "responsive"),
+  height_mode = c("auto", "scroll"),
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -33,6 +35,10 @@ Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{
 \item{plot_position}{"left" or "right" to override plot position from theme}
 
 \item{row_height}{Numeric row height in pixels (overrides theme)}
+
+\item{width_mode}{Layout width mode: "fit" (shrink-wrap, default), "fill" (100\%), or "responsive" (100\% with scaling)}
+
+\item{height_mode}{Layout height mode: "auto" (natural height) or "scroll" (scroll if > viewport)}
 
 \item{width}{Widget width (default NULL for auto)}
 
