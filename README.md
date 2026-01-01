@@ -49,6 +49,7 @@ forest_plot(data,
 - **Hierarchical grouping** — collapsible nested subgroups with summaries
 - **Row styling** — headers, spacers, bold/italic, indentation, custom colors
 - **Interactivity** — hover, selection, tooltips, sorting, column resize
+- **Layout controls** — fit/fill/responsive width modes; auto/scroll height modes
 - **Export** — `save_plot()` for SVG/PDF/PNG; download button in widget toolbar
 - **Fully customizable** — fluent API for theme, axis, and layout control
 

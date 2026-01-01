@@ -4,6 +4,12 @@
 
 ### New Features
 
+* **Layout mode controls**: New toolbar button and R parameters for controlling plot container sizing:
+  - `width_mode`: "fit" (shrink-wrap, default), "fill" (100%), or "responsive" (100% with font scaling)
+  - `height_mode`: "auto" (natural height) or "scroll" (capped at viewport height)
+  - Interactive dropdown in toolbar to switch modes on the fly
+  - Responsive mode scales text down (min 0.6x) to fit wide plots without horizontal scroll
+
 * **Explicit row styling API**: New `row_*` parameters in `forest_plot()`/`web_spec()` replace magic `.row_*` column naming convention. Use any column name and map it explicitly:
   - `row_type`, `row_bold`, `row_italic`, `row_indent`, `row_color`, `row_bg`, `row_badge`, `row_icon`
   - Example: `forest_plot(data, row_bold = "is_primary", row_badge = "sig_label")`
