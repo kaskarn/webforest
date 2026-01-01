@@ -1,0 +1,439 @@
+---
+title: "Troubleshooting"
+---
+
+```{r}
+#| include: false
+library(webforest)
+library(dplyr)
+```
+
+This guide covers common issues and their solutions when using webforest.
+
+## Quick Diagnostic Checklist
+
+When something isn't working:
+
+1. **Check column names** - Are they spelled correctly and exist in the data?
+2. **Check data types** - Are numeric columns actually numeric?
+3. **Check for NAs** - Are there unexpected missing values?
+4. **Check scale** - Using `scale = "log"` with non-positive values?
+5. **Check dependencies** - Is V8 installed for exports?
+
+## Data Issues
+
+### "Column not found in data"
+
+**Symptom:** Error message about missing column.
+
+**Cause:** Column name typo or the column doesn't exist.
+
+**Solution:**
+```{r}
+#| eval: false
+# Check what columns exist
+names(your_data)
+
+# Common mistake: using wrong case
+forest_plot(data, point = "HR", ...)  # Wrong: "HR"
+forest_plot(data, point = "hr", ...)  # Correct: "hr"
+```
+
+### Unexpected NAs in Plot
+
+**Symptom:** Rows appear without intervals or with missing values.
+
+**Cause:** Columns contain NA values or wrong data types.
+
+**Solution:**
+```{r}
+#| eval: false
+# Check for NAs
+summary(your_data)
+
+# Check column types - character columns won't work for numeric fields
+sapply(your_data, class)
+
+# Fix character columns that should be numeric
+your_data$hr <- as.numeric(your_data$hr)
+```
+
+### Groups Not Displaying Correctly
+
+**Symptom:** Hierarchical groups appear flat or have wrong nesting.
+
+**Cause:** Group column contains unexpected values or ID collisions.
+
+**Solution:**
+```{r}
+#| eval: false
+# Check unique group values
+table(your_data$region)
+table(your_data$subregion)
+
+# Ensure nested groups have consistent parent values
+your_data |>
+  group_by(region, subregion) |>
+  count()
+```
+
+### Data Rows Mixed with Headers
+
+**Symptom:** Header rows show intervals, or data rows appear as headers.
+
+**Cause:** `row_type` column has incorrect values.
+
+**Solution:**
+```{r}
+#| eval: false
+# Valid row_type values
+valid_types <- c("header", "data", "summary", "spacer")
+
+# Check your values
+your_data |>
+  count(row_type)
+
+# Ensure header/spacer rows have NA for estimates
+your_data <- your_data |>
+  mutate(
+    hr = if_else(row_type %in% c("header", "spacer"), NA_real_, hr),
+    lower = if_else(row_type %in% c("header", "spacer"), NA_real_, lower),
+    upper = if_else(row_type %in% c("header", "spacer"), NA_real_, upper)
+  )
+```
+
+## Scale and Axis Issues
+
+### Log Scale with Non-Positive Values
+
+**Symptom:** Error or unexpected axis range when using `scale = "log"`.
+
+**Cause:** Data contains zero or negative values, which are undefined on log scale.
+
+**Solution:**
+```{r}
+#| eval: false
+# Find problematic rows
+your_data |>
+  filter(hr <= 0 | lower <= 0 | upper <= 0)
+
+# Option 1: Filter out invalid rows
+valid_data <- your_data |>
+  filter(hr > 0, lower > 0, upper > 0)
+
+# Option 2: Use linear scale instead
+forest_plot(your_data, ..., scale = "linear", null_value = 0)
+```
+
+### Axis Range Too Wide
+
+**Symptom:** Data points are compressed into a small portion of the axis.
+
+**Cause:** Outliers or automatic axis calculation including extreme values.
+
+**Solution:**
+```{r}
+#| eval: false
+# Check data range
+range(your_data$hr, na.rm = TRUE)
+range(your_data$lower, na.rm = TRUE)
+range(your_data$upper, na.rm = TRUE)
+
+# Option 1: Override axis range
+forest_plot(your_data, ...,
+  axis_range = c(0.5, 2.0)  # Focus on relevant range
+)
+
+# Option 2: Filter outliers
+filtered <- your_data |>
+  filter(between(hr, 0.3, 3))
+```
+
+### Axis Range Too Narrow
+
+**Symptom:** Confidence intervals extend beyond axis bounds.
+
+**Cause:** Manual axis range doesn't accommodate all data.
+
+**Solution:**
+```{r}
+#| eval: false
+# Find the actual data extent
+min_val <- min(your_data$lower, na.rm = TRUE)
+max_val <- max(your_data$upper, na.rm = TRUE)
+message("Data range: ", round(min_val, 2), " to ", round(max_val, 2))
+
+# Adjust axis_range to include all data
+forest_plot(your_data, ...,
+  axis_range = c(min_val * 0.9, max_val * 1.1)
+)
+```
+
+### Tick Marks Not Appearing
+
+**Symptom:** Axis shows but has no tick marks or unexpected tick positions.
+
+**Solution:**
+```{r}
+#| eval: false
+# Specify explicit tick positions
+forest_plot(your_data, ...,
+  scale = "log",
+  axis_ticks = c(0.5, 0.7, 1, 1.5, 2)  # Explicit ticks
+)
+
+# Or use theme settings
+forest_plot(your_data, ...,
+  theme = web_theme_default() |>
+    set_axis(tick_count = 5, gridlines = TRUE)
+)
+```
+
+## Export Failures
+
+### V8 Not Installed
+
+**Symptom:** Error when calling `save_plot()`: "Package V8 is required"
+
+**Solution:**
+```{r}
+#| eval: false
+# Install V8
+install.packages("V8")
+
+# On some systems, you may need system libraries first:
+# macOS: brew install v8
+# Ubuntu: sudo apt-get install libv8-dev
+```
+
+### rsvg Issues
+
+**Symptom:** PDF/PNG export fails with rsvg errors.
+
+**Solution:**
+```{r}
+#| eval: false
+# Install rsvg
+install.packages("rsvg")
+
+# On macOS, you may need:
+# brew install librsvg
+
+# On Ubuntu:
+# sudo apt-get install librsvg2-dev
+```
+
+### "SVG generator JavaScript file not found"
+
+**Symptom:** Export fails with message about missing JS file.
+
+**Cause:** Package installation is incomplete.
+
+**Solution:**
+```{r}
+#| eval: false
+# Reinstall the package
+pak::pak("kaskarn/webforest", force = TRUE)
+
+# Verify installation
+system.file("js/svg-generator.js", package = "webforest")
+# Should return a path, not ""
+```
+
+### Colors Differ Between Display and Export
+
+**Symptom:** Exported SVG/PNG has different colors than the interactive widget.
+
+**Cause:** Theme not applied consistently to both.
+
+**Solution:**
+```{r}
+#| eval: false
+# Use the same theme for display and export
+my_theme <- web_theme_lancet()
+
+# Interactive
+forest_plot(data, ..., theme = my_theme)
+
+# Export
+spec <- web_spec(data, ..., theme = my_theme)
+save_plot(spec, "output.svg")
+```
+
+## Widget Rendering Issues
+
+### Blank Output in RStudio Viewer
+
+**Symptom:** Plot doesn't appear in RStudio's Viewer pane.
+
+**Cause:** Viewer pane size or rendering issues.
+
+**Solution:**
+```{r}
+#| eval: false
+# Try in browser instead
+plot <- forest_plot(your_data, ...)
+htmltools::browsable(plot)
+
+# Or save to file and open
+htmlwidgets::saveWidget(plot, "temp.html")
+browseURL("temp.html")
+```
+
+### Widget Not Sizing Correctly
+
+**Symptom:** Plot is too small, cut off, or doesn't fill container.
+
+**Solution:**
+```{r}
+#| eval: false
+# Specify explicit dimensions
+forest_plot(your_data, ...,
+  width = 900,
+  height = 600
+)
+
+# For Shiny, use CSS units
+forestOutput("plot", width = "100%", height = "600px")
+```
+
+### Shiny: Proxy Not Working
+
+**Symptom:** `forestProxy()` calls don't update the plot.
+
+**Cause:** Proxy created outside reactive context.
+
+**Solution:**
+```{r}
+#| eval: false
+# Wrong: proxy at top level
+# proxy <- forestProxy("forest")  # This will fail!
+
+# Correct: proxy inside reactive context
+observeEvent(input$button, {
+  proxy <- forestProxy("forest")
+  forest_sort(proxy, "hr", "asc")
+})
+```
+
+## Theme and Styling Issues
+
+### Styles Not Applying
+
+**Symptom:** Bold, color, or other styles don't appear.
+
+**Cause:** Passing values directly instead of column names.
+
+**Solution:**
+```{r}
+#| eval: false
+# Wrong: passing values directly
+col_numeric("hr", bold = TRUE, color = "#ff0000")
+
+# Correct: passing column names that contain the values
+col_numeric("hr", bold = "is_bold", color = "hr_color")
+
+# The data must have these columns:
+data <- data |>
+  mutate(
+    is_bold = pval < 0.05,
+    hr_color = if_else(hr < 1, "#16a34a", "#dc2626")
+  )
+```
+
+### Font Not Loading
+
+**Symptom:** Text appears in wrong font.
+
+**Cause:** Custom font not available on system.
+
+**Solution:**
+```{r}
+#| eval: false
+# Use web-safe fallback fonts
+web_theme_default() |>
+  set_typography(
+    font_family = "Georgia, 'Times New Roman', serif"
+  )
+
+# For exports, fonts must be installed on the rendering system
+```
+
+## Debug Patterns
+
+### Inspecting WebSpec
+
+```{r}
+# Create spec without rendering
+spec <- web_spec(
+  data.frame(
+    study = c("A", "B"),
+    hr = c(0.8, 1.2),
+    lower = c(0.6, 0.9),
+    upper = c(1.1, 1.6)
+  ),
+  point = "hr", lower = "lower", upper = "upper", label = "study"
+)
+
+# Print summary
+print(spec)
+
+# Access components
+spec@data
+spec@columns
+spec@theme@name
+```
+
+### Check Export Output
+
+```{r}
+#| eval: false
+# Generate SVG and check structure
+save_plot(spec, "debug.svg")
+
+# Read and inspect the SVG
+svg_content <- readLines("debug.svg")
+head(svg_content, 20)
+```
+
+### Browser Developer Tools
+
+For debugging interactive widgets:
+
+1. Right-click the widget → "Inspect"
+2. Check Console tab for JavaScript errors
+3. Check Elements tab for DOM structure
+4. Check Network tab for failed resources
+
+### Minimal Reproducible Example
+
+When reporting issues, create a minimal example:
+
+```{r}
+#| eval: false
+# Minimal data that reproduces the problem
+test_data <- data.frame(
+  study = c("Test 1", "Test 2"),
+  hr = c(0.8, 1.2),
+  lower = c(0.6, 0.9),
+  upper = c(1.1, 1.6)
+)
+
+# Minimal code
+forest_plot(test_data,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study"
+)
+
+# Include session info
+sessionInfo()
+```
+
+## Getting Help
+
+If you've tried the above and still have issues:
+
+1. Check [GitHub Issues](https://github.com/kaskarn/webforest/issues) for similar problems
+2. Create a minimal reproducible example
+3. Include `sessionInfo()` output
+4. Open a new issue with your example and session info

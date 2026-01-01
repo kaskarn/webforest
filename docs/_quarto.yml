@@ -22,6 +22,15 @@ website:
             href: guide/exporting.qmd
           - text: "Axis & Annotations"
             href: guide/axis-annotations.qmd
+          - text: "---"
+          - text: "Data Preparation"
+            href: guide/data-preparation.qmd
+          - text: "Cell Styling"
+            href: guide/cell-styling.qmd
+          - text: "Shiny Integration"
+            href: guide/shiny.qmd
+          - text: "Troubleshooting"
+            href: guide/troubleshooting.qmd
       - text: "Cookbook"
         href: cookbook.qmd
       - text: "Gallery"
