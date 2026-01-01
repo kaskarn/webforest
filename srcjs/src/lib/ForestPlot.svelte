@@ -1021,7 +1021,7 @@
   }
 
   .row-band.band-group {
-    fill: color-mix(in srgb, var(--wf-primary) 8%, var(--wf-bg));
+    fill: color-mix(in srgb, var(--wf-primary) 5%, var(--wf-bg));
   }
 
   .row-band.band-depth-1 {
