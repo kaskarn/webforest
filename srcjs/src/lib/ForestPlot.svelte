@@ -605,7 +605,7 @@
 <script lang="ts" module>
   import type { Row, ColumnSpec, RowStyle, DisplayRow } from "$types";
 
-  // Get CSS class for SVG row banding
+  // Get CSS class for SVG row banding (must match getRowClasses logic for HTML table)
   function getRowBandClass(displayRow: DisplayRow, idx: number, hasGroups: boolean): string {
     if (displayRow.type === "group_header") {
       return "band-group";
@@ -620,11 +620,18 @@
       // Custom background (style.bg) handled via inline style on the rect
     }
 
+    // Depth-based banding for nested groups (matches HTML row-depth-X)
     if (hasGroups && displayRow.depth > 0) {
       return `band-depth-${Math.min(displayRow.depth, 4)}`;
     }
-    // Default alternating: odd rows get subtle background
-    return idx % 2 === 1 ? "band-odd" : "band-even";
+
+    // Default alternating banding only when no groups (matches HTML row-odd)
+    if (!hasGroups) {
+      return idx % 2 === 1 ? "band-odd" : "band-even";
+    }
+
+    // When hasGroups but depth === 0, no banding (matches HTML behavior)
+    return "";
   }
 
   function formatNumber(value: number | undefined): string {
