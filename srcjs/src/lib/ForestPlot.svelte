@@ -196,13 +196,14 @@
   }
 
   // Height style based on preset (must be inline to override htmlwidgets inline style)
+  // Use max-height for fixed presets so container doesn't fill with empty space
   const heightStyle = $derived.by(() => {
     switch (heightPreset) {
-      case 'small': return 'height: 400px; overflow-y: auto;';
-      case 'medium': return 'height: 600px; overflow-y: auto;';
-      case 'large': return 'height: 1000px; overflow-y: auto;';
-      case 'full': return 'height: auto; overflow: visible;';
-      case 'container': return 'height: 100%; overflow-y: auto;';
+      case 'small': return 'height: auto; max-height: 400px; overflow-y: auto;';
+      case 'medium': return 'height: auto; max-height: 600px; overflow-y: auto;';
+      case 'large': return 'height: auto; max-height: 1000px; overflow-y: auto;';
+      case 'full': return 'height: auto; max-height: none; overflow: visible;';
+      case 'container': return 'height: 100%; max-height: none; overflow-y: auto;';
       default: return '';
     }
   });
@@ -809,29 +810,34 @@
     transform-origin: top left;
   }
 
-  /* Height presets */
+  /* Height presets - use max-height so container doesn't fill with empty space */
   :global(.webforest-container.height-small) {
-    height: 400px;
+    height: auto;
+    max-height: 400px;
     overflow-y: auto;
   }
 
   :global(.webforest-container.height-medium) {
-    height: 600px;
+    height: auto;
+    max-height: 600px;
     overflow-y: auto;
   }
 
   :global(.webforest-container.height-large) {
-    height: 1000px;
+    height: auto;
+    max-height: 1000px;
     overflow-y: auto;
   }
 
   :global(.webforest-container.height-full) {
     height: auto;
+    max-height: none;
     overflow: visible;
   }
 
   :global(.webforest-container.height-container) {
     height: 100%;
+    max-height: none;
     overflow-y: auto;
   }
 
