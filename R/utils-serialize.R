@@ -174,13 +174,24 @@ serialize_column <- function(col) {
   }
 
   # Handle regular ColumnSpec
+  # Width can be: NA (NULL), numeric, or "auto"
+  width_val <- if (is.na(col@width[1])) {
+    NULL
+  } else if (identical(col@width, "auto")) {
+    "auto"
+  } else {
+    as.numeric(col@width)
+  }
+
   result <- list(
     id = col@id,
     header = col@header,
     field = col@field,
     type = col@type,
-    width = if (is.na(col@width)) NULL else col@width,
+    width = width_val,
     align = col@align,
+    headerAlign = if (is.na(col@header_align)) NULL else col@header_align,
+    wrap = col@wrap,
     position = col@position,
     sortable = col@sortable,
     isGroup = FALSE

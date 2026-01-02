@@ -132,8 +132,10 @@ export interface ColumnSpec {
   header: string;
   field: string;
   type: "text" | "numeric" | "interval" | "bar" | "pvalue" | "sparkline" | "custom";
-  width?: number | null;
+  width?: number | "auto" | null;  // "auto" for content-based width calculation
   align: "left" | "center" | "right";
+  headerAlign?: "left" | "center" | "right" | null;  // Header alignment (defaults to align if not specified)
+  wrap?: boolean;  // Enable text wrapping (default false)
   position: "left" | "right";
   sortable: boolean;
   options?: ColumnOptions;

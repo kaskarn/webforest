@@ -963,6 +963,11 @@ function renderInterval(
   const defaultLineColor = theme.colors.intervalLine;
   const whiskerHalf = SPACING.WHISKER_HALF_HEIGHT;
 
+  // Check if this is a summary row (should render diamond)
+  const isSummaryRow = row.style?.type === 'summary';
+  const diamondHeight = theme.shapes.summaryHeight;
+  const halfDiamondHeight = diamondHeight / 2;
+
   // Render each effect
   const parts: string[] = [];
   validEffects.forEach((effect, idx) => {
@@ -980,20 +985,36 @@ function renderInterval(
           ? theme.colors.intervalNegative
           : theme.colors.muted);
 
-    parts.push(`
-      <g class="interval effect-${idx}">
-        <!-- CI line -->
-        <line x1="${x1}" x2="${x2}" y1="${effectY}" y2="${effectY}"
-          stroke="${lineColor}" stroke-width="${lineWidth}"/>
-        <!-- Whiskers -->
-        <line x1="${x1}" x2="${x1}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}"
-          stroke="${lineColor}" stroke-width="${lineWidth}"/>
-        <line x1="${x2}" x2="${x2}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}"
-          stroke="${lineColor}" stroke-width="${lineWidth}"/>
-        <!-- Point -->
-        <rect x="${cx - pointSize}" y="${effectY - pointSize}"
-          width="${pointSize * 2}" height="${pointSize * 2}" fill="${pointColor}"/>
-      </g>`);
+    if (isSummaryRow) {
+      // Summary row: render diamond shape spanning lower to upper
+      const diamondPoints = [
+        `${x1},${effectY}`,
+        `${cx},${effectY - halfDiamondHeight}`,
+        `${x2},${effectY}`,
+        `${cx},${effectY + halfDiamondHeight}`
+      ].join(' ');
+      parts.push(`
+        <g class="interval effect-${idx} summary">
+          <polygon points="${diamondPoints}"
+            fill="${theme.colors.summaryFill}" stroke="${theme.colors.summaryBorder}" stroke-width="1"/>
+        </g>`);
+    } else {
+      // Regular row: CI line with whiskers and square point
+      parts.push(`
+        <g class="interval effect-${idx}">
+          <!-- CI line -->
+          <line x1="${x1}" x2="${x2}" y1="${effectY}" y2="${effectY}"
+            stroke="${lineColor}" stroke-width="${lineWidth}"/>
+          <!-- Whiskers -->
+          <line x1="${x1}" x2="${x1}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}"
+            stroke="${lineColor}" stroke-width="${lineWidth}"/>
+          <line x1="${x2}" x2="${x2}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}"
+            stroke="${lineColor}" stroke-width="${lineWidth}"/>
+          <!-- Point -->
+          <rect x="${cx - pointSize}" y="${effectY - pointSize}"
+            width="${pointSize * 2}" height="${pointSize * 2}" fill="${pointColor}"/>
+        </g>`);
+    }
   });
 
   return parts.join("");
@@ -1258,8 +1279,11 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       }
     });
 
-    // Overall summary diamond
-    if (spec.data.overall && layout.showOverallSummary) {
+    // Overall summary diamond (with validation)
+    if (spec.data.overall && layout.showOverallSummary &&
+        typeof spec.data.overall.point === 'number' && !Number.isNaN(spec.data.overall.point) &&
+        typeof spec.data.overall.lower === 'number' && !Number.isNaN(spec.data.overall.lower) &&
+        typeof spec.data.overall.upper === 'number' && !Number.isNaN(spec.data.overall.upper)) {
       const diamondY = plotY + layout.summaryYPosition;
       parts.push(renderDiamond(
         spec.data.overall.point,

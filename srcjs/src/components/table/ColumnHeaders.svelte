@@ -144,7 +144,7 @@
         <div
           class="webforest-col header-cell group-row"
           style:grid-row="1 / 3"
-          style:text-align={col.align}
+          style:text-align={col.headerAlign ?? col.align}
         >
           <span class="header-text">{col.header}</span>
           {#if enableResize && store}
@@ -165,7 +165,7 @@
           {#if !subCol.isGroup}
             <div
               class="webforest-col header-cell column-row"
-              style:text-align={subCol.align}
+              style:text-align={subCol.headerAlign ?? subCol.align}
             >
               <span class="header-text">{subCol.header}</span>
               {#if enableResize && store}
@@ -204,7 +204,7 @@
       <div
         class="webforest-col"
         style:width={getColWidth(column) ? `${getColWidth(column)}px` : "auto"}
-        style:text-align={column.align}
+        style:text-align={column.headerAlign ?? column.align}
       >
         <span class="header-text">{column.header}</span>
         {#if enableResize && store}

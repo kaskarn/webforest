@@ -1,5 +1,23 @@
 # webforest (development version)
 
+## 0.0.0.9005
+
+### New Features
+
+* **Height presets**: New `height_preset` parameter with explicit size options: `"small"` (200px), `"medium"` (400px), `"large"` (600px), `"full"` (natural height), `"container"` (fill parent). Deprecates `height_mode`.
+
+* **Column enhancements**:
+  - `header_align`: Independent header vs body alignment
+  - `wrap = TRUE`: Text wrapping instead of truncation
+  - `width = "auto"`: Content-based width calculation
+  - Truncation tooltips on hover
+
+### Improvements
+
+* Increased default column widths (`col_text` 80→120px, `col_interval` 140→160px)
+* Better annotation label collision avoidance
+* Fixed gallery_07 example column positioning
+
 ## 0.0.0.9004
 
 ### New Features

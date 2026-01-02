@@ -7,7 +7,8 @@
 #' @param field Data field name to display
 #' @param type Column type: "text", "numeric", "interval", "bar", "pvalue", "sparkline", "custom"
 #' @param width Column width in pixels (NA for auto)
-#' @param align Text alignment: "left", "center", "right"
+#' @param align Text alignment for body cells: "left", "center", "right"
+#' @param header_align Text alignment for header: "left", "center", "right" (NA to inherit from align)
 #' @param position Column position relative to plot: "left" or "right"
 #' @param sortable Whether the column is sortable
 #' @param options Named list of type-specific options
@@ -26,8 +27,10 @@ ColumnSpec <- new_class(
     header = class_character,
     field = class_character,
     type = new_property(class_character, default = "text"),
-    width = new_property(class_numeric, default = NA_real_),
+    width = new_property(class_any, default = NA_real_),  # numeric or "auto"
     align = new_property(class_character, default = "left"),
+    header_align = new_property(class_character, default = NA_character_),
+    wrap = new_property(class_logical, default = FALSE),  # Enable text wrapping
     position = new_property(class_character, default = "left"),
     sortable = new_property(class_logical, default = TRUE),
     options = new_property(class_list, default = list()),
@@ -45,9 +48,19 @@ ColumnSpec <- new_class(
       return(paste("type must be one of:", paste(valid_types, collapse = ", ")))
     }
 
+    # Validate width: must be NA, numeric, or "auto"
+    if (!is.na(self@width) && !is.numeric(self@width) && !identical(self@width, "auto")) {
+      return("width must be numeric or \"auto\"")
+    }
+
     valid_aligns <- c("left", "center", "right")
     if (!self@align %in% valid_aligns) {
       return(paste("align must be one of:", paste(valid_aligns, collapse = ", ")))
+    }
+
+    # Validate header_align if provided (not NA)
+    if (!is.na(self@header_align) && !self@header_align %in% valid_aligns) {
+      return(paste("header_align must be one of:", paste(valid_aligns, collapse = ", ")))
     }
 
     valid_positions <- c("left", "right")
@@ -64,8 +77,11 @@ ColumnSpec <- new_class(
 #' @param field Data field name to display
 #' @param header Display header (defaults to field name)
 #' @param type Column type
-#' @param width Column width in pixels
-#' @param align Text alignment
+#' @param width Column width in pixels, or "auto" for content-based width
+#' @param align Text alignment for body cells
+#' @param header_align Text alignment for header (NULL to inherit from align)
+#' @param wrap Enable text wrapping (default FALSE). When TRUE, long text wraps
+#'   instead of being truncated with ellipsis.
 #' @param position Column position: "left" or "right" of the forest plot
 #' @param sortable Whether sortable
 #' @param options Named list of type-specific options
@@ -84,6 +100,8 @@ web_col <- function(
     type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline", "custom"),
     width = NULL,
     align = NULL,
+    header_align = NULL,
+    wrap = FALSE,
     position = c("left", "right"),
     sortable = TRUE,
     options = list(),
@@ -104,13 +122,24 @@ web_col <- function(
     align <- if (type %in% c("numeric", "pvalue", "bar")) "right" else "left"
   }
 
+  # Handle width: NULL → NA, "auto" → "auto", numeric → numeric
+  width_val <- if (is.null(width)) {
+    NA_real_
+  } else if (identical(width, "auto")) {
+    "auto"
+  } else {
+    as.numeric(width)
+  }
+
   ColumnSpec(
     id = field,
     header = header,
     field = field,
     type = type,
-    width = if (is.null(width)) NA_real_ else width,
+    width = width_val,
     align = align,
+    header_align = header_align %||% NA_character_,
+    wrap = wrap,
     position = position,
     sortable = sortable,
     options = options,
@@ -131,12 +160,12 @@ web_col <- function(
 #'
 #' @param field Field name
 #' @param header Column header
-#' @param width Column width in pixels (default 80)
+#' @param width Column width in pixels (default 120)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
-col_text <- function(field, header = NULL, width = 80, ...) {
+col_text <- function(field, header = NULL, width = 120, ...) {
   web_col(field, header, type = "text", width = width, ...)
 }
 
@@ -144,12 +173,12 @@ col_text <- function(field, header = NULL, width = 80, ...) {
 #'
 #' @param field Field name
 #' @param header Column header
-#' @param width Column width in pixels (default 80)
+#' @param width Column width in pixels (default 90)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
-col_numeric <- function(field, header = NULL, width = 80, ...) {
+col_numeric <- function(field, header = NULL, width = 90, ...) {
   web_col(field, header, type = "numeric", width = width, ...)
 }
 
@@ -157,24 +186,24 @@ col_numeric <- function(field, header = NULL, width = 80, ...) {
 #'
 #' @param field Field name (default "n")
 #' @param header Column header (default "N")
-#' @param width Column width in pixels (default 70)
+#' @param width Column width in pixels (default 80)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
-col_n <- function(field = "n", header = "N", width = 70, ...) {
+col_n <- function(field = "n", header = "N", width = 80, ...) {
   web_col(field, header, type = "numeric", width = width, ...)
 }
 
 #' Column helper: Interval display (e.g., "1.2 (0.9, 1.5)")
 #'
 #' @param header Column header
-#' @param width Column width in pixels (default 140)
+#' @param width Column width in pixels (default 160)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
-col_interval <- function(header = "95% CI", width = 140, ...) {
+col_interval <- function(header = "95% CI", width = 160, ...) {
   web_col("_interval", header, type = "interval", width = width, ...)
 }
 

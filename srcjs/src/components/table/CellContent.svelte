@@ -22,6 +22,7 @@
   class:cell-italic={isItalic}
   style:color={textColor}
   style:background-color={bgColor}
+  title={String(value ?? "")}
 >
   {#if hasIcon}<span class="cell-icon">{cellStyle?.icon}</span>{/if}
   <span class="cell-value">{value ?? ""}</span>

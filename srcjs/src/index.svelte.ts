@@ -48,7 +48,11 @@ const binding: HTMLWidgetsBinding = {
     }
 
     return {
-      renderValue: (x: WebSpec & { widthMode?: 'fit' | 'fill' | 'responsive'; heightMode?: 'auto' | 'scroll' }) => {
+      renderValue: (x: WebSpec & {
+        widthMode?: 'fit' | 'fill' | 'responsive';
+        heightPreset?: 'small' | 'medium' | 'large' | 'full' | 'container';
+        heightMode?: 'auto' | 'scroll';  // Deprecated, kept for backwards compatibility
+      }) => {
         store.setSpec(x);
         store.setDimensions(width, height);
 
@@ -56,8 +60,12 @@ const binding: HTMLWidgetsBinding = {
         if (x.widthMode) {
           store.setWidthMode(x.widthMode);
         }
-        if (x.heightMode) {
-          store.setHeightMode(x.heightMode);
+        // New height preset system
+        if (x.heightPreset) {
+          store.setHeightPreset(x.heightPreset);
+        } else if (x.heightMode) {
+          // Backwards compatibility: map old heightMode to new heightPreset
+          store.setHeightPreset(x.heightMode === 'auto' ? 'full' : 'medium');
         }
 
         if (component) {

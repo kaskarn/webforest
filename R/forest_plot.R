@@ -17,7 +17,9 @@
 #' @param plot_position "left" or "right" to override plot position from theme
 #' @param row_height Numeric row height in pixels (overrides theme)
 #' @param width_mode Layout width mode: "fit" (shrink-wrap, default), "fill" (100%), or "responsive" (100% with scaling)
-#' @param height_mode Layout height mode: "auto" (natural height) or "scroll" (scroll if > viewport)
+#' @param height_preset Layout height preset: "small" (200px), "medium" (400px), "large" (600px),
+#'   "full" (natural height, no constraint), or "container" (fill parent). Default is "full".
+#' @param height_mode Deprecated. Use `height_preset` instead.
 #' @param width Widget width (default NULL for auto)
 #' @param height Widget height (default NULL for auto)
 #' @param elementId HTML element ID (optional)
@@ -73,15 +75,27 @@ forest_plot <- function(
     plot_position = NULL,
     row_height = NULL,
     width_mode = c("fit", "fill", "responsive"),
-    height_mode = c("auto", "scroll"),
+    height_preset = c("full", "small", "medium", "large", "container"),
+    height_mode = NULL,
     width = NULL,
     height = NULL,
     elementId = NULL) {
 
   # Validate layout mode arguments
-
   width_mode <- match.arg(width_mode)
-  height_mode <- match.arg(height_mode)
+
+  # Handle deprecated height_mode parameter
+
+  if (!is.null(height_mode)) {
+    cli::cli_warn(c(
+      "{.arg height_mode} is deprecated.",
+      "i" = "Use {.arg height_preset} instead.",
+      "i" = 'Mapping "{height_mode}" to "{if (height_mode == "auto") "full" else "medium"}".'
+    ))
+    height_preset <- if (height_mode == "auto") "full" else "medium"
+  } else {
+    height_preset <- match.arg(height_preset)
+  }
 
   # Handle WebSpec or raw data
   if (inherits(x, "webforest::WebSpec")) {
@@ -115,7 +129,7 @@ forest_plot <- function(
 
   # Add layout mode settings
   payload$widthMode <- width_mode
-  payload$heightMode <- height_mode
+  payload$heightPreset <- height_preset
 
   # Create widget
   widget <- htmlwidgets::createWidget(

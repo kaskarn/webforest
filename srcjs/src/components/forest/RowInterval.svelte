@@ -84,6 +84,13 @@
     )
   );
 
+  // Check if this is a summary row (should render diamond instead of square)
+  const isSummaryRow = $derived(row.style?.type === 'summary');
+
+  // Diamond height for summary rows
+  const diamondHeight = $derived(theme?.shapes.summaryHeight ?? 10);
+  const halfDiamondHeight = $derived(diamondHeight / 2);
+
   // Point size scaled by weight if available
   const pointSize = $derived.by(() => {
     const baseSize = theme?.shapes.pointSize ?? 6;
@@ -135,43 +142,61 @@
         {@const color = getEffectColor(effect)}
         {@const lineColor = effect.color ?? "var(--wf-interval-line, #475569)"}
 
-        <!-- CI line -->
-        <line
-          {x1}
-          {x2}
-          y1={effectY}
-          y2={effectY}
-          stroke={lineColor}
-          stroke-width={theme?.shapes.lineWidth ?? 1.5}
-        />
+        {#if isSummaryRow}
+          <!-- Summary row: render diamond shape spanning lower to upper -->
+          {@const diamondPoints = [
+            `${x1},${effectY}`,           // left (lower)
+            `${cx},${effectY - halfDiamondHeight}`,  // top (point)
+            `${x2},${effectY}`,           // right (upper)
+            `${cx},${effectY + halfDiamondHeight}`   // bottom (point)
+          ].join(' ')}
+          <polygon
+            points={diamondPoints}
+            fill="var(--wf-summary-fill, #2563eb)"
+            stroke="var(--wf-summary-border, #1d4ed8)"
+            stroke-width="1"
+            class="point-estimate"
+          />
+        {:else}
+          <!-- Regular row: CI line with whiskers and square point -->
+          <!-- CI line -->
+          <line
+            {x1}
+            {x2}
+            y1={effectY}
+            y2={effectY}
+            stroke={lineColor}
+            stroke-width={theme?.shapes.lineWidth ?? 1.5}
+          />
 
-        <!-- CI whiskers (caps) -->
-        <line
-          x1={x1}
-          x2={x1}
-          y1={effectY - 4}
-          y2={effectY + 4}
-          stroke={lineColor}
-          stroke-width={theme?.shapes.lineWidth ?? 1.5}
-        />
-        <line
-          x1={x2}
-          x2={x2}
-          y1={effectY - 4}
-          y2={effectY + 4}
-          stroke={lineColor}
-          stroke-width={theme?.shapes.lineWidth ?? 1.5}
-        />
+          <!-- CI whiskers (caps) -->
+          <line
+            x1={x1}
+            x2={x1}
+            y1={effectY - 4}
+            y2={effectY + 4}
+            stroke={lineColor}
+            stroke-width={theme?.shapes.lineWidth ?? 1.5}
+          />
+          <line
+            x1={x2}
+            x2={x2}
+            y1={effectY - 4}
+            y2={effectY + 4}
+            stroke={lineColor}
+            stroke-width={theme?.shapes.lineWidth ?? 1.5}
+          />
 
-        <!-- Point estimate (square) -->
-        <rect
-          x={cx - pointSize}
-          y={effectY - pointSize}
-          width={pointSize * 2}
-          height={pointSize * 2}
-          fill={color}
-          class="point-estimate"
-        />
+          <!-- Point estimate (square) -->
+          <rect
+            x={cx - pointSize}
+            y={effectY - pointSize}
+            width={pointSize * 2}
+            height={pointSize * 2}
+            fill={color}
+            class="point-estimate"
+          />
+        {/if}
       {/if}
     {/each}
   </g>

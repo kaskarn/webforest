@@ -50,17 +50,10 @@
 
   // Layout mode state
   const widthMode = $derived(store.widthMode);
-  const heightModeOverride = $derived(store.heightModeOverride);
+  const heightPreset = $derived(store.heightPreset);
 
-  // Container ref for height detection
+  // Container ref for responsive mode width detection
   let containerRef: HTMLDivElement | undefined = $state();
-  let contentHeight = $state(0);
-  let viewportHeight = $state(typeof window !== 'undefined' ? window.innerHeight : 800);
-
-  // Determine effective height mode (auto-detect or user override)
-  const effectiveHeightMode = $derived(
-    heightModeOverride ?? (contentHeight > viewportHeight ? 'scroll' : 'auto')
-  );
 
   // Responsive mode: compute scale factor when content is wider than container
   let containerWidth = $state(0);
@@ -76,29 +69,21 @@
     return Math.max(0.6, scale);
   });
 
-  // ResizeObserver for content height/width detection
+  // ResizeObserver for responsive mode width detection
   $effect(() => {
     if (!containerRef) return;
 
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        contentHeight = entry.target.scrollHeight;
         contentScrollWidth = entry.target.scrollWidth;
         containerWidth = entry.contentRect.width;
       }
     });
 
     observer.observe(containerRef);
-    viewportHeight = window.innerHeight;
-
-    const handleResize = () => {
-      viewportHeight = window.innerHeight;
-    };
-    window.addEventListener('resize', handleResize);
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('resize', handleResize);
     };
   });
 
@@ -127,7 +112,10 @@
       .sort((a, b) => a.x - b.x);
 
     const offsets: Record<string, number> = {};
-    const MIN_LABEL_SPACING = 60; // Minimum pixels between labels
+    // Labels are center-anchored, so we need generous spacing to avoid overlap
+    // A 100px label extends 50px in each direction from its anchor point
+    const MIN_LABEL_SPACING = 120;
+    const STAGGER_OFFSET = -18; // Move labels up by ~1.5 line heights
 
     for (let i = 0; i < labeledAnnotations.length; i++) {
       const current = labeledAnnotations[i];
@@ -139,7 +127,7 @@
         const xDiff = current.x - prev.x;
         if (xDiff < MIN_LABEL_SPACING) {
           // Alternate labels above/below to avoid overlap
-          offsets[current.id] = offsets[prev.id] === 0 ? -12 : 0;
+          offsets[current.id] = offsets[prev.id] === 0 ? STAGGER_OFFSET : 0;
         }
       }
     }
@@ -207,10 +195,23 @@
     document.removeEventListener("pointerup", stopPlotResize);
   }
 
+  // Height style based on preset (must be inline to override htmlwidgets inline style)
+  const heightStyle = $derived.by(() => {
+    switch (heightPreset) {
+      case 'small': return 'height: 200px; overflow-y: auto;';
+      case 'medium': return 'height: 400px; overflow-y: auto;';
+      case 'large': return 'height: 600px; overflow-y: auto;';
+      case 'full': return 'height: auto; overflow: visible;';
+      case 'container': return 'height: 100%; overflow-y: auto;';
+      default: return '';
+    }
+  });
+
   // CSS variable style string (includes shared rendering constants for consistency)
   const cssVars = $derived.by(() => {
-    if (!theme) return "";
+    if (!theme) return heightStyle;
     return `
+      ${heightStyle}
       --wf-bg: ${theme.colors.background};
       --wf-fg: ${theme.colors.foreground};
       --wf-primary: ${theme.colors.primary};
@@ -254,7 +255,7 @@
 
 <div
   bind:this={containerRef}
-  class="webforest-container width-{widthMode} height-{effectiveHeightMode}"
+  class="webforest-container width-{widthMode} height-{heightPreset}"
   style={cssVars}
 >
   {#if spec}
@@ -317,6 +318,7 @@
                 style:padding-left={effectiveIndent ? `${effectiveIndent * 12}px` : undefined}
                 style:width={getLabelWidth()}
                 style:flex={getLabelFlex()}
+                title={row.label}
               >
                 {#if row.style?.icon}<span class="row-icon">{row.style.icon}</span>{/if}
                 {row.label}
@@ -326,6 +328,7 @@
                 {@const cellStyle = getCellStyle(row, column)}
                 <div
                   class="webforest-col"
+                  class:wrap-enabled={column.wrap}
                   style:width={getColWidth(column)}
                   style:text-align={column.align}
                 >
@@ -497,7 +500,10 @@
             {/each}
 
             <!-- Overall summary diamond -->
-            {#if spec.data.overall && layout.showOverallSummary}
+            {#if spec.data.overall && layout.showOverallSummary &&
+                 typeof spec.data.overall.point === 'number' && !Number.isNaN(spec.data.overall.point) &&
+                 typeof spec.data.overall.lower === 'number' && !Number.isNaN(spec.data.overall.lower) &&
+                 typeof spec.data.overall.upper === 'number' && !Number.isNaN(spec.data.overall.upper)}
               <SummaryDiamond
                 point={spec.data.overall.point}
                 lower={spec.data.overall.lower}
@@ -553,6 +559,7 @@
                   {@const cellStyle = getCellStyle(row, column)}
                   <div
                     class="webforest-col"
+                    class:wrap-enabled={column.wrap}
                     style:width={getColWidth(column)}
                     style:text-align={column.align}
                   >
@@ -802,15 +809,29 @@
     transform-origin: top left;
   }
 
-  /* Height modes */
-  :global(.webforest-container.height-auto) {
-    height: auto;
-    /* Use auto overflow so scrollbars appear if parent constrains height */
-    overflow: auto;
+  /* Height presets */
+  :global(.webforest-container.height-small) {
+    height: 200px;
+    overflow-y: auto;
   }
 
-  :global(.webforest-container.height-scroll) {
-    max-height: 100vh;
+  :global(.webforest-container.height-medium) {
+    height: 400px;
+    overflow-y: auto;
+  }
+
+  :global(.webforest-container.height-large) {
+    height: 600px;
+    overflow-y: auto;
+  }
+
+  :global(.webforest-container.height-full) {
+    height: auto;
+    overflow: visible;
+  }
+
+  :global(.webforest-container.height-container) {
+    height: 100%;
     overflow-y: auto;
   }
 
@@ -881,6 +902,18 @@
     align-items: center;
     border-bottom: 1px solid var(--wf-border);
     flex-shrink: 0;
+  }
+
+  /* Text wrapping mode - allows long text to wrap instead of truncating */
+  .webforest-col.wrap-enabled {
+    white-space: normal;
+    word-wrap: break-word;
+    text-overflow: clip;
+    min-height: var(--wf-row-height);
+    height: auto;
+    align-items: flex-start;
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 
   .webforest-canvas {

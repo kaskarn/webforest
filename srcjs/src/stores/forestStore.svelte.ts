@@ -42,7 +42,7 @@ export function createForestStore() {
 
   // Layout mode state
   let widthMode = $state<'fit' | 'fill' | 'responsive'>('fit');
-  let heightModeOverride = $state<'auto' | 'scroll' | null>(null);
+  let heightPreset = $state<'small' | 'medium' | 'large' | 'full' | 'container'>('full');
 
   // Derived: visible rows (all rows after filter/sort, but NOT collapsed filtering)
   // Collapsed filtering is handled by displayRows for proper group header display
@@ -364,6 +364,61 @@ export function createForestStore() {
     collapsedGroups = new Set(
       newSpec.data.groups.filter((g) => g.collapsed).map((g) => g.id)
     );
+    // Measure auto-width columns
+    measureAutoColumns();
+  }
+
+  // Helper to measure columns with width="auto" and set their computed widths
+  function measureAutoColumns() {
+    if (!spec || typeof document === 'undefined') return;
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Get font from theme
+    const fontFamily = spec.theme.typography.fontFamily;
+    const fontSize = spec.theme.typography.fontSizeBase;
+    ctx.font = `${fontSize} ${fontFamily}`;
+
+    const padding = 20; // 10px padding on each side
+    const maxAutoWidth = 400; // Cap auto width at 400px
+    const minAutoWidth = 60; // Minimum auto width
+
+    // Process columns recursively
+    function processColumn(col: ColumnSpec | ColumnGroup) {
+      if (col.isGroup) {
+        for (const child of col.columns) {
+          processColumn(child);
+        }
+        return;
+      }
+
+      // Only process columns with width="auto"
+      if (col.width !== "auto") return;
+
+      let maxWidth = 0;
+
+      // Measure header text
+      maxWidth = Math.max(maxWidth, ctx!.measureText(col.header).width);
+
+      // Measure all data cell values
+      for (const row of spec!.data.rows) {
+        const value = row.metadata[col.field];
+        if (value !== null && value !== undefined) {
+          const text = String(value);
+          maxWidth = Math.max(maxWidth, ctx!.measureText(text).width);
+        }
+      }
+
+      // Apply computed width with padding and constraints
+      const computedWidth = Math.min(maxAutoWidth, Math.max(minAutoWidth, Math.ceil(maxWidth + padding)));
+      columnWidths[col.id] = computedWidth;
+    }
+
+    for (const colDef of spec.columns) {
+      processColumn(colDef);
+    }
   }
 
   function setDimensions(w: number, h: number) {
@@ -452,12 +507,14 @@ export function createForestStore() {
     widthMode = modes[(currentIndex + 1) % modes.length];
   }
 
-  function setHeightMode(mode: 'auto' | 'scroll') {
-    heightModeOverride = mode;
+  function setHeightPreset(preset: 'small' | 'medium' | 'large' | 'full' | 'container') {
+    heightPreset = preset;
   }
 
-  function toggleHeightMode() {
-    heightModeOverride = heightModeOverride === 'scroll' ? 'auto' : 'scroll';
+  function toggleHeightPreset() {
+    const presets = ['small', 'medium', 'large', 'full', 'container'] as const;
+    const currentIndex = presets.indexOf(heightPreset);
+    heightPreset = presets[(currentIndex + 1) % presets.length];
   }
 
   // Derived: tooltip row
@@ -522,8 +579,8 @@ export function createForestStore() {
     get widthMode() {
       return widthMode;
     },
-    get heightModeOverride() {
-      return heightModeOverride;
+    get heightPreset() {
+      return heightPreset;
     },
     getRowDepth,
     getColumnWidth,
@@ -544,8 +601,8 @@ export function createForestStore() {
     toggleForestView,
     setWidthMode,
     toggleWidthMode,
-    setHeightMode,
-    toggleHeightMode,
+    setHeightPreset,
+    toggleHeightPreset,
   };
 }
 

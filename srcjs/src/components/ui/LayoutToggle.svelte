@@ -10,7 +10,7 @@
   let dropdownOpen = $state(false);
 
   const widthMode = $derived(store.widthMode);
-  const heightModeOverride = $derived(store.heightModeOverride);
+  const heightPreset = $derived(store.heightPreset);
 
   const WIDTH_OPTIONS = [
     { value: 'fit' as const, label: 'Fit Content' },
@@ -19,8 +19,11 @@
   ];
 
   const HEIGHT_OPTIONS = [
-    { value: 'auto' as const, label: 'Auto Height' },
-    { value: 'scroll' as const, label: 'Scroll' },
+    { value: 'small' as const, label: 'Small (200px)' },
+    { value: 'medium' as const, label: 'Medium (400px)' },
+    { value: 'large' as const, label: 'Large (600px)' },
+    { value: 'full' as const, label: 'Full Height' },
+    { value: 'container' as const, label: 'Fill Container' },
   ];
 
   function closeDropdown() {
@@ -31,8 +34,8 @@
     store.setWidthMode(mode);
   }
 
-  function selectHeightMode(mode: 'auto' | 'scroll') {
-    store.setHeightMode(mode);
+  function selectHeightPreset(preset: 'small' | 'medium' | 'large' | 'full' | 'container') {
+    store.setHeightPreset(preset);
   }
 
   // Close dropdown when clicking outside
@@ -88,10 +91,10 @@
       {#each HEIGHT_OPTIONS as option}
         <button
           class="dropdown-item"
-          class:active={heightModeOverride === option.value}
-          onclick={() => selectHeightMode(option.value)}
+          class:active={heightPreset === option.value}
+          onclick={() => selectHeightPreset(option.value)}
         >
-          {#if heightModeOverride === option.value}
+          {#if heightPreset === option.value}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="20 6 9 17 4 12" />
             </svg>

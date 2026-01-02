@@ -17,8 +17,8 @@ forest_plot(
   point = "or", lower = "lower", upper = "upper",
   label = "study",
   columns = list(
-    col_numeric("dose_mg", "Dose (mg)"),
-    col_interval("OR (95% CI)")
+    col_numeric("dose_mg", "Dose (mg)", width = 100),
+    col_interval("OR (95% CI)", position = "right")
   ),
   annotations = list(
     forest_refline(0.80, label = "Clinically meaningful", style = "dashed", color = "#16a34a"),

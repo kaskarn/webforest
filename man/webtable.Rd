@@ -8,7 +8,8 @@ webtable(
   x,
   ...,
   width_mode = c("fit", "fill", "responsive"),
-  height_mode = c("auto", "scroll"),
+  height_preset = c("full", "small", "medium", "large", "container"),
+  height_mode = NULL,
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -23,7 +24,10 @@ Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{
 
 \item{width_mode}{Layout width mode: "fit" (shrink-wrap, default), "fill" (100\%), or "responsive" (100\% with scaling)}
 
-\item{height_mode}{Layout height mode: "auto" (natural height) or "scroll" (scroll if > viewport)}
+\item{height_preset}{Layout height preset: "small" (200px), "medium" (400px), "large" (600px),
+"full" (natural height, no constraint), or "container" (fill parent). Default is "full".}
+
+\item{height_mode}{Deprecated. Use \code{height_preset} instead.}
 
 \item{width}{Widget width (default NULL for auto)}
 
