@@ -13,7 +13,8 @@ set_row_style(
   badge = NULL,
   icon = NULL,
   indent = NULL,
-  type = NULL
+  type = NULL,
+  weight = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ set_row_style(
 \item{indent}{Column name containing numeric values for row indentation}
 
 \item{type}{Column name containing row type ("data", "header", "summary", "spacer")}
+
+\item{weight}{Column name for marker weight/size scaling (numeric values, typically 0-100)}
 }
 \value{
 The modified WebSpec object (or widget)

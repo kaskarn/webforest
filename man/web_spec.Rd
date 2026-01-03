@@ -30,6 +30,7 @@ web_spec(
   row_icon = NULL,
   row_indent = NULL,
   row_type = NULL,
+  weight = NULL,
   theme = web_theme_default(),
   interaction = web_interaction()
 )
@@ -90,6 +91,8 @@ to innermost, e.g., \code{c("region", "country")} creates region > country
 \item{row_indent}{Column name for row indentation (numeric values)}
 
 \item{row_type}{Column name for row type ("data", "header", "summary", "spacer")}
+
+\item{weight}{Column name for marker weight/size scaling (numeric values, typically 0-100)}
 
 \item{theme}{Theme object (use \verb{web_theme_*()} functions)}
 

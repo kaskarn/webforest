@@ -487,6 +487,7 @@
                   {layout}
                   {theme}
                   effects={spec.data.effects}
+                  weightCol={spec.data.weightCol}
                   onRowClick={() => store.selectRow(displayRow.row.id)}
                   onRowHover={(hovered, event) => {
                     store.setHovered(hovered ? displayRow.row.id : null);

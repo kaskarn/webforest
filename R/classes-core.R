@@ -198,7 +198,9 @@ WebSpec <- new_class(
     row_badge_col = new_property(class_character, default = NA_character_),
     row_icon_col = new_property(class_character, default = NA_character_),
     row_indent_col = new_property(class_character, default = NA_character_),
-    row_type_col = new_property(class_character, default = NA_character_)
+    row_type_col = new_property(class_character, default = NA_character_),
+    # Marker weight/size column mapping
+    weight_col = new_property(class_character, default = NA_character_)
   ),
   validator = function(self) {
     # Validate required columns exist

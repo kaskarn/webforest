@@ -92,6 +92,7 @@ export interface WebData {
   labelCol?: string | null;
   labelHeader?: string | null;
   groupCol?: string | null;
+  weightCol?: string | null;
   scale: "linear" | "log";
   nullValue: number;
   axisLabel: string;

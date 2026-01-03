@@ -18,6 +18,7 @@ forest_plot(
   minimal_data,
   point = "hr", lower = "lower", upper = "upper",
   label = "trial",
+  weight = "weight",  # Scale marker sizes by study weight
   columns = list(
     col_numeric("n", "N"),
     col_numeric("events", "Events"),

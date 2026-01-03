@@ -171,6 +171,7 @@ weighted_data <- data.frame(
 forest_plot(weighted_data,
   point = "or", lower = "lower", upper = "upper",
   label = "study", null_value = 1,
+  weight = "weight",  # Scale marker sizes by weight
   columns = list(
     col_bar("weight", "Weight %", width = 100)
   ),

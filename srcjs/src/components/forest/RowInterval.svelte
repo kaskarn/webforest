@@ -9,6 +9,7 @@
     layout: ComputedLayout;
     theme: WebTheme | undefined;
     effects?: EffectSpec[];
+    weightCol?: string | null;
     onRowClick?: () => void;
     onRowHover?: (hovered: boolean, event?: MouseEvent) => void;
   }
@@ -20,6 +21,7 @@
     layout,
     theme,
     effects = [],
+    weightCol = null,
     onRowClick,
     onRowHover,
   }: Props = $props();
@@ -91,10 +93,10 @@
   const diamondHeight = $derived(theme?.shapes.summaryHeight ?? 10);
   const halfDiamondHeight = $derived(diamondHeight / 2);
 
-  // Point size scaled by weight if available
+  // Point size scaled by weight if available (requires explicit weightCol configuration)
   const pointSize = $derived.by(() => {
     const baseSize = theme?.shapes.pointSize ?? 6;
-    const weight = row.metadata.weight as number | undefined;
+    const weight = weightCol ? (row.metadata[weightCol] as number | undefined) : undefined;
     if (weight) {
       // Scale between 0.5x and 2x based on weight
       const scale = 0.5 + Math.sqrt(weight / 100) * 1.5;

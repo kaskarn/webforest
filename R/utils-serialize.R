@@ -150,6 +150,7 @@ serialize_data <- function(spec, include_forest = TRUE) {
     labelCol = if (is.na(spec@label_col)) NULL else spec@label_col,
     labelHeader = spec@label_header,
     groupCol = if (is.na(spec@group_col)) NULL else spec@group_col,
+    weightCol = if (is.na(spec@weight_col)) NULL else spec@weight_col,
     scale = spec@scale,
     nullValue = spec@null_value,
     axisLabel = spec@axis_label,

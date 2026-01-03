@@ -10,7 +10,7 @@
 #' @param x Either a WebSpec object or a data.frame/data.table/tibble
 #' @param ... Arguments passed to `web_spec()` when x is a data frame.
 #'   Common arguments: `point`, `lower`, `upper`, `label`, `group`,
-#'   `columns`, `scale`, `null_value`, `axis_label`, `theme`, `interaction`
+#'   `columns`, `scale`, `null_value`, `axis_label`, `weight`, `theme`, `interaction`
 #' @param axis_range Numeric vector c(min, max) to override axis range from theme
 #' @param axis_ticks Numeric vector of explicit tick positions
 #' @param axis_gridlines Logical to show/hide gridlines (overrides theme)

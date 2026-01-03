@@ -25,7 +25,7 @@ forest_plot(
 
 \item{...}{Arguments passed to \code{web_spec()} when x is a data frame.
 Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{group},
-\code{columns}, \code{scale}, \code{null_value}, \code{axis_label}, \code{theme}, \code{interaction}}
+\code{columns}, \code{scale}, \code{null_value}, \code{axis_label}, \code{weight}, \code{theme}, \code{interaction}}
 
 \item{axis_range}{Numeric vector c(min, max) to override axis range from theme}
 

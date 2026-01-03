@@ -26,6 +26,7 @@ forest_plot(
   meta_analysis,
   point = "or", lower = "lower", upper = "upper",
   label = "study",
+  weight = "weight",  # Scale marker sizes by study weight
   columns = list(
     col_n("n"),
     col_weight("weight"),

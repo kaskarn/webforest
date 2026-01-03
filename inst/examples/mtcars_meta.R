@@ -33,6 +33,7 @@ forest_plot(
   upper = "upper",
   label = "study",
   group = "group",
+  weight = "weight",  # Scale marker sizes by inverse-variance weight
   columns = list(
     col_numeric("hp", "HP", position = "left"),
     col_numeric("wt", "Wt", position = "left"),

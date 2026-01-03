@@ -929,7 +929,8 @@ function renderInterval(
   xScale: Scale,
   theme: WebTheme,
   nullValue: number,
-  effects: EffectSpec[] = []
+  effects: EffectSpec[] = [],
+  weightCol?: string | null
 ): string {
   // Build effective effects to render
   interface ResolvedEffect {
@@ -971,7 +972,7 @@ function renderInterval(
   }
 
   const baseSize = theme.shapes.pointSize;
-  const weight = row.metadata.weight as number | undefined;
+  const weight = weightCol ? (row.metadata[weightCol] as number | undefined) : undefined;
   let pointSize = baseSize;
   if (weight) {
     const scale = 0.5 + Math.sqrt(weight / 100) * 1.5;
@@ -1294,7 +1295,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     displayRows.forEach((displayRow, i) => {
       if (displayRow.type === "data") {
         const yPos = plotY + i * layout.rowHeight + layout.rowHeight / 2;
-        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue, spec.data.effects));
+        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue, spec.data.effects, spec.data.weightCol));
       }
     });
 

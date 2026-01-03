@@ -35,6 +35,7 @@
 #' @param row_icon Column name for label icons (emoji/unicode)
 #' @param row_indent Column name for row indentation (numeric values)
 #' @param row_type Column name for row type ("data", "header", "summary", "spacer")
+#' @param weight Column name for marker weight/size scaling (numeric values, typically 0-100)
 #' @param theme Theme object (use `web_theme_*()` functions)
 #' @param interaction Interaction settings (use `web_interaction()`)
 #'
@@ -97,6 +98,7 @@ web_spec <- function(
     row_icon = NULL,
     row_indent = NULL,
     row_type = NULL,
+    weight = NULL,
     theme = web_theme_default(),
     interaction = web_interaction()) {
   # Match scale
@@ -297,7 +299,8 @@ web_spec <- function(
     row_badge_col = row_badge %||% NA_character_,
     row_icon_col = row_icon %||% NA_character_,
     row_indent_col = row_indent %||% NA_character_,
-    row_type_col = row_type %||% NA_character_
+    row_type_col = row_type %||% NA_character_,
+    weight_col = weight %||% NA_character_
   )
 }
 

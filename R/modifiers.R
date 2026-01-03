@@ -15,6 +15,7 @@
 #' @param icon Column name containing emoji/unicode for icons on the label column
 #' @param indent Column name containing numeric values for row indentation
 #' @param type Column name containing row type ("data", "header", "summary", "spacer")
+#' @param weight Column name for marker weight/size scaling (numeric values, typically 0-100)
 #'
 #' @return The modified WebSpec object (or widget)
 #'
@@ -36,7 +37,8 @@ set_row_style <- function(
     badge = NULL,
     icon = NULL,
     indent = NULL,
-    type = NULL) {
+    type = NULL,
+    weight = NULL) {
   # Extract WebSpec from widget if needed
   spec <- if (inherits(x, "htmlwidget")) {
     attr(x, "webspec")
@@ -55,6 +57,7 @@ set_row_style <- function(
   if (!is.null(icon)) spec@row_icon_col <- icon
   if (!is.null(indent)) spec@row_indent_col <- indent
   if (!is.null(type)) spec@row_type_col <- type
+  if (!is.null(weight)) spec@weight_col <- weight
 
   # Return same type as input
   if (inherits(x, "htmlwidget")) {

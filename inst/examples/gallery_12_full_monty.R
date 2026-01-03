@@ -44,6 +44,7 @@ forest_plot(
   full_monty,
   point = "primary_hr", lower = "primary_lo", upper = "primary_hi",
   label = "study", group = c("program", "phase"),
+  weight = "weight",  # Explicit weight column for marker sizing
   columns = list(
     col_n("n"),
     col_weight("weight"),
