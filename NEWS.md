@@ -121,7 +121,9 @@ First public release of webforest.
 * Unified axis scaling between web view and SVG export using shared `niceDomain()` logic for consistent, sensible tick values
 * Improved SVG generator code quality: extracted constants, added input validation, reduced code duplication
 
-## New Features
+## 0.0.0.9000
+
+### New Features
 
 * Interactive forest plots rendered with Svelte 5 and D3.js
 * 7 preset themes: default, JAMA, Lancet, modern, presentation, dark, minimal
@@ -136,12 +138,12 @@ First public release of webforest.
 * **Web download button**: Interactive plots now include a download button (appears on hover) with SVG/PNG export options, using the same renderer as `save_plot()` for consistent output
 * New `enable_export` option in `web_interaction()` to control download button visibility
 
-## Documentation
+### Documentation
 
 * Package guide with interactive examples
 * Example gallery with 11 interactive demos (dark theme, nested groups, multiple effects, column groups, journal styles, and more)
 * Enhanced README with visual hero image and simplified quick-start example
 
-## Bug Fixes
+### Bug Fixes
 
 * Fixed navbar visibility on documentation site caused by Tailwind/Bootstrap CSS conflict

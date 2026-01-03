@@ -12,3 +12,5 @@
 ^README\.Rmd$
 ^\.lintr$
 ^_pkgdown\.yml$
+^inst/scripts$
+^cran-comments\.md$
