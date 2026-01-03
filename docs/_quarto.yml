@@ -59,6 +59,8 @@ website:
             href: reference/shiny.qmd
       - text: "Technical"
         menu:
+          - text: "S7 Class Architecture"
+            href: technical/s7-classes.qmd
           - text: "Export System"
             href: technical/export-system.qmd
     right:
