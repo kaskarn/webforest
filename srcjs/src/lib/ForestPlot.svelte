@@ -865,16 +865,16 @@
 
   :global(.webforest-container.width-fill) .webforest-scalable {
     transform: scale(var(--wf-fill-scale, 1));
-    transform-origin: top center;
+    transform-origin: top left;
     /* Don't use flex: 1 in fill mode - we need natural height for scaling */
     flex: none;
-    /* Center the scaled content horizontally */
-    margin-left: auto;
-    margin-right: auto;
+    /* No margins in fill mode - we fill the container */
+    margin: 0;
     /* Move border/background here so they scale with content */
     background: var(--wf-bg);
-    border: 1px solid var(--wf-border);
-    border-radius: 8px;
+    /* Minimal border to avoid scroll issues */
+    border: none;
+    border-radius: 0;
   }
 
   /* Height presets - use max-height so container doesn't fill with empty space */
