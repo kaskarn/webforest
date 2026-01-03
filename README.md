@@ -47,6 +47,7 @@ forest_plot(data,
 - **Publication themes** — JAMA, Lancet, modern, presentation, dark, minimal
 - **Rich columns** — numeric, intervals, bar charts, p-values, sparklines, badges
 - **Hierarchical grouping** — collapsible nested subgroups with summaries
+- **Split by subgroups** — sidebar navigation for separate plots by variable values
 - **Row styling** — headers, spacers, bold/italic, indentation, custom colors
 - **Interactivity** — hover, selection, tooltips, sorting, column resize
 - **Layout controls** — fit/fill/responsive width modes; auto/scroll height modes
@@ -108,6 +109,23 @@ forest_plot(data, ...,
   row_badge = "badge"     # Column for badge text
 )
 ```
+
+## Split Forest Plots
+
+Create separate navigable plots for each subgroup:
+
+```r
+forest_plot(data, ...,
+  split_by = "region"  # Single variable
+)
+
+forest_plot(data, ...,
+  split_by = c("sex", "age_group"),  # Hierarchical: Sex > Age Group
+  shared_axis = TRUE                  # Same axis range across all
+)
+```
+
+A floating sidebar provides tree navigation between subgroups.
 
 ## Documentation
 

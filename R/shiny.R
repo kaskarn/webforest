@@ -151,3 +151,100 @@ invoke_proxy_method <- function(proxy, method, args) {
 
   invisible(proxy)
 }
+
+# ============================================================================
+# Split Forest Shiny Support
+# ============================================================================
+
+#' Shiny output function for split forest plot
+#'
+#' Creates a Shiny output element for displaying a split forest plot with
+#' sidebar navigation.
+#'
+#' @param outputId Output variable name
+#' @param width Widget width (CSS units)
+#' @param height Widget height (CSS units)
+#'
+#' @return A Shiny output element
+#' @export
+splitForestOutput <- function(outputId, width = "100%", height = "600px") {
+  htmlwidgets::shinyWidgetOutput(
+    outputId,
+    "webforest_split",
+    width,
+    height,
+    package = "webforest"
+  )
+}
+
+#' Shiny render function for split forest plot
+#'
+#' Renders a split forest plot in a Shiny application. The expression should
+#' return either a SplitForest object or a forest_plot() call with split_by.
+#'
+#' @param expr An expression that returns a split forest plot
+#' @param env The environment in which to evaluate expr
+#' @param quoted Is expr a quoted expression?
+#'
+#' @return A Shiny render function
+#'
+#' @examples
+#' \dontrun{
+#' # In server function:
+#' output$split_plot <- renderSplitForest({
+#'   data |>
+#'     web_spec(point = "or", lower = "lower", upper = "upper") |>
+#'     split_forest(by = input$split_var) |>
+#'     forest_plot()
+#' })
+#' }
+#'
+#' @export
+renderSplitForest <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) {
+    expr <- substitute(expr)
+  }
+  htmlwidgets::shinyRenderWidget(expr, splitForestOutput, env, quoted = TRUE)
+}
+
+#' Create a split forest plot proxy object
+#'
+#' Creates a proxy object that can be used to control a split forest plot in a
+#' Shiny app without re-rendering the entire widget.
+#'
+#' @param id The widget ID
+#' @param session The Shiny session (default: current session)
+#'
+#' @return A split_forest_proxy object
+#' @export
+splitForestProxy <- function(id, session = shiny::getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    cli_abort("splitForestProxy must be called from within a Shiny reactive context")
+  }
+
+  structure(
+    list(id = id, session = session),
+    class = "split_forest_proxy"
+  )
+}
+
+#' Select a plot in the split forest via proxy
+#'
+#' Programmatically select a different plot in the split forest sidebar
+#' navigation.
+#'
+#' @param proxy A split_forest_proxy object
+#' @param key The key of the plot to select (e.g., "Male" or "Male__Young")
+#'
+#' @return The proxy object (invisibly), for chaining
+#' @export
+split_forest_select <- function(proxy, key) {
+  if (!inherits(proxy, "split_forest_proxy")) {
+    cli_abort("proxy must be a split_forest_proxy object created with splitForestProxy()")
+  }
+
+  msg <- list(id = proxy$id, method = "selectPlot", args = list(key = key))
+  proxy$session$sendCustomMessage("webforest-split-proxy", msg)
+
+  invisible(proxy)
+}

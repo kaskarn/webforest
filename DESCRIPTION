@@ -1,6 +1,6 @@
 Package: webforest
 Title: Web-Native Interactive Forest Plots
-Version: 0.0.0.9006
+Version: 0.0.1
 Authors@R:
     person("Antoine", "Baldassari", , "baldassarian@gmail.com", role = c("aut", "cre"))
 Description: Create interactive, web-native forest plots and tables. Forest plots
@@ -23,6 +23,7 @@ Collate:
     'utils-serialize.R'
     'modifiers.R'
     'web_spec.R'
+    'split_forest.R'
     'save_plot.R'
     'forest_plot.R'
     'webtable.R'

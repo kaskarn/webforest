@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite build --watch",
-    "build": "vite build && vite build --config vite.config.v8.ts",
+    "build": "vite build && vite build --config vite.config.split.ts && vite build --config vite.config.v8.ts",
     "build:widget": "vite build",
+    "build:split": "vite build --config vite.config.split.ts",
     "build:v8": "vite build --config vite.config.v8.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": "bun test",

@@ -1,0 +1,94 @@
+---
+title: "split_forest()"
+---
+
+```{r}
+#| include: false
+library(webforest)
+```
+
+Create a collection of separate forest plots split by categorical variable values, with interactive sidebar navigation.
+
+## Usage
+
+```r
+split_forest(x, by, shared_axis = FALSE, ...)
+```
+
+## Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `x` | A `WebSpec` object or data frame |
+| `by` | Column name(s) for splitting. Single string or character vector for hierarchical splits |
+| `shared_axis` | If `TRUE`, use the same axis range across all plots (default: `FALSE`) |
+| `...` | Additional arguments passed to `web_spec()` if `x` is a data frame |
+
+## Value
+A `SplitForest` object containing multiple `WebSpec` objects, one per unique combination of split values.
+
+## Details
+
+### Single Variable Split
+```r
+split_forest(spec, by = "region")
+```
+Creates one plot per unique value in the `region` column.
+
+### Hierarchical Split
+```r
+split_forest(spec, by = c("sex", "age_group"))
+```
+Creates plots for each combination (e.g., Male/Young, Male/Old, Female/Young, Female/Old) with nested navigation.
+
+### Shared Axis
+```r
+split_forest(spec, by = "region", shared_axis = TRUE
+)
+```
+Forces all sub-plots to use the same axis range, enabling visual comparison across subgroups.
+
+## Examples
+
+### Basic Split
+```{r}
+set.seed(42)
+data <- data.frame(
+  study = paste0("Study ", 1:30),
+  region = sample(c("Americas", "Europe", "Asia"), 30, replace = TRUE),
+  or = exp(rnorm(30, log(0.8), 0.3)),
+  lower = NA, upper = NA
+)
+data$lower <- data$or * exp(-1.96 * 0.25)
+data$upper <- data$or * exp(1.96 * 0.25)
+
+data |>
+  web_spec(point = "or", lower = "lower", upper = "upper",
+           label = "study", scale = "log", null_value = 1) |>
+  split_forest(by = "region") |>
+  forest_plot(theme = web_theme_modern())
+```
+
+### Via forest_plot() Parameter
+
+You can also use `split_by` directly in `forest_plot()`:
+
+```r
+forest_plot(data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = "region",  # Equivalent to split_forest()
+  scale = "log", null_value = 1
+)
+```
+
+## Related Functions
+
+- `forest_plot()` - Render a forest plot (accepts `split_by` parameter)
+- `save_split_forest()` - Export all sub-plots to a directory
+- `web_spec()` - Create a plot specification
+
+## See Also
+
+- [Split Forest Guide](../guide/split-forest.qmd) for detailed usage
+- [Gallery Examples](../gallery.qmd#split-forest-plots) for visual examples

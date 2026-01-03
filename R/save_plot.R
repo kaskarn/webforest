@@ -204,3 +204,118 @@ extract_webspec <- function(x) {
 
   NULL
 }
+
+# ============================================================================
+# SplitForest export
+# ============================================================================
+
+#' Save a split forest plot collection to a directory
+#'
+#' Exports all plots in a SplitForest to a directory structure that mirrors
+#' the split hierarchy. Each sub-plot is saved as a separate file.
+#'
+#' @param x A SplitForest object or forest_plot() output with split_by
+#' @param path Output directory path. Directory will be created if it doesn't exist.
+#' @param format Output format: "svg" (default), "pdf", or "png"
+#' @param width Plot width in pixels (default: 800)
+#' @param height Plot height in pixels. If NULL (default), auto-calculated
+#' @param scale Scaling factor for PNG output (default: 2 for retina quality)
+#' @param ... Additional arguments (currently unused)
+#'
+#' @return Invisibly returns a character vector of exported file paths
+#'
+#' @examples
+#' \dontrun{
+#' # Create a split forest
+#' split_result <- data |>
+#'   web_spec(point = "or", lower = "lower", upper = "upper") |>
+#'   split_forest(by = c("sex", "age_group"))
+#'
+#' # Export to directory
+#' save_split_forest(split_result, "output/plots")
+#'
+#' # Creates:
+#' # output/plots/Male/Male_Young.svg
+#' # output/plots/Male/Male_Old.svg
+#' # output/plots/Female/Female_Young.svg
+#' # output/plots/Female/Female_Old.svg
+#' }
+#'
+#' @export
+save_split_forest <- function(x, path, format = c("svg", "pdf", "png"),
+                               width = 800, height = NULL, scale = 2, ...) {
+  # Match format argument
+  format <- match.arg(format)
+
+  # Extract SplitForest from input
+  split_forest <- extract_splitforest(x)
+
+  if (is.null(split_forest)) {
+    cli::cli_abort(c(
+      "{.arg x} must be a SplitForest object or forest_plot() output with split_by",
+      "i" = "Create with {.fn split_forest} or use {.code split_by} in {.fn forest_plot}"
+    ))
+  }
+
+  # Create output directory if needed
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
+  }
+
+  # Track exported files
+  exported_files <- character()
+
+  # Export each spec
+  for (key in names(split_forest@specs)) {
+    spec <- split_forest@specs[[key]]
+
+    # Build file path from key (hierarchical)
+    # e.g., "Male__Young" -> "Male/Male_Young.svg"
+    parts <- strsplit(key, "__", fixed = TRUE)[[1]]
+
+    if (length(parts) > 1) {
+      # Create subdirectory for parent levels
+      subdir <- file.path(path, paste(parts[-length(parts)], collapse = .Platform$file.sep))
+      if (!dir.exists(subdir)) {
+        dir.create(subdir, recursive = TRUE)
+      }
+      filename <- paste0(paste(parts, collapse = "_"), ".", format)
+      file_path <- file.path(subdir, filename)
+    } else {
+      filename <- paste0(key, ".", format)
+      file_path <- file.path(path, filename)
+    }
+
+    # Export individual spec
+    save_plot(spec, file_path, width = width, height = height, scale = scale)
+    exported_files <- c(exported_files, file_path)
+  }
+
+  cli::cli_alert_success("Exported {length(exported_files)} plot{?s} to {.path {path}}")
+
+  invisible(exported_files)
+}
+
+#' Extract SplitForest from various input types
+#'
+#' @param x Input object (SplitForest or htmlwidget)
+#' @return SplitForest object or NULL
+#' @noRd
+extract_splitforest <- function(x) {
+  # Direct SplitForest (check S7 class)
+  if (S7::S7_inherits(x, SplitForest)) {
+    return(x)
+  }
+
+  # htmlwidget from forest_plot() with split_by
+  if (inherits(x, "htmlwidget")) {
+    # Check for attached splitforest
+    sf <- attr(x, "splitforest")
+    if (!is.null(sf) && S7::S7_inherits(sf, SplitForest)) {
+      return(sf)
+    }
+    return(NULL)
+  }
+
+  NULL
+}

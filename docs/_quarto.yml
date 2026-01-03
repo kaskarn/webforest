@@ -18,6 +18,8 @@ website:
             href: guide/columns.qmd
           - text: "Grouping & Rows"
             href: guide/grouping-rows.qmd
+          - text: "Split Forest Plots"
+            href: guide/split-forest.qmd
           - text: "Exporting Plots"
             href: guide/exporting.qmd
           - text: "Axis & Annotations"
@@ -42,6 +44,8 @@ website:
           - text: "---"
           - text: "forest_plot()"
             href: reference/forest_plot.qmd
+          - text: "split_forest()"
+            href: reference/split_forest.qmd
           - text: "webtable()"
             href: reference/webtable.qmd
           - text: "save_plot()"

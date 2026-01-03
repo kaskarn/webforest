@@ -1,5 +1,33 @@
 # webforest (development version)
 
+## 0.0.1
+
+First public release of webforest.
+
+### New Features
+
+* **Split forest plots**: Create separate navigable plots for each value of a categorical variable with interactive sidebar navigation.
+  - `split_by` parameter in `forest_plot()` for quick usage
+  - `split_forest()` function for pipe-based workflow
+  - Hierarchical splits: `split_by = c("sex", "age_group")` creates nested tree navigation
+  - `shared_axis = TRUE` for consistent axis range across all subgroups
+  - Floating sidebar with search, keyboard navigation, and collapsible sections
+  - `save_split_forest()` exports all sub-plots to directory structure
+
+* **Shiny support for split forests**:
+  - `splitForestOutput()` and `renderSplitForest()` for Shiny apps
+  - `splitForestProxy()` for programmatic control
+  - `split_forest_select()` to change active subgroup from server
+
+### Documentation
+
+* New guide: "Split Forest Plots" with comprehensive examples
+* Gallery examples 16-18: Regional subgroups, hierarchical navigation, three-level clinical trials
+* Cookbook recipes for split_by and save_split_forest()
+* Function reference for split_forest()
+
+---
+
 ## 0.0.0.9006
 
 ### Breaking Changes

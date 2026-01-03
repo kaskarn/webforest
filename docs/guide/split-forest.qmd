@@ -1,0 +1,141 @@
+---
+title: "Split Forest Plots"
+---
+
+```{r}
+#| include: false
+library(webforest)
+library(dplyr)
+```
+
+Split forest plots create **separate plots for each value** of a categorical variable, with an interactive sidebar for navigation. This is ideal for subgroup analyses where you want to compare results across different populations.
+
+## Basic Split
+
+Use `split_by` to create separate plots for each unique value:
+```{r}
+set.seed(42)
+trial_data <- data.frame(
+  study = paste0("Study ", 1:30),
+  region = sample(c("North America", "Europe", "Asia Pacific"), 30, replace = TRUE),
+  or = exp(rnorm(30, log(0.8), 0.3)),
+  lower = NA, upper = NA
+)
+trial_data$lower <- trial_data$or * exp(-1.96 * 0.25)
+trial_data$upper <- trial_data$or * exp(1.96 * 0.25)
+
+forest_plot(trial_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = "region",
+  scale = "log", null_value = 1,
+  axis_label = "Odds Ratio (95% CI)",
+  title = "Treatment Effect by Region"
+)
+```
+
+The floating sidebar shows each region. Click to navigate between subgroups.
+
+## Hierarchical Splits
+
+Split by multiple variables for nested navigation:
+
+```{r}
+set.seed(123)
+n <- 50
+subgroup_data <- data.frame(
+  study = paste0("Study ", sprintf("%02d", 1:n)),
+  sex = sample(c("Male", "Female"), n, replace = TRUE),
+  age_group = sample(c("18-40", "41-65", "65+"), n, replace = TRUE),
+  or = exp(rnorm(n, log(0.75), 0.25)),
+  lower = NA, upper = NA
+)
+subgroup_data$lower <- subgroup_data$or * exp(-1.96 * 0.2)
+subgroup_data$upper <- subgroup_data$or * exp(1.96 * 0.2)
+
+forest_plot(subgroup_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = c("sex", "age_group"),  # Hierarchical: Sex > Age Group
+  scale = "log", null_value = 1,
+  theme = web_theme_modern(),
+  axis_label = "Odds Ratio"
+)
+```
+
+The sidebar shows "Sex" as the first level header, with "Age Group" nested under each sex.
+
+## Using split_forest() Directly
+
+For more control, use the `split_forest()` function with the pipe syntax:
+
+```{r}
+subgroup_data |>
+  web_spec(
+    point = "or", lower = "lower", upper = "upper",
+    label = "study",
+    scale = "log", null_value = 1,
+    columns = list(
+      col_text("sex", header = "Sex"),
+      col_text("age_group", header = "Age"),
+      col_interval("OR (95% CI)")
+    )
+  ) |>
+  split_forest(by = c("sex", "age_group")) |>
+  forest_plot()
+```
+
+## Shared Axis Range
+
+By default, each sub-plot auto-scales its axis. Use `shared_axis = TRUE` for consistent comparison:
+
+```{r}
+forest_plot(trial_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = "region",
+  shared_axis = TRUE,  # Same axis range across all regions
+  scale = "log", null_value = 1,
+  theme = web_theme_modern()
+)
+```
+
+This ensures the same visual scale across all subgroups.
+
+## Sidebar Features
+
+The sidebar includes:
+
+- **Section headers**: Split variable names displayed as uppercase labels
+- **Collapsible**: Click the chevron to collapse the sidebar
+- **Search**: Filter subgroups by typing in the search box
+- **Keyboard navigation**: Use arrow keys to move between subgroups
+- **Bold active**: Currently selected subgroup is highlighted
+
+## Exporting Split Forests
+
+Export all sub-plots to a directory structure:
+
+```r
+split_result <- data |>
+  web_spec(point = "or", lower = "lower", upper = "upper") |>
+  split_forest(by = c("sex", "age_group"))
+
+# Exports to: output/Male/Male_Young.svg, etc.
+save_split_forest(split_result, "output", format = "svg")
+```
+
+The directory structure mirrors the split hierarchy.
+
+## When to Use Split vs. Group
+
+| Feature | `group =` | `split_by =` |
+|---------|-----------|--------------|
+| Display | Single plot with collapsible rows | Separate plots with sidebar |
+| Navigation | Click group headers | Click sidebar items |
+| Comparison | All visible at once | One subgroup at a time |
+| Best for | Small number of groups | Many subgroups, detailed analysis |
+
+**Use `group`** when you want to see all data in one view with collapsible sections.
+
+**Use `split_by`** when each subgroup deserves its own focused view, or when you have many subgroups that would clutter a single plot.

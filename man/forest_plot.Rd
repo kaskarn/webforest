@@ -7,6 +7,8 @@
 forest_plot(
   x,
   ...,
+  split_by = NULL,
+  shared_axis = FALSE,
   axis_range = NULL,
   axis_ticks = NULL,
   axis_gridlines = NULL,
@@ -21,11 +23,18 @@ forest_plot(
 )
 }
 \arguments{
-\item{x}{Either a WebSpec object or a data.frame/data.table/tibble}
+\item{x}{Either a WebSpec object, a SplitForest object, or a data.frame/data.table/tibble}
 
 \item{...}{Arguments passed to \code{web_spec()} when x is a data frame.
 Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{group},
 \code{columns}, \code{scale}, \code{null_value}, \code{axis_label}, \code{weight}, \code{theme}, \code{interaction}}
+
+\item{split_by}{Column name(s) to split data into separate plots. When specified,
+creates a SplitForest with sidebar navigation. Can be a single column name or
+a character vector for hierarchical splits (e.g., \code{c("region", "age_group")}).}
+
+\item{shared_axis}{When \code{split_by} is used, whether to use the same axis range
+across all split plots for easier comparison. Default is \code{FALSE}.}
 
 \item{axis_range}{Numeric vector c(min, max) to override axis range from theme}
 

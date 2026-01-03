@@ -518,3 +518,61 @@ serialize_annotation <- function(ann) {
   cli_warn("Unknown annotation type, skipping: {class(ann)[[1]]}")
   NULL
 }
+
+# ============================================================================
+# SplitForest serialization
+# ============================================================================
+
+#' Serialize a SplitForest to a JSON-ready list
+#'
+#' Converts a SplitForest object containing multiple WebSpec objects into
+#' a format suitable for the split forest htmlwidget.
+#'
+#' @param split_forest A SplitForest object
+#' @param include_forest Whether to include forest plot data in each spec
+#' @return A nested list suitable for jsonlite::toJSON
+#' @keywords internal
+serialize_split_forest <- function(split_forest, include_forest = TRUE) {
+  # Serialize each spec
+  serialized_specs <- list()
+  for (key in names(split_forest@specs)) {
+    spec <- split_forest@specs[[key]]
+    serialized_specs[[key]] <- serialize_spec(spec, include_forest = include_forest)
+  }
+
+  list(
+    type = "split_forest",
+    splitVars = split_forest@split_vars,
+    navTree = serialize_nav_tree(split_forest@split_tree),
+    specs = serialized_specs,
+    sharedAxis = split_forest@shared_axis,
+    axisRange = if (any(is.na(split_forest@axis_range))) {
+      NULL
+    } else {
+      list(min = split_forest@axis_range[1], max = split_forest@axis_range[2])
+    }
+  )
+}
+
+#' Serialize navigation tree for JSON
+#'
+#' Recursively converts the R list structure to JSON-compatible format.
+#'
+#' @param tree The navigation tree (list of nodes)
+#' @return List structure ready for JSON serialization
+#' @keywords internal
+serialize_nav_tree <- function(tree) {
+  if (is.null(tree) || length(tree) == 0) return(NULL)
+
+  lapply(tree, function(node) {
+    list(
+      label = node$label,
+      key = node$key,
+      children = if (!is.null(node$children) && length(node$children) > 0) {
+        serialize_nav_tree(node$children)
+      } else {
+        NULL
+      }
+    )
+  })
+}

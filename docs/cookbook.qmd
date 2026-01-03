@@ -263,3 +263,51 @@ forest_plot(meta_data[1:3, ],
   subtitle = "For presentation slides"
 )
 ```
+
+## Split by Subgroups
+
+Create separate navigable plots for each subgroup value:
+
+```{r}
+set.seed(42)
+subgroup_data <- data.frame(
+  study = paste0("Study ", 1:20),
+  region = sample(c("Americas", "Europe", "Asia"), 20, replace = TRUE),
+  or = exp(rnorm(20, log(0.8), 0.25)),
+  lower = NA, upper = NA
+)
+subgroup_data$lower <- subgroup_data$or * exp(-1.96 * 0.2)
+subgroup_data$upper <- subgroup_data$or * exp(1.96 * 0.2)
+
+forest_plot(subgroup_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = "region",  # Creates sidebar navigation
+  scale = "log", null_value = 1,
+  theme = web_theme_modern()
+)
+```
+
+For hierarchical navigation (e.g., Sex > Age Group):
+
+```r
+forest_plot(data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = c("sex", "age_group"),  # Nested tree
+  shared_axis = TRUE,  # Same scale across all subgroups
+  scale = "log", null_value = 1
+)
+```
+
+## Export Split Forest to Directory
+
+Save all subgroup plots as separate files:
+```r
+split_result <- data |>
+  web_spec(point = "or", lower = "lower", upper = "upper", label = "study") |>
+  split_forest(by = c("sex", "age_group"))
+
+# Creates: output/Male/Male_Young.svg, output/Male/Male_Old.svg, etc.
+save_split_forest(split_result, "output", format = "svg")
+```

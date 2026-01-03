@@ -7,10 +7,15 @@
 #' While commonly used for meta-analysis, they work for any data with
 #' point + interval structure (QC measurements, regression coefficients, etc.).
 #'
-#' @param x Either a WebSpec object or a data.frame/data.table/tibble
+#' @param x Either a WebSpec object, a SplitForest object, or a data.frame/data.table/tibble
 #' @param ... Arguments passed to `web_spec()` when x is a data frame.
 #'   Common arguments: `point`, `lower`, `upper`, `label`, `group`,
 #'   `columns`, `scale`, `null_value`, `axis_label`, `weight`, `theme`, `interaction`
+#' @param split_by Column name(s) to split data into separate plots. When specified,
+#'   creates a SplitForest with sidebar navigation. Can be a single column name or
+#'   a character vector for hierarchical splits (e.g., `c("region", "age_group")`).
+#' @param shared_axis When `split_by` is used, whether to use the same axis range
+#'   across all split plots for easier comparison. Default is `FALSE`.
 #' @param axis_range Numeric vector c(min, max) to override axis range from theme
 #' @param axis_ticks Numeric vector of explicit tick positions
 #' @param axis_gridlines Logical to show/hide gridlines (overrides theme)
@@ -69,6 +74,8 @@
 forest_plot <- function(
     x,
     ...,
+    split_by = NULL,
+    shared_axis = FALSE,
     axis_range = NULL,
     axis_ticks = NULL,
     axis_gridlines = NULL,
@@ -85,7 +92,6 @@ forest_plot <- function(
   width_mode <- match.arg(width_mode)
 
   # Handle deprecated height_mode parameter
-
   if (!is.null(height_mode)) {
     cli::cli_warn(c(
       "{.arg height_mode} is deprecated.",
@@ -97,13 +103,25 @@ forest_plot <- function(
     height_preset <- match.arg(height_preset)
   }
 
+  # Handle SplitForest objects directly
+  if (S7_inherits(x, SplitForest)) {
+    return(forest_plot_split(x, width = width, height = height, elementId = elementId))
+  }
+
   # Handle WebSpec or raw data
-  if (inherits(x, "webforest::WebSpec")) {
+  if (S7_inherits(x, WebSpec)) {
     spec <- x
   } else if (is.data.frame(x)) {
     spec <- web_spec(x, ...)
   } else {
-    cli_abort("{.arg x} must be a WebSpec object or a data frame")
+    cli_abort("{.arg x} must be a WebSpec object, SplitForest object, or a data frame")
+  }
+
+  # If split_by is specified, create a SplitForest and render it
+
+  if (!is.null(split_by)) {
+    split_result <- split_forest(spec, by = split_by, shared_axis = shared_axis)
+    return(forest_plot_split(split_result, width = width, height = height, elementId = elementId))
   }
 
   # Apply visual overrides to theme
@@ -168,4 +186,58 @@ forest_plot <- function(
 #' @export
 method(plot, WebSpec) <- function(x, ...) {
   forest_plot(x, ...)
+}
+
+#' Plot method for SplitForest
+#'
+#' Renders a SplitForest as a split forest plot with sidebar navigation.
+#'
+#' @param x A SplitForest object
+#' @param ... Additional arguments passed to forest_plot_split
+#'
+#' @return An htmlwidget
+#' @export
+method(plot, SplitForest) <- function(x, ...) {
+  forest_plot(x, ...)
+}
+
+#' Render a SplitForest as an htmlwidget
+#'
+#' Internal function to create the split forest widget.
+#'
+#' @param x A SplitForest object
+#' @param width Widget width (default NULL for auto)
+#' @param height Widget height (default NULL for auto)
+#' @param elementId HTML element ID (optional)
+#'
+#' @return An htmlwidget
+#' @keywords internal
+forest_plot_split <- function(x, width = NULL, height = NULL, elementId = NULL) {
+  # Serialize the SplitForest
+
+  payload <- serialize_split_forest(x, include_forest = TRUE)
+
+  # Create widget
+  widget <- htmlwidgets::createWidget(
+    name = "webforest_split",
+    x = payload,
+    width = width,
+    height = height,
+    package = "webforest",
+    elementId = elementId,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      defaultWidth = "100%",
+      defaultHeight = 600,
+      viewer.fill = TRUE,
+      browser.fill = TRUE,
+      knitr.figure = FALSE,
+      knitr.defaultWidth = "100%",
+      knitr.defaultHeight = 600
+    )
+  )
+
+  # Attach SplitForest for save_plot() to use
+  attr(widget, "splitforest") <- x
+
+  widget
 }

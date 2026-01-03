@@ -267,6 +267,69 @@ method(print, WebSpec) <- function(x, ...) {
 }
 
 # ============================================================================
+# Split Forest: Collection of plots split by variable values
+# ============================================================================
+
+#' SplitForest: A collection of forest plots split by variable values
+#'
+#' Container for multiple WebSpec objects, one per split combination.
+#' Used when `split_by` is specified to create separate plots for each
+#' subset of data based on the splitting variable(s).
+#'
+#' @param specs Named list of WebSpec objects (names are split value keys)
+#' @param split_vars Character vector of column names used for splitting
+#' @param split_tree Hierarchical navigation structure for the sidebar
+#' @param shared_axis Whether to use shared axis range across all plots
+#' @param axis_range Numeric vector of length 2 with shared axis min/max (if shared_axis = TRUE)
+#'
+#' @export
+SplitForest <- new_class(
+  "SplitForest",
+  properties = list(
+    specs = new_property(class_list, default = list()),
+    split_vars = new_property(class_character, default = character(0)),
+    split_tree = new_property(class_list, default = list()),
+    shared_axis = new_property(class_logical, default = FALSE),
+    axis_range = new_property(class_numeric, default = c(NA_real_, NA_real_))
+  ),
+  validator = function(self) {
+    if (length(self@specs) == 0) {
+      return("SplitForest must contain at least one WebSpec")
+    }
+    for (name in names(self@specs)) {
+      if (!S7_inherits(self@specs[[name]], WebSpec)) {
+        return(paste0("All specs must be WebSpec objects, got invalid type for '", name, "'"))
+      }
+    }
+    if (length(self@split_vars) == 0) {
+      return("split_vars must contain at least one column name")
+    }
+    NULL
+  }
+)
+
+#' Print method for SplitForest
+#' @export
+method(print, SplitForest) <- function(x, ...) {
+  total_rows <- sum(vapply(x@specs, function(s) nrow(s@data), integer(1)))
+  cli_inform(c(
+    "A {.cls SplitForest} with {length(x@specs)} plot{?s}",
+    "*" = "Split by: {.field {x@split_vars}}",
+    "*" = "Total rows: {total_rows}",
+    "*" = "Shared axis: {.val {x@shared_axis}}",
+    "",
+    "Plots:",
+    set_names(
+      vapply(names(x@specs), function(k) {
+        paste0("{.val ", k, "} ({nrow(x@specs[[\"", k, "\"]]@data)} rows)")
+      }, character(1)),
+      rep("*", length(x@specs))
+    )
+  ))
+  invisible(x)
+}
+
+# ============================================================================
 # Meta-analysis convenience classes (optional add-ons)
 # ============================================================================
 

@@ -370,6 +370,25 @@ export interface FilterConfig {
 }
 
 // ============================================================================
+// Split Forest Types
+// ============================================================================
+
+export interface NavTreeNode {
+  label: string;
+  key: string;
+  children: NavTreeNode[] | null;
+}
+
+export interface SplitForestPayload {
+  type: "split_forest";
+  splitVars: string[];
+  navTree: NavTreeNode[];
+  specs: Record<string, WebSpec>;
+  sharedAxis: boolean;
+  axisRange: { min: number; max: number } | null;
+}
+
+// ============================================================================
 // HTMLWidgets Integration
 // ============================================================================
 
