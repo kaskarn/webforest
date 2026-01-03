@@ -39,6 +39,8 @@ ColumnSpec(
 
 \item{header_align}{Text alignment for header: "left", "center", "right" (NA to inherit from align)}
 
+\item{wrap}{Enable text wrapping (default FALSE). When TRUE, long text wraps instead of being truncated.}
+
 \item{position}{Column position relative to plot: "left" or "right"}
 
 \item{sortable}{Whether the column is sortable}

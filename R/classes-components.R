@@ -9,6 +9,7 @@
 #' @param width Column width in pixels (NA for auto)
 #' @param align Text alignment for body cells: "left", "center", "right"
 #' @param header_align Text alignment for header: "left", "center", "right" (NA to inherit from align)
+#' @param wrap Enable text wrapping (default FALSE). When TRUE, long text wraps instead of being truncated.
 #' @param position Column position relative to plot: "left" or "right"
 #' @param sortable Whether the column is sortable
 #' @param options Named list of type-specific options
