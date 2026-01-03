@@ -4,14 +4,14 @@
 \alias{col_n}
 \title{Column helper: Sample size / count}
 \usage{
-col_n(field = "n", header = "N", width = 70, ...)
+col_n(field = "n", header = "N", width = 80, ...)
 }
 \arguments{
 \item{field}{Field name (default "n")}
 
 \item{header}{Column header (default "N")}
 
-\item{width}{Column width in pixels (default 70)}
+\item{width}{Column width in pixels (default 80)}
 
 \item{...}{Additional arguments passed to web_col}
 }

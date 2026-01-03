@@ -10,6 +10,8 @@ web_col(
   type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline", "custom"),
   width = NULL,
   align = NULL,
+  header_align = NULL,
+  wrap = FALSE,
   position = c("left", "right"),
   sortable = TRUE,
   options = list(),
@@ -28,9 +30,14 @@ web_col(
 
 \item{type}{Column type}
 
-\item{width}{Column width in pixels}
+\item{width}{Column width in pixels, or "auto" for content-based width}
 
-\item{align}{Text alignment}
+\item{align}{Text alignment for body cells}
+
+\item{header_align}{Text alignment for header (NULL to inherit from align)}
+
+\item{wrap}{Enable text wrapping (default FALSE). When TRUE, long text wraps
+instead of being truncated with ellipsis.}
 
 \item{position}{Column position: "left" or "right" of the forest plot}
 

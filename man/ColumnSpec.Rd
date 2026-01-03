@@ -11,6 +11,8 @@ ColumnSpec(
   type = "text",
   width = NA_real_,
   align = "left",
+  header_align = NA_character_,
+  wrap = FALSE,
   position = "left",
   sortable = TRUE,
   options = list(),
@@ -33,7 +35,9 @@ ColumnSpec(
 
 \item{width}{Column width in pixels (NA for auto)}
 
-\item{align}{Text alignment: "left", "center", "right"}
+\item{align}{Text alignment for body cells: "left", "center", "right"}
+
+\item{header_align}{Text alignment for header: "left", "center", "right" (NA to inherit from align)}
 
 \item{position}{Column position relative to plot: "left" or "right"}
 
