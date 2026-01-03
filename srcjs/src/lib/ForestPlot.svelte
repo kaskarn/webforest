@@ -865,10 +865,12 @@
 
   :global(.webforest-container.width-fill) .webforest-scalable {
     transform: scale(var(--wf-fill-scale, 1));
-    transform-origin: top left;
-    /* Scale affects visual rendering but not layout box.
-       Use width to make the layout box match the scaled visual size. */
-    width: calc(100% / var(--wf-fill-scale, 1));
+    transform-origin: top center;
+    /* Don't use flex: 1 in fill mode - we need natural height for scaling */
+    flex: none;
+    /* Center the scaled content horizontally */
+    margin-left: auto;
+    margin-right: auto;
     /* Move border/background here so they scale with content */
     background: var(--wf-bg);
     border: 1px solid var(--wf-border);
