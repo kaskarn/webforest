@@ -22,6 +22,20 @@ Second release of webforest with enhanced column formatting, new themes, and pac
   - `nba_efficiency` - NBA player efficiency ratings (~30 rows)
   - `climate_temps` - Regional temperature anomalies (~20 rows)
 
+### Bug Fixes
+
+* Fixed split sidebar showing "R" instead of "Region" for single-variable splits (JSON serialization issue with length-1 vectors)
+* Fixed fill container mode triggering horizontal scrollbar due to padding/margin not accounted for in scaling
+* Fixed infinite height growth loop in fill container mode
+* Fixed tooltip positioning to stay within viewport bounds
+* Changed tooltip display to opt-in behavior via `tooltip_fields` in `web_interaction()`
+
+### Improvements
+
+* Reduced height preset values for small/medium/large containers
+* Compacted tooltip and layout toggle dropdown styling
+* Refreshed default theme color palette to cyan tones
+
 ### Documentation
 
 * New guide: "Package Datasets" with examples for all four datasets
