@@ -99,9 +99,9 @@ Build commands:
 
 ```bash
 cd srcjs
-npm run build          # Both bundles
-npm run build:widget   # Widget only
-npm run build:v8       # V8 bundle only
+bun run build          # Both bundles
+bun run build:widget   # Widget only
+bun run build:v8       # V8 bundle only
 ```
 
 ## R Integration
@@ -231,7 +231,7 @@ function renderTableRow(...) {
 2. Rebuild both bundles:
 
 ```bash
-npm run build
+bun run build
 ```
 
 ### Customizing Export Options
@@ -255,7 +255,7 @@ interface ExportOptions {
 The V8 bundle hasn't been built. Run:
 
 ```bash
-cd srcjs && npm run build
+cd srcjs && bun run build
 ```
 
 ### Text alignment looks off
