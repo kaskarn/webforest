@@ -417,14 +417,14 @@
     "href": "reference/webtable.html#usage",
     "title": "webtable",
     "section": "Usage",
-    "text": "Usage\nwebtable(\n  x,\n  ...,\n  width_mode = c(\"fit\", \"fill\", \"responsive\"),\n  height_mode = c(\"auto\", \"scroll\"),\n  width = NULL,\n  height = NULL,\n  elementId = NULL\n)"
+    "text": "Usage\nwebtable(\n  x,\n  ...,\n  width_mode = c(\"natural\", \"fill\"),\n  height_mode = c(\"auto\", \"scroll\"),\n  width = NULL,\n  height = NULL,\n  elementId = NULL\n)"
   },
   {
     "objectID": "reference/webtable.html#arguments",
     "href": "reference/webtable.html#arguments",
     "title": "webtable",
     "section": "Arguments",
-    "text": "Arguments\n\n\n\nArgument\nDescription\n\n\n\n\nx\nA data frame or WebSpec object\n\n\n...\nArguments passed to web_spec() when x is a data frame\n\n\nwidth_mode\n\"fit\", \"fill\", or \"responsive\"\n\n\nheight_mode\n\"auto\" or \"scroll\"\n\n\nwidth\nWidget width\n\n\nheight\nWidget height\n\n\nelementId\nHTML element ID"
+    "text": "Arguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nx\nA data frame or WebSpec object\n\n\n...\nArguments passed to web_spec() when x is a data frame\n\n\nwidth_mode\n\"natural\" (centered at natural width) or \"fill\" (scale to fill container)\n\n\nheight_mode\n\"auto\" or \"scroll\"\n\n\nwidth\nWidget width\n\n\nheight\nWidget height\n\n\nelementId\nHTML element ID"
   },
   {
     "objectID": "reference/webtable.html#value",
@@ -732,14 +732,14 @@
     "href": "reference/forest_plot.html#usage",
     "title": "forest_plot",
     "section": "Usage",
-    "text": "Usage\nforest_plot(\n\nx,\n...,\naxis_range = NULL,\naxis_ticks = NULL,\naxis_gridlines = NULL,\nplot_position = NULL,\nrow_height = NULL,\nwidth_mode = c(\"fit\", \"fill\", \"responsive\"),\nheight_mode = c(\"auto\", \"scroll\"),\nwidth = NULL,\nheight = NULL,\nelementId = NULL\n)"
+    "text": "Usage\nforest_plot(\n\nx,\n...,\naxis_range = NULL,\naxis_ticks = NULL,\naxis_gridlines = NULL,\nplot_position = NULL,\nrow_height = NULL,\nwidth_mode = c(\"natural\", \"fill\"),\nheight_mode = c(\"auto\", \"scroll\"),\nwidth = NULL,\nheight = NULL,\nelementId = NULL\n)"
   },
   {
     "objectID": "reference/forest_plot.html#arguments",
     "href": "reference/forest_plot.html#arguments",
     "title": "forest_plot",
     "section": "Arguments",
-    "text": "Arguments\n\nData Arguments (passed to web_spec() via ...)\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nx\nA data frame or WebSpec object\n\n\npoint\nColumn name for point estimates\n\n\nlower\nColumn name for lower confidence bounds\n\n\nupper\nColumn name for upper confidence bounds\n\n\nlabel\nColumn name for row labels\n\n\ngroup\nColumn name(s) for hierarchical grouping\n\n\ncolumns\nList of column specifications\n\n\nscale\n\"linear\" or \"log\"\n\n\nnull_value\nReference value (e.g., 1 for ratios, 0 for differences)\n\n\naxis_label\nX-axis label\n\n\ntheme\nTheme object (default: web_theme_default())\n\n\ntitle\nPlot title\n\n\nsubtitle\nPlot subtitle\n\n\ncaption\nPlot caption\n\n\nfootnote\nPlot footnote\n\n\n\n\n\nRow Styling Arguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nrow_type\nColumn for row type: \"header\", \"data\", \"summary\", \"spacer\"\n\n\nrow_bold\nColumn for bold styling (logical)\n\n\nrow_indent\nColumn for indentation level (integer)\n\n\nrow_color\nColumn for text color (hex string)\n\n\nrow_badge\nColumn for badge text\n\n\n\n\n\nCell Styling Arguments\n\n\n\nArgument\nDescription\n\n\n\n\nstyle_cols\nColumn names to apply cell styling to\n\n\nstyle_bold\nColumn for cell bold (logical)\n\n\nstyle_color\nColumn for cell text color (hex string)\n\n\nstyle_bg\nColumn for cell background color (hex string)\n\n\n\n\n\nVisual Override Arguments\n\n\n\nArgument\nDescription\n\n\n\n\naxis_range\nc(min, max) to override axis limits\n\n\naxis_ticks\nNumeric vector of explicit tick positions\n\n\naxis_gridlines\nTRUE/FALSE to show/hide gridlines\n\n\nplot_position\n\"left\" or \"right\"\n\n\nrow_height\nRow height in pixels\n\n\n\n\n\nLayout Arguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nwidth_mode\n\"fit\" (shrink-wrap), \"fill\" (100%), or \"responsive\" (100% with scaling)\n\n\nheight_mode\n\"auto\" (natural height) or \"scroll\" (scroll if &gt; viewport)\n\n\nwidth\nWidget width\n\n\nheight\nWidget height\n\n\nelementId\nHTML element ID"
+    "text": "Arguments\n\nData Arguments (passed to web_spec() via ...)\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nx\nA data frame or WebSpec object\n\n\npoint\nColumn name for point estimates\n\n\nlower\nColumn name for lower confidence bounds\n\n\nupper\nColumn name for upper confidence bounds\n\n\nlabel\nColumn name for row labels\n\n\ngroup\nColumn name(s) for hierarchical grouping\n\n\ncolumns\nList of column specifications\n\n\nscale\n\"linear\" or \"log\"\n\n\nnull_value\nReference value (e.g., 1 for ratios, 0 for differences)\n\n\naxis_label\nX-axis label\n\n\ntheme\nTheme object (default: web_theme_default())\n\n\ntitle\nPlot title\n\n\nsubtitle\nPlot subtitle\n\n\ncaption\nPlot caption\n\n\nfootnote\nPlot footnote\n\n\n\n\n\nRow Styling Arguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nrow_type\nColumn for row type: \"header\", \"data\", \"summary\", \"spacer\"\n\n\nrow_bold\nColumn for bold styling (logical)\n\n\nrow_indent\nColumn for indentation level (integer)\n\n\nrow_color\nColumn for text color (hex string)\n\n\nrow_badge\nColumn for badge text\n\n\n\n\n\nCell Styling Arguments\n\n\n\nArgument\nDescription\n\n\n\n\nstyle_cols\nColumn names to apply cell styling to\n\n\nstyle_bold\nColumn for cell bold (logical)\n\n\nstyle_color\nColumn for cell text color (hex string)\n\n\nstyle_bg\nColumn for cell background color (hex string)\n\n\n\n\n\nVisual Override Arguments\n\n\n\nArgument\nDescription\n\n\n\n\naxis_range\nc(min, max) to override axis limits\n\n\naxis_ticks\nNumeric vector of explicit tick positions\n\n\naxis_gridlines\nTRUE/FALSE to show/hide gridlines\n\n\nplot_position\n\"left\" or \"right\"\n\n\nrow_height\nRow height in pixels\n\n\n\n\n\nLayout Arguments\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nwidth_mode\n\"natural\" (centered at natural width) or \"fill\" (scale to fill container)\n\n\nheight_mode\n\"auto\" (natural height) or \"scroll\" (scroll if &gt; viewport)\n\n\nwidth\nWidget width\n\n\nheight\nWidget height\n\n\nelementId\nHTML element ID"
   },
   {
     "objectID": "reference/forest_plot.html#value",
