@@ -859,8 +859,8 @@
     background: transparent;
     border: none;
     border-radius: 0;
-    /* Allow content to extend beyond and trigger page scroll */
-    overflow: visible;
+    /* Clip content to container - transform doesn't affect layout box width */
+    overflow: hidden;
   }
 
   :global(.webforest-container.width-fill) .webforest-scalable {
