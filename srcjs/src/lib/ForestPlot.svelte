@@ -58,6 +58,7 @@
 
   // Container width from ResizeObserver (for fill mode scaling)
   let containerWidth = $state(0);
+  let scalableNaturalWidth = $state(0);
   let scalableNaturalHeight = $state(0);
 
   // Natural content width from store (calculated from column specs)
@@ -65,11 +66,18 @@
 
   // Scale factor for fill mode: stretch or shrink content to fit container
   const fillScale = $derived.by(() => {
-    if (widthMode !== 'fill' || containerWidth <= 0 || naturalContentWidth <= 0) {
+    if (widthMode !== 'fill' || containerWidth <= 0) {
       return 1;
     }
+    // Use measured width (more accurate - includes padding, borders, gaps)
+    // Fall back to calculated width from store if not measured yet
+    const contentWidth = scalableNaturalWidth > 0
+      ? scalableNaturalWidth
+      : naturalContentWidth;
+    if (contentWidth <= 0) return 1;
+
     // Scale to fit content within container (both up and down)
-    const scale = containerWidth / naturalContentWidth;
+    const scale = containerWidth / contentWidth;
     // Don't scale below 0.6 (text becomes unreadable) or above 2.0 (too stretched)
     return Math.max(0.6, Math.min(2.0, scale));
   });
@@ -86,6 +94,7 @@
         if (entry.target === containerRef) {
           containerWidth = entry.contentRect.width;
         } else if (entry.target === scalableRef) {
+          scalableNaturalWidth = entry.contentRect.width;
           scalableNaturalHeight = entry.contentRect.height;
         }
       }
@@ -875,6 +884,11 @@
     /* Minimal border to avoid scroll issues */
     border: none;
     border-radius: 0;
+  }
+
+  /* In fill mode, prevent inner scrollbars - container handles clipping */
+  :global(.webforest-container.width-fill) .webforest-main {
+    overflow: visible;
   }
 
   /* Height presets - use max-height so container doesn't fill with empty space */
