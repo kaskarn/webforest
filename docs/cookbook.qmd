@@ -41,9 +41,8 @@ Adjust the JAMA theme for your journal's requirements:
 jama_custom <- web_theme_jama() |>
   set_colors(
     primary = "#000000",        # Black for main elements
-    interval_line = "#333333",  # Dark gray CI lines
-    interval_positive = "#000000",
-    interval_negative = "#000000"
+    interval = "#000000",       # Black markers
+    interval_line = "#333333"   # Dark gray CI lines
   ) |>
   set_typography(
     font_family = "Arial, sans-serif"  # Common journal font
@@ -301,6 +300,34 @@ forest_plot(design_data,
   footnote = "Circles = RCTs, Squares = Observational studies"
 )
 ```
+
+## Add Hover Tooltips
+
+Show additional metadata when hovering over interval markers:
+
+```{r}
+tooltip_data <- data.frame(
+  study = c("EMPA-REG 2015", "CANVAS 2017", "DECLARE 2019"),
+  hr = c(0.62, 0.86, 0.93),
+  lower = c(0.49, 0.75, 0.84),
+  upper = c(0.77, 0.97, 1.03),
+  n = c(7020, 10142, 17160),
+  events = c(490, 585, 882),
+  pvalue = c(0.0001, 0.02, 0.17)
+)
+
+forest_plot(tooltip_data,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study", null_value = 1, scale = "log",
+  interaction = web_interaction(
+    tooltip_fields = c("n", "events", "pvalue")
+  ),
+  theme = web_theme_modern(),
+  footnote = "Hover over markers to see tooltip"
+)
+```
+
+Tooltips are opt-in and display the row label, estimate with CI, and any additional fields you specify.
 
 ## Use Dark Theme for Presentations
 

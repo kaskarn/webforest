@@ -159,10 +159,11 @@ web_effect(point, lower, upper, label = NULL, color = NULL, shape = NULL, opacit
 
 ### web_interaction {#web_interaction}
 
-Configure interactive features.
+Configure interactive features and tooltips.
 
 ```r
 web_interaction(
+  tooltip_fields = NULL,
   show_filters = FALSE,
   show_legend = TRUE,
   enable_sort = TRUE,
@@ -174,16 +175,33 @@ web_interaction(
 )
 ```
 
-| Argument | Description |
-|----------|-------------|
-| `show_filters` | Show filter panel |
-| `show_legend` | Show legend |
-| `enable_sort` | Enable column sorting |
-| `enable_collapse` | Enable group collapsing |
-| `enable_select` | Enable row selection |
-| `enable_hover` | Enable hover effects |
-| `enable_resize` | Enable column resizing |
-| `enable_export` | Enable download/export button |
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `tooltip_fields` | Column names to show in hover tooltip | `NULL` (no tooltip) |
+| `show_filters` | Show filter panel | `FALSE` |
+| `show_legend` | Show legend | `TRUE` |
+| `enable_sort` | Enable column sorting | `TRUE` |
+| `enable_collapse` | Enable group collapsing | `TRUE` |
+| `enable_select` | Enable row selection | `TRUE` |
+| `enable_hover` | Enable hover effects | `TRUE` |
+| `enable_resize` | Enable column resizing | `TRUE` |
+| `enable_export` | Enable download/export button | `TRUE` |
+
+### Tooltips
+
+Tooltips are **opt-in**. Specify column names to display when hovering over interval markers:
+
+```r
+# Show sample size and p-value on hover
+web_interaction(
+  tooltip_fields = c("n", "events", "pvalue")
+)
+```
+
+The tooltip displays:
+1. Row label (study name)
+2. Point estimate with CI
+3. Each specified field as key-value pairs
 
 ### Presets
 

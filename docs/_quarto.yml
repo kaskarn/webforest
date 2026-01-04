@@ -12,25 +12,28 @@ website:
         menu:
           - text: "Quick Start"
             href: guide/quick-start.qmd
+          - text: "Package Datasets"
+            href: guide/datasets.qmd
+          - text: "Data Preparation"
+            href: guide/data-preparation.qmd
+          - text: "---"
           - text: "Themes"
             href: guide/themes.qmd
           - text: "Columns"
             href: guide/columns.qmd
           - text: "Grouping & Rows"
             href: guide/grouping-rows.qmd
-          - text: "Split Forest Plots"
-            href: guide/split-forest.qmd
-          - text: "Exporting Plots"
-            href: guide/exporting.qmd
-          - text: "Axis & Annotations"
-            href: guide/axis-annotations.qmd
-          - text: "---"
-          - text: "Package Datasets"
-            href: guide/datasets.qmd
-          - text: "Data Preparation"
-            href: guide/data-preparation.qmd
           - text: "Cell Styling"
             href: guide/cell-styling.qmd
+          - text: "Interactivity & Tooltips"
+            href: guide/interactivity.qmd
+          - text: "---"
+          - text: "Split Forest Plots"
+            href: guide/split-forest.qmd
+          - text: "Axis & Annotations"
+            href: guide/axis-annotations.qmd
+          - text: "Exporting Plots"
+            href: guide/exporting.qmd
           - text: "Shiny Integration"
             href: guide/shiny.qmd
           - text: "Troubleshooting"

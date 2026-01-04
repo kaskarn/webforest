@@ -110,9 +110,8 @@ set_colors(
   secondary = "#64748b",
   muted = "#94a3b8",
   border = "#e2e8f0",
-  interval_positive = "#22c55e",
-  interval_negative = "#ef4444",
-  interval_line = "#475569"
+  interval = "#2563eb",        # Marker fill color
+  interval_line = "#475569"    # CI line color
 )
 ```
 
@@ -178,7 +177,7 @@ set_layout(
 
 | Component | Function | Key Properties |
 |-----------|----------|----------------|
-| Colors | `set_colors()` | background, foreground, primary, interval_positive/negative |
+| Colors | `set_colors()` | background, foreground, primary, interval, interval_line |
 | Typography | `set_typography()` | font_family, font_size_*, font_weight_* |
 | Spacing | `set_spacing()` | row_height, header_height, column_gap, padding |
 | Shapes | `set_shapes()` | point_size, summary_height, line_width |
