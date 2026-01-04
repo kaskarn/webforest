@@ -101,15 +101,15 @@ save_plot(spec, "figure1.png", width = 800, scale = 3)
 
 ## Format P-values
 
-P-values are displayed cleanly with Unicode superscript notation for very small values (e.g., 1.2×10⁻⁴):
+P-values are displayed with Unicode superscript notation for very small values (e.g., `1.2×10⁻⁵`). This keeps the display compact and readable:
 
 ```{r}
 pval_data <- data.frame(
-  study = c("Alpha", "Beta", "Gamma", "Delta"),
-  or = c(0.72, 0.95, 0.68, 1.02),
-  lower = c(0.55, 0.78, 0.52, 0.84),
-  upper = c(0.94, 1.16, 0.89, 1.24),
-  pval = c(0.00012, 0.42, 0.003, 0.78)  # Note: very small p-value
+  study = c("Alpha", "Beta", "Gamma", "Delta", "Epsilon"),
+  or = c(0.72, 0.95, 0.68, 1.02, 0.55),
+  lower = c(0.55, 0.78, 0.52, 0.84, 0.42),
+  upper = c(0.94, 1.16, 0.89, 1.24, 0.72),
+  pval = c(0.000012, 0.42, 0.0008, 0.78, 0.00000035)
 )
 
 forest_plot(pval_data,
@@ -122,25 +122,36 @@ forest_plot(pval_data,
 )
 ```
 
-## Customize P-value Display
+## Customize P-value Precision
 
-Control precision and exponential notation threshold:
+Control the number of significant figures and when to switch to exponential notation:
 
-```r
-# Show 3 significant figures, use exponential below 0.01
-col_pvalue("pval", "P-value",
-  digits = 3,
-  exp_threshold = 0.01
+```{r}
+forest_plot(pval_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study", null_value = 1,
+  columns = list(
+    col_pvalue("pval", "P-value",
+      digits = 3,           # 3 significant figures
+      exp_threshold = 0.01  # Use exponential below 0.01
+    )
+  ),
+  theme = web_theme_modern()
 )
 ```
 
-## Add Significance Stars to P-values
+## Add Significance Stars
 
-Enable stars for quick visual identification of significant results:
+Enable stars for quick visual identification (`*` p<0.05, `**` p<0.01, `***` p<0.001):
 
-```r
-col_pvalue("pval", "P-value",
-  stars = TRUE
+```{r}
+forest_plot(pval_data,
+  point = "or", lower = "lower", upper = "upper",
+  label = "study", null_value = 1,
+  columns = list(
+    col_pvalue("pval", "P-value", stars = TRUE)
+  ),
+  theme = web_theme_modern()
 )
 ```
 

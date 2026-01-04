@@ -1,13 +1,11 @@
-@import "tailwindcss";
-
-/* NOTE: Tailwind's utility classes (like .collapse, .hidden, etc.) are output
-   globally and may conflict with other CSS frameworks (e.g., Bootstrap).
-   If embedding webforest in a page with Bootstrap, you may need to add
-   CSS overrides. See docs/styles.css for an example. */
+/* Import only Tailwind's preflight (reset) and theme (CSS variables).
+   We skip utilities to avoid conflicts with Bootstrap (.collapse, etc.) */
+@import "tailwindcss/preflight";
+@import "tailwindcss/theme";
 
 /* Base webforest styles */
 .webforest-container {
-  @apply font-sans;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* Ensure SVG text inherits font */

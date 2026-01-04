@@ -175,28 +175,10 @@ forest_plot <- function(
   widget
 }
 
-#' Plot method for WebSpec
-#'
-#' Renders a WebSpec as a forest plot.
-#'
-#' @param x A WebSpec object
-#' @param ... Additional arguments passed to forest_plot
-#'
-#' @return An htmlwidget
-#' @export
 method(plot, WebSpec) <- function(x, ...) {
   forest_plot(x, ...)
 }
 
-#' Plot method for SplitForest
-#'
-#' Renders a SplitForest as a split forest plot with sidebar navigation.
-#'
-#' @param x A SplitForest object
-#' @param ... Additional arguments passed to forest_plot_split
-#'
-#' @return An htmlwidget
-#' @export
 method(plot, SplitForest) <- function(x, ...) {
   forest_plot(x, ...)
 }

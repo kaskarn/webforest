@@ -276,8 +276,6 @@ if (self@scale == "log") {
   }
 )
 
-#' Print method for WebSpec
-#' @export
 method(print, WebSpec) <- function(x, ...) {
   cli_inform(c(
     "A {.cls WebSpec} with {nrow(x@data)} row{?s}",
@@ -332,8 +330,6 @@ SplitForest <- new_class(
   }
 )
 
-#' Print method for SplitForest
-#' @export
 method(print, SplitForest) <- function(x, ...) {
   total_rows <- sum(vapply(x@specs, function(s) nrow(s@data), integer(1)))
   cli_inform(c(
