@@ -139,6 +139,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Quick Start</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../guide/fluent-api.html">
+ <span class="dropdown-text">The Fluent API</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../guide/datasets.html">
  <span class="dropdown-text">Package Datasets</span></a>
   </li>  
@@ -307,6 +311,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#mixed-column-types" id="toc-mixed-column-types" class="nav-link" data-scroll-target="#mixed-column-types">Mixed Column Types</a></li>
   <li><a href="#column-groups-1" id="toc-column-groups-1" class="nav-link" data-scroll-target="#column-groups-1">Column Groups</a></li>
+  </ul></li>
+  <li><a href="#fluent-column-styling" id="toc-fluent-column-styling" class="nav-link" data-scroll-target="#fluent-column-styling">Fluent Column Styling</a>
+  <ul class="collapse">
+  <li><a href="#set_column_style" id="toc-set_column_style" class="nav-link" data-scroll-target="#set_column_style">set_column_style</a></li>
   </ul></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul>
@@ -612,8 +620,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="webforest html-widget html-fill-item" id="htmlwidget-66309d3568c0fa76cb66" style="width:100%;height:400px;"></div>
-<script type="application/json" data-for="htmlwidget-66309d3568c0fa76cb66">{"x":{"data":{"rows":[{"id":"row_1","label":"Trial A","point":0.72,"lower":0.55,"upper":0.95,"groupId":null,"metadata":{"study":"Trial A","hr":0.72,"lower":0.55,"upper":0.95,"n":245,"weight":35,"pval":0.018}},{"id":"row_2","label":"Trial B","point":0.85,"lower":0.7,"upper":1.03,"groupId":null,"metadata":{"study":"Trial B","hr":0.85,"lower":0.7,"upper":1.03,"n":180,"weight":28,"pval":0.092}},{"id":"row_3","label":"Trial C","point":0.68,"lower":0.52,"upper":0.89,"groupId":null,"metadata":{"study":"Trial C","hr":0.68,"lower":0.52,"upper":0.89,"n":320,"weight":37,"pval":0.003}}],"groups":[],"summaries":[],"overall":{"point":[],"lower":[],"upper":[],"metadata":[]},"pointCol":"hr","lowerCol":"lower","upperCol":"upper","labelCol":"study","labelHeader":"Study","groupCol":null,"weightCol":null,"scale":"log","nullValue":1,"axisLabel":"Estimate","effects":[],"includeForest":true},"columns":[{"id":"n","header":"N","field":"n","type":"numeric","width":80,"align":"right","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false,"options":{"numeric":{"decimals":0}}},{"id":"weight","header":"Weight","field":"weight","type":"bar","width":null,"align":"right","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false,"options":{"bar":{"maxValue":null,"showLabel":true,"color":null}}},{"id":"_interval","header":"HR (95% CI)","field":"_interval","type":"interval","width":160,"align":"left","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false},{"id":"pval","header":"P-value","field":"pval","type":"pvalue","width":100,"align":"right","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false,"options":{"pvalue":{"stars":true,"thresholds":[0.05,0.01,0.001],"format":"auto"}}}],"annotations":[],"theme":{"name":"default","colors":{"background":"#ffffff","foreground":"#333333","primary":"#0891b2","secondary":"#64748b","accent":"#8b5cf6","muted":"#94a3b8","border":"#e2e8f0","interval":"#0891b2","intervalPositive":"#0891b2","intervalNegative":"#dc2626","intervalNeutral":"#64748b","intervalLine":"#475569","summaryFill":"#0891b2","summaryBorder":"#0e7490"},"typography":{"fontFamily":"system-ui, -apple-system, sans-serif","fontSizeSm":"0.75rem","fontSizeBase":"0.875rem","fontSizeLg":"1rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":600,"lineHeight":1.5},"spacing":{"rowHeight":28,"headerHeight":36,"columnGap":8,"sectionGap":16,"padding":12,"cellPaddingX":10,"cellPaddingY":4},"shapes":{"pointSize":6,"summaryHeight":10,"lineWidth":1.5,"borderRadius":2},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted"},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":true,"containerBorderRadius":8}},"interaction":{"showFilters":false,"showLegend":true,"enableSort":true,"enableCollapse":true,"enableSelect":true,"enableHover":true,"enableResize":true,"enableExport":true,"tooltipFields":null},"labels":null,"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto"},"widthMode":"natural","heightPreset":"full"},"evals":[],"jsHooks":[]}</script>
+<div class="webforest html-widget html-fill-item" id="htmlwidget-27686808c02c4c3c19f2" style="width:100%;height:400px;"></div>
+<script type="application/json" data-for="htmlwidget-27686808c02c4c3c19f2">{"x":{"data":{"rows":[{"id":"row_1","label":"Trial A","point":0.72,"lower":0.55,"upper":0.95,"groupId":null,"metadata":{"study":"Trial A","hr":0.72,"lower":0.55,"upper":0.95,"n":245,"weight":35,"pval":0.018}},{"id":"row_2","label":"Trial B","point":0.85,"lower":0.7,"upper":1.03,"groupId":null,"metadata":{"study":"Trial B","hr":0.85,"lower":0.7,"upper":1.03,"n":180,"weight":28,"pval":0.092}},{"id":"row_3","label":"Trial C","point":0.68,"lower":0.52,"upper":0.89,"groupId":null,"metadata":{"study":"Trial C","hr":0.68,"lower":0.52,"upper":0.89,"n":320,"weight":37,"pval":0.003}}],"groups":[],"summaries":[],"overall":{"point":[],"lower":[],"upper":[],"metadata":[]},"pointCol":"hr","lowerCol":"lower","upperCol":"upper","labelCol":"study","labelHeader":"Study","groupCol":null,"weightCol":null,"scale":"log","nullValue":1,"axisLabel":"Estimate","effects":[],"includeForest":true},"columns":[{"id":"n","header":"N","field":"n","type":"numeric","width":80,"align":"right","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false,"options":{"numeric":{"decimals":0}}},{"id":"weight","header":"Weight","field":"weight","type":"bar","width":null,"align":"right","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false,"options":{"bar":{"maxValue":null,"showLabel":true,"color":null}}},{"id":"_interval","header":"HR (95% CI)","field":"_interval","type":"interval","width":160,"align":"left","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false},{"id":"pval","header":"P-value","field":"pval","type":"pvalue","width":100,"align":"right","headerAlign":null,"wrap":false,"position":"left","sortable":true,"isGroup":false,"options":{"pvalue":{"stars":true,"thresholds":[0.05,0.01,0.001],"format":"auto"}}}],"annotations":[],"theme":{"name":"default","colors":{"background":"#ffffff","foreground":"#333333","primary":"#0891b2","secondary":"#64748b","accent":"#8b5cf6","muted":"#94a3b8","border":"#e2e8f0","interval":"#0891b2","intervalPositive":"#0891b2","intervalNegative":"#dc2626","intervalNeutral":"#64748b","intervalLine":"#475569","summaryFill":"#0891b2","summaryBorder":"#0e7490"},"typography":{"fontFamily":"system-ui, -apple-system, sans-serif","fontSizeSm":"0.75rem","fontSizeBase":"0.875rem","fontSizeLg":"1rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":600,"lineHeight":1.5},"spacing":{"rowHeight":28,"headerHeight":36,"columnGap":8,"sectionGap":16,"padding":12,"cellPaddingX":10,"cellPaddingY":4},"shapes":{"pointSize":6,"summaryHeight":10,"lineWidth":1.5,"borderRadius":2},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted"},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":true,"containerBorderRadius":8}},"interaction":{"showFilters":false,"showLegend":true,"enableSort":true,"enableCollapse":true,"enableSelect":true,"enableHover":true,"enableResize":true,"enableExport":true,"tooltipFields":null},"labels":null,"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto"},"widthMode":"natural","heightPreset":"full"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -634,11 +642,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
+<section id="fluent-column-styling" class="level2">
+<h2 class="anchored" data-anchor-id="fluent-column-styling">Fluent Column Styling</h2>
+<section id="set_column_style" class="level3">
+<h3 class="anchored" data-anchor-id="set_column_style">set_column_style</h3>
+<p>Apply per-cell styling to a column after spec creation. See <a href="../guide/fluent-api.html">The Fluent API</a> guide.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>spec <span class="sc">|&gt;</span> <span class="fu">set_column_style</span>(column, <span class="at">bold =</span> <span class="cn">NULL</span>, <span class="at">italic =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="cn">NULL</span>, <span class="at">bg =</span> <span class="cn">NULL</span>, <span class="at">badge =</span> <span class="cn">NULL</span>, <span class="at">icon =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Argument</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>column</code></td>
+<td>Field name of the column to style</td>
+</tr>
+<tr class="even">
+<td><code>bold</code></td>
+<td>Column name for bold text (logical)</td>
+</tr>
+<tr class="odd">
+<td><code>italic</code></td>
+<td>Column name for italic text (logical)</td>
+</tr>
+<tr class="even">
+<td><code>color</code></td>
+<td>Column name for text color (hex string)</td>
+</tr>
+<tr class="odd">
+<td><code>bg</code></td>
+<td>Column name for background color (hex string)</td>
+</tr>
+<tr class="even">
+<td><code>badge</code></td>
+<td>Column name for badge text</td>
+</tr>
+<tr class="odd">
+<td><code>icon</code></td>
+<td>Column name for icon (emoji/unicode)</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">web_spec</span>(data, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>, <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(<span class="fu">col_numeric</span>(<span class="st">"hr"</span>, <span class="st">"HR"</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_column_style</span>(<span class="st">"hr"</span>, <span class="at">bold =</span> <span class="st">"is_significant"</span>, <span class="at">color =</span> <span class="st">"hr_color"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forest_plot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+</section>
+</section>
 <section id="see-also" class="level2">
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <ul>
 <li><a href="../reference/forest_plot.html">forest_plot()</a> for using columns</li>
 <li><a href="../guide/columns.html">Columns Guide</a> for detailed examples</li>
+<li><a href="../guide/fluent-api.html">The Fluent API</a> for pipe-based styling</li>
 </ul>
 
 
@@ -1098,206 +1164,238 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Columns"</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webforest)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>Column functions for defining table columns in forest plots.</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Basic Columns</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_text {#col_text}</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>Text column for displaying character data.</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="fu">col_text</span>(field, <span class="at">header =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">position =</span> <span class="st">"left"</span>)</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name in data <span class="pp">|</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Display header (defaults to field name) <span class="pp">|</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels <span class="pp">|</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`position`</span> <span class="pp">|</span> <span class="in">`"left"`</span> or <span class="in">`"right"`</span> of forest plot <span class="pp">|</span></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_numeric {#col_numeric}</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>Numeric column with automatic formatting.</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="fu">col_numeric</span>(field, <span class="at">header =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">position =</span> <span class="st">"left"</span>)</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name in data <span class="pp">|</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Display header <span class="pp">|</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels <span class="pp">|</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`position`</span> <span class="pp">|</span> <span class="in">`"left"`</span> or <span class="in">`"right"`</span> <span class="pp">|</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_interval {#col_interval}</span></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>Confidence interval display showing point estimate with bounds.</span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="fu">col_interval</span>(<span class="at">header =</span> <span class="st">"95% CI"</span>, <span class="at">width =</span> <span class="dv">140</span>, <span class="at">position =</span> <span class="st">"right"</span>)</span>
-<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header (default: "95% CI") <span class="pp">|</span></span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels (default: 140) <span class="pp">|</span></span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`position`</span> <span class="pp">|</span> Position relative to plot (default: "right") <span class="pp">|</span></span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a>**Note**: This column automatically uses the <span class="in">`point`</span>, <span class="in">`lower`</span>, and <span class="in">`upper`</span> values specified in <span class="in">`forest_plot()`</span>.</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualization Columns</span></span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_bar {#col_bar}</span></span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a>Horizontal bar chart for showing magnitude.</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a><span class="fu">col_bar</span>(</span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a>  field,</span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_value =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_label =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="cn">NULL</span></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name containing numeric values <span class="pp">|</span></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header <span class="pp">|</span></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels <span class="pp">|</span></span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`max_value`</span> <span class="pp">|</span> Maximum value for scaling (auto if NULL) <span class="pp">|</span></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`show_label`</span> <span class="pp">|</span> Show value label (default: TRUE) <span class="pp">|</span></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`color`</span> <span class="pp">|</span> Bar color <span class="pp">|</span></span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_pvalue {#col_pvalue}</span></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>P-value column with optional significance stars.</span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a><span class="fu">col_pvalue</span>(field, <span class="at">header =</span> <span class="st">"P-value"</span>, <span class="at">width =</span> <span class="dv">80</span>, <span class="at">stars =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name containing p-values <span class="pp">|</span></span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header (default: "P-value") <span class="pp">|</span></span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width (default: 80) <span class="pp">|</span></span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`stars`</span> <span class="pp">|</span> Show significance stars (default: TRUE) <span class="pp">|</span></span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>**Significance levels**:</span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`*`</span> p &lt; 0.05</span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`**`</span> p &lt; 0.01</span>
-<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`***`</span> p &lt; 0.001</span>
-<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_sparkline {#col_sparkline}</span></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>Inline sparkline chart for trend visualization.</span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a><span class="fu">col_sparkline</span>(field, <span class="at">header =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="dv">80</span>, <span class="at">type =</span> <span class="st">"line"</span>)</span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name containing numeric vector <span class="pp">|</span></span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header <span class="pp">|</span></span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width (default: 80) <span class="pp">|</span></span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`type`</span> <span class="pp">|</span> <span class="in">`"line"`</span>, <span class="in">`"bar"`</span>, or <span class="in">`"area"`</span> <span class="pp">|</span></span>
-<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a>**Note**: The field should contain list-columns with numeric vectors.</span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_n {#col_n}</span></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a>Sample size column (alias for <span class="in">`col_numeric`</span> with sensible defaults).</span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="fu">col_n</span>(<span class="at">field =</span> <span class="st">"n"</span>, <span class="at">header =</span> <span class="st">"N"</span>, <span class="at">width =</span> <span class="dv">60</span>)</span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_weight {#col_weight}</span></span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a>Weight column with bar visualization for meta-analysis.</span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a><span class="fu">col_weight</span>(<span class="at">field =</span> <span class="st">"weight"</span>, <span class="at">header =</span> <span class="st">"Weight"</span>, <span class="at">width =</span> <span class="dv">100</span>)</span>
-<span id="cb12-140"><a href="#cb12-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-141"><a href="#cb12-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Column Groups</span></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_group {#col_group}</span></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>Group multiple columns under a shared header.</span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a><span class="fu">col_group</span>(header, ...)</span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Group header text <span class="pp">|</span></span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`...`</span> <span class="pp">|</span> Column specifications to group <span class="pp">|</span></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mixed Column Types</span></span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb12-165"><a href="#cb12-165" aria-hidden="true" tabindex="-1"></a>  <span class="at">study =</span> <span class="fu">c</span>(<span class="st">"Trial A"</span>, <span class="st">"Trial B"</span>, <span class="st">"Trial C"</span>),</span>
-<span id="cb12-166"><a href="#cb12-166" aria-hidden="true" tabindex="-1"></a>  <span class="at">hr =</span> <span class="fu">c</span>(<span class="fl">0.72</span>, <span class="fl">0.85</span>, <span class="fl">0.68</span>),</span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="fl">0.70</span>, <span class="fl">0.52</span>),</span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">1.03</span>, <span class="fl">0.89</span>),</span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">245</span>, <span class="dv">180</span>, <span class="dv">320</span>),</span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">28</span>, <span class="dv">37</span>),</span>
-<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="fu">c</span>(<span class="fl">0.018</span>, <span class="fl">0.092</span>, <span class="fl">0.003</span>)</span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_plot</span>(data,</span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a>  <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_n</span>(<span class="st">"n"</span>),</span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_weight</span>(<span class="st">"weight"</span>),</span>
-<span id="cb12-180"><a href="#cb12-180" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>),</span>
-<span id="cb12-181"><a href="#cb12-181" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_pvalue</span>(<span class="st">"pval"</span>)</span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a>  <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">scale =</span> <span class="st">"log"</span></span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### Column Groups</span></span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>columns <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_n</span>(<span class="st">"n"</span>),</span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_group</span>(<span class="st">"Treatment Effect"</span>,</span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_numeric</span>(<span class="st">"hr"</span>, <span class="st">"HR"</span>),</span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"95% CI"</span>)</span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_pvalue</span>(<span class="st">"pval"</span>)</span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-201"><a href="#cb12-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-202"><a href="#cb12-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">forest_plot()</span><span class="co">](forest_plot.qmd)</span> for using columns</span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Columns Guide</span><span class="co">](../guide/columns.qmd)</span> for detailed examples</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Columns"</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webforest)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>Column functions for defining table columns in forest plots.</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Basic Columns</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_text {#col_text}</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>Text column for displaying character data.</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">col_text</span>(field, <span class="at">header =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">position =</span> <span class="st">"left"</span>)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name in data <span class="pp">|</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Display header (defaults to field name) <span class="pp">|</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels <span class="pp">|</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`position`</span> <span class="pp">|</span> <span class="in">`"left"`</span> or <span class="in">`"right"`</span> of forest plot <span class="pp">|</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_numeric {#col_numeric}</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>Numeric column with automatic formatting.</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="fu">col_numeric</span>(field, <span class="at">header =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="cn">NULL</span>, <span class="at">position =</span> <span class="st">"left"</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name in data <span class="pp">|</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Display header <span class="pp">|</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels <span class="pp">|</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`position`</span> <span class="pp">|</span> <span class="in">`"left"`</span> or <span class="in">`"right"`</span> <span class="pp">|</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_interval {#col_interval}</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>Confidence interval display showing point estimate with bounds.</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a><span class="fu">col_interval</span>(<span class="at">header =</span> <span class="st">"95% CI"</span>, <span class="at">width =</span> <span class="dv">140</span>, <span class="at">position =</span> <span class="st">"right"</span>)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header (default: "95% CI") <span class="pp">|</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels (default: 140) <span class="pp">|</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`position`</span> <span class="pp">|</span> Position relative to plot (default: "right") <span class="pp">|</span></span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>**Note**: This column automatically uses the <span class="in">`point`</span>, <span class="in">`lower`</span>, and <span class="in">`upper`</span> values specified in <span class="in">`forest_plot()`</span>.</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualization Columns</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_bar {#col_bar}</span></span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>Horizontal bar chart for showing magnitude.</span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a><span class="fu">col_bar</span>(</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>  field,</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">header =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_value =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_label =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="cn">NULL</span></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name containing numeric values <span class="pp">|</span></span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header <span class="pp">|</span></span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width in pixels <span class="pp">|</span></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`max_value`</span> <span class="pp">|</span> Maximum value for scaling (auto if NULL) <span class="pp">|</span></span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`show_label`</span> <span class="pp">|</span> Show value label (default: TRUE) <span class="pp">|</span></span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`color`</span> <span class="pp">|</span> Bar color <span class="pp">|</span></span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_pvalue {#col_pvalue}</span></span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>P-value column with optional significance stars.</span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a><span class="fu">col_pvalue</span>(field, <span class="at">header =</span> <span class="st">"P-value"</span>, <span class="at">width =</span> <span class="dv">80</span>, <span class="at">stars =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name containing p-values <span class="pp">|</span></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header (default: "P-value") <span class="pp">|</span></span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width (default: 80) <span class="pp">|</span></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`stars`</span> <span class="pp">|</span> Show significance stars (default: TRUE) <span class="pp">|</span></span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>**Significance levels**:</span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`*`</span> p &lt; 0.05</span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`**`</span> p &lt; 0.01</span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`***`</span> p &lt; 0.001</span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_sparkline {#col_sparkline}</span></span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>Inline sparkline chart for trend visualization.</span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="fu">col_sparkline</span>(field, <span class="at">header =</span> <span class="cn">NULL</span>, <span class="at">width =</span> <span class="dv">80</span>, <span class="at">type =</span> <span class="st">"line"</span>)</span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`field`</span> <span class="pp">|</span> Column name containing numeric vector <span class="pp">|</span></span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Column header <span class="pp">|</span></span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Column width (default: 80) <span class="pp">|</span></span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`type`</span> <span class="pp">|</span> <span class="in">`"line"`</span>, <span class="in">`"bar"`</span>, or <span class="in">`"area"`</span> <span class="pp">|</span></span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>**Note**: The field should contain list-columns with numeric vectors.</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_n {#col_n}</span></span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>Sample size column (alias for <span class="in">`col_numeric`</span> with sensible defaults).</span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a><span class="fu">col_n</span>(<span class="at">field =</span> <span class="st">"n"</span>, <span class="at">header =</span> <span class="st">"N"</span>, <span class="at">width =</span> <span class="dv">60</span>)</span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_weight {#col_weight}</span></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>Weight column with bar visualization for meta-analysis.</span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a><span class="fu">col_weight</span>(<span class="at">field =</span> <span class="st">"weight"</span>, <span class="at">header =</span> <span class="st">"Weight"</span>, <span class="at">width =</span> <span class="dv">100</span>)</span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a><span class="fu">## Column Groups</span></span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### col_group {#col_group}</span></span>
+<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>Group multiple columns under a shared header.</span>
+<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a><span class="fu">col_group</span>(header, ...)</span>
+<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header`</span> <span class="pp">|</span> Group header text <span class="pp">|</span></span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`...`</span> <span class="pp">|</span> Column specifications to group <span class="pp">|</span></span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mixed Column Types</span></span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>  <span class="at">study =</span> <span class="fu">c</span>(<span class="st">"Trial A"</span>, <span class="st">"Trial B"</span>, <span class="st">"Trial C"</span>),</span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>  <span class="at">hr =</span> <span class="fu">c</span>(<span class="fl">0.72</span>, <span class="fl">0.85</span>, <span class="fl">0.68</span>),</span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">c</span>(<span class="fl">0.55</span>, <span class="fl">0.70</span>, <span class="fl">0.52</span>),</span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">c</span>(<span class="fl">0.95</span>, <span class="fl">1.03</span>, <span class="fl">0.89</span>),</span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">c</span>(<span class="dv">245</span>, <span class="dv">180</span>, <span class="dv">320</span>),</span>
+<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">35</span>, <span class="dv">28</span>, <span class="dv">37</span>),</span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="fu">c</span>(<span class="fl">0.018</span>, <span class="fl">0.092</span>, <span class="fl">0.003</span>)</span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_plot</span>(data,</span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>  <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_n</span>(<span class="st">"n"</span>),</span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_weight</span>(<span class="st">"weight"</span>),</span>
+<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>),</span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_pvalue</span>(<span class="st">"pval"</span>)</span>
+<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>  <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">scale =</span> <span class="st">"log"</span></span>
+<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a><span class="fu">### Column Groups</span></span>
+<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a>columns <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_n</span>(<span class="st">"n"</span>),</span>
+<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_group</span>(<span class="st">"Treatment Effect"</span>,</span>
+<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_numeric</span>(<span class="st">"hr"</span>, <span class="st">"HR"</span>),</span>
+<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"95% CI"</span>)</span>
+<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">col_pvalue</span>(<span class="st">"pval"</span>)</span>
+<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fluent Column Styling</span></span>
+<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_column_style {#set_column_style}</span></span>
+<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a>Apply per-cell styling to a column after spec creation. See <span class="co">[</span><span class="ot">The Fluent API</span><span class="co">](../guide/fluent-api.qmd)</span> guide.</span>
+<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>spec <span class="sc">|&gt;</span> <span class="fu">set_column_style</span>(column, <span class="at">bold =</span> <span class="cn">NULL</span>, <span class="at">italic =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="cn">NULL</span>, <span class="at">bg =</span> <span class="cn">NULL</span>, <span class="at">badge =</span> <span class="cn">NULL</span>, <span class="at">icon =</span> <span class="cn">NULL</span>)</span>
+<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`column`</span> <span class="pp">|</span> Field name of the column to style <span class="pp">|</span></span>
+<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`bold`</span> <span class="pp">|</span> Column name for bold text (logical) <span class="pp">|</span></span>
+<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`italic`</span> <span class="pp">|</span> Column name for italic text (logical) <span class="pp">|</span></span>
+<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`color`</span> <span class="pp">|</span> Column name for text color (hex string) <span class="pp">|</span></span>
+<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`bg`</span> <span class="pp">|</span> Column name for background color (hex string) <span class="pp">|</span></span>
+<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`badge`</span> <span class="pp">|</span> Column name for badge text <span class="pp">|</span></span>
+<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`icon`</span> <span class="pp">|</span> Column name for icon (emoji/unicode) <span class="pp">|</span></span>
+<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a>Example:</span>
+<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a><span class="fu">web_spec</span>(data, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>, <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(<span class="fu">col_numeric</span>(<span class="st">"hr"</span>, <span class="st">"HR"</span>))</span>
+<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_column_style</span>(<span class="st">"hr"</span>, <span class="at">bold =</span> <span class="st">"is_significant"</span>, <span class="at">color =</span> <span class="st">"hr_color"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forest_plot</span>()</span>
+<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">forest_plot()</span><span class="co">](forest_plot.qmd)</span> for using columns</span>
+<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Columns Guide</span><span class="co">](../guide/columns.qmd)</span> for detailed examples</span>
+<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The Fluent API</span><span class="co">](../guide/fluent-api.qmd)</span> for pipe-based styling</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
