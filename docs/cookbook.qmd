@@ -99,9 +99,9 @@ spec <- web_spec(data,
 save_plot(spec, "figure1.png", width = 800, scale = 3)
 ```
 
-## Add Significance Stars to P-values
+## Format P-values
 
-P-values automatically show stars by default:
+P-values are displayed cleanly with Unicode superscript notation for very small values (e.g., 1.2×10⁻⁴):
 
 ```{r}
 pval_data <- data.frame(
@@ -109,7 +109,7 @@ pval_data <- data.frame(
   or = c(0.72, 0.95, 0.68, 1.02),
   lower = c(0.55, 0.78, 0.52, 0.84),
   upper = c(0.94, 1.16, 0.89, 1.24),
-  pval = c(0.008, 0.42, 0.003, 0.78)
+  pval = c(0.00012, 0.42, 0.003, 0.78)  # Note: very small p-value
 )
 
 forest_plot(pval_data,
@@ -122,14 +122,25 @@ forest_plot(pval_data,
 )
 ```
 
-Customize the thresholds:
+## Customize P-value Display
+
+Control precision and exponential notation threshold:
 
 ```r
-col_pvalue("pval", "P",
-  options = list(
-    thresholds = c(0.05, 0.01, 0.001),  # Default
-    show_stars = TRUE
-  )
+# Show 3 significant figures, use exponential below 0.01
+col_pvalue("pval", "P-value",
+  digits = 3,
+  exp_threshold = 0.01
+)
+```
+
+## Add Significance Stars to P-values
+
+Enable stars for quick visual identification of significant results:
+
+```r
+col_pvalue("pval", "P-value",
+  stars = TRUE
 )
 ```
 
@@ -389,9 +400,9 @@ split_result <- data |>
 save_split_forest(split_result, "output", format = "svg")
 ```
 
-## Build a Plot Step by Step (Fluent API)
+## Apply Styling with the Fluent API
 
-Use the fluent API to separate spec creation from styling:
+Use `set_*()` functions to modify plots after creation:
 
 ```{r}
 step_data <- data.frame(
@@ -404,44 +415,32 @@ step_data <- data.frame(
   study_shape = c("circle", "circle", "circle", "diamond")
 )
 
-# Step 1: Create base spec
-base_spec <- web_spec(step_data,
+forest_plot(step_data,
   point = "hr", lower = "lower", upper = "upper",
-  label = "study", scale = "log", null_value = 1
-)
-
-# Step 2: Add styling via pipes
-styled_spec <- base_spec |>
+  label = "study", scale = "log", null_value = 1,
+  theme = web_theme_modern()
+) |>
   set_marker_style(color = "sig_color", shape = "study_shape") |>
   set_row_style(bold = "is_summary")
-
-# Step 3: Render
-forest_plot(styled_spec, theme = web_theme_modern())
 ```
 
-## Create Spec Variants from Base
+## Create Plot Variants
 
-Reuse a base spec with different styling:
+Apply different styling to the same base plot:
 
 ```{r}
 #| eval: false
-# Base spec (no styling)
-base <- web_spec(data,
+base_plot <- forest_plot(data,
   point = "hr", lower = "lower", upper = "upper",
   label = "study", scale = "log", null_value = 1
 )
 
 # Variant 1: Colored by significance
-v1 <- base |> set_marker_style(color = "sig_color")
+base_plot |> set_marker_style(color = "sig_color")
 
 # Variant 2: Shaped by study type
-v2 <- base |> set_marker_style(shape = "study_shape")
+base_plot |> set_marker_style(shape = "study_shape")
 
 # Variant 3: Both
-v3 <- base |> set_marker_style(color = "sig_color", shape = "study_shape")
-
-# Render each for comparison
-forest_plot(v1)  # Colored
-forest_plot(v2)  # Shaped
-forest_plot(v3)  # Both
+base_plot |> set_marker_style(color = "sig_color", shape = "study_shape")
 ```

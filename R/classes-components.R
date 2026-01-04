@@ -238,22 +238,43 @@ col_interval <- function(header = "95% CI", width = 160, ...) {
 
 #' Column helper: P-value
 #'
+#' Display p-values with optional significance stars and smart formatting.
+#' Very small values are displayed using Unicode superscript notation
+#' (e.g., 1.2×10⁻⁵) for improved readability.
+#'
 #' @param field Field name (default "pvalue")
 #' @param header Column header (default "P-value")
 #' @param stars Show significance stars (default TRUE)
 #' @param thresholds Numeric vector of 3 significance thresholds (default c(0.05, 0.01, 0.001))
 #' @param format P-value format: "auto", "scientific", or "decimal"
+#' @param digits Number of significant figures to display (default 2)
+#' @param exp_threshold Values below this use exponential notation (default 0.001)
 #' @param width Column width in pixels (default 100)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
+#'
+#' @examples
+#' # Default: 2 significant figures, exponential below 0.001
+#' col_pvalue("pval")
+#'
+#' # Show 3 significant figures
+#' col_pvalue("pval", digits = 3)
+#'
+#' # Use exponential notation below 0.01
+#' col_pvalue("pval", exp_threshold = 0.01)
+#'
+#' # With significance stars
+#' col_pvalue("pval", stars = TRUE)
 col_pvalue <- function(
     field = "pvalue",
     header = "P-value",
-    stars = TRUE,
+    stars = FALSE,
     thresholds = c(0.05, 0.01, 0.001),
     format = c("auto", "scientific", "decimal"),
+    digits = 2,
+    exp_threshold = 0.001,
     width = 100,
     ...) {
   format <- match.arg(format)
@@ -261,7 +282,9 @@ col_pvalue <- function(
     pvalue = list(
       stars = stars,
       thresholds = thresholds,
-      format = format
+      format = format,
+      digits = digits,
+      expThreshold = exp_threshold
     )
   )
   web_col(field, header, type = "pvalue", width = width, options = opts, ...)

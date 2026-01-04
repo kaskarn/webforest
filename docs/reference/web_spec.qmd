@@ -287,7 +287,7 @@ spec <- web_spec(data,
 
 ## Fluent API
 
-Modify specifications after creation using the pipe operator. See [The Fluent API](../guide/fluent-api.qmd) guide for detailed usage.
+Modify specifications after creation using the pipe operator. See [Customizing Plots](../guide/fluent-api.qmd) guide for detailed usage.
 
 ### set_marker_style {#set_marker_style}
 

@@ -186,4 +186,4 @@ web_spec(badge_data,
   forest_plot(theme = web_theme_modern())
 ```
 
-This is useful when building specs programmatically or reusing a base spec with different styling. See [The Fluent API](fluent-api.qmd) for more details.
+This is useful when building specs programmatically or reusing a base spec with different styling. See [Customizing Plots](fluent-api.qmd) for more details.

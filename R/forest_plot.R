@@ -168,9 +168,9 @@ forest_plot <- function(
     )
   )
 
-  # Attach WebSpec for save_plot() to use
-
+  # Attach WebSpec for fluent API and save_plot() to use
   attr(widget, "webspec") <- spec
+  attr(widget, "widget_type") <- "forest_plot"
 
   widget
 }

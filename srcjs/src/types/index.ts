@@ -144,6 +144,8 @@ export interface PvalueColumnOptions {
   stars?: boolean;
   thresholds?: [number, number, number]; // e.g., [0.05, 0.01, 0.001]
   format?: "scientific" | "decimal" | "auto";
+  digits?: number; // Number of significant figures (default: 2)
+  expThreshold?: number; // Values below this use exponential notation (default: 0.001)
 }
 
 export interface SparklineColumnOptions {

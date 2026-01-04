@@ -8,9 +8,34 @@
 
   let { value, options }: Props = $props();
 
-  const showStars = $derived(options?.stars ?? true);
+  // Unicode superscript character mapping
+  const SUPERSCRIPT_MAP: Record<string, string> = {
+    "0": "⁰",
+    "1": "¹",
+    "2": "²",
+    "3": "³",
+    "4": "⁴",
+    "5": "⁵",
+    "6": "⁶",
+    "7": "⁷",
+    "8": "⁸",
+    "9": "⁹",
+    "-": "⁻",
+    "+": "⁺",
+  };
+
+  function toSuperscript(str: string): string {
+    return str
+      .split("")
+      .map((c) => SUPERSCRIPT_MAP[c] ?? c)
+      .join("");
+  }
+
+  const showStars = $derived(options?.stars ?? false);
   const thresholds = $derived(options?.thresholds ?? [0.05, 0.01, 0.001]);
   const format = $derived(options?.format ?? "auto");
+  const digits = $derived(options?.digits ?? 2);
+  const expThreshold = $derived(options?.expThreshold ?? 0.001);
 
   const stars = $derived.by(() => {
     if (!showStars || value === undefined || value === null) return "";
@@ -24,18 +49,22 @@
   const formattedValue = $derived.by(() => {
     if (value === undefined || value === null) return "";
 
-    // Very small values: show < threshold
+    // Very small values: show "less than" notation
     if (value < 0.0001) return "<0.0001";
 
-    // Use scientific notation for very small values
-    if (format === "scientific" || (format === "auto" && value < 0.001)) {
-      return value.toExponential(1);
+    // Use scientific notation with Unicode superscript for small values
+    if (format === "scientific" || (format === "auto" && value < expThreshold)) {
+      const exp = Math.floor(Math.log10(value));
+      const mantissa = value / Math.pow(10, exp);
+      // Format mantissa to specified digits
+      const mantissaStr = mantissa.toPrecision(digits);
+      return `${mantissaStr}×10${toSuperscript(exp.toString())}`;
     }
 
-    // Decimal format
-    if (value >= 0.1) return value.toFixed(2);
-    if (value >= 0.01) return value.toFixed(3);
-    return value.toFixed(4);
+    // Decimal format with appropriate precision based on magnitude
+    if (value >= 0.1) return value.toFixed(digits);
+    if (value >= 0.01) return value.toFixed(digits + 1);
+    return value.toFixed(digits + 2);
   });
 
   const isSignificant = $derived(stars.length > 0);

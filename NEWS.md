@@ -1,5 +1,9 @@
 # webforest (development version)
 
+* **P-value formatting**: `col_pvalue()` now displays small values using Unicode superscript notation (e.g., `1.2×10⁻⁵`). New parameters: `digits` for significant figures, `exp_threshold` for exponential notation cutoff. Default `stars = FALSE` for cleaner display.
+
+* **Fluent API**: `set_*()` functions now work directly on `forest_plot()` and `webtable()` outputs, not just `web_spec()` objects.
+
 ## 0.1.0
 
 Second release of webforest with enhanced column formatting, new themes, and package datasets.

@@ -98,22 +98,49 @@ col_bar(field = "weight", header = "Weight", width = 100, color = "#2563eb")
 
 ## P-value Columns
 
-Format p-values with optional significance stars:
+Format p-values with optional significance stars and smart exponential notation:
 
 ```r
-col_pvalue(field = "pvalue", header = "P", width = 70)
+col_pvalue(field = "pvalue", header = "P", width = 100)
 ```
 
-By default, stars are added: `*` for p < 0.05, `**` for p < 0.01, `***` for p < 0.001.
+Stars can be enabled: `*` for p < 0.05, `**` for p < 0.01, `***` for p < 0.001.
 
-Customize thresholds:
+### Unicode Superscript Notation
+
+Very small p-values are displayed using Unicode superscript for readability. For example, p = 0.00012 becomes `1.2×10⁻⁴` instead of `1.2e-04`.
+
+The threshold for exponential notation defaults to 0.001, but can be customized:
 
 ```r
-col_pvalue("pvalue", "P",
-  options = list(
-    thresholds = c(0.05, 0.01, 0.001),
-    show_stars = TRUE
-  )
+# Use exponential notation for values below 0.01
+col_pvalue("pval", exp_threshold = 0.01)
+
+# Force decimal format for all values
+col_pvalue("pval", format = "decimal")
+```
+
+### Precision Control
+
+Control the number of significant figures:
+```r
+# Show 3 significant figures (default is 2)
+col_pvalue("pval", digits = 3)
+```
+
+### Enable Stars
+
+Add significance stars for quick visual identification:
+```r
+col_pvalue("pval", stars = TRUE)
+```
+
+### Custom Thresholds
+
+Customize significance thresholds for stars:
+```r
+col_pvalue("pvalue",
+  thresholds = c(0.10, 0.05, 0.01)  # *, **, *** at 0.10, 0.05, 0.01
 )
 ```
 
@@ -190,4 +217,4 @@ web_spec(data,
   forest_plot()
 ```
 
-This is useful when styling depends on computed columns or when reusing a base spec. See [The Fluent API](fluent-api.qmd) for more details.
+This is useful when styling depends on computed columns or when reusing a base spec. See [Customizing Plots](fluent-api.qmd) for more details.

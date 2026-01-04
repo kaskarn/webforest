@@ -62,10 +62,10 @@ set_row_style <- function(
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
     # Re-create widget with updated spec
-    if (inherits(x, "forest_plot")) {
-      forest_plot(spec)
-    } else {
+    if (identical(attr(x, "widget_type"), "webtable")) {
       webtable(spec)
+    } else {
+      forest_plot(spec)
     }
   } else {
     spec
@@ -155,10 +155,10 @@ set_column_style <- function(
 
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
-    if (inherits(x, "forest_plot")) {
-      forest_plot(spec)
-    } else {
+    if (identical(attr(x, "widget_type"), "webtable")) {
       webtable(spec)
+    } else {
+      forest_plot(spec)
     }
   } else {
     spec
@@ -212,10 +212,10 @@ set_marker_style <- function(
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
     # Re-create widget with updated spec
-    if (inherits(x, "forest_plot")) {
-      forest_plot(spec)
-    } else {
+    if (identical(attr(x, "widget_type"), "webtable")) {
       webtable(spec)
+    } else {
+      forest_plot(spec)
     }
   } else {
     spec

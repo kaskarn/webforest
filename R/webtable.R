@@ -90,7 +90,7 @@ webtable <- function(
   payload$heightPreset <- height_preset
 
   # Create widget (uses same JS, but with includeForest = FALSE)
-  htmlwidgets::createWidget(
+  widget <- htmlwidgets::createWidget(
     name = "webforest",
     x = payload,
     width = width,
@@ -107,4 +107,10 @@ webtable <- function(
       knitr.defaultHeight = 300
     )
   )
+
+  # Attach WebSpec for fluent API and save_plot() to use
+  attr(widget, "webspec") <- spec
+  attr(widget, "widget_type") <- "webtable"
+
+  widget
 }

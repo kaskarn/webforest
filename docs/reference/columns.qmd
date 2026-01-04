@@ -85,24 +85,59 @@ col_bar(
 
 ### col_pvalue {#col_pvalue}
 
-P-value column with optional significance stars.
+P-value column with optional significance stars and smart formatting. Very small values are displayed using Unicode superscript notation (e.g., 1.2×10⁻⁵) for improved readability.
 
 ```r
-col_pvalue(field, header = "P-value", width = 80, stars = TRUE)
+col_pvalue(
+  field = "pvalue",
+  header = "P-value",
+  stars = TRUE,
+  thresholds = c(0.05, 0.01, 0.001),
+  format = c("auto", "scientific", "decimal"),
+  digits = 2,
+  exp_threshold = 0.001,
+  width = 100
+)
 ```
 
 | Argument | Description |
 |----------|-------------|
 | `field` | Column name containing p-values |
 | `header` | Column header (default: "P-value") |
-| `width` | Column width (default: 80) |
-| `stars` | Show significance stars (default: TRUE) |
+| `stars` | Show significance stars (default: FALSE) |
+| `thresholds` | Numeric vector of 3 significance thresholds (default: `c(0.05, 0.01, 0.001)`) |
+| `format` | Display format: `"auto"`, `"scientific"`, or `"decimal"` |
+| `digits` | Number of significant figures (default: 2) |
+| `exp_threshold` | Values below this use exponential notation (default: 0.001) |
+| `width` | Column width in pixels (default: 100) |
 
-**Significance levels**:
+**Formatting behavior**:
+
+- Values ≥ `exp_threshold`: displayed as decimal (e.g., 0.042)
+- Values < `exp_threshold`: displayed with Unicode superscript (e.g., 2.3×10⁻⁴)
+- Values < 0.0001: displayed as "<0.0001"
+
+**Significance levels** (when `stars = TRUE`):
 
 - `*` p < 0.05
 - `**` p < 0.01
 - `***` p < 0.001
+
+**Examples**:
+
+```r
+# Default: 2 significant figures, exponential below 0.001
+col_pvalue("pval")
+
+# More precision
+col_pvalue("pval", digits = 3)
+
+# Use exponential notation earlier (below 0.01)
+col_pvalue("pval", exp_threshold = 0.01)
+
+# With significance stars
+col_pvalue("pval", stars = TRUE)
+```
 
 ### col_sparkline {#col_sparkline}
 
@@ -198,7 +233,7 @@ columns = list(
 
 ### set_column_style {#set_column_style}
 
-Apply per-cell styling to a column after spec creation. See [The Fluent API](../guide/fluent-api.qmd) guide.
+Apply per-cell styling to a column after spec creation. See [Customizing Plots](../guide/fluent-api.qmd) guide.
 
 ```r
 spec |> set_column_style(column, bold = NULL, italic = NULL, color = NULL, bg = NULL, badge = NULL, icon = NULL)
@@ -229,4 +264,4 @@ web_spec(data, point = "hr", lower = "lower", upper = "upper", label = "study",
 
 - [forest_plot()](forest_plot.qmd) for using columns
 - [Columns Guide](../guide/columns.qmd) for detailed examples
-- [The Fluent API](../guide/fluent-api.qmd) for pipe-based styling
+- [Customizing Plots](../guide/fluent-api.qmd) for pipe-based styling

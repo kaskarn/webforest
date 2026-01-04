@@ -427,6 +427,55 @@ function formatInterval(point?: number, lower?: number, upper?: number): string 
   return `${point.toFixed(2)} (${lower.toFixed(2)}, ${upper.toFixed(2)})`;
 }
 
+/** Unicode superscript character mapping */
+const SUPERSCRIPT_MAP: Record<string, string> = {
+  "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
+  "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹",
+  "-": "⁻", "+": "⁺",
+};
+
+/** Convert string to Unicode superscript */
+function toSuperscript(str: string): string {
+  return str.split("").map(c => SUPERSCRIPT_MAP[c] ?? c).join("");
+}
+
+/** Format p-value for display with Unicode superscript notation */
+function formatPvalue(value: number, options?: ColumnOptions): string {
+  const pvalOpts = options?.pvalue;
+  const digits = pvalOpts?.digits ?? 2;
+  const expThreshold = pvalOpts?.expThreshold ?? 0.001;
+  const format = pvalOpts?.format ?? "auto";
+  const showStars = pvalOpts?.stars ?? false;
+  const thresholds = pvalOpts?.thresholds ?? [0.05, 0.01, 0.001];
+
+  // Compute stars
+  let starStr = "";
+  if (showStars) {
+    if (value < thresholds[2]) starStr = "***";
+    else if (value < thresholds[1]) starStr = "**";
+    else if (value < thresholds[0]) starStr = "*";
+  }
+
+  // Very small values: show "less than" notation
+  if (value < 0.0001) return `<0.0001${starStr}`;
+
+  // Use scientific notation with Unicode superscript for small values
+  if (format === "scientific" || (format === "auto" && value < expThreshold)) {
+    const exp = Math.floor(Math.log10(value));
+    const mantissa = value / Math.pow(10, exp);
+    const mantissaStr = mantissa.toPrecision(digits);
+    return `${mantissaStr}×10${toSuperscript(exp.toString())}${starStr}`;
+  }
+
+  // Decimal format with appropriate precision based on magnitude
+  let formatted: string;
+  if (value >= 0.1) formatted = value.toFixed(digits);
+  else if (value >= 0.01) formatted = value.toFixed(digits + 1);
+  else formatted = value.toFixed(digits + 2);
+
+  return `${formatted}${starStr}`;
+}
+
 /** Format tick value for axis */
 function formatTick(value: number): string {
   if (Math.abs(value) < 0.01) return "0";
@@ -917,15 +966,7 @@ function getCellValue(row: Row, col: ColumnSpec): string {
   if (col.type === "pvalue") {
     const val = row.metadata[col.field];
     if (typeof val !== "number") return col.options?.naText ?? "";
-    const stars = col.options?.pvalue?.stars;
-    const thresholds = col.options?.pvalue?.thresholds ?? [0.05, 0.01, 0.001];
-    let starStr = "";
-    if (stars) {
-      if (val < thresholds[2]) starStr = "***";
-      else if (val < thresholds[1]) starStr = "**";
-      else if (val < thresholds[0]) starStr = "*";
-    }
-    return val < 0.001 ? `<0.001${starStr}` : `${val.toFixed(3)}${starStr}`;
+    return formatPvalue(val, col.options);
   }
   const val = row.metadata[col.field];
   return val !== undefined && val !== null ? String(val) : (col.options?.naText ?? "");

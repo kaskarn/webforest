@@ -67,26 +67,28 @@ const binding: HTMLWidgetsBinding = {
         // Override htmlwidgets container height based on preset
         // This is necessary because htmlwidgets sets inline height on the wrapper div
         // Use max-height for fixed presets so container doesn't fill with empty space
+        // Always hide horizontal overflow to prevent stray scrollbars from minor sizing discrepancies
+        el.style.overflowX = 'hidden';
         if (effectivePreset === 'full') {
           el.style.height = 'auto';
           el.style.maxHeight = 'none';
-          el.style.overflow = 'visible';
+          el.style.overflowY = 'visible';
         } else if (effectivePreset === 'container') {
           el.style.height = '100%';
           el.style.maxHeight = 'none';
-          el.style.overflow = 'auto';
+          el.style.overflowY = 'auto';
         } else if (effectivePreset === 'small') {
           el.style.height = 'auto';
           el.style.maxHeight = '400px';
-          el.style.overflow = 'auto';
+          el.style.overflowY = 'auto';
         } else if (effectivePreset === 'medium') {
           el.style.height = 'auto';
           el.style.maxHeight = '600px';
-          el.style.overflow = 'auto';
+          el.style.overflowY = 'auto';
         } else if (effectivePreset === 'large') {
           el.style.height = 'auto';
           el.style.maxHeight = '1000px';
-          el.style.overflow = 'auto';
+          el.style.overflowY = 'auto';
         }
 
         if (component) {
