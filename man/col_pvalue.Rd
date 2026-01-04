@@ -7,9 +7,11 @@
 col_pvalue(
   field = "pvalue",
   header = "P-value",
-  stars = TRUE,
+  stars = FALSE,
   thresholds = c(0.05, 0.01, 0.001),
   format = c("auto", "scientific", "decimal"),
+  digits = 2,
+  exp_threshold = 0.001,
   width = 100,
   ...
 )
@@ -25,6 +27,10 @@ col_pvalue(
 
 \item{format}{P-value format: "auto", "scientific", or "decimal"}
 
+\item{digits}{Number of significant figures to display (default 2)}
+
+\item{exp_threshold}{Values below this use exponential notation (default 0.001)}
+
 \item{width}{Column width in pixels (default 100)}
 
 \item{...}{Additional arguments passed to web_col}
@@ -33,5 +39,20 @@ col_pvalue(
 A ColumnSpec object
 }
 \description{
-Column helper: P-value
+Display p-values with optional significance stars and smart formatting.
+Very small values are displayed using Unicode superscript notation
+(e.g., 1.2×10⁻⁵) for improved readability.
+}
+\examples{
+# Default: 2 significant figures, exponential below 0.001
+col_pvalue("pval")
+
+# Show 3 significant figures
+col_pvalue("pval", digits = 3)
+
+# Use exponential notation below 0.01
+col_pvalue("pval", exp_threshold = 0.01)
+
+# With significance stars
+col_pvalue("pval", stars = TRUE)
 }
