@@ -52,6 +52,8 @@ const DEFAULT_THEME: WebTheme = {
     padding: 12,
     cellPaddingX: 10,
     cellPaddingY: 4,
+    axisGap: 12,
+    groupPadding: 8,
   },
   shapes: {
     pointSize: 6,

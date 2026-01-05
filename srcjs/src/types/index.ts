@@ -293,6 +293,8 @@ export interface Spacing {
   padding: number;
   cellPaddingX: number;
   cellPaddingY: number;
+  axisGap: number;  // Gap between table and x-axis (default ~12px)
+  groupPadding: number;  // Left/right padding for column group headers (default 8px)
 }
 
 export interface Shapes {

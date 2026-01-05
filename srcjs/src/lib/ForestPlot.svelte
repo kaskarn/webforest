@@ -266,6 +266,8 @@
       --wf-padding: ${theme.spacing.padding}px;
       --wf-cell-padding-x: ${theme.spacing.cellPaddingX}px;
       --wf-cell-padding-y: ${theme.spacing.cellPaddingY}px;
+      --wf-axis-gap: ${theme.spacing.axisGap ?? 12}px;
+      --wf-group-padding: ${theme.spacing.groupPadding ?? 8}px;
       --wf-point-size: ${theme.shapes.pointSize}px;
       --wf-line-width: ${theme.shapes.lineWidth}px;
       --wf-border-radius: ${theme.shapes.borderRadius}px;

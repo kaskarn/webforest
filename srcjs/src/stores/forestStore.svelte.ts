@@ -323,7 +323,8 @@ export function createForestStore() {
 
     const rowHeight = spec.theme.spacing.rowHeight;
     const headerHeight = spec.theme.spacing.headerHeight;
-    const axisHeight = 32; // Space for bottom axis
+    const axisGap = spec.theme.spacing.axisGap ?? 12; // Gap between table and axis
+    const axisHeight = 32 + axisGap; // Axis content (32px) + configurable gap
     const includeForest = spec.data.includeForest;
     // Use override if set, otherwise calculate default (25% of width, min 200px)
     const forestWidth = includeForest

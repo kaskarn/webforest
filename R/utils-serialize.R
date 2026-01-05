@@ -271,7 +271,9 @@ serialize_theme <- function(theme) {
       sectionGap = theme@spacing@section_gap,
       padding = theme@spacing@padding,
       cellPaddingX = theme@layout@cell_padding_x,
-      cellPaddingY = theme@layout@cell_padding_y
+      cellPaddingY = theme@layout@cell_padding_y,
+      axisGap = theme@spacing@axis_gap,
+      groupPadding = theme@spacing@group_padding
     ),
     shapes = list(
       pointSize = theme@shapes@point_size,

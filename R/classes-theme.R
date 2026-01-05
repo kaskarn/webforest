@@ -60,7 +60,9 @@ Spacing <- new_class(
     header_height = new_property(class_numeric, default = 36),
     column_gap = new_property(class_numeric, default = 8),
     section_gap = new_property(class_numeric, default = 16),
-    padding = new_property(class_numeric, default = 12)
+    padding = new_property(class_numeric, default = 12),
+    axis_gap = new_property(class_numeric, default = 12),
+    group_padding = new_property(class_numeric, default = 8)
   )
 )
 
@@ -392,13 +394,20 @@ set_typography <- function(theme, ...) {
 #' Pipe-friendly function to modify spacing values.
 #'
 #' @param theme A WebTheme object
-#' @param ... Named spacing values to override
+#' @param ... Named spacing values to override. Available properties:
+#'   - `row_height`: Height of data rows in pixels
+#'   - `header_height`: Height of header row in pixels
+#'   - `column_gap`: Gap between table and forest plot in pixels
+#'   - `section_gap`: Gap between sections in pixels
+#'   - `padding`: Overall padding in pixels
+#'   - `axis_gap`: Gap between table content and x-axis (default 12px)
+#'   - `group_padding`: Left/right padding for column group headers (default 8px)
 #'
 #' @return Modified WebTheme object
 #' @export
 #' @examples
 #' web_theme_default() |>
-#'   set_spacing(row_height = 32, header_height = 40)
+#'   set_spacing(row_height = 32, axis_gap = 16, group_padding = 12)
 set_spacing <- function(theme, ...) {
   stopifnot(S7_inherits(theme, WebTheme))
   args <- list(...)

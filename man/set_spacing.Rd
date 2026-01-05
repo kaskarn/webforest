@@ -9,7 +9,16 @@ set_spacing(theme, ...)
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named spacing values to override}
+\item{...}{Named spacing values to override. Available properties:
+\itemize{
+\item \code{row_height}: Height of data rows in pixels
+\item \code{header_height}: Height of header row in pixels
+\item \code{column_gap}: Gap between table and forest plot in pixels
+\item \code{section_gap}: Gap between sections in pixels
+\item \code{padding}: Overall padding in pixels
+\item \code{axis_gap}: Gap between table content and x-axis (default 12px)
+\item \code{group_padding}: Left/right padding for column group headers (default 8px)
+}}
 }
 \value{
 Modified WebTheme object
@@ -19,5 +28,5 @@ Pipe-friendly function to modify spacing values.
 }
 \examples{
 web_theme_default() |>
-  set_spacing(row_height = 32, header_height = 40)
+  set_spacing(row_height = 32, axis_gap = 16, group_padding = 12)
 }

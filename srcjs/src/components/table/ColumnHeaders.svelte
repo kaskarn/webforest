@@ -278,6 +278,8 @@
   .group-header {
     justify-content: center;
     font-weight: 700;
+    padding-left: var(--wf-group-padding, 8px);
+    padding-right: var(--wf-group-padding, 8px);
   }
 
   .webforest-label-col {
