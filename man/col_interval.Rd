@@ -4,12 +4,31 @@
 \alias{col_interval}
 \title{Column helper: Interval display (e.g., "1.2 (0.9, 1.5)")}
 \usage{
-col_interval(header = "95\% CI", width = 160, ...)
+col_interval(
+  header = "95\% CI",
+  width = 160,
+  decimals = 2,
+  sep = " ",
+  point = NULL,
+  lower = NULL,
+  upper = NULL,
+  ...
+)
 }
 \arguments{
-\item{header}{Column header}
+\item{header}{Column header (default "95\% CI")}
 
 \item{width}{Column width in pixels (default 160)}
+
+\item{decimals}{Number of decimal places (default 2)}
+
+\item{sep}{Separator between point and CI (default " ")}
+
+\item{point}{Optional field name to override the point estimate column}
+
+\item{lower}{Optional field name to override the lower bound column}
+
+\item{upper}{Optional field name to override the upper bound column}
 
 \item{...}{Additional arguments passed to web_col}
 }
@@ -17,5 +36,17 @@ col_interval(header = "95\% CI", width = 160, ...)
 A ColumnSpec object
 }
 \description{
-Column helper: Interval display (e.g., "1.2 (0.9, 1.5)")
+Display point estimates with confidence intervals. By default, uses the
+point/lower/upper columns defined at the plot level, but these can be
+overridden with the \code{point}, \code{lower}, and \code{upper} arguments.
+}
+\examples{
+# Default formatting
+col_interval()
+
+# Custom decimals and separator
+col_interval("HR (95\% CI)", decimals = 3, sep = ", ")
+
+# Override interval fields (show different effect than plot)
+col_interval("Per-Protocol", point = "pp_hr", lower = "pp_lower", upper = "pp_upper")
 }

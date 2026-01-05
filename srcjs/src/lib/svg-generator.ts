@@ -375,6 +375,23 @@ function addThousandsSep(numStr: string, separator: string): string {
   return parts.join(".");
 }
 
+/** Helper to abbreviate large numbers: 1234567 -> "1.2M", 5300 -> "5.3K" */
+function abbreviateNumber(value: number, sigfigs: number = 2): string {
+  const absValue = Math.abs(value);
+  const sign = value < 0 ? "-" : "";
+
+  if (absValue >= 1e9) {
+    return sign + (absValue / 1e9).toPrecision(sigfigs) + "B";
+  }
+  if (absValue >= 1e6) {
+    return sign + (absValue / 1e6).toPrecision(sigfigs) + "M";
+  }
+  if (absValue >= 1e3) {
+    return sign + (absValue / 1e3).toPrecision(sigfigs) + "K";
+  }
+  return value.toPrecision(sigfigs);
+}
+
 /** Format number for display - respects column options */
 function formatNumber(value: number | undefined | null, options?: ColumnOptions): string {
   if (value === undefined || value === null || Number.isNaN(value)) {
@@ -387,6 +404,24 @@ function formatNumber(value: number | undefined | null, options?: ColumnOptions)
     const displayValue = multiply ? value * 100 : value;
     const formatted = displayValue.toFixed(decimals);
     return symbol ? `${formatted}%` : formatted;
+  }
+
+  // Handle abbreviation for large numbers
+  const abbreviate = options?.numeric?.abbreviate;
+  if (abbreviate && Math.abs(value) >= 1000) {
+    const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
+    return abbreviateNumber(value, sigfigs);
+  }
+
+  // Use significant figures if digits specified
+  const digits = options?.numeric?.digits;
+  if (digits !== undefined && digits !== null) {
+    const formatted = value.toPrecision(digits);
+    const thousandsSep = options?.numeric?.thousandsSep;
+    if (thousandsSep && typeof thousandsSep === "string") {
+      return addThousandsSep(formatted, thousandsSep);
+    }
+    return formatted;
   }
 
   // Numeric formatting with decimals and thousands separator
@@ -413,7 +448,7 @@ function formatNumber(value: number | undefined | null, options?: ColumnOptions)
 
 /** Format events column (events/n) */
 function formatEvents(row: Row, options: ColumnOptions): string {
-  const { eventsField, nField, separator = "/", showPct = false, thousandsSep } = options.events!;
+  const { eventsField, nField, separator = "/", showPct = false, thousandsSep, abbreviate } = options.events!;
   const events = row.metadata[eventsField];
   const n = row.metadata[nField];
 
@@ -423,13 +458,22 @@ function formatEvents(row: Row, options: ColumnOptions): string {
 
   const eventsNum = Number(events);
   const nNum = Number(n);
-  let eventsStr = String(eventsNum);
-  let nStr = String(nNum);
+  let eventsStr: string;
+  let nStr: string;
 
-  // Apply thousands separator if specified
-  if (thousandsSep && typeof thousandsSep === "string") {
-    eventsStr = addThousandsSep(eventsStr, thousandsSep);
-    nStr = addThousandsSep(nStr, thousandsSep);
+  // Handle abbreviation for large numbers
+  if (abbreviate && (eventsNum >= 1000 || nNum >= 1000)) {
+    const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
+    eventsStr = eventsNum >= 1000 ? abbreviateNumber(eventsNum, sigfigs) : String(eventsNum);
+    nStr = nNum >= 1000 ? abbreviateNumber(nNum, sigfigs) : String(nNum);
+  } else {
+    eventsStr = String(eventsNum);
+    nStr = String(nNum);
+    // Apply thousands separator if specified (only when not abbreviating)
+    if (thousandsSep && typeof thousandsSep === "string") {
+      eventsStr = addThousandsSep(eventsStr, thousandsSep);
+      nStr = addThousandsSep(nStr, thousandsSep);
+    }
   }
 
   let result = `${eventsStr}${separator}${nStr}`;
@@ -443,13 +487,22 @@ function formatEvents(row: Row, options: ColumnOptions): string {
 }
 
 /** Format interval for display */
-function formatInterval(point?: number, lower?: number, upper?: number): string {
+function formatInterval(
+  point?: number,
+  lower?: number,
+  upper?: number,
+  options?: ColumnOptions
+): string {
   if (point === undefined || point === null || Number.isNaN(point)) return "";
+
+  const decimals = options?.interval?.decimals ?? 2;
+  const sep = options?.interval?.sep ?? " ";
+
   if (lower === undefined || lower === null || upper === undefined || upper === null ||
       Number.isNaN(lower) || Number.isNaN(upper)) {
-    return formatNumber(point);
+    return point.toFixed(decimals);
   }
-  return `${point.toFixed(2)} (${lower.toFixed(2)}, ${upper.toFixed(2)})`;
+  return `${point.toFixed(decimals)}${sep}(${lower.toFixed(decimals)}, ${upper.toFixed(decimals)})`;
 }
 
 /** Unicode superscript character mapping */
@@ -469,6 +522,7 @@ function formatPvalue(value: number, options?: ColumnOptions): string {
   const pvalOpts = options?.pvalue;
   const digits = pvalOpts?.digits ?? 2;
   const expThreshold = pvalOpts?.expThreshold ?? 0.001;
+  const abbrevThreshold = pvalOpts?.abbrevThreshold ?? null;
   const format = pvalOpts?.format ?? "auto";
   const showStars = pvalOpts?.stars ?? false;
   const thresholds = pvalOpts?.thresholds ?? [0.05, 0.01, 0.001];
@@ -481,8 +535,10 @@ function formatPvalue(value: number, options?: ColumnOptions): string {
     else if (value < thresholds[0]) starStr = "*";
   }
 
-  // Very small values: show "less than" notation
-  if (value < 0.0001) return `<0.0001${starStr}`;
+  // Abbreviation threshold: show "<threshold" notation if enabled and value is below
+  if (abbrevThreshold !== null && value < abbrevThreshold) {
+    return `<${abbrevThreshold}${starStr}`;
+  }
 
   // Use scientific notation with Unicode superscript for small values
   if (format === "scientific" || (format === "auto" && value < expThreshold)) {
@@ -979,7 +1035,17 @@ function renderTableRow(
 
 function getCellValue(row: Row, col: ColumnSpec): string {
   if (col.type === "interval") {
-    return formatInterval(row.point, row.lower, row.upper);
+    // Support optional field overrides from column options
+    const point = col.options?.interval?.point
+      ? row.metadata[col.options.interval.point] as number
+      : row.point;
+    const lower = col.options?.interval?.lower
+      ? row.metadata[col.options.interval.lower] as number
+      : row.lower;
+    const upper = col.options?.interval?.upper
+      ? row.metadata[col.options.interval.upper] as number
+      : row.upper;
+    return formatInterval(point, lower, upper, col.options);
   }
   if (col.type === "numeric") {
     const val = row.metadata[col.field];

@@ -12,6 +12,7 @@ col_events(
   separator = "/",
   show_pct = FALSE,
   thousands_sep = ",",
+  abbreviate = FALSE,
   ...
 )
 }
@@ -29,6 +30,9 @@ col_events(
 \item{show_pct}{Show percentage in parentheses (default FALSE)}
 
 \item{thousands_sep}{Thousands separator (default ",")}
+
+\item{abbreviate}{Abbreviate large numbers (default FALSE). When TRUE or a number,
+values >= 1000 are shortened (e.g., "1.1K/12K" instead of "1,100/12,000").}
 
 \item{...}{Additional arguments passed to web_col}
 }
@@ -48,4 +52,7 @@ col_events("events", "n", show_pct = TRUE)
 
 # Different separator: "45 of 120"
 col_events("events", "n", separator = " of ")
+
+# Abbreviate large numbers: "1.1K/12K"
+col_events("events", "n", abbreviate = TRUE)
 }

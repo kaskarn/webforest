@@ -36,6 +36,7 @@
   const format = $derived(options?.format ?? "auto");
   const digits = $derived(options?.digits ?? 2);
   const expThreshold = $derived(options?.expThreshold ?? 0.001);
+  const abbrevThreshold = $derived(options?.abbrevThreshold ?? null);
 
   const stars = $derived.by(() => {
     if (!showStars || value === undefined || value === null) return "";
@@ -49,8 +50,10 @@
   const formattedValue = $derived.by(() => {
     if (value === undefined || value === null) return "";
 
-    // Very small values: show "less than" notation
-    if (value < 0.0001) return "<0.0001";
+    // Abbreviation threshold: show "<threshold" notation if enabled and value is below
+    if (abbrevThreshold !== null && value < abbrevThreshold) {
+      return `<${abbrevThreshold}`;
+    }
 
     // Use scientific notation with Unicode superscript for small values
     if (format === "scientific" || (format === "auto" && value < expThreshold)) {

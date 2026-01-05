@@ -415,7 +415,12 @@
                   {:else if column.type === "custom" && column.options?.events}
                     <CellContent value={formatEvents(row, column.options)} {cellStyle} />
                   {:else if column.type === "interval"}
-                    <CellContent value={formatInterval(row.point, row.lower, row.upper)} {cellStyle} />
+                    <CellContent value={formatInterval(
+                      column.options?.interval?.point ? row.metadata[column.options.interval.point] as number : row.point,
+                      column.options?.interval?.lower ? row.metadata[column.options.interval.lower] as number : row.lower,
+                      column.options?.interval?.upper ? row.metadata[column.options.interval.upper] as number : row.upper,
+                      column.options
+                    )} {cellStyle} />
                   {:else}
                     <CellContent value={row.metadata[column.field] ?? ""} {cellStyle} />
                   {/if}
@@ -681,7 +686,12 @@
                     {:else if column.type === "custom" && column.options?.events}
                       <CellContent value={formatEvents(row, column.options)} {cellStyle} />
                     {:else if column.type === "interval"}
-                      <CellContent value={formatInterval(row.point, row.lower, row.upper)} {cellStyle} />
+                      <CellContent value={formatInterval(
+                        column.options?.interval?.point ? row.metadata[column.options.interval.point] as number : row.point,
+                        column.options?.interval?.lower ? row.metadata[column.options.interval.lower] as number : row.lower,
+                        column.options?.interval?.upper ? row.metadata[column.options.interval.upper] as number : row.upper,
+                        column.options
+                      )} {cellStyle} />
                     {:else}
                       <CellContent value={row.metadata[column.field] ?? ""} {cellStyle} />
                     {/if}
@@ -744,6 +754,23 @@
     return parts.join(".");
   }
 
+  // Helper to abbreviate large numbers: 1234567 -> "1.2M", 5300 -> "5.3K"
+  function abbreviateNumber(value: number, sigfigs: number = 2): string {
+    const absValue = Math.abs(value);
+    const sign = value < 0 ? "-" : "";
+
+    if (absValue >= 1e9) {
+      return sign + (absValue / 1e9).toPrecision(sigfigs) + "B";
+    }
+    if (absValue >= 1e6) {
+      return sign + (absValue / 1e6).toPrecision(sigfigs) + "M";
+    }
+    if (absValue >= 1e3) {
+      return sign + (absValue / 1e3).toPrecision(sigfigs) + "K";
+    }
+    return value.toPrecision(sigfigs);
+  }
+
   function formatNumber(value: number | undefined | null, options?: ColumnOptions): string {
     if (value === undefined || value === null || Number.isNaN(value)) {
       return options?.naText ?? "";
@@ -755,6 +782,24 @@
       const displayValue = multiply ? value * 100 : value;
       const formatted = displayValue.toFixed(decimals);
       return symbol ? `${formatted}%` : formatted;
+    }
+
+    // Handle abbreviation for large numbers
+    const abbreviate = options?.numeric?.abbreviate;
+    if (abbreviate && Math.abs(value) >= 1000) {
+      const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
+      return abbreviateNumber(value, sigfigs);
+    }
+
+    // Use significant figures if digits specified
+    const digits = options?.numeric?.digits;
+    if (digits !== undefined && digits !== null) {
+      const formatted = value.toPrecision(digits);
+      const thousandsSep = options?.numeric?.thousandsSep;
+      if (thousandsSep && typeof thousandsSep === "string") {
+        return addThousandsSep(formatted, thousandsSep);
+      }
+      return formatted;
     }
 
     // Numeric formatting with decimals and thousands separator
@@ -771,7 +816,7 @@
   }
 
   function formatEvents(row: Row, options: ColumnOptions): string {
-    const { eventsField, nField, separator = "/", showPct = false, thousandsSep } = options.events!;
+    const { eventsField, nField, separator = "/", showPct = false, thousandsSep, abbreviate } = options.events!;
     const events = row.metadata[eventsField];
     const n = row.metadata[nField];
 
@@ -781,13 +826,22 @@
 
     const eventsNum = Number(events);
     const nNum = Number(n);
-    let eventsStr = String(eventsNum);
-    let nStr = String(nNum);
+    let eventsStr: string;
+    let nStr: string;
 
-    // Apply thousands separator if specified
-    if (thousandsSep && typeof thousandsSep === "string") {
-      eventsStr = addThousandsSep(eventsStr, thousandsSep);
-      nStr = addThousandsSep(nStr, thousandsSep);
+    // Handle abbreviation for large numbers
+    if (abbreviate && (eventsNum >= 1000 || nNum >= 1000)) {
+      const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
+      eventsStr = eventsNum >= 1000 ? abbreviateNumber(eventsNum, sigfigs) : String(eventsNum);
+      nStr = nNum >= 1000 ? abbreviateNumber(nNum, sigfigs) : String(nNum);
+    } else {
+      eventsStr = String(eventsNum);
+      nStr = String(nNum);
+      // Apply thousands separator if specified (only when not abbreviating)
+      if (thousandsSep && typeof thousandsSep === "string") {
+        eventsStr = addThousandsSep(eventsStr, thousandsSep);
+        nStr = addThousandsSep(nStr, thousandsSep);
+      }
     }
 
     let result = `${eventsStr}${separator}${nStr}`;
@@ -800,16 +854,25 @@
     return result;
   }
 
-  function formatInterval(point?: number, lower?: number, upper?: number): string {
+  function formatInterval(
+    point?: number,
+    lower?: number,
+    upper?: number,
+    options?: ColumnOptions
+  ): string {
     // Handle NA/undefined values gracefully (for header/spacer rows)
     if (point === undefined || point === null || Number.isNaN(point)) {
       return "";
     }
+
+    const decimals = options?.interval?.decimals ?? 2;
+    const sep = options?.interval?.sep ?? " ";
+
     if (lower === undefined || lower === null || upper === undefined || upper === null ||
         Number.isNaN(lower) || Number.isNaN(upper)) {
-      return point.toFixed(2);
+      return point.toFixed(decimals);
     }
-    return `${point.toFixed(2)} (${lower.toFixed(2)}, ${upper.toFixed(2)})`;
+    return `${point.toFixed(decimals)}${sep}(${lower.toFixed(decimals)}, ${upper.toFixed(decimals)})`;
   }
 
   function getMaxValueForColumn(rows: Row[], column: ColumnSpec): number {

@@ -12,6 +12,7 @@ col_pvalue(
   format = c("auto", "scientific", "decimal"),
   digits = 2,
   exp_threshold = 0.001,
+  abbrev_threshold = NULL,
   width = 100,
   ...
 )
@@ -21,7 +22,7 @@ col_pvalue(
 
 \item{header}{Column header (default "P-value")}
 
-\item{stars}{Show significance stars (default TRUE)}
+\item{stars}{Show significance stars (default FALSE)}
 
 \item{thresholds}{Numeric vector of 3 significance thresholds (default c(0.05, 0.01, 0.001))}
 
@@ -30,6 +31,9 @@ col_pvalue(
 \item{digits}{Number of significant figures to display (default 2)}
 
 \item{exp_threshold}{Values below this use exponential notation (default 0.001)}
+
+\item{abbrev_threshold}{Values below this display as "<threshold" (default NULL = off).
+For example, \code{abbrev_threshold = 0.0001} displays values below 0.0001 as "<0.0001".}
 
 \item{width}{Column width in pixels (default 100)}
 
@@ -55,4 +59,7 @@ col_pvalue("pval", exp_threshold = 0.01)
 
 # With significance stars
 col_pvalue("pval", stars = TRUE)
+
+# Abbreviate very small values
+col_pvalue("pval", abbrev_threshold = 0.0001)
 }

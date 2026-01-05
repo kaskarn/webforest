@@ -185,8 +185,12 @@ col_text <- function(field, header = NULL, width = 120, ...) {
 #' @param header Column header
 #' @param width Column width in pixels (default 90)
 #' @param decimals Number of decimal places to display (default 2, NULL for auto)
+#' @param digits Number of significant figures (takes precedence over decimals if set)
 #' @param thousands_sep Thousands separator (default FALSE for decimal columns,
 #'   use "," or other string to enable)
+#' @param abbreviate Abbreviate large numbers (default FALSE). When TRUE or a number,
+#'   values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").
+#'   If a number, specifies significant figures for abbreviated values (default 2).
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -200,12 +204,21 @@ col_text <- function(field, header = NULL, width = 120, ...) {
 #'
 #' # Integer display (no decimals) with thousands separator
 #' col_numeric("count", decimals = 0, thousands_sep = ",")
+#'
+#' # Significant figures instead of decimals
+#' col_numeric("value", digits = 3)
+#'
+#' # Abbreviate large numbers: 1,234,567 -> "1.2M"
+#' col_numeric("population", abbreviate = TRUE)
 col_numeric <- function(field, header = NULL, width = 90, decimals = 2,
-                        thousands_sep = FALSE, ...) {
+                        digits = NULL, thousands_sep = FALSE, abbreviate = FALSE,
+                        ...) {
   opts <- list(
     numeric = list(
       decimals = decimals,
-      thousandsSep = thousands_sep
+      digits = digits,
+      thousandsSep = thousands_sep,
+      abbreviate = abbreviate
     )
   )
   web_col(field, header, type = "numeric", width = width, options = opts, ...)
@@ -219,7 +232,10 @@ col_numeric <- function(field, header = NULL, width = 90, decimals = 2,
 #' @param header Column header (default "N")
 #' @param width Column width in pixels (default 80)
 #' @param decimals Number of decimal places (default 0 for integers)
+#' @param digits Number of significant figures (takes precedence over decimals if set)
 #' @param thousands_sep Thousands separator (default "," for integer columns)
+#' @param abbreviate Abbreviate large numbers (default FALSE). When TRUE or a number,
+#'   values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -230,12 +246,17 @@ col_numeric <- function(field, header = NULL, width = 90, decimals = 2,
 #'
 #' # Disable thousands separator
 #' col_n("n", thousands_sep = FALSE)
+#'
+#' # Abbreviate large sample sizes: 12,345 -> "12K"
+#' col_n("n", abbreviate = TRUE)
 col_n <- function(field = "n", header = "N", width = 80, decimals = 0,
-                  thousands_sep = ",", ...) {
+                  digits = NULL, thousands_sep = ",", abbreviate = FALSE, ...) {
   opts <- list(
     numeric = list(
       decimals = decimals,
-      thousandsSep = thousands_sep
+      digits = digits,
+      thousandsSep = thousands_sep,
+      abbreviate = abbreviate
     )
   )
   web_col(field, header, type = "numeric", width = width, options = opts, ...)
@@ -243,14 +264,42 @@ col_n <- function(field = "n", header = "N", width = 80, decimals = 0,
 
 #' Column helper: Interval display (e.g., "1.2 (0.9, 1.5)")
 #'
-#' @param header Column header
+#' Display point estimates with confidence intervals. By default, uses the
+#' point/lower/upper columns defined at the plot level, but these can be
+#' overridden with the `point`, `lower`, and `upper` arguments.
+#'
+#' @param header Column header (default "95% CI")
 #' @param width Column width in pixels (default 160)
+#' @param decimals Number of decimal places (default 2)
+#' @param sep Separator between point and CI (default " ")
+#' @param point Optional field name to override the point estimate column
+#' @param lower Optional field name to override the lower bound column
+#' @param upper Optional field name to override the upper bound column
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
-col_interval <- function(header = "95% CI", width = 160, ...) {
-  web_col("_interval", header, type = "interval", width = width, ...)
+#' @examples
+#' # Default formatting
+#' col_interval()
+#'
+#' # Custom decimals and separator
+#' col_interval("HR (95% CI)", decimals = 3, sep = ", ")
+#'
+#' # Override interval fields (show different effect than plot)
+#' col_interval("Per-Protocol", point = "pp_hr", lower = "pp_lower", upper = "pp_upper")
+col_interval <- function(header = "95% CI", width = 160, decimals = 2, sep = " ",
+                         point = NULL, lower = NULL, upper = NULL, ...) {
+  opts <- list(
+    interval = list(
+      decimals = decimals,
+      sep = sep,
+      point = point,
+      lower = lower,
+      upper = upper
+    )
+  )
+  web_col("_interval", header, type = "interval", width = width, options = opts, ...)
 }
 
 #' Column helper: P-value
@@ -261,11 +310,13 @@ col_interval <- function(header = "95% CI", width = 160, ...) {
 #'
 #' @param field Field name (default "pvalue")
 #' @param header Column header (default "P-value")
-#' @param stars Show significance stars (default TRUE)
+#' @param stars Show significance stars (default FALSE)
 #' @param thresholds Numeric vector of 3 significance thresholds (default c(0.05, 0.01, 0.001))
 #' @param format P-value format: "auto", "scientific", or "decimal"
 #' @param digits Number of significant figures to display (default 2)
 #' @param exp_threshold Values below this use exponential notation (default 0.001)
+#' @param abbrev_threshold Values below this display as "<threshold" (default NULL = off).
+#'   For example, `abbrev_threshold = 0.0001` displays values below 0.0001 as "<0.0001".
 #' @param width Column width in pixels (default 100)
 #' @param ... Additional arguments passed to web_col
 #'
@@ -284,6 +335,9 @@ col_interval <- function(header = "95% CI", width = 160, ...) {
 #'
 #' # With significance stars
 #' col_pvalue("pval", stars = TRUE)
+#'
+#' # Abbreviate very small values
+#' col_pvalue("pval", abbrev_threshold = 0.0001)
 col_pvalue <- function(
     field = "pvalue",
     header = "P-value",
@@ -292,6 +346,7 @@ col_pvalue <- function(
     format = c("auto", "scientific", "decimal"),
     digits = 2,
     exp_threshold = 0.001,
+    abbrev_threshold = NULL,
     width = 100,
     ...) {
   format <- match.arg(format)
@@ -301,7 +356,8 @@ col_pvalue <- function(
       thresholds = thresholds,
       format = format,
       digits = digits,
-      expThreshold = exp_threshold
+      expThreshold = exp_threshold,
+      abbrevThreshold = abbrev_threshold
     )
   )
   web_col(field, header, type = "pvalue", width = width, options = opts, ...)
@@ -417,6 +473,8 @@ col_percent <- function(
 #' @param separator Separator between events and n (default "/")
 #' @param show_pct Show percentage in parentheses (default FALSE)
 #' @param thousands_sep Thousands separator (default ",")
+#' @param abbreviate Abbreviate large numbers (default FALSE). When TRUE or a number,
+#'   values >= 1000 are shortened (e.g., "1.1K/12K" instead of "1,100/12,000").
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -430,6 +488,9 @@ col_percent <- function(
 #'
 #' # Different separator: "45 of 120"
 #' col_events("events", "n", separator = " of ")
+#'
+#' # Abbreviate large numbers: "1.1K/12K"
+#' col_events("events", "n", abbreviate = TRUE)
 col_events <- function(
     events_field,
     n_field,
@@ -438,6 +499,7 @@ col_events <- function(
     separator = "/",
     show_pct = FALSE,
     thousands_sep = ",",
+    abbreviate = FALSE,
     ...) {
   opts <- list(
     events = list(
@@ -445,7 +507,8 @@ col_events <- function(
       nField = n_field,
       separator = separator,
       showPct = show_pct,
-      thousandsSep = thousands_sep
+      thousandsSep = thousands_sep,
+      abbreviate = abbreviate
     )
   )
   # Use a synthetic field that signals this is an events column

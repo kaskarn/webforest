@@ -119,7 +119,17 @@ export interface WebData {
 
 export interface NumericColumnOptions {
   decimals?: number;  // Number of decimal places (default: 2)
+  digits?: number;    // Significant figures (takes precedence over decimals)
   thousandsSep?: string | false;  // Thousands separator (default: "," for integers, false for decimals)
+  abbreviate?: boolean | number;  // Abbreviate large numbers (true or sigfig count: 1.1M, 5.3K)
+}
+
+export interface IntervalColumnOptions {
+  decimals?: number;  // Decimal places for point/CI (default: 2)
+  sep?: string;       // Separator between point and CI (default: " ")
+  point?: string;     // Override field for point estimate
+  lower?: string;     // Override field for lower bound
+  upper?: string;     // Override field for upper bound
 }
 
 export interface PercentColumnOptions {
@@ -148,6 +158,7 @@ export interface PvalueColumnOptions {
   format?: "scientific" | "decimal" | "auto";
   digits?: number; // Number of significant figures (default: 2)
   expThreshold?: number; // Values below this use exponential notation (default: 0.001)
+  abbrevThreshold?: number | null; // Values below this display as "<threshold" (default: null = off)
 }
 
 export interface SparklineColumnOptions {
@@ -205,6 +216,7 @@ export interface ColumnOptions {
   bar?: BarColumnOptions;
   pvalue?: PvalueColumnOptions;
   sparkline?: SparklineColumnOptions;
+  interval?: IntervalColumnOptions;
   icon?: IconColumnOptions;
   badge?: BadgeColumnOptions;
   stars?: StarsColumnOptions;

@@ -9,7 +9,9 @@ col_numeric(
   header = NULL,
   width = 90,
   decimals = 2,
+  digits = NULL,
   thousands_sep = FALSE,
+  abbreviate = FALSE,
   ...
 )
 }
@@ -22,8 +24,14 @@ col_numeric(
 
 \item{decimals}{Number of decimal places to display (default 2, NULL for auto)}
 
+\item{digits}{Number of significant figures (takes precedence over decimals if set)}
+
 \item{thousands_sep}{Thousands separator (default FALSE for decimal columns,
 use "," or other string to enable)}
+
+\item{abbreviate}{Abbreviate large numbers (default FALSE). When TRUE or a number,
+values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").
+If a number, specifies significant figures for abbreviated values (default 2).}
 
 \item{...}{Additional arguments passed to web_col}
 }
@@ -42,4 +50,10 @@ col_numeric("pct", decimals = 3)
 
 # Integer display (no decimals) with thousands separator
 col_numeric("count", decimals = 0, thousands_sep = ",")
+
+# Significant figures instead of decimals
+col_numeric("value", digits = 3)
+
+# Abbreviate large numbers: 1,234,567 -> "1.2M"
+col_numeric("population", abbreviate = TRUE)
 }
