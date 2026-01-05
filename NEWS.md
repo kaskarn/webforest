@@ -1,5 +1,29 @@
 # webforest (development version)
 
+## New Column Types
+
+Six new column helpers for richer data presentation:
+
+* **`col_icon()`** — Display icons or emoji with value-to-icon mapping. Great for status indicators (✓/✗), categorical markers, or any symbolic representation.
+
+* **`col_badge()`** — Colored status badges with semantic variants (`success`, `warning`, `error`, `info`, `muted`) or custom hex colors. Perfect for publication status, categories, or any labeled data.
+
+* **`col_stars()`** — Star ratings (1-5 scale) using Unicode ★/☆. Supports half-stars, custom colors, and configurable max stars. Ideal for quality scores, ratings, or risk assessments.
+
+* **`col_img()`** — Inline images from URLs with shape options (`square`, `circle`, `rounded`), lazy loading, and graceful fallbacks. Use for logos, flags, or any visual identifiers.
+
+* **`col_reference()`** — Truncated text with tooltip for full content, optional hyperlinks via `href_field`. Designed for DOIs, PubMed IDs, citations, or any reference identifiers.
+
+* **`col_range()`** — Display min-max ranges from two fields (e.g., "18 – 65"). Smart decimal handling and configurable separator.
+
+## Numeric Formatting
+
+* **Thousands separators**: New `thousands_sep` parameter for `col_numeric()`, `col_n()`, and `col_events()`. Large integers now display as `12,345` instead of `12345`.
+  - Default ON for `col_n()` and `col_events()` (integer columns)
+  - Default OFF for `col_numeric()` (opt-in for decimal columns)
+
+## Previous Changes
+
 * **P-value formatting**: `col_pvalue()` now displays small values using Unicode superscript notation (e.g., `1.2×10⁻⁵`). New parameters: `digits` for significant figures, `exp_threshold` for exponential notation cutoff. Default `stars = FALSE` for cleaner display.
 
 * **Fluent API**: `set_*()` functions now work directly on `forest_plot()` and `webtable()` outputs, not just `web_spec()` objects.

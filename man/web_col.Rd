@@ -7,7 +7,8 @@
 web_col(
   field,
   header = NULL,
-  type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline", "custom"),
+  type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline", "icon", "badge",
+    "stars", "img", "reference", "range", "custom"),
   width = NULL,
   align = NULL,
   header_align = NULL,

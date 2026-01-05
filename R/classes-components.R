@@ -44,7 +44,8 @@ ColumnSpec <- new_class(
     style_icon = new_property(class_character, default = NA_character_)
   ),
   validator = function(self) {
-    valid_types <- c("text", "numeric", "interval", "bar", "pvalue", "sparkline", "custom")
+    valid_types <- c("text", "numeric", "interval", "bar", "pvalue", "sparkline",
+                     "icon", "badge", "stars", "img", "reference", "range", "custom")
     if (!self@type %in% valid_types) {
       return(paste("type must be one of:", paste(valid_types, collapse = ", ")))
     }
@@ -99,7 +100,8 @@ ColumnSpec <- new_class(
 web_col <- function(
     field,
     header = NULL,
-    type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline", "custom"),
+    type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline",
+             "icon", "badge", "stars", "img", "reference", "range", "custom"),
     width = NULL,
     align = NULL,
     header_align = NULL,
@@ -183,6 +185,8 @@ col_text <- function(field, header = NULL, width = 120, ...) {
 #' @param header Column header
 #' @param width Column width in pixels (default 90)
 #' @param decimals Number of decimal places to display (default 2, NULL for auto)
+#' @param thousands_sep Thousands separator (default FALSE for decimal columns,
+#'   use "," or other string to enable)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -194,12 +198,14 @@ col_text <- function(field, header = NULL, width = 120, ...) {
 #' # Show 3 decimal places
 #' col_numeric("pct", decimals = 3)
 #'
-#' # Integer display (no decimals)
-#' col_numeric("count", decimals = 0)
-col_numeric <- function(field, header = NULL, width = 90, decimals = 2, ...) {
+#' # Integer display (no decimals) with thousands separator
+#' col_numeric("count", decimals = 0, thousands_sep = ",")
+col_numeric <- function(field, header = NULL, width = 90, decimals = 2,
+                        thousands_sep = FALSE, ...) {
   opts <- list(
     numeric = list(
-      decimals = decimals
+      decimals = decimals,
+      thousandsSep = thousands_sep
     )
   )
   web_col(field, header, type = "numeric", width = width, options = opts, ...)
@@ -207,18 +213,29 @@ col_numeric <- function(field, header = NULL, width = 90, decimals = 2, ...) {
 
 #' Column helper: Sample size / count
 #'
+#' Display integer counts with thousands separator for readability.
+#'
 #' @param field Field name (default "n")
 #' @param header Column header (default "N")
 #' @param width Column width in pixels (default 80)
 #' @param decimals Number of decimal places (default 0 for integers)
+#' @param thousands_sep Thousands separator (default "," for integer columns)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
-col_n <- function(field = "n", header = "N", width = 80, decimals = 0, ...) {
+#' @examples
+#' # Default: shows "12,345" for large numbers
+#' col_n("n")
+#'
+#' # Disable thousands separator
+#' col_n("n", thousands_sep = FALSE)
+col_n <- function(field = "n", header = "N", width = 80, decimals = 0,
+                  thousands_sep = ",", ...) {
   opts <- list(
     numeric = list(
-      decimals = decimals
+      decimals = decimals,
+      thousandsSep = thousands_sep
     )
   )
   web_col(field, header, type = "numeric", width = width, options = opts, ...)
@@ -391,6 +408,7 @@ col_percent <- function(
 #' Column helper: Events column
 #'
 #' Display event counts in "events/n" format for clinical trial data.
+#' Large numbers are formatted with thousands separators for readability.
 #'
 #' @param events_field Field name containing number of events
 #' @param n_field Field name containing total sample size
@@ -398,6 +416,7 @@ col_percent <- function(
 #' @param width Column width in pixels (default 100)
 #' @param separator Separator between events and n (default "/")
 #' @param show_pct Show percentage in parentheses (default FALSE)
+#' @param thousands_sep Thousands separator (default ",")
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -418,13 +437,15 @@ col_events <- function(
     width = 100,
     separator = "/",
     show_pct = FALSE,
+    thousands_sep = ",",
     ...) {
   opts <- list(
     events = list(
       eventsField = events_field,
       nField = n_field,
       separator = separator,
-      showPct = show_pct
+      showPct = show_pct,
+      thousandsSep = thousands_sep
     )
   )
   # Use a synthetic field that signals this is an events column
@@ -442,6 +463,289 @@ col_weight <- function(field = "weight", header = "Weight", show_bar = TRUE, ...
   } else {
     col_numeric(field, header, ...)
   }
+}
+
+# ============================================================================
+# New Column Helpers
+# ============================================================================
+
+#' Column helper: Icon/emoji display
+#'
+#' Display icons or emoji based on data values. Values can be mapped to
+#' specific icons using the `mapping` parameter.
+#'
+#' @param field Field name containing the values to display
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (default 50)
+#' @param mapping Named character vector mapping values to icons/emoji
+#'   (e.g., `c("yes" = "✓", "no" = "✗")`)
+#' @param size Icon size: "sm", "base", or "lg" (default "base")
+#' @param color Optional CSS color for the icon (default NULL, uses theme)
+#' @param ... Additional arguments passed to web_col
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Simple emoji column (values are emoji)
+#' col_icon("status_icon")
+#'
+#' # Map values to icons
+#' col_icon("result", mapping = c("pass" = "✓", "fail" = "✗", "pending" = "○"))
+#'
+#' # With color
+#' col_icon("status", color = "#16a34a")
+col_icon <- function(
+    field,
+    header = NULL,
+    width = 50,
+    mapping = NULL,
+    size = c("base", "sm", "lg"),
+    color = NULL,
+    ...) {
+  size <- match.arg(size)
+  opts <- list(
+    icon = list(
+      mapping = as.list(mapping),
+      size = size,
+      color = color
+    )
+  )
+  web_col(field, header, type = "icon", width = width, align = "center",
+          options = opts, ...)
+}
+
+#' Column helper: Status badges
+#'
+#' Display colored status badges (pills) based on data values.
+#'
+#' @param field Field name containing the badge text
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (default 100)
+#' @param variants Named character vector mapping values to semantic variants:
+#'   "default", "success", "warning", "error", "info", "muted"
+#'   (e.g., `c("published" = "success", "draft" = "warning")`)
+#' @param colors Named character vector mapping values to custom hex colors,
+#'   which override variants (e.g., `c("special" = "#ff5500")`)
+#' @param size Badge size: "sm" or "base" (default "base")
+#' @param ... Additional arguments passed to web_col
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Simple badge (shows value as badge text)
+#' col_badge("status")
+#'
+#' # With semantic variants
+#' col_badge("status", variants = c(
+#'   "published" = "success",
+#'   "draft" = "warning",
+#'   "rejected" = "error"
+#' ))
+#'
+#' # With custom colors
+#' col_badge("priority", colors = c(
+#'   "high" = "#dc2626",
+#'   "medium" = "#f59e0b",
+#'   "low" = "#22c55e"
+#' ))
+col_badge <- function(
+    field,
+    header = NULL,
+    width = 100,
+    variants = NULL,
+    colors = NULL,
+    size = c("base", "sm"),
+    ...) {
+  size <- match.arg(size)
+  opts <- list(
+    badge = list(
+      variants = as.list(variants),
+      colors = as.list(colors),
+      size = size
+    )
+  )
+  web_col(field, header, type = "badge", width = width, align = "center",
+          options = opts, ...)
+}
+
+#' Column helper: Star rating
+#'
+#' Display star ratings using Unicode stars (★ filled, ☆ empty).
+#'
+#' @param field Field name containing numeric rating (1-5 or custom range)
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (default 80)
+#' @param max_stars Maximum number of stars (default 5)
+#' @param color CSS color for filled stars (default "#f59e0b", amber)
+#' @param empty_color CSS color for empty stars (default "#d1d5db", gray)
+#' @param half_stars Allow half-star increments (default FALSE)
+#' @param ... Additional arguments passed to web_col
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Default 5-star rating
+#' col_stars("rating")
+#'
+#' # Custom colors
+#' col_stars("quality", color = "#ef4444", empty_color = "#fee2e2")
+#'
+#' # Half-star increments
+#' col_stars("score", half_stars = TRUE)
+col_stars <- function(
+    field,
+    header = NULL,
+    width = 80,
+    max_stars = 5,
+    color = "#f59e0b",
+    empty_color = "#d1d5db",
+    half_stars = FALSE,
+    ...) {
+  opts <- list(
+    stars = list(
+      maxStars = max_stars,
+      color = color,
+      emptyColor = empty_color,
+      halfStars = half_stars
+    )
+  )
+  web_col(field, header, type = "stars", width = width, align = "center",
+          options = opts, ...)
+}
+
+#' Column helper: Image display
+#'
+#' Display inline images from URLs.
+#'
+#' @param field Field name containing image URLs
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (default 60)
+#' @param height Image height in pixels (default NULL, uses row height - 4)
+#' @param max_width Maximum image width (default NULL, uses column width)
+#' @param fallback Fallback text or icon if image fails to load (default "📷")
+#' @param shape Image shape: "square", "circle", or "rounded" (default "square")
+#' @param ... Additional arguments passed to web_col
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Simple image column
+#' col_img("logo_url", "Logo")
+#'
+#' # Circular avatars
+#' col_img("avatar_url", "Avatar", shape = "circle", width = 40)
+#'
+#' # With fallback
+#' col_img("thumbnail", fallback = "No image")
+col_img <- function(
+    field,
+    header = NULL,
+    width = 60,
+    height = NULL,
+    max_width = NULL,
+    fallback = "\U0001F4F7",
+    shape = c("square", "circle", "rounded"),
+    ...) {
+  shape <- match.arg(shape)
+  opts <- list(
+    img = list(
+      height = height,
+      maxWidth = max_width,
+      fallback = fallback,
+      shape = shape
+    )
+  )
+  web_col(field, header, type = "img", width = width, align = "center",
+          options = opts, ...)
+}
+
+#' Column helper: Reference/citation display
+#'
+#' Display truncated text with optional link and full text in tooltip.
+#'
+#' @param field Field name containing the reference text
+#' @param header Column header (default "Reference")
+#' @param width Column width in pixels (default 150)
+#' @param href_field Optional field name containing URLs for linking
+#' @param max_chars Maximum characters to display before truncating (default 30)
+#' @param icon Show external link icon when href_field is provided (default TRUE)
+#' @param ... Additional arguments passed to web_col
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Simple truncated text
+#' col_reference("citation")
+#'
+#' # With clickable links
+#' col_reference("title", href_field = "doi_url", max_chars = 40)
+#'
+#' # Without link icon
+#' col_reference("source", href_field = "url", icon = FALSE)
+col_reference <- function(
+    field,
+    header = "Reference",
+    width = 150,
+    href_field = NULL,
+    max_chars = 30,
+    icon = TRUE,
+    ...) {
+  opts <- list(
+    reference = list(
+      hrefField = href_field,
+      maxChars = max_chars,
+      showIcon = icon
+    )
+  )
+  web_col(field, header, type = "reference", width = width, options = opts, ...)
+}
+
+#' Column helper: Range display
+#'
+#' Display min-max ranges like "18-65" or "2.5 - 10.0".
+#'
+#' @param min_field Field name containing minimum values
+#' @param max_field Field name containing maximum values
+#' @param header Column header (default "Range")
+#' @param width Column width in pixels (default 100)
+#' @param separator Separator between min and max (default " - ")
+#' @param decimals Number of decimal places (default NULL for auto-detection)
+#' @param show_bar Show visual bar representation (default FALSE)
+#' @param ... Additional arguments passed to web_col
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Simple range: "18 - 65"
+#' col_range("age_min", "age_max", "Age Range")
+#'
+#' # Custom separator: "18–65"
+#' col_range("min", "max", separator = "–")
+#'
+#' # With decimals: "1.5 - 3.2"
+#' col_range("ci_lower", "ci_upper", decimals = 1)
+col_range <- function(
+    min_field,
+    max_field,
+    header = "Range",
+    width = 100,
+    separator = " - ",
+    decimals = NULL,
+    show_bar = FALSE,
+    ...) {
+  opts <- list(
+    range = list(
+      minField = min_field,
+      maxField = max_field,
+      separator = separator,
+      decimals = decimals,
+      showBar = show_bar
+    )
+  )
+  # Use a synthetic field that signals this is a range column
+  synthetic_field <- paste0("_range_", min_field, "_", max_field)
+  web_col(synthetic_field, header, type = "range", width = width,
+          align = "right", options = opts, ...)
 }
 
 # ============================================================================

@@ -3,6 +3,8 @@ Title: Web-Native Interactive Forest Plots
 Version: 0.1.0
 Authors@R:
     person("Antoine", "Baldassari", , "baldassarian@gmail.com", role = c("aut", "cre"))
+Author: Antoine Baldassari [aut, cre]
+Maintainer: Antoine Baldassari <baldassarian@gmail.com>
 Description: Create interactive, web-native forest plots and tables. Forest plots
     visualize point estimates with intervals for any domain: meta-analysis,
     regression results, QC measurements, and more. Rendered using modern web

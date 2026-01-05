@@ -45,6 +45,12 @@ forest_plot(demo_data,
 | `col_bar()` | Horizontal bar | Weights, percentages |
 | `col_pvalue()` | P-value formatting | Significance stars |
 | `col_sparkline()` | Mini chart | Trends, distributions |
+| `col_icon()` | Icons/emoji | Status indicators, yes/no |
+| `col_badge()` | Colored badges | Status labels, categories |
+| `col_stars()` | Star ratings | Quality scores (1-5) |
+| `col_img()` | Inline images | Logos, flags, icons |
+| `col_reference()` | Truncated links | Citations, DOIs, URLs |
+| `col_range()` | Min-max ranges | Age ranges, value bounds |
 | `col_group()` | Group header | Organize related columns |
 
 ## Column Positioning
@@ -155,6 +161,106 @@ col_sparkline(field = "dist", header = "Distribution",
 ```
 
 Sparkline types: `"line"` (default), `"area"`, `"bar"`.
+
+## Icon Columns
+
+Display icons or emoji based on data values:
+
+```r
+# Direct emoji values
+col_icon(field = "status_emoji", header = "Status", width = 50)
+
+# With value-to-icon mapping
+col_icon(field = "status",
+  mapping = list(yes = "✓", no = "✗", pending = "⏳"),
+  color = "#16a34a"  # Optional color override
+)
+```
+
+## Badge Columns
+
+Display colored status badges:
+
+```r
+col_badge(field = "status", header = "Status", width = 100,
+  variants = list(
+    published = "success",
+    draft = "warning",
+    rejected = "error"
+  )
+)
+
+# Or use custom hex colors
+col_badge(field = "category",
+  colors = list(
+    "A" = "#2563eb",
+    "B" = "#16a34a",
+    "C" = "#f59e0b"
+  )
+)
+```
+
+Available variants: `"success"`, `"warning"`, `"error"`, `"info"`, `"muted"`, `"default"`.
+
+## Star Rating Columns
+
+Display star ratings (1-5 scale):
+
+```r
+col_stars(field = "quality", header = "Quality", width = 80)
+
+# Customize appearance
+col_stars(field = "rating",
+  max_stars = 5,
+  color = "#f59e0b",      # Filled star color (gold)
+  empty_color = "#d1d5db", # Empty star color
+  half_stars = TRUE        # Allow 0.5 increments
+)
+```
+
+## Image Columns
+
+Display inline images from URLs:
+
+```r
+col_img(field = "logo_url", header = "Logo", width = 60)
+
+# With options
+col_img(field = "avatar",
+  height = 24,          # Image height in pixels
+  shape = "circle",     # "square", "circle", or "rounded"
+  fallback = "📷"       # Shown if image fails to load
+)
+```
+
+## Reference Columns
+
+Display truncated text with optional links:
+
+```r
+col_reference(field = "doi", header = "DOI", width = 120)
+
+# With clickable links
+col_reference(field = "pmid",
+  href_field = "pubmed_url",  # Column containing the URL
+  max_chars = 25,             # Truncate after N chars
+  icon = TRUE                 # Show external link icon
+)
+```
+
+## Range Columns
+
+Display min-max ranges from two fields:
+
+```r
+col_range(
+  min_field = "age_min",
+  max_field = "age_max",
+  header = "Age Range",
+  separator = " – ",   # Separator between values
+  decimals = 0         # NULL for auto-detection
+)
+```
 
 ## Column Groups
 

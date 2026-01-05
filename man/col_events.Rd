@@ -11,6 +11,7 @@ col_events(
   width = 100,
   separator = "/",
   show_pct = FALSE,
+  thousands_sep = ",",
   ...
 )
 }
@@ -27,6 +28,8 @@ col_events(
 
 \item{show_pct}{Show percentage in parentheses (default FALSE)}
 
+\item{thousands_sep}{Thousands separator (default ",")}
+
 \item{...}{Additional arguments passed to web_col}
 }
 \value{
@@ -34,6 +37,7 @@ A ColumnSpec object
 }
 \description{
 Display event counts in "events/n" format for clinical trial data.
+Large numbers are formatted with thousands separators for readability.
 }
 \examples{
 # Simple events/n display: "45/120"

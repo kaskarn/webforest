@@ -958,7 +958,54 @@ forest_plot(
 )
 ```
 
-## 21. Airline Performance
+## 21. Rich Column Types
+
+Showcasing badges, icons, stars, images, and ranges.
+
+```{r}
+rich_columns_data <- tibble(
+  study = c("ADVANCE", "CARDINAL", "ELEVATE", "FRONTIER", "GENESIS"),
+  status = c("Published", "Draft", "Published", "In Review", "Published"),
+  quality = c(4, 3, 5, 4, 3),
+  age_min = c(18, 21, 25, 18, 30),
+  age_max = c(65, 75, 70, 80, 65),
+  validated = c("yes", "no", "yes", "yes", "no"),
+  doi = c("10.1001/jama.2024.1234", "10.1016/j.lancet.2024.5678",
+          "10.1056/NEJMoa2024.9012", "10.1136/bmj.2024.3456",
+          "10.1161/CIRCULATIONAHA.2024.7890"),
+  hr = c(0.74, 0.78, 0.71, 0.82, 0.69),
+  lower = c(0.62, 0.66, 0.60, 0.71, 0.55),
+  upper = c(0.88, 0.92, 0.84, 0.95, 0.87)
+)
+
+forest_plot(
+  rich_columns_data,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study",
+  columns = list(
+    col_badge("status", "Status",
+      variants = list(Published = "success", Draft = "warning", `In Review` = "info"),
+      position = "left"
+    ),
+    col_stars("quality", "Quality", position = "left"),
+    col_range("age_min", "age_max", header = "Age", position = "left"),
+    col_icon("validated", "Valid",
+      mapping = list(yes = "✓", no = "✗"),
+      color = "#16a34a", position = "left"
+    ),
+    col_reference("doi", "DOI", max_chars = 20, position = "right"),
+    col_interval("HR (95% CI)")
+  ),
+  theme = web_theme_modern(),
+  scale = "log", null_value = 1,
+  axis_label = "Hazard Ratio",
+  title = "Rich Column Types",
+  subtitle = "Badges, stars, ranges, icons, and references",
+  caption = "New column types for enhanced data presentation"
+)
+```
+
+## 22. Airline Performance
 
 Transportation analytics using the `airline_delays` package dataset, with row and column grouping.
 

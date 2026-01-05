@@ -4,7 +4,14 @@
 \alias{col_n}
 \title{Column helper: Sample size / count}
 \usage{
-col_n(field = "n", header = "N", width = 80, decimals = 0, ...)
+col_n(
+  field = "n",
+  header = "N",
+  width = 80,
+  decimals = 0,
+  thousands_sep = ",",
+  ...
+)
 }
 \arguments{
 \item{field}{Field name (default "n")}
@@ -15,11 +22,20 @@ col_n(field = "n", header = "N", width = 80, decimals = 0, ...)
 
 \item{decimals}{Number of decimal places (default 0 for integers)}
 
+\item{thousands_sep}{Thousands separator (default "," for integer columns)}
+
 \item{...}{Additional arguments passed to web_col}
 }
 \value{
 A ColumnSpec object
 }
 \description{
-Column helper: Sample size / count
+Display integer counts with thousands separator for readability.
+}
+\examples{
+# Default: shows "12,345" for large numbers
+col_n("n")
+
+# Disable thousands separator
+col_n("n", thousands_sep = FALSE)
 }

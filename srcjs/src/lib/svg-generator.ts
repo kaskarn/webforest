@@ -368,6 +368,13 @@ function truncateText(text: string, maxWidth: number, fontSize: number, padding:
   return text.slice(0, maxChars - 1) + "…";
 }
 
+/** Helper to add thousands separator to a number string */
+function addThousandsSep(numStr: string, separator: string): string {
+  const parts = numStr.split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+  return parts.join(".");
+}
+
 /** Format number for display - respects column options */
 function formatNumber(value: number | undefined | null, options?: ColumnOptions): string {
   if (value === undefined || value === null || Number.isNaN(value)) {
@@ -382,22 +389,31 @@ function formatNumber(value: number | undefined | null, options?: ColumnOptions)
     return symbol ? `${formatted}%` : formatted;
   }
 
-  // Numeric formatting with decimals
+  // Numeric formatting with decimals and thousands separator
   const decimals = options?.numeric?.decimals;
+  const thousandsSep = options?.numeric?.thousandsSep;
+  let formatted: string;
+
   if (decimals !== undefined) {
-    return value.toFixed(decimals);
+    formatted = value.toFixed(decimals);
+  } else if (Number.isInteger(value) || Math.abs(value - Math.round(value)) < 0.0001) {
+    // Default behavior: integers show no decimals, others show 2
+    formatted = Math.round(value).toString();
+  } else {
+    formatted = value.toFixed(2);
   }
 
-  // Default behavior: integers show no decimals, others show 2
-  if (Number.isInteger(value) || Math.abs(value - Math.round(value)) < 0.0001) {
-    return Math.round(value).toString();
+  // Apply thousands separator if specified
+  if (thousandsSep && typeof thousandsSep === "string") {
+    formatted = addThousandsSep(formatted, thousandsSep);
   }
-  return value.toFixed(2);
+
+  return formatted;
 }
 
 /** Format events column (events/n) */
 function formatEvents(row: Row, options: ColumnOptions): string {
-  const { eventsField, nField, separator = "/", showPct = false } = options.events!;
+  const { eventsField, nField, separator = "/", showPct = false, thousandsSep } = options.events!;
   const events = row.metadata[eventsField];
   const n = row.metadata[nField];
 
@@ -407,7 +423,16 @@ function formatEvents(row: Row, options: ColumnOptions): string {
 
   const eventsNum = Number(events);
   const nNum = Number(n);
-  let result = `${eventsNum}${separator}${nNum}`;
+  let eventsStr = String(eventsNum);
+  let nStr = String(nNum);
+
+  // Apply thousands separator if specified
+  if (thousandsSep && typeof thousandsSep === "string") {
+    eventsStr = addThousandsSep(eventsStr, thousandsSep);
+    nStr = addThousandsSep(nStr, thousandsSep);
+  }
+
+  let result = `${eventsStr}${separator}${nStr}`;
 
   if (showPct && nNum > 0) {
     const pct = ((eventsNum / nNum) * 100).toFixed(1);
@@ -967,6 +992,62 @@ function getCellValue(row: Row, col: ColumnSpec): string {
     const val = row.metadata[col.field];
     if (typeof val !== "number") return col.options?.naText ?? "";
     return formatPvalue(val, col.options);
+  }
+  // New column type fallbacks for SVG export
+  if (col.type === "icon") {
+    const val = row.metadata[col.field];
+    if (val === undefined || val === null) return "";
+    const strVal = String(val);
+    const mapping = col.options?.icon?.mapping;
+    if (mapping && strVal in mapping) return mapping[strVal];
+    return strVal;
+  }
+  if (col.type === "badge") {
+    const val = row.metadata[col.field];
+    return val !== undefined && val !== null ? String(val) : "";
+  }
+  if (col.type === "stars") {
+    const val = row.metadata[col.field];
+    if (typeof val !== "number") return "";
+    const maxStars = col.options?.stars?.maxStars ?? 5;
+    const rating = Math.max(0, Math.min(maxStars, val));
+    const filled = Math.floor(rating);
+    const empty = maxStars - filled;
+    return "★".repeat(filled) + "☆".repeat(empty);
+  }
+  if (col.type === "img") {
+    // Images can't render in SVG text - show fallback
+    const fallback = col.options?.img?.fallback ?? "[IMG]";
+    return fallback;
+  }
+  if (col.type === "reference") {
+    const val = row.metadata[col.field];
+    if (val === undefined || val === null) return "";
+    const str = String(val);
+    const maxChars = col.options?.reference?.maxChars ?? 30;
+    if (str.length <= maxChars) return str;
+    return str.substring(0, maxChars) + "...";
+  }
+  if (col.type === "range") {
+    const opts = col.options?.range;
+    if (!opts) return "";
+    const minVal = row.metadata[opts.minField];
+    const maxVal = row.metadata[opts.maxField];
+    const sep = opts.separator ?? " – ";
+    const decimals = opts.decimals;
+
+    const formatVal = (v: unknown): string => {
+      if (typeof v !== "number") return "";
+      if (decimals === null || decimals === undefined) {
+        return Number.isInteger(v) ? String(v) : v.toFixed(1);
+      }
+      return v.toFixed(decimals);
+    };
+
+    if (minVal === null && maxVal === null) return "";
+    if (minVal === null) return formatVal(maxVal);
+    if (maxVal === null) return formatVal(minVal);
+    return `${formatVal(minVal)}${sep}${formatVal(maxVal)}`;
   }
   const val = row.metadata[col.field];
   return val !== undefined && val !== null ? String(val) : (col.options?.naText ?? "");

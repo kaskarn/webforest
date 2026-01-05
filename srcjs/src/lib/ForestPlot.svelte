@@ -14,6 +14,12 @@
   import CellPvalue from "$components/table/CellPvalue.svelte";
   import CellSparkline from "$components/table/CellSparkline.svelte";
   import CellContent from "$components/table/CellContent.svelte";
+  import CellIcon from "$components/table/CellIcon.svelte";
+  import CellBadge from "$components/table/CellBadge.svelte";
+  import CellStars from "$components/table/CellStars.svelte";
+  import CellImg from "$components/table/CellImg.svelte";
+  import CellReference from "$components/table/CellReference.svelte";
+  import CellRange from "$components/table/CellRange.svelte";
   import ControlToolbar from "$components/ui/ControlToolbar.svelte";
   import {
     ROW_ODD_OPACITY,
@@ -372,6 +378,38 @@
                       data={row.metadata[column.field] as number[]}
                       options={column.options?.sparkline}
                     />
+                  {:else if column.type === "icon"}
+                    <CellIcon
+                      value={row.metadata[column.field]}
+                      options={column.options?.icon}
+                    />
+                  {:else if column.type === "badge"}
+                    <CellBadge
+                      value={row.metadata[column.field]}
+                      options={column.options?.badge}
+                    />
+                  {:else if column.type === "stars"}
+                    <CellStars
+                      value={row.metadata[column.field] as number}
+                      options={column.options?.stars}
+                    />
+                  {:else if column.type === "img"}
+                    <CellImg
+                      value={row.metadata[column.field] as string}
+                      options={column.options?.img}
+                    />
+                  {:else if column.type === "reference"}
+                    <CellReference
+                      value={row.metadata[column.field] as string}
+                      metadata={row.metadata}
+                      options={column.options?.reference}
+                    />
+                  {:else if column.type === "range"}
+                    <CellRange
+                      value={row.metadata[column.field]}
+                      metadata={row.metadata}
+                      options={column.options?.range}
+                    />
                   {:else if column.type === "numeric"}
                     <CellContent value={formatNumber(row.metadata[column.field] as number, column.options)} {cellStyle} />
                   {:else if column.type === "custom" && column.options?.events}
@@ -606,6 +644,38 @@
                         data={row.metadata[column.field] as number[]}
                         options={column.options?.sparkline}
                       />
+                    {:else if column.type === "icon"}
+                      <CellIcon
+                        value={row.metadata[column.field]}
+                        options={column.options?.icon}
+                      />
+                    {:else if column.type === "badge"}
+                      <CellBadge
+                        value={row.metadata[column.field]}
+                        options={column.options?.badge}
+                      />
+                    {:else if column.type === "stars"}
+                      <CellStars
+                        value={row.metadata[column.field] as number}
+                        options={column.options?.stars}
+                      />
+                    {:else if column.type === "img"}
+                      <CellImg
+                        value={row.metadata[column.field] as string}
+                        options={column.options?.img}
+                      />
+                    {:else if column.type === "reference"}
+                      <CellReference
+                        value={row.metadata[column.field] as string}
+                        metadata={row.metadata}
+                        options={column.options?.reference}
+                      />
+                    {:else if column.type === "range"}
+                      <CellRange
+                        value={row.metadata[column.field]}
+                        metadata={row.metadata}
+                        options={column.options?.range}
+                      />
                     {:else if column.type === "numeric"}
                       <CellContent value={formatNumber(row.metadata[column.field] as number, column.options)} {cellStyle} />
                     {:else if column.type === "custom" && column.options?.events}
@@ -667,6 +737,13 @@
     return "";
   }
 
+  // Helper to add thousands separator to a number string
+  function addThousandsSep(numStr: string, separator: string): string {
+    const parts = numStr.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+    return parts.join(".");
+  }
+
   function formatNumber(value: number | undefined | null, options?: ColumnOptions): string {
     if (value === undefined || value === null || Number.isNaN(value)) {
       return options?.naText ?? "";
@@ -680,13 +757,21 @@
       return symbol ? `${formatted}%` : formatted;
     }
 
-    // Numeric formatting with decimals
+    // Numeric formatting with decimals and thousands separator
     const decimals = options?.numeric?.decimals ?? 2;
-    return value.toFixed(decimals);
+    const thousandsSep = options?.numeric?.thousandsSep;
+    let formatted = value.toFixed(decimals);
+
+    // Apply thousands separator if specified
+    if (thousandsSep && typeof thousandsSep === "string") {
+      formatted = addThousandsSep(formatted, thousandsSep);
+    }
+
+    return formatted;
   }
 
   function formatEvents(row: Row, options: ColumnOptions): string {
-    const { eventsField, nField, separator = "/", showPct = false } = options.events!;
+    const { eventsField, nField, separator = "/", showPct = false, thousandsSep } = options.events!;
     const events = row.metadata[eventsField];
     const n = row.metadata[nField];
 
@@ -696,7 +781,16 @@
 
     const eventsNum = Number(events);
     const nNum = Number(n);
-    let result = `${eventsNum}${separator}${nNum}`;
+    let eventsStr = String(eventsNum);
+    let nStr = String(nNum);
+
+    // Apply thousands separator if specified
+    if (thousandsSep && typeof thousandsSep === "string") {
+      eventsStr = addThousandsSep(eventsStr, thousandsSep);
+      nStr = addThousandsSep(nStr, thousandsSep);
+    }
+
+    let result = `${eventsStr}${separator}${nStr}`;
 
     if (showPct && nNum > 0) {
       const pct = ((eventsNum / nNum) * 100).toFixed(1);

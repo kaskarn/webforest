@@ -119,6 +119,7 @@ export interface WebData {
 
 export interface NumericColumnOptions {
   decimals?: number;  // Number of decimal places (default: 2)
+  thousandsSep?: string | false;  // Thousands separator (default: "," for integers, false for decimals)
 }
 
 export interface PercentColumnOptions {
@@ -132,6 +133,7 @@ export interface EventsColumnOptions {
   nField: string;       // Column name for total N
   separator?: string;   // Separator between events and N (default: "/")
   showPct?: boolean;    // Show percentage after (default: false)
+  thousandsSep?: string | false;  // Thousands separator (default: ",")
 }
 
 export interface BarColumnOptions {
@@ -154,6 +156,48 @@ export interface SparklineColumnOptions {
   color?: string | null;
 }
 
+// New column types
+
+export interface IconColumnOptions {
+  mapping?: Record<string, string>;  // Value-to-icon mapping
+  size?: "sm" | "base" | "lg";
+  color?: string;
+}
+
+export interface BadgeColumnOptions {
+  variants?: Record<string, "default" | "success" | "warning" | "error" | "info" | "muted">;
+  colors?: Record<string, string>;  // Custom hex colors override variants
+  size?: "sm" | "base";
+}
+
+export interface StarsColumnOptions {
+  maxStars?: number;
+  color?: string;  // Filled star color
+  emptyColor?: string;  // Empty star color
+  halfStars?: boolean;
+}
+
+export interface ImgColumnOptions {
+  height?: number;
+  maxWidth?: number;
+  fallback?: string;
+  shape?: "square" | "circle" | "rounded";
+}
+
+export interface ReferenceColumnOptions {
+  hrefField?: string;  // Field containing URL
+  maxChars?: number;
+  showIcon?: boolean;
+}
+
+export interface RangeColumnOptions {
+  minField: string;
+  maxField: string;
+  separator?: string;
+  decimals?: number | null;  // null for auto
+  showBar?: boolean;
+}
+
 export interface ColumnOptions {
   numeric?: NumericColumnOptions;
   percent?: PercentColumnOptions;
@@ -161,6 +205,12 @@ export interface ColumnOptions {
   bar?: BarColumnOptions;
   pvalue?: PvalueColumnOptions;
   sparkline?: SparklineColumnOptions;
+  icon?: IconColumnOptions;
+  badge?: BadgeColumnOptions;
+  stars?: StarsColumnOptions;
+  img?: ImgColumnOptions;
+  reference?: ReferenceColumnOptions;
+  range?: RangeColumnOptions;
   naText?: string;  // Custom text for NA/missing values
 }
 
@@ -168,7 +218,7 @@ export interface ColumnSpec {
   id: string;
   header: string;
   field: string;
-  type: "text" | "numeric" | "interval" | "bar" | "pvalue" | "sparkline" | "custom";
+  type: "text" | "numeric" | "interval" | "bar" | "pvalue" | "sparkline" | "icon" | "badge" | "stars" | "img" | "reference" | "range" | "custom";
   width?: number | "auto" | null;  // "auto" for content-based width calculation
   align: "left" | "center" | "right";
   headerAlign?: "left" | "center" | "right" | null;  // Header alignment (defaults to align if not specified)

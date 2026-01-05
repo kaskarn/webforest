@@ -13,5 +13,7 @@
 ^\.lintr$
 ^_pkgdown\.yml$
 ^inst/scripts$
+^inst/scripts/node_modules
+^srcjs/node_modules
 ^cran-comments\.md$
 ^data-raw$
