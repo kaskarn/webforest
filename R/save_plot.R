@@ -6,8 +6,11 @@
 #' Uses a shared JavaScript SVG generator via the V8 package for consistent
 #' output between R and web exports.
 #'
-#' @param x A WebSpec object or forest_plot() htmlwidget output
-#' @param file Output file path. Extension determines format:
+#' For SplitForest objects, this function dispatches to `save_split_forest()`
+#' to export all sub-plots to a directory structure.
+#'
+#' @param x A WebSpec object, forest_plot() htmlwidget output, or SplitForest
+#' @param file Output file path (or directory for SplitForest). Extension determines format:
 #'   - `.svg` - Scalable Vector Graphics
 #'   - `.pdf` - PDF document (requires rsvg package)
 #'   - `.png` - PNG image (requires rsvg package)
@@ -44,6 +47,14 @@
 #' # Save from htmlwidget output
 #' p <- forest_plot(spec)
 #' save_plot(p, "forest.svg")
+#'
+#' # Save a SplitForest to a directory
+#' split_result <- data |>
+#'   web_spec(point = "estimate", lower = "lower", upper = "upper") |>
+#'   split_forest(by = c("sex", "age_group"))
+#'
+#' save_plot(split_result, "output/plots")
+#' # Creates: output/plots/Male/Male_Young.svg, etc.
 #' }
 #'
 #' @export
@@ -51,6 +62,23 @@ save_plot <- function(x, file, width = 800, height = NULL, scale = 2, ...) {
   # Validate inputs
   if (missing(file) || is.null(file)) {
     cli::cli_abort("{.arg file} is required")
+  }
+
+  # Dispatch to save_split_forest() if x is a SplitForest
+  if (S7::S7_inherits(x, SplitForest)) {
+    # Determine format and path from file argument
+    ext <- tolower(tools::file_ext(file))
+    if (ext %in% c("svg", "pdf", "png")) {
+      # file has extension - use parent directory and extract format
+      path <- dirname(file)
+      format <- ext
+    } else {
+      # file is a directory path - use as-is with default format
+      path <- file
+      format <- "svg"
+    }
+    return(save_split_forest(x, path = path, format = format,
+                             width = width, height = height, scale = scale, ...))
   }
 
   # Check for V8 package
