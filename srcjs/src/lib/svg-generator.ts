@@ -219,6 +219,15 @@ function buildDisplayRows(spec: WebSpec): DisplayRow[] {
     return group ? group.depth + 1 : 0;
   }
 
+  // Count all rows (direct + all descendants) for a group
+  function countAllDescendantRows(groupId: string): number {
+    let count = rowsByGroup.get(groupId)?.length ?? 0;
+    for (const childGroup of getChildGroups(groupId)) {
+      count += countAllDescendantRows(childGroup.id);
+    }
+    return count;
+  }
+
   const result: DisplayRow[] = [];
 
   // Recursive function to output a group and its descendants
@@ -227,7 +236,8 @@ function buildDisplayRows(spec: WebSpec): DisplayRow[] {
       const group = groupMap.get(groupId);
       if (!group) return;
 
-      const rowCount = rowsByGroup.get(groupId)?.length ?? 0;
+      // Count all descendant rows (direct + nested subgroups)
+      const rowCount = countAllDescendantRows(groupId);
       result.push({
         type: "group_header",
         groupId: group.id,

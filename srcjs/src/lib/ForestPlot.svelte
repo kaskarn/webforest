@@ -1232,6 +1232,7 @@
   .row-spacer .webforest-label-col,
   .row-spacer .webforest-col {
     border-bottom: none;
+    visibility: hidden;
   }
 
   .row-bold {

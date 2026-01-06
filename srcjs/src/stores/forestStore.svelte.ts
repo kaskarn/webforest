@@ -256,6 +256,17 @@ export function createForestStore() {
         .filter(g => (g.parentId ?? null) === parentId && groupsWithHeaders.has(g.id));
     }
 
+    // 3b. Helper to count all rows (direct + all descendants) for a group
+    function countAllDescendantRows(groupId: string): number {
+      // Direct rows in this group
+      let count = rowsByGroup.get(groupId)?.length ?? 0;
+      // Add rows from all child groups recursively
+      for (const childGroup of getChildGroups(groupId)) {
+        count += countAllDescendantRows(childGroup.id);
+      }
+      return count;
+    }
+
     // 4. Recursive function to output a group and its descendants
     function outputGroup(groupId: string | null) {
       if (groupId) {
@@ -266,7 +277,8 @@ export function createForestStore() {
         if (isAncestorCollapsed(groupId)) return;
 
         const isCollapsed = collapsedGroups.has(group.id);
-        const rowCount = rowsByGroup.get(groupId)?.length ?? 0;
+        // Count all descendant rows (direct + nested subgroups)
+        const rowCount = countAllDescendantRows(groupId);
 
         result.push({
           type: "group_header",
