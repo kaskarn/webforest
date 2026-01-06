@@ -7,9 +7,9 @@
 save_plot(x, file, width = 800, height = NULL, scale = 2, ...)
 }
 \arguments{
-\item{x}{A WebSpec object or forest_plot() htmlwidget output}
+\item{x}{A WebSpec object, forest_plot() htmlwidget output, or SplitForest}
 
-\item{file}{Output file path. Extension determines format:
+\item{file}{Output file path (or directory for SplitForest). Extension determines format:
 \itemize{
 \item \code{.svg} - Scalable Vector Graphics
 \item \code{.pdf} - PDF document (requires rsvg package)
@@ -32,6 +32,10 @@ Invisibly returns the file path
 Exports a forest plot to a static file format (SVG, PDF, or PNG).
 Uses a shared JavaScript SVG generator via the V8 package for consistent
 output between R and web exports.
+}
+\details{
+For SplitForest objects, this function dispatches to \code{save_split_forest()}
+to export all sub-plots to a directory structure.
 }
 \examples{
 \dontrun{
@@ -58,6 +62,14 @@ save_plot(spec, "forest.png", width = 1200)
 # Save from htmlwidget output
 p <- forest_plot(spec)
 save_plot(p, "forest.svg")
+
+# Save a SplitForest to a directory
+split_result <- data |>
+  web_spec(point = "estimate", lower = "lower", upper = "upper") |>
+  split_forest(by = c("sex", "age_group"))
+
+save_plot(split_result, "output/plots")
+# Creates: output/plots/Male/Male_Young.svg, etc.
 }
 
 }

@@ -10,6 +10,7 @@ forest_plot(
   split_by = NULL,
   shared_axis = FALSE,
   axis_range = NULL,
+  axis_trim = NULL,
   axis_ticks = NULL,
   axis_gridlines = NULL,
   plot_position = NULL,
@@ -37,6 +38,11 @@ a character vector for hierarchical splits (e.g., \code{c("region", "age_group")
 across all split plots for easier comparison. Default is \code{FALSE}.}
 
 \item{axis_range}{Numeric vector c(min, max) to override axis range from theme}
+
+\item{axis_trim}{IQR multiplier for automatic outlier trimming. When set (e.g., 2),
+the axis range is computed as \verb{median ± axis_trim * IQR} of the point estimates.
+Intervals extending beyond this range show arrow indicators.
+Ignored if \code{axis_range} is also specified.}
 
 \item{axis_ticks}{Numeric vector of explicit tick positions}
 

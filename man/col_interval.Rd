@@ -12,6 +12,7 @@ col_interval(
   point = NULL,
   lower = NULL,
   upper = NULL,
+  imprecise_threshold = NULL,
   ...
 )
 }
@@ -29,6 +30,10 @@ col_interval(
 \item{lower}{Optional field name to override the lower bound column}
 
 \item{upper}{Optional field name to override the upper bound column}
+
+\item{imprecise_threshold}{When upper/lower ratio exceeds this threshold,
+the interval is considered imprecise and displayed as "—" instead.
+The forest plot marker is also hidden. Default is NULL (no threshold).}
 
 \item{...}{Additional arguments passed to web_col}
 }
@@ -49,4 +54,7 @@ col_interval("HR (95\% CI)", decimals = 3, sep = ", ")
 
 # Override interval fields (show different effect than plot)
 col_interval("Per-Protocol", point = "pp_hr", lower = "pp_lower", upper = "pp_upper")
+
+# Hide imprecise estimates (CI ratio > 10)
+col_interval(imprecise_threshold = 10)
 }

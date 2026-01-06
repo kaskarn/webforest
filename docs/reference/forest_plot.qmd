@@ -13,19 +13,21 @@ Create interactive forest plots from data frames or WebSpec objects.
 
 ```r
 forest_plot(
-
-x,
-...,
-axis_range = NULL,
-axis_ticks = NULL,
-axis_gridlines = NULL,
-plot_position = NULL,
-row_height = NULL,
-width_mode = c("natural", "fill"),
-height_mode = c("auto", "scroll"),
-width = NULL,
-height = NULL,
-elementId = NULL
+  x,
+  ...,
+  split_by = NULL,
+  shared_axis = FALSE,
+  axis_range = NULL,
+  axis_trim = NULL,
+  axis_ticks = NULL,
+  axis_gridlines = NULL,
+  plot_position = NULL,
+  row_height = NULL,
+  width_mode = c("natural", "fill"),
+  height_preset = c("full", "small", "medium", "large", "container"),
+  width = NULL,
+  height = NULL,
+  elementId = NULL
 )
 ```
 
@@ -70,11 +72,19 @@ elementId = NULL
 | `style_color` | Column for cell text color (hex string) |
 | `style_bg` | Column for cell background color (hex string) |
 
+### Split Plot Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `split_by` | Column name(s) to split data into separate plots with sidebar navigation |
+| `shared_axis` | When `split_by` is used, `TRUE` to use the same axis range across all plots |
+
 ### Visual Override Arguments
 
 | Argument | Description |
 |----------|-------------|
 | `axis_range` | `c(min, max)` to override axis limits |
+| `axis_trim` | IQR multiplier for automatic outlier trimming. Computes range as `median ± axis_trim × IQR`. Ignored if `axis_range` is set. |
 | `axis_ticks` | Numeric vector of explicit tick positions |
 | `axis_gridlines` | `TRUE`/`FALSE` to show/hide gridlines |
 | `plot_position` | `"left"` or `"right"` |
@@ -85,7 +95,7 @@ elementId = NULL
 | Argument | Description |
 |----------|-------------|
 | `width_mode` | `"natural"` (centered at natural width) or `"fill"` (scale to fill container) |
-| `height_mode` | `"auto"` (natural height) or `"scroll"` (scroll if > viewport) |
+| `height_preset` | `"full"` (natural height), `"small"` (300px), `"medium"` (500px), `"large"` (900px), or `"container"` (fill parent) |
 | `width` | Widget width |
 | `height` | Widget height |
 | `elementId` | HTML element ID |

@@ -7,13 +7,13 @@ title: "save_plot"
 library(webforest)
 ```
 
-Export a forest plot or webtable to static file formats.
+Export a forest plot, webtable, or split forest to static file formats.
 
 ## Usage
 
 ```r
 save_plot(
-  plot,
+  x,
   file,
   width = 800,
   height = NULL,
@@ -25,8 +25,8 @@ save_plot(
 
 | Argument | Description |
 |----------|-------------|
-| `plot` | A `forest_plot()` or `webtable()` widget |
-| `file` | Output file path with extension `.svg`, `.pdf`, or `.png` |
+| `x` | A `WebSpec`, `SplitForest`, or htmlwidget from `forest_plot()`/`webtable()` |
+| `file` | Output file path (or directory for SplitForest). Extension determines format: `.svg`, `.pdf`, or `.png` |
 | `width` | Width in pixels (default: 800) |
 | `height` | Height in pixels (auto-calculated if NULL) |
 | `scale` | Scale factor for PNG resolution (default: 2) |
@@ -72,6 +72,20 @@ save_plot(p, "my_plot.png", width = 1200, scale = 3)
 
 ```r
 save_plot(p, "my_plot.pdf", width = 800)
+```
+
+### Save SplitForest to Directory
+
+When saving a SplitForest, all sub-plots are exported to a directory structure matching the split hierarchy:
+
+```r
+split_result <- data |>
+  web_spec(point = "hr", lower = "lo", upper = "hi") |>
+  split_forest(by = c("region", "age_group"))
+
+# Export all plots to a directory
+save_plot(split_result, "output/plots")
+# Creates: output/plots/North/North_Young.svg, etc.
 ```
 
 ## See Also

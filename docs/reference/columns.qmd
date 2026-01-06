@@ -65,7 +65,8 @@ Confidence interval display showing point estimate with bounds.
 ```r
 col_interval(header = "95% CI", width = 160, position = "right",
              decimals = 2, sep = " ",
-             point = NULL, lower = NULL, upper = NULL)
+             point = NULL, lower = NULL, upper = NULL,
+             imprecise_threshold = NULL)
 ```
 
 | Argument | Description |
@@ -78,6 +79,7 @@ col_interval(header = "95% CI", width = 160, position = "right",
 | `point` | Override field for point estimate |
 | `lower` | Override field for lower bound |
 | `upper` | Override field for upper bound |
+| `imprecise_threshold` | When `upper/lower` ratio exceeds this threshold, display "—" instead |
 
 **Note**: By default, this column uses the `point`, `lower`, and `upper` values specified in `forest_plot()`. Use the override arguments to display different effect estimates.
 
@@ -92,6 +94,9 @@ col_interval("HR (95% CI)", decimals = 1, sep = ", ")
 
 # Show alternative effect from different columns
 col_interval("Per-Protocol", point = "pp_hr", lower = "pp_lower", upper = "pp_upper")
+
+# Hide imprecise estimates where CI ratio > 10
+col_interval(imprecise_threshold = 10)
 ```
 
 ## Visualization Columns
