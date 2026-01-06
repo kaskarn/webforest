@@ -556,21 +556,6 @@ serialize_annotation <- function(ann) {
     ))
   }
 
-  # RiskOfBias
-  if (S7_inherits(ann, RiskOfBias)) {
-    return(list(
-      type = "risk_of_bias",
-      id = "rob",
-      domains = ann@domains,
-      assessments = lapply(ann@assessments, function(a) {
-        list(
-          studyId = a@study_id,
-          ratings = a@assessments
-        )
-      })
-    ))
-  }
-
   # Unknown annotation type - warn and return NULL
   cli_warn("Unknown annotation type, skipping: {class(ann)[[1]]}")
   NULL

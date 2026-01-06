@@ -64,24 +64,6 @@ forest_annotation(
 | `color` | Shape color (default: purple) |
 | `size` | Size multiplier (default: 1.0) |
 
-## Risk of Bias
-
-### forest_rob {#forest_rob}
-
-Create a risk of bias traffic light annotation for systematic reviews.
-
-```r
-forest_rob(data, study_id = "study_id", ...)
-```
-
-| Argument | Description |
-|----------|-------------|
-| `data` | Data frame with study IDs and domain assessments |
-| `study_id` | Column name for study identifiers |
-| `...` | Domain columns containing ratings |
-
-**Rating values**: `"low"`, `"unclear"`, `"high"`
-
 ## Examples
 
 ### Adding Reference Lines
@@ -104,20 +86,6 @@ forest_plot(data,
     forest_refline(0.75, "Clinically meaningful", style = "dashed")
   )
 )
-```
-
-### Risk of Bias Assessment
-
-```{r}
-#| eval: false
-rob_data <- data.frame(
-  study_id = c("Study A", "Study B", "Study C"),
-  randomization = c("low", "unclear", "low"),
-  blinding = c("low", "high", "low"),
-  attrition = c("low", "low", "unclear")
-)
-
-forest_rob(rob_data)
 ```
 
 ## See Also

@@ -405,17 +405,7 @@ export interface CustomAnnotation {
   size: number;
 }
 
-export interface RiskOfBiasAnnotation {
-  type: "risk_of_bias";
-  id: string;
-  domains: string[];
-  assessments: {
-    studyId: string;
-    ratings: Record<string, "low" | "unclear" | "high">;
-  }[];
-}
-
-export type Annotation = ReferenceLine | CustomAnnotation | RiskOfBiasAnnotation;
+export type Annotation = ReferenceLine | CustomAnnotation;
 
 // ============================================================================
 // Computed Layout
