@@ -1169,9 +1169,9 @@
     flex-shrink: 0;
   }
 
-  /* Text wrapping mode - allows long text to wrap instead of truncating */
+  /* Text wrapping mode - allows long text to wrap and respects \n newlines */
   .webforest-col.wrap-enabled {
-    white-space: normal;
+    white-space: pre-line;
     word-wrap: break-word;
     text-overflow: clip;
     min-height: var(--wf-row-height);
