@@ -135,6 +135,24 @@ export const RENDERING = {
 } as const;
 
 // ============================================================================
+// Auto Width Constants
+// ============================================================================
+
+export const AUTO_WIDTH = {
+  /** Padding added to measured text width (accounts for cell padding + rendering overhead) */
+  PADDING: 28,
+
+  /** Minimum width for auto-sized columns */
+  MIN: 60,
+
+  /** Maximum width for auto-sized data columns */
+  MAX: 600,
+
+  /** Maximum width for auto-sized label column */
+  LABEL_MAX: 400,
+} as const;
+
+// ============================================================================
 // CSS Custom Property Generation (for Svelte components)
 // ============================================================================
 

@@ -145,6 +145,7 @@ export interface EventsColumnOptions {
   separator?: string;   // Separator between events and N (default: "/")
   showPct?: boolean;    // Show percentage after (default: false)
   thousandsSep?: string | false;  // Thousands separator (default: ",")
+  abbreviate?: boolean | number;  // Abbreviate large numbers (true or sigfig count: 1.1K, 5.3M)
 }
 
 export interface BarColumnOptions {

@@ -15,6 +15,8 @@ import type {
 } from "$types";
 import { niceDomain, DOMAIN_PADDING } from "$lib/scale-utils";
 import { THEME_PRESETS, type ThemeName } from "$lib/theme-presets";
+import { getColumnDisplayText } from "$lib/formatters";
+import { AUTO_WIDTH } from "$lib/rendering-constants";
 
 // Svelte 5 runes-based store
 export function createForestStore() {
@@ -443,10 +445,6 @@ export function createForestStore() {
     const fontSize = spec.theme.typography.fontSizeBase;
     ctx.font = `${fontSize} ${fontFamily}`;
 
-    const padding = 20; // 10px padding on each side
-    const maxAutoWidth = 600; // Cap auto width at 600px
-    const minAutoWidth = 60; // Minimum auto width
-
     // Process columns recursively
     function processColumn(col: ColumnSpec | ColumnGroup) {
       if (col.isGroup) {
@@ -462,19 +460,26 @@ export function createForestStore() {
       let maxWidth = 0;
 
       // Measure header text
-      maxWidth = Math.max(maxWidth, ctx!.measureText(col.header).width);
+      if (col.header) {
+        maxWidth = Math.max(maxWidth, ctx!.measureText(col.header).width);
+      }
 
-      // Measure all data cell values
+      // Measure all data cell values using proper display text for each column type
       for (const row of spec!.data.rows) {
-        const value = row.metadata[col.field];
-        if (value !== null && value !== undefined) {
-          const text = String(value);
+        // Skip header/spacer rows that don't have real data
+        if (row.style?.type === "header" || row.style?.type === "spacer") {
+          continue;
+        }
+
+        // Use getColumnDisplayText to get the actual rendered text for this column type
+        const text = getColumnDisplayText(row, col);
+        if (text) {
           maxWidth = Math.max(maxWidth, ctx!.measureText(text).width);
         }
       }
 
       // Apply computed width with padding and constraints
-      const computedWidth = Math.min(maxAutoWidth, Math.max(minAutoWidth, Math.ceil(maxWidth + padding)));
+      const computedWidth = Math.min(AUTO_WIDTH.MAX, Math.max(AUTO_WIDTH.MIN, Math.ceil(maxWidth + AUTO_WIDTH.PADDING)));
       columnWidths[col.id] = computedWidth;
     }
 

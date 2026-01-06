@@ -22,10 +22,19 @@ import {
   TYPOGRAPHY,
   SPACING,
   RENDERING,
+  AUTO_WIDTH,
   ROW_ODD_OPACITY,
   GROUP_HEADER_OPACITY,
   getDepthOpacity,
 } from "./rendering-constants";
+import {
+  formatNumber,
+  formatEvents,
+  formatInterval,
+  formatPvalue,
+  getColumnDisplayText,
+} from "./formatters";
+import { estimateTextWidth } from "./width-utils";
 
 // ============================================================================
 // Export Options
@@ -39,6 +48,102 @@ export interface ExportOptions {
 }
 
 // ============================================================================
+// Auto Width Calculation for SVG Export
+// ============================================================================
+
+/**
+ * Calculate auto-widths for columns that have width="auto" or null.
+ * Uses text estimation since canvas measurement is not available in SVG context.
+ */
+function calculateSvgAutoWidths(
+  spec: WebSpec,
+  columns: ColumnSpec[]
+): Map<string, number> {
+  const widths = new Map<string, number>();
+  const fontSize = parseFontSize(spec.theme.typography.fontSizeBase);
+  const rows = spec.data.rows;
+
+  for (const col of columns) {
+    // Only process columns with width="auto" or null
+    if (col.width !== "auto" && col.width !== null && col.width !== undefined) {
+      continue;
+    }
+
+    let maxWidth = 0;
+
+    // Measure header text
+    if (col.header) {
+      maxWidth = Math.max(maxWidth, estimateTextWidth(col.header, fontSize));
+    }
+
+    // Measure all data cell values using proper display text
+    for (const row of rows) {
+      if (row.style?.type === "header" || row.style?.type === "spacer") {
+        continue;
+      }
+      const text = getColumnDisplayText(row, col);
+      if (text) {
+        maxWidth = Math.max(maxWidth, estimateTextWidth(text, fontSize));
+      }
+    }
+
+    // Apply padding and constraints
+    const computedWidth = Math.ceil(maxWidth + AUTO_WIDTH.PADDING);
+    widths.set(col.id, Math.min(AUTO_WIDTH.MAX, Math.max(AUTO_WIDTH.MIN, computedWidth)));
+  }
+
+  return widths;
+}
+
+/**
+ * Calculate label column width based on actual label content.
+ */
+function calculateSvgLabelWidth(spec: WebSpec): number {
+  const fontSize = parseFontSize(spec.theme.typography.fontSizeBase);
+  let maxWidth = 0;
+
+  // Measure label header
+  if (spec.data.labelHeader) {
+    maxWidth = Math.max(maxWidth, estimateTextWidth(spec.data.labelHeader, fontSize));
+  }
+
+  // Measure all labels
+  for (const row of spec.data.rows) {
+    if (row.label) {
+      // Account for indentation
+      const indent = row.style?.indent ?? 0;
+      const indentWidth = indent * SPACING.INDENT_PER_LEVEL;
+      maxWidth = Math.max(maxWidth, estimateTextWidth(row.label, fontSize) + indentWidth);
+    }
+  }
+
+  // Also measure group headers
+  for (const group of spec.data.groups) {
+    if (group.label) {
+      const indentWidth = group.depth * SPACING.INDENT_PER_LEVEL;
+      maxWidth = Math.max(maxWidth, estimateTextWidth(group.label, fontSize) + indentWidth);
+    }
+  }
+
+  const computedWidth = Math.ceil(maxWidth + AUTO_WIDTH.PADDING);
+  return Math.min(AUTO_WIDTH.LABEL_MAX, Math.max(AUTO_WIDTH.MIN, computedWidth));
+}
+
+/**
+ * Get effective column width, using calculated auto-width if available.
+ */
+function getEffectiveWidth(col: ColumnSpec, autoWidths: Map<string, number>): number {
+  const autoWidth = autoWidths.get(col.id);
+  if (autoWidth !== undefined) {
+    return autoWidth;
+  }
+  if (typeof col.width === "number") {
+    return col.width;
+  }
+  return LAYOUT.DEFAULT_COLUMN_WIDTH;
+}
+
+// ============================================================================
 // Layout Computation
 // ============================================================================
 
@@ -49,6 +154,8 @@ interface InternalLayout extends ComputedLayout {
   subtitleY: number;
   mainY: number;
   footerY: number;
+  autoWidths: Map<string, number>;  // Add auto-widths to layout
+  labelWidth: number;               // Calculated label column width
 }
 
 function computeLayout(spec: WebSpec, options: ExportOptions): InternalLayout {
@@ -91,14 +198,20 @@ function computeLayout(spec: WebSpec, options: ExportOptions): InternalLayout {
   const plotHeight = displayRowCount * rowHeight +
     (hasOverall ? rowHeight * RENDERING.OVERALL_ROW_HEIGHT_MULTIPLIER : 0);
 
-  // Column widths - use the column definitions to compute total width
+  // Calculate auto-widths for columns
   const leftColumns = flattenColumns(columns, "left");
   const rightColumns = flattenColumns(columns, "right");
+  const allColumns = [...leftColumns, ...rightColumns];
+  const autoWidths = calculateSvgAutoWidths(spec, allColumns);
 
-  const leftTableWidth = LAYOUT.DEFAULT_LABEL_WIDTH +
-    leftColumns.reduce((sum, c) => sum + (typeof c.width === 'number' ? c.width : LAYOUT.DEFAULT_COLUMN_WIDTH), 0);
+  // Calculate label column width
+  const labelWidth = calculateSvgLabelWidth(spec);
+
+  // Calculate table widths using effective widths
+  const leftTableWidth = labelWidth +
+    leftColumns.reduce((sum, c) => sum + getEffectiveWidth(c, autoWidths), 0);
   const rightTableWidth =
-    rightColumns.reduce((sum, c) => sum + (typeof c.width === 'number' ? c.width : LAYOUT.DEFAULT_COLUMN_WIDTH), 0);
+    rightColumns.reduce((sum, c) => sum + getEffectiveWidth(c, autoWidths), 0);
 
   // Forest width calculation - "tables first" approach
   const baseWidth = options.width ?? LAYOUT.DEFAULT_WIDTH;
@@ -146,6 +259,8 @@ function computeLayout(spec: WebSpec, options: ExportOptions): InternalLayout {
     subtitleY: padding + titleHeight + TYPOGRAPHY.SUBTITLE_HEIGHT - 4,
     mainY: headerTextHeight + padding,
     footerY: headerTextHeight + padding + headerHeight + plotHeight + LAYOUT.AXIS_HEIGHT + LAYOUT.AXIS_LABEL_HEIGHT + padding,
+    autoWidths,
+    labelWidth,
   };
 }
 
@@ -378,201 +493,7 @@ function truncateText(text: string, maxWidth: number, fontSize: number, padding:
   return text.slice(0, maxChars - 1) + "…";
 }
 
-/** Helper to add thousands separator to a number string */
-function addThousandsSep(numStr: string, separator: string): string {
-  const parts = numStr.split(".");
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
-  return parts.join(".");
-}
-
-/** Helper to abbreviate large numbers: 1234567 -> "1.2M", 5300 -> "5.3K" */
-function abbreviateNumber(value: number, sigfigs: number = 2): string {
-  const absValue = Math.abs(value);
-  const sign = value < 0 ? "-" : "";
-
-  if (absValue >= 1e9) {
-    return sign + (absValue / 1e9).toPrecision(sigfigs) + "B";
-  }
-  if (absValue >= 1e6) {
-    return sign + (absValue / 1e6).toPrecision(sigfigs) + "M";
-  }
-  if (absValue >= 1e3) {
-    return sign + (absValue / 1e3).toPrecision(sigfigs) + "K";
-  }
-  return value.toPrecision(sigfigs);
-}
-
-/** Format number for display - respects column options */
-function formatNumber(value: number | undefined | null, options?: ColumnOptions): string {
-  if (value === undefined || value === null || Number.isNaN(value)) {
-    return options?.naText ?? "";
-  }
-
-  // Percent formatting
-  if (options?.percent) {
-    const { decimals = 1, multiply = false, symbol = true } = options.percent;
-    const displayValue = multiply ? value * 100 : value;
-    const formatted = displayValue.toFixed(decimals);
-    return symbol ? `${formatted}%` : formatted;
-  }
-
-  // Handle abbreviation for large numbers
-  const abbreviate = options?.numeric?.abbreviate;
-  if (abbreviate && Math.abs(value) >= 1000) {
-    const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
-    return abbreviateNumber(value, sigfigs);
-  }
-
-  // Use significant figures if digits specified
-  const digits = options?.numeric?.digits;
-  if (digits !== undefined && digits !== null) {
-    const formatted = value.toPrecision(digits);
-    const thousandsSep = options?.numeric?.thousandsSep;
-    if (thousandsSep && typeof thousandsSep === "string") {
-      return addThousandsSep(formatted, thousandsSep);
-    }
-    return formatted;
-  }
-
-  // Numeric formatting with decimals and thousands separator
-  const decimals = options?.numeric?.decimals;
-  const thousandsSep = options?.numeric?.thousandsSep;
-  let formatted: string;
-
-  if (decimals !== undefined) {
-    formatted = value.toFixed(decimals);
-  } else if (Number.isInteger(value) || Math.abs(value - Math.round(value)) < 0.0001) {
-    // Default behavior: integers show no decimals, others show 2
-    formatted = Math.round(value).toString();
-  } else {
-    formatted = value.toFixed(2);
-  }
-
-  // Apply thousands separator if specified
-  if (thousandsSep && typeof thousandsSep === "string") {
-    formatted = addThousandsSep(formatted, thousandsSep);
-  }
-
-  return formatted;
-}
-
-/** Format events column (events/n) */
-function formatEvents(row: Row, options: ColumnOptions): string {
-  const { eventsField, nField, separator = "/", showPct = false, thousandsSep, abbreviate } = options.events!;
-  const events = row.metadata[eventsField];
-  const n = row.metadata[nField];
-
-  if (events === undefined || events === null || n === undefined || n === null) {
-    return options.naText ?? "";
-  }
-
-  const eventsNum = Number(events);
-  const nNum = Number(n);
-  let eventsStr: string;
-  let nStr: string;
-
-  // Handle abbreviation for large numbers
-  if (abbreviate && (eventsNum >= 1000 || nNum >= 1000)) {
-    const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
-    eventsStr = eventsNum >= 1000 ? abbreviateNumber(eventsNum, sigfigs) : String(eventsNum);
-    nStr = nNum >= 1000 ? abbreviateNumber(nNum, sigfigs) : String(nNum);
-  } else {
-    eventsStr = String(eventsNum);
-    nStr = String(nNum);
-    // Apply thousands separator if specified (only when not abbreviating)
-    if (thousandsSep && typeof thousandsSep === "string") {
-      eventsStr = addThousandsSep(eventsStr, thousandsSep);
-      nStr = addThousandsSep(nStr, thousandsSep);
-    }
-  }
-
-  let result = `${eventsStr}${separator}${nStr}`;
-
-  if (showPct && nNum > 0) {
-    const pct = ((eventsNum / nNum) * 100).toFixed(1);
-    result += ` (${pct}%)`;
-  }
-
-  return result;
-}
-
-/** Format interval for display */
-function formatInterval(
-  point?: number,
-  lower?: number,
-  upper?: number,
-  options?: ColumnOptions
-): string {
-  if (point === undefined || point === null || Number.isNaN(point)) return "";
-
-  const decimals = options?.interval?.decimals ?? 2;
-  const sep = options?.interval?.sep ?? " ";
-  const impreciseThreshold = options?.interval?.impreciseThreshold;
-
-  if (lower === undefined || lower === null || upper === undefined || upper === null ||
-      Number.isNaN(lower) || Number.isNaN(upper)) {
-    return point.toFixed(decimals);
-  }
-
-  // Check for imprecise estimate (CI ratio exceeds threshold)
-  if (impreciseThreshold != null && lower > 0 && upper / lower > impreciseThreshold) {
-    return "—";
-  }
-
-  return `${point.toFixed(decimals)}${sep}(${lower.toFixed(decimals)}, ${upper.toFixed(decimals)})`;
-}
-
-/** Unicode superscript character mapping */
-const SUPERSCRIPT_MAP: Record<string, string> = {
-  "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
-  "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹",
-  "-": "⁻", "+": "⁺",
-};
-
-/** Convert string to Unicode superscript */
-function toSuperscript(str: string): string {
-  return str.split("").map(c => SUPERSCRIPT_MAP[c] ?? c).join("");
-}
-
-/** Format p-value for display with Unicode superscript notation */
-function formatPvalue(value: number, options?: ColumnOptions): string {
-  const pvalOpts = options?.pvalue;
-  const digits = pvalOpts?.digits ?? 2;
-  const expThreshold = pvalOpts?.expThreshold ?? 0.001;
-  const abbrevThreshold = pvalOpts?.abbrevThreshold ?? null;
-  const format = pvalOpts?.format ?? "auto";
-  const showStars = pvalOpts?.stars ?? false;
-  const thresholds = pvalOpts?.thresholds ?? [0.05, 0.01, 0.001];
-
-  // Compute stars
-  let starStr = "";
-  if (showStars) {
-    if (value < thresholds[2]) starStr = "***";
-    else if (value < thresholds[1]) starStr = "**";
-    else if (value < thresholds[0]) starStr = "*";
-  }
-
-  // Abbreviation threshold: show "<threshold" notation if enabled and value is below
-  if (abbrevThreshold !== null && value < abbrevThreshold) {
-    return `<${abbrevThreshold}${starStr}`;
-  }
-
-  // Use scientific notation with Unicode superscript for small values
-  if (format === "scientific" || (format === "auto" && value < expThreshold)) {
-    const exp = Math.floor(Math.log10(value));
-    const mantissa = value / Math.pow(10, exp);
-    const mantissaStr = mantissa.toPrecision(digits);
-    return `${mantissaStr}×10${toSuperscript(exp.toString())}${starStr}`;
-  }
-
-  // Decimal format with appropriate precision based on magnitude
-  let formatted: string;
-  if (value >= 0.1) formatted = value.toFixed(digits);
-  else if (value >= 0.01) formatted = value.toFixed(digits + 1);
-  else formatted = value.toFixed(digits + 2);
-
-  return `${formatted}${starStr}`;
-}
+// Note: formatNumber, formatEvents, formatInterval, formatPvalue are imported from ./formatters
 
 /** Format tick value for axis */
 function formatTick(value: number): string {
@@ -759,15 +680,30 @@ function renderColumnHeaders(
   headerHeight: number,
   theme: WebTheme,
   labelHeader?: string,
-  labelWidth?: number
+  labelWidth?: number,
+  autoWidths?: Map<string, number>
 ): string {
   const lines: string[] = [];
   const fontSize = parseFontSize(theme.typography.fontSizeSm);
   const fontWeight = theme.typography.fontWeightMedium;
   const boldWeight = theme.typography.fontWeightBold;
   const hasGroups = hasColumnGroups(columnDefs);
-  const defaultColWidth = LAYOUT.DEFAULT_COLUMN_WIDTH;
   const actualLabelWidth = labelWidth ?? LAYOUT.DEFAULT_LABEL_WIDTH;
+
+  // Helper to get effective column width
+  const getColWidth = (col: ColumnSpec): number => {
+    if (autoWidths) {
+      const autoWidth = autoWidths.get(col.id);
+      if (autoWidth !== undefined) return autoWidth;
+    }
+    return typeof col.width === 'number' ? col.width : LAYOUT.DEFAULT_COLUMN_WIDTH;
+  };
+
+  // Helper to get column def width (for groups)
+  const getDefWidth = (col: ColumnDef): number => {
+    if (!col.isGroup) return getColWidth(col as ColumnSpec);
+    return col.columns.reduce((sum, c) => sum + getDefWidth(c), 0);
+  };
 
   // Helper to calculate text Y position for vertical centering
   const getTextY = (containerY: number, containerHeight: number) =>
@@ -797,7 +733,7 @@ function renderColumnHeaders(
     for (const col of columnDefs) {
       if (col.isGroup) {
         // Group header spans its children
-        const groupWidth = getColumnDefWidth(col, defaultColWidth);
+        const groupWidth = getDefWidth(col);
         const textX = currentX + groupWidth / 2;
         lines.push(`<text x="${textX}" y="${getTextY(y, row1Height)}"
           font-family="${theme.typography.fontFamily}"
@@ -812,7 +748,7 @@ function renderColumnHeaders(
         currentX += groupWidth;
       } else {
         // Non-grouped column spans both rows
-        const width = typeof col.width === 'number' ? col.width : defaultColWidth;
+        const width = getColWidth(col);
         const headerAlign = col.headerAlign ?? col.align;
         const { textX, anchor } = getTextPosition(currentX, width, headerAlign);
         const truncatedHeader = truncateText(col.header, width, fontSize, SPACING.TEXT_PADDING);
@@ -833,7 +769,7 @@ function renderColumnHeaders(
         // Render sub-column headers
         for (const subCol of col.columns) {
           if (!subCol.isGroup) {
-            const width = typeof subCol.width === 'number' ? subCol.width : defaultColWidth;
+            const width = getColWidth(subCol as ColumnSpec);
             const headerAlign = subCol.headerAlign ?? subCol.align;
             const { textX, anchor } = getTextPosition(currentX, width, headerAlign);
             lines.push(`<text x="${textX}" y="${getTextY(y + row1Height, row2Height)}"
@@ -847,7 +783,7 @@ function renderColumnHeaders(
         }
       } else {
         // Skip non-grouped columns (already rendered spanning both rows)
-        const width = typeof col.width === 'number' ? col.width : defaultColWidth;
+        const width = getColWidth(col);
         currentX += width;
       }
     }
@@ -865,7 +801,7 @@ function renderColumnHeaders(
     }
 
     for (const col of leafColumns) {
-      const width = typeof col.width === 'number' ? col.width : defaultColWidth;
+      const width = getColWidth(col);
       // Use headerAlign if specified, otherwise fall back to align
       const headerAlign = col.headerAlign ?? col.align;
       const { textX, anchor } = getTextPosition(currentX, width, headerAlign);
@@ -941,12 +877,22 @@ function renderTableRow(
   includeLabel: boolean,
   labelWidth: number = LAYOUT.DEFAULT_LABEL_WIDTH,
   depth: number = 0,
-  barMaxValues?: Map<string, number>
+  barMaxValues?: Map<string, number>,
+  autoWidths?: Map<string, number>
 ): string {
   const lines: string[] = [];
   const fontSize = parseFontSize(theme.typography.fontSizeBase);
   const textY = y + rowHeight / 2 + fontSize * TYPOGRAPHY.TEXT_BASELINE_ADJUSTMENT;
   let currentX = x;
+
+  // Helper to get effective column width
+  const getColWidth = (col: ColumnSpec): number => {
+    if (autoWidths) {
+      const autoWidth = autoWidths.get(col.id);
+      if (autoWidth !== undefined) return autoWidth;
+    }
+    return typeof col.width === 'number' ? col.width : LAYOUT.DEFAULT_COLUMN_WIDTH;
+  };
 
   // Label
   if (includeLabel) {
@@ -994,7 +940,7 @@ function renderTableRow(
 
   // Columns
   for (const col of columns) {
-    const width = typeof col.width === 'number' ? col.width : LAYOUT.DEFAULT_COLUMN_WIDTH;
+    const width = getColWidth(col);
     const value = getCellValue(row, col);
     const { textX, anchor } = getTextPosition(currentX, width, col.align);
 
@@ -1560,8 +1506,9 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
   const leftColumns = flattenColumns(columns, "left");
   const rightColumns = flattenColumns(columns, "right");
 
-  const leftTableWidth = LAYOUT.DEFAULT_LABEL_WIDTH +
-    leftColumns.reduce((sum, c) => sum + (typeof c.width === 'number' ? c.width : LAYOUT.DEFAULT_COLUMN_WIDTH), 0);
+  // Calculate left table width using auto-widths from layout
+  const leftTableWidth = layout.labelWidth +
+    leftColumns.reduce((sum, c) => sum + getEffectiveWidth(c, layout.autoWidths), 0);
 
   // Forest position
   const forestX = padding + leftTableWidth;
@@ -1596,7 +1543,8 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     layout.headerHeight,
     theme,
     spec.data.labelHeader ?? "Study",
-    LAYOUT.DEFAULT_LABEL_WIDTH
+    layout.labelWidth,
+    layout.autoWidths
   ));
   if (rightColumns.length > 0) {
     parts.push(renderColumnHeaders(
@@ -1605,7 +1553,10 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       rightTableX,
       headerY,
       layout.headerHeight,
-      theme
+      theme,
+      undefined,
+      undefined,
+      layout.autoWidths
     ));
   }
 
@@ -1718,11 +1669,11 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       }
 
       // Left table
-      parts.push(renderTableRow(row, leftColumns, padding, y, layout.rowHeight, theme, true, LAYOUT.DEFAULT_LABEL_WIDTH, depth, leftBarMaxValues));
+      parts.push(renderTableRow(row, leftColumns, padding, y, layout.rowHeight, theme, true, layout.labelWidth, depth, leftBarMaxValues, layout.autoWidths));
 
       // Right table
       if (rightColumns.length > 0) {
-        parts.push(renderTableRow(row, rightColumns, rightTableX, y, layout.rowHeight, theme, false, 0, depth, rightBarMaxValues));
+        parts.push(renderTableRow(row, rightColumns, rightTableX, y, layout.rowHeight, theme, false, 0, depth, rightBarMaxValues, layout.autoWidths));
       }
     }
 

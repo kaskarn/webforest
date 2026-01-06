@@ -73,18 +73,35 @@ renderAxis(xScale, layout, theme, axisLabel): string
 2. **No external dependencies** — Pure TypeScript, bundled as standalone IIFE
 3. **Deterministic output** — Same input always produces same SVG
 
-### Text Measurement
+### Text Measurement and Auto-Width
 
-Since V8 has no DOM, we can't use `canvas.measureText()` for precise text width calculation. Instead, we use an approximation:
+Since V8 has no DOM, we can't use `canvas.measureText()` for precise text width calculation. Instead, `width-utils.ts` provides character-aware estimation:
 
 ```typescript
-function measureText(text: string, fontSize: number): number {
-  // Average character width is roughly 0.55 of font size
-  return text.length * fontSize * 0.55;
+function estimateTextWidth(text: string, fontSize: number): number {
+  let width = 0;
+  for (const char of text) {
+    if ("il1.,;:|!()[]{}' ".includes(char)) {
+      width += fontSize * 0.35;  // Narrow characters
+    } else if ("mwMW@%".includes(char)) {
+      width += fontSize * 0.85;  // Wide characters
+    } else if (char >= "0" && char <= "9") {
+      width += fontSize * 0.6;   // Tabular numbers
+    } else {
+      width += fontSize * 0.55;  // Average characters
+    }
+  }
+  return width;
 }
 ```
 
-This works well for most cases. For pixel-perfect layouts, users can adjust column widths explicitly.
+**Auto-width calculation:** Both web and SVG renderers now calculate column widths from actual content. For each column with `width="auto"`:
+
+1. Measure the header text
+2. Measure all cell values using the proper formatted text (e.g., "0.76 (0.68, 0.85)" for intervals)
+3. Apply padding (28px) and constraints (min 60px, max 600px)
+
+This ensures columns are wide enough to display their content without truncation, matching the behavior of the interactive web renderer.
 
 ### Build Outputs
 
@@ -260,11 +277,11 @@ cd srcjs && bun run build
 
 ### Text alignment looks off
 
-The text width approximation may be inaccurate for certain fonts. Solutions:
+The text width estimation is character-aware but may still be slightly off for unusual fonts. Solutions:
 
-1. Explicitly set column widths in your spec
-2. Use a monospace font family in the theme
-3. For R exports, consider post-processing with rsvg
+1. Explicitly set column widths with `col_text("field", width = 150)`
+2. Use a standard font family in the theme (Inter, Arial, system-ui)
+3. Increase or decrease padding via the `AUTO_WIDTH.PADDING` constant in `rendering-constants.ts`
 
 ### Colors don't match the interactive plot
 

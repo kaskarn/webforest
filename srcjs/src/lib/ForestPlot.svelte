@@ -30,6 +30,13 @@
     ROW_SELECTED_HOVER_OPACITY,
     DEPTH_BASE_OPACITY,
   } from "$lib/rendering-constants";
+  import {
+    formatNumber,
+    formatEvents,
+    formatInterval,
+    addThousandsSep,
+    abbreviateNumber,
+  } from "$lib/formatters";
 
   interface Props {
     store: ForestStore;
@@ -752,140 +759,7 @@
     return "";
   }
 
-  // Helper to add thousands separator to a number string
-  function addThousandsSep(numStr: string, separator: string): string {
-    const parts = numStr.split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
-    return parts.join(".");
-  }
-
-  // Helper to abbreviate large numbers: 1234567 -> "1.2M", 5300 -> "5.3K"
-  function abbreviateNumber(value: number, sigfigs: number = 2): string {
-    const absValue = Math.abs(value);
-    const sign = value < 0 ? "-" : "";
-
-    if (absValue >= 1e9) {
-      return sign + (absValue / 1e9).toPrecision(sigfigs) + "B";
-    }
-    if (absValue >= 1e6) {
-      return sign + (absValue / 1e6).toPrecision(sigfigs) + "M";
-    }
-    if (absValue >= 1e3) {
-      return sign + (absValue / 1e3).toPrecision(sigfigs) + "K";
-    }
-    return value.toPrecision(sigfigs);
-  }
-
-  function formatNumber(value: number | undefined | null, options?: ColumnOptions): string {
-    if (value === undefined || value === null || Number.isNaN(value)) {
-      return options?.naText ?? "";
-    }
-
-    // Percent formatting
-    if (options?.percent) {
-      const { decimals = 1, multiply = false, symbol = true } = options.percent;
-      const displayValue = multiply ? value * 100 : value;
-      const formatted = displayValue.toFixed(decimals);
-      return symbol ? `${formatted}%` : formatted;
-    }
-
-    // Handle abbreviation for large numbers
-    const abbreviate = options?.numeric?.abbreviate;
-    if (abbreviate && Math.abs(value) >= 1000) {
-      const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
-      return abbreviateNumber(value, sigfigs);
-    }
-
-    // Use significant figures if digits specified
-    const digits = options?.numeric?.digits;
-    if (digits !== undefined && digits !== null) {
-      const formatted = value.toPrecision(digits);
-      const thousandsSep = options?.numeric?.thousandsSep;
-      if (thousandsSep && typeof thousandsSep === "string") {
-        return addThousandsSep(formatted, thousandsSep);
-      }
-      return formatted;
-    }
-
-    // Numeric formatting with decimals and thousands separator
-    const decimals = options?.numeric?.decimals ?? 2;
-    const thousandsSep = options?.numeric?.thousandsSep;
-    let formatted = value.toFixed(decimals);
-
-    // Apply thousands separator if specified
-    if (thousandsSep && typeof thousandsSep === "string") {
-      formatted = addThousandsSep(formatted, thousandsSep);
-    }
-
-    return formatted;
-  }
-
-  function formatEvents(row: Row, options: ColumnOptions): string {
-    const { eventsField, nField, separator = "/", showPct = false, thousandsSep, abbreviate } = options.events!;
-    const events = row.metadata[eventsField];
-    const n = row.metadata[nField];
-
-    if (events === undefined || events === null || n === undefined || n === null) {
-      return options.naText ?? "";
-    }
-
-    const eventsNum = Number(events);
-    const nNum = Number(n);
-    let eventsStr: string;
-    let nStr: string;
-
-    // Handle abbreviation for large numbers
-    if (abbreviate && (eventsNum >= 1000 || nNum >= 1000)) {
-      const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
-      eventsStr = eventsNum >= 1000 ? abbreviateNumber(eventsNum, sigfigs) : String(eventsNum);
-      nStr = nNum >= 1000 ? abbreviateNumber(nNum, sigfigs) : String(nNum);
-    } else {
-      eventsStr = String(eventsNum);
-      nStr = String(nNum);
-      // Apply thousands separator if specified (only when not abbreviating)
-      if (thousandsSep && typeof thousandsSep === "string") {
-        eventsStr = addThousandsSep(eventsStr, thousandsSep);
-        nStr = addThousandsSep(nStr, thousandsSep);
-      }
-    }
-
-    let result = `${eventsStr}${separator}${nStr}`;
-
-    if (showPct && nNum > 0) {
-      const pct = ((eventsNum / nNum) * 100).toFixed(1);
-      result += ` (${pct}%)`;
-    }
-
-    return result;
-  }
-
-  function formatInterval(
-    point?: number,
-    lower?: number,
-    upper?: number,
-    options?: ColumnOptions
-  ): string {
-    // Handle NA/undefined values gracefully (for header/spacer rows)
-    if (point === undefined || point === null || Number.isNaN(point)) {
-      return "";
-    }
-
-    const decimals = options?.interval?.decimals ?? 2;
-    const sep = options?.interval?.sep ?? " ";
-    const impreciseThreshold = options?.interval?.impreciseThreshold;
-
-    if (lower === undefined || lower === null || upper === undefined || upper === null ||
-        Number.isNaN(lower) || Number.isNaN(upper)) {
-      return point.toFixed(decimals);
-    }
-
-    // Check for imprecise estimate (CI ratio exceeds threshold)
-    if (impreciseThreshold != null && lower > 0 && upper / lower > impreciseThreshold) {
-      return "—";
-    }
-
-    return `${point.toFixed(decimals)}${sep}(${lower.toFixed(decimals)}, ${upper.toFixed(decimals)})`;
-  }
+  // Note: formatNumber, formatEvents, formatInterval, addThousandsSep, abbreviateNumber are imported from $lib/formatters
 
   function getMaxValueForColumn(rows: Row[], column: ColumnSpec): number {
     // Use explicit maxValue from options if provided
