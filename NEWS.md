@@ -1,5 +1,41 @@
 # webforest (development version)
 
+## Column Formatting Enhancements
+
+* **Interval formatting**: `col_interval()` gains `decimals` and `sep` parameters for customizing display format, plus `point`, `lower`, `upper` field overrides to show alternative effects (e.g., per-protocol results alongside ITT).
+
+* **P-value abbreviation**: `col_pvalue()` now has `abbrev_threshold` parameter to display very small values as "<0.0001" instead of scientific notation.
+
+* **Number abbreviation**: `col_numeric()`, `col_n()`, and `col_events()` gain `abbreviate` parameter to display large numbers with K/M/B suffixes (e.g., 1,234,567 → "1.2M").
+
+* **Significant figures**: `col_numeric()` and `col_n()` gain `digits` parameter for formatting by significant figures instead of fixed decimals.
+
+## Split Forest Improvements
+
+* **Theme persistence**: Selected theme now persists when navigating between split subgroups.
+
+* **Sidebar styling**: Replaced chevron icons with tree-style +/− box icons. Fixed top alignment with plot. Reduced spacing for more compact navigation.
+
+* **Title concatenation**: When using `split_by` with a custom title, the title now displays as "{your_title} — {group_path}" instead of being overwritten.
+
+## Reference Lines
+
+* **Width and opacity**: `forest_refline()` gains `width` (default 1) and `opacity` (default 0.6) parameters for fine-tuning reference line appearance.
+
+## Groups & Rows
+
+* **Recursive row counting**: Group headers now show total count of ALL descendant rows including nested subgroups, not just direct children.
+
+* **Spacer row handling**: Spacer rows now properly hide cell content (sparklines, etc.) instead of showing placeholder values.
+
+## Theme Spacing
+
+* **New spacing properties**: `set_spacing()` gains `axis_gap` (gap between table and x-axis, default 12px) and `group_padding` (left/right padding for column group headers, default 8px).
+
+## Toolbar
+
+* **Reset button**: New reset button (↺ icon) in the toolbar restores default view settings (clears selections, collapsed groups, sort/filter, column widths, layout mode).
+
 ## New Column Types
 
 Six new column helpers for richer data presentation:
