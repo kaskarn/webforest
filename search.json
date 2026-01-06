@@ -1155,18 +1155,11 @@
     "text": "Custom Annotations\n\nforest_annotation\nAdd a custom shape annotation to a specific study.\nforest_annotation(\n  study_id,\n  shape = c(\"circle\", \"square\", \"triangle\", \"star\"),\n  position = c(\"after\", \"before\", \"overlay\"),\n  color = \"#8b5cf6\",\n  size = 1.0\n)\n\n\n\n\n\n\n\nArgument\nDescription\n\n\n\n\nstudy_id\nStudy identifier to annotate\n\n\nshape\nShape type: \"circle\", \"square\", \"triangle\", \"star\"\n\n\nposition\nPosition relative to point: \"before\", \"after\", \"overlay\"\n\n\ncolor\nShape color (default: purple)\n\n\nsize\nSize multiplier (default: 1.0)"
   },
   {
-    "objectID": "reference/annotations.html#risk-of-bias",
-    "href": "reference/annotations.html#risk-of-bias",
-    "title": "Annotations",
-    "section": "Risk of Bias",
-    "text": "Risk of Bias\n\nforest_rob\nCreate a risk of bias traffic light annotation for systematic reviews.\nforest_rob(data, study_id = \"study_id\", ...)\n\n\n\nArgument\nDescription\n\n\n\n\ndata\nData frame with study IDs and domain assessments\n\n\nstudy_id\nColumn name for study identifiers\n\n\n...\nDomain columns containing ratings\n\n\n\nRating values: \"low\", \"unclear\", \"high\""
-  },
-  {
     "objectID": "reference/annotations.html#examples",
     "href": "reference/annotations.html#examples",
     "title": "Annotations",
     "section": "Examples",
-    "text": "Examples\n\nAdding Reference Lines\n\n\nCode\ndata &lt;- data.frame(\n  study = c(\"Study A\", \"Study B\", \"Study C\"),\n  hr = c(0.72, 0.85, 1.15),\n  lower = c(0.55, 0.70, 0.90),\n  upper = c(0.95, 1.03, 1.45)\n)\n\nforest_plot(data,\n  point = \"hr\", lower = \"lower\", upper = \"upper\",\n  label = \"study\",\n  null_value = 1, scale = \"log\",\n  annotations = list(\n    forest_refline(1, \"No effect\", style = \"solid\"),\n    forest_refline(0.75, \"Clinically meaningful\", style = \"dashed\")\n  )\n)\n\n\n\n\nRisk of Bias Assessment\n\n\nCode\nrob_data &lt;- data.frame(\n  study_id = c(\"Study A\", \"Study B\", \"Study C\"),\n  randomization = c(\"low\", \"unclear\", \"low\"),\n  blinding = c(\"low\", \"high\", \"low\"),\n  attrition = c(\"low\", \"low\", \"unclear\")\n)\n\nforest_rob(rob_data)"
+    "text": "Examples\n\nAdding Reference Lines\n\n\nCode\ndata &lt;- data.frame(\n  study = c(\"Study A\", \"Study B\", \"Study C\"),\n  hr = c(0.72, 0.85, 1.15),\n  lower = c(0.55, 0.70, 0.90),\n  upper = c(0.95, 1.03, 1.45)\n)\n\nforest_plot(data,\n  point = \"hr\", lower = \"lower\", upper = \"upper\",\n  label = \"study\",\n  null_value = 1, scale = \"log\",\n  annotations = list(\n    forest_refline(1, \"No effect\", style = \"solid\"),\n    forest_refline(0.75, \"Clinically meaningful\", style = \"dashed\")\n  )\n)"
   },
   {
     "objectID": "reference/annotations.html#see-also",
