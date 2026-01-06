@@ -1,4 +1,28 @@
-# webforest (development version)
+# webforest 0.1.2
+
+## Axis & Interval Improvements
+
+* **Axis outlier trimming**: `forest_plot()` gains `axis_trim` parameter for IQR-based axis range trimming. When set (e.g., `axis_trim = 2`), the axis range is computed as `median ± axis_trim × IQR`.
+
+* **Arrow indicators**: Confidence intervals extending beyond axis bounds now display arrow indicators instead of whiskers, showing "continues beyond visible range".
+
+* **Imprecise estimates**: `col_interval()` gains `imprecise_threshold` parameter. When the CI ratio (upper/lower) exceeds the threshold, displays "—" instead of numeric values.
+
+## Label & Export Improvements
+
+* **Auto-generated label headers**: When `label` is provided without explicit `label_header`, the header is auto-generated from the field name (e.g., `label = "study_name"` → header "Study Name"). When no label column is specified, uses "#" with row numbers.
+
+* **SplitForest export**: `save_plot()` now accepts `SplitForest` objects directly, exporting all sub-plots to a directory structure matching the split hierarchy.
+
+## UI Polish
+
+* **Column auto-width**: Increased max auto-width from 400px to 600px for better handling of wide content.
+
+* **Compact menus**: Reduced padding in theme switcher and layout toggle dropdowns for a more compact feel.
+
+---
+
+# webforest 0.1.1
 
 ## Column Formatting Enhancements
 
