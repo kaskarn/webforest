@@ -21,6 +21,9 @@
   // Compute if we have any groups (need two-row header)
   const hasGroups = $derived(columnDefs.some((c) => c.isGroup));
 
+  // Create reactive dependency on columnWidths to trigger re-render when widths change
+  const columnWidthsSnapshot = $derived(store ? { ...store.columnWidths } : {});
+
   // Get flat list of leaf columns
   function getLeafColumns(cols: ColumnDef[]): ColumnSpec[] {
     const result: ColumnSpec[] = [];
@@ -61,13 +64,24 @@
   }
 
   // Helper to get column width (dynamic or default)
+  // Only returns numeric widths - "auto" columns return undefined
+  // Uses columnWidthsSnapshot to ensure Svelte 5 reactivity
   function getColWidth(column: ColumnSpec): number | undefined {
-    return store?.getColumnWidth(column.id) ?? column.width ?? undefined;
+    const storeWidth = columnWidthsSnapshot[column.id];
+    if (typeof storeWidth === "number") return storeWidth;
+    if (typeof column.width === "number") return column.width;
+    return undefined;
   }
 
   // Get label column width (uses special key "__label__")
+  // Uses columnWidthsSnapshot to ensure Svelte 5 reactivity
   function getLabelWidth(): number | undefined {
-    return store?.getColumnWidth("__label__");
+    return columnWidthsSnapshot["__label__"];
+  }
+
+  // Check if column has explicit (non-auto) width - used for truncation CSS
+  function hasExplicitWidth(column: ColumnSpec): boolean {
+    return typeof column.width === "number";
   }
 
   // Start resize for label column
@@ -222,6 +236,7 @@
     {#each leafColumns as column (column.id)}
       <div
         class="webforest-col"
+        class:explicit-width={hasExplicitWidth(column)}
         style:width={getColWidth(column) ? `${getColWidth(column)}px` : "auto"}
         style:text-align={column.headerAlign ?? column.align}
       >
@@ -297,12 +312,18 @@
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
     position: relative;
+    flex-shrink: 0;  /* Prevent shrinking below set width */
   }
 
   .header-text {
+    /* Allow headers to show full text - column widths should be sized by measurement */
+    display: block;
+  }
+
+  /* Truncate headers only for columns with explicit (non-auto) width */
+  .explicit-width .header-text {
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block;
   }
 
   .resize-handle {

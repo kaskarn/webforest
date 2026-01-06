@@ -67,6 +67,9 @@
   const widthMode = $derived(store.widthMode);
   const heightPreset = $derived(store.heightPreset);
 
+  // Create reactive dependency on columnWidths to trigger re-render when widths change
+  const columnWidthsSnapshot = $derived({ ...store.columnWidths });
+
   // Container ref for fill mode width detection
   let containerRef: HTMLDivElement | undefined = $state();
   let scalableRef: HTMLDivElement | undefined = $state();
@@ -185,21 +188,26 @@
   }
 
   // Helper to get column width (dynamic or default)
+  // Returns "auto" for auto-width columns, "{n}px" for fixed-width columns
+  // Uses columnWidthsSnapshot to ensure Svelte 5 reactivity
   function getColWidth(column: ColumnSpec): string {
-    const dynamicWidth = store.getColumnWidth(column.id);
-    const width = dynamicWidth ?? column.width;
-    return width ? `${width}px` : "auto";
+    const dynamicWidth = columnWidthsSnapshot[column.id];
+    if (typeof dynamicWidth === "number") return `${dynamicWidth}px`;
+    if (typeof column.width === "number") return `${column.width}px`;
+    return "auto";
   }
 
   // Helper to get label column width
+  // Uses columnWidthsSnapshot to ensure Svelte 5 reactivity
   function getLabelWidth(): string | undefined {
-    const width = store.getColumnWidth("__label__");
+    const width = columnWidthsSnapshot["__label__"];
     return width ? `${width}px` : undefined;
   }
 
   // Helper to get label column flex
+  // Uses columnWidthsSnapshot to ensure Svelte 5 reactivity
   function getLabelFlex(): string {
-    return store.getColumnWidth("__label__") ? "none" : "1";
+    return columnWidthsSnapshot["__label__"] ? "none" : "1";
   }
 
   // Plot resize state and handlers

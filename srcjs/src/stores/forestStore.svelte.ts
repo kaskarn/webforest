@@ -436,14 +436,39 @@ export function createForestStore() {
   function measureAutoColumns() {
     if (!spec || typeof document === 'undefined') return;
 
+    // Get font from theme
+    const fontFamily = spec.theme.typography.fontFamily;
+    let fontSize = spec.theme.typography.fontSizeBase;
+
+    // Convert rem to px (assume 16px base, common browser default)
+    if (typeof fontSize === 'string' && fontSize.endsWith('rem')) {
+      const remValue = parseFloat(fontSize);
+      fontSize = `${remValue * 16}px`;
+    }
+
+    // Do initial measurement immediately
+    doMeasurement(fontSize, fontFamily);
+
+    // Then wait for fonts to load and re-measure for accuracy
+    // This ensures custom/web fonts are properly measured
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        doMeasurement(fontSize as string, fontFamily, true);
+      });
+    }
+  }
+
+  // Perform the actual column width measurement
+  function doMeasurement(fontSize: string, fontFamily: string, isFontLoaded = false) {
+    if (!spec) return;
+
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Get font from theme
-    const fontFamily = spec.theme.typography.fontFamily;
-    const fontSize = spec.theme.typography.fontSizeBase;
-    ctx.font = `${fontSize} ${fontFamily}`;
+    // Font strings for headers (bold) and data cells (normal)
+    const headerFont = `600 ${fontSize} ${fontFamily}`;
+    const dataFont = `${fontSize} ${fontFamily}`;
 
     // Process columns recursively
     function processColumn(col: ColumnSpec | ColumnGroup) {
@@ -459,12 +484,14 @@ export function createForestStore() {
 
       let maxWidth = 0;
 
-      // Measure header text
+      // Measure header text with bold font (headers use font-weight: 600)
       if (col.header) {
+        ctx!.font = headerFont;
         maxWidth = Math.max(maxWidth, ctx!.measureText(col.header).width);
       }
 
-      // Measure all data cell values using proper display text for each column type
+      // Measure all data cell values with normal font
+      ctx!.font = dataFont;
       for (const row of spec!.data.rows) {
         // Skip header/spacer rows that don't have real data
         if (row.style?.type === "header" || row.style?.type === "spacer") {
