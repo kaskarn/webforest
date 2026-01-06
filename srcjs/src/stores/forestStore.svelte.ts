@@ -577,6 +577,22 @@ export function createForestStore() {
     heightPreset = presets[(currentIndex + 1) % presets.length];
   }
 
+  // Reset all user-modified state to defaults
+  function resetState() {
+    selectedRowIds = new Set();
+    collapsedGroups = new Set();
+    sortConfig = null;
+    filterConfig = null;
+    columnWidths = {};
+    plotWidthOverride = null;
+    widthMode = 'natural';
+    heightPreset = 'full';
+    hoveredRowId = null;
+    tooltipRowId = null;
+    tooltipPosition = null;
+    // Note: spec theme is not reset here - use setSpec to fully reset
+  }
+
   // Derived: tooltip row
   const tooltipRow = $derived.by((): Row | null => {
     if (!tooltipRowId || !spec) return null;
@@ -666,6 +682,7 @@ export function createForestStore() {
     toggleWidthMode,
     setHeightPreset,
     toggleHeightPreset,
+    resetState,
   };
 }
 
