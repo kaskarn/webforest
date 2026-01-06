@@ -391,6 +391,8 @@ export interface ReferenceLine {
   label?: string;
   style: "solid" | "dashed" | "dotted";
   color?: string;
+  width?: number;
+  opacity?: number;
 }
 
 export interface CustomAnnotation {

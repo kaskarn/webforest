@@ -8,7 +8,9 @@ ReferenceLine(
   x = integer(0),
   label = NA_character_,
   style = "dashed",
-  color = NA_character_
+  color = NA_character_,
+  width = 1,
+  opacity = 0.6
 )
 }
 \arguments{
@@ -19,6 +21,10 @@ ReferenceLine(
 \item{style}{Line style: "solid", "dashed", "dotted"}
 
 \item{color}{Line color (optional, uses theme default)}
+
+\item{width}{Line width in pixels (default 1)}
+
+\item{opacity}{Line opacity from 0 to 1 (default 0.6)}
 }
 \description{
 ReferenceLine: Vertical reference line annotation

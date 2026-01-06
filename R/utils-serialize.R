@@ -537,7 +537,9 @@ serialize_annotation <- function(ann) {
       x = ann@x,
       label = if (is.na(ann@label)) NULL else ann@label,
       style = ann@style,
-      color = if (is.na(ann@color)) NULL else ann@color
+      color = if (is.na(ann@color)) NULL else ann@color,
+      width = ann@width,
+      opacity = ann@opacity
     ))
   }
 

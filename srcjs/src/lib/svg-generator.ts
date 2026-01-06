@@ -1434,11 +1434,13 @@ function renderReferenceLine(
   y2: number,
   style: "solid" | "dashed" | "dotted",
   color: string,
-  label?: string
+  label?: string,
+  width: number = 1,
+  opacity: number = 0.6
 ): string {
   const dashArray = style === "dashed" ? "6,4" : style === "dotted" ? "2,2" : "none";
   let svg = `<line x1="${x}" x2="${x}" y1="${y1}" y2="${y2}"
-    stroke="${color}" stroke-width="1" stroke-dasharray="${dashArray}"/>`;
+    stroke="${color}" stroke-width="${width}" stroke-opacity="${opacity}" stroke-dasharray="${dashArray}"/>`;
 
   if (label) {
     svg += `<text x="${x}" y="${y1 - 4}" text-anchor="middle"
@@ -1595,7 +1597,9 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
           plotY + layout.plotHeight,
           ann.style,
           ann.color ?? theme.colors.accent,
-          ann.label
+          ann.label,
+          ann.width ?? 1,
+          ann.opacity ?? 0.6
         ));
       }
     }

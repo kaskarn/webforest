@@ -527,7 +527,8 @@
                 y1={layout.headerHeight}
                 y2={layout.headerHeight + rowsAreaHeight}
                 stroke={annotation.color ?? "var(--wf-accent)"}
-                stroke-width="1.5"
+                stroke-width={annotation.width ?? 1.5}
+                stroke-opacity={annotation.opacity ?? 0.6}
                 stroke-dasharray={annotation.style === "dashed" ? "6,4" : annotation.style === "dotted" ? "2,2" : "none"}
               />
               {#if annotation.label}

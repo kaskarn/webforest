@@ -8,21 +8,38 @@ forest_refline(
   x,
   label = NULL,
   style = c("dashed", "solid", "dotted"),
-  color = NULL
+  color = NULL,
+  width = 1,
+  opacity = 0.6
 )
 }
 \arguments{
-\item{x}{X-axis position}
+\item{x}{X-axis position for the line}
 
-\item{label}{Optional label}
+\item{label}{Optional label text displayed near the line}
 
-\item{style}{Line style}
+\item{style}{Line style: "dashed" (default), "solid", or "dotted"}
 
-\item{color}{Line color}
+\item{color}{Line color. If NULL, uses theme default}
+
+\item{width}{Line width in pixels (default 1)}
+
+\item{opacity}{Line opacity from 0 to 1 (default 0.6)}
 }
 \value{
 A ReferenceLine object
 }
 \description{
-Create a reference line annotation
+Adds a vertical reference line to the forest plot at a specified x-axis
+position. Commonly used to mark the null effect (e.g., 0 for differences,
+1 for ratios) or other clinically meaningful thresholds.
+}
+\examples{
+# Basic null line
+forest_refline(1)
+
+# Labeled threshold with custom styling
+forest_refline(0.5, label = "Clinically meaningful", style = "solid",
+               width = 2, opacity = 0.8)
+
 }
