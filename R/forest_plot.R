@@ -8,9 +8,19 @@
 #' point + interval structure (QC measurements, regression coefficients, etc.).
 #'
 #' @param x Either a WebSpec object, a SplitForest object, or a data.frame/data.table/tibble
-#' @param ... Arguments passed to `web_spec()` when x is a data frame.
-#'   Common arguments: `point`, `lower`, `upper`, `label`, `group`,
-#'   `columns`, `scale`, `null_value`, `axis_label`, `weight`, `theme`, `interaction`
+#' @param point Column name for point estimates (string). Required when x is a data frame.
+#' @param lower Column name for lower bounds of intervals (string). Required when x is a data frame.
+#' @param upper Column name for upper bounds of intervals (string). Required when x is a data frame.
+#' @param label Column name for row labels (optional string)
+#' @param group Grouping column name(s) or list of `web_group()` objects
+#' @param columns List of column specifications (use `col_*()` helpers)
+#' @param scale Scale type: "linear" (default) or "log"
+#' @param null_value Reference value for null effect. Default: 0 for linear, 1 for log
+#' @param axis_label Label for the graphical axis
+#' @param theme Theme object (use `web_theme_*()` functions)
+#' @param ... Additional arguments passed to `web_spec()` when x is a data frame.
+#'   See `?web_spec` for all available options including row styling, marker styling,
+#'   effects, annotations, and labels.
 #' @param split_by Column name(s) to split data into separate plots. When specified,
 #'   creates a SplitForest with sidebar navigation. Can be a single column name or
 #'   a character vector for hierarchical splits (e.g., `c("region", "age_group")`).
@@ -77,6 +87,16 @@
 #' @export
 forest_plot <- function(
     x,
+    point = NULL,
+    lower = NULL,
+    upper = NULL,
+    label = NULL,
+    group = NULL,
+    columns = NULL,
+    scale = NULL,
+    null_value = NULL,
+    axis_label = NULL,
+    theme = NULL,
     ...,
     split_by = NULL,
     shared_axis = FALSE,
@@ -117,7 +137,24 @@ forest_plot <- function(
   if (S7_inherits(x, WebSpec)) {
     spec <- x
   } else if (is.data.frame(x)) {
-    spec <- web_spec(x, ...)
+    # Build args list from explicit parameters, omitting NULLs
+    spec_args <- list(data = x)
+    if (!is.null(point)) spec_args$point <- point
+    if (!is.null(lower)) spec_args$lower <- lower
+    if (!is.null(upper)) spec_args$upper <- upper
+    if (!is.null(label)) spec_args$label <- label
+    if (!is.null(group)) spec_args$group <- group
+    if (!is.null(columns)) spec_args$columns <- columns
+    if (!is.null(scale)) spec_args$scale <- scale
+    if (!is.null(null_value)) spec_args$null_value <- null_value
+    if (!is.null(axis_label)) spec_args$axis_label <- axis_label
+    if (!is.null(theme)) spec_args$theme <- theme
+
+    # Add any extra args from ...
+    extra_args <- list(...)
+    spec_args <- c(spec_args, extra_args)
+
+    spec <- do.call(web_spec, spec_args)
   } else {
     cli_abort("{.arg x} must be a WebSpec object, SplitForest object, or a data frame")
   }

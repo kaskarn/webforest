@@ -21,6 +21,33 @@ webforest offers two levels of styling:
 
 Cell styling takes precedence over row styling when both are specified.
 
+## Semantic Row Styling
+
+For quick conditional formatting, use semantic styling classes that apply theme-appropriate styles:
+
+| Parameter | Effect | Use For |
+|-----------|--------|---------|
+| `row_emphasis` | Bold text, darker color | Key results, primary endpoints |
+| `row_muted` | Lighter color, reduced prominence | Secondary results, supporting data |
+| `row_accent` | Theme accent color | Highlighted findings, special rows |
+
+```{r}
+#| eval: false
+# Add semantic styling columns to your data
+data <- data |>
+  mutate(
+    is_primary = endpoint == "Primary",
+    is_secondary = grepl("Secondary", endpoint)
+  )
+
+forest_plot(data, ...,
+  row_emphasis = "is_primary",
+  row_muted = "is_secondary"
+)
+```
+
+These semantic styles use theme colors automatically, so they adapt when switching themes.
+
 ## Cell Style Parameters
 
 Every `col_*()` function accepts these styling parameters:

@@ -431,6 +431,16 @@ extract_row_style <- function(row, spec) {
   val <- get_style_val(spec@row_badge_col, "character")
   if (!is.null(val)) style$badge <- val
 
+  # Semantic styling (T/F columns)
+  val <- get_style_val(spec@row_emphasis_col, "logical")
+  if (!is.null(val)) style$emphasis <- val
+
+  val <- get_style_val(spec@row_muted_col, "logical")
+  if (!is.null(val)) style$muted <- val
+
+  val <- get_style_val(spec@row_accent_col, "logical")
+  if (!is.null(val)) style$accent <- val
+
   # Return NULL if no style properties set
   if (length(style) == 0) {
     return(NULL)

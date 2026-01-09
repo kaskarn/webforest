@@ -7,9 +7,10 @@
 #' @importFrom stats complete.cases
 #'
 #' @param data A data.frame, data.table, or tibble
-#' @param point Column name for point estimates (unquoted or string)
-#' @param lower Column name for lower bounds of intervals
-#' @param upper Column name for upper bounds of intervals
+#' @param point Column name for point estimates. Can be NULL if `effects` is provided
+#'   (will use first effect's columns).
+#' @param lower Column name for lower bounds of intervals. Can be NULL if `effects` is provided.
+#' @param upper Column name for upper bounds of intervals. Can be NULL if `effects` is provided.
 #' @param label Column name for row labels (optional)
 #' @param label_header Header text for the label column (default: "Study")
 #' @param group Grouping specification. Can be:
@@ -35,6 +36,9 @@
 #' @param row_icon Column name for label icons (emoji/unicode)
 #' @param row_indent Column name for row indentation (numeric values)
 #' @param row_type Column name for row type ("data", "header", "summary", "spacer")
+#' @param row_emphasis Column name for emphasis styling (logical: bold, darker text)
+#' @param row_muted Column name for muted styling (logical: lighter, reduced prominence)
+#' @param row_accent Column name for accent styling (logical: theme accent color)
 #' @param marker_color Column name for marker fill color (CSS color strings)
 #' @param marker_shape Column name for marker shape ("square", "circle", "diamond", "triangle")
 #' @param marker_opacity Column name for marker opacity (numeric 0-1)
@@ -78,9 +82,9 @@
 #' @export
 web_spec <- function(
     data,
-    point,
-    lower,
-    upper,
+    point = NULL,
+    lower = NULL,
+    upper = NULL,
     label = NULL,
     label_header = "Study",
     group = NULL,
@@ -102,6 +106,9 @@ web_spec <- function(
     row_icon = NULL,
     row_indent = NULL,
     row_type = NULL,
+    row_emphasis = NULL,
+    row_muted = NULL,
+    row_accent = NULL,
     marker_color = NULL,
     marker_shape = NULL,
     marker_opacity = NULL,
@@ -134,6 +141,19 @@ web_spec <- function(
       cli_abort("Column {.val {col}} not found in data")
     }
     col
+  }
+
+  # If effects= is provided but point/lower/upper are NULL, use first effect
+  if (!is.null(effects) && length(effects) > 0) {
+    first_effect <- effects[[1]]
+    if (is.null(point)) point <- first_effect@point_col
+    if (is.null(lower)) lower <- first_effect@lower_col
+    if (is.null(upper)) upper <- first_effect@upper_col
+  }
+
+  # Validate required columns
+  if (is.null(point) || is.null(lower) || is.null(upper)) {
+    cli_abort("Arguments {.arg point}, {.arg lower}, and {.arg upper} are required (or provide {.arg effects})")
   }
 
   point_col <- check_column(point, "point", data)
@@ -297,6 +317,9 @@ web_spec <- function(
     row_icon_col = row_icon %||% NA_character_,
     row_indent_col = row_indent %||% NA_character_,
     row_type_col = row_type %||% NA_character_,
+    row_emphasis_col = row_emphasis %||% NA_character_,
+    row_muted_col = row_muted %||% NA_character_,
+    row_accent_col = row_accent %||% NA_character_,
     marker_color_col = marker_color %||% NA_character_,
     marker_shape_col = marker_shape %||% NA_character_,
     marker_opacity_col = marker_opacity %||% NA_character_,

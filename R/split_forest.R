@@ -97,21 +97,41 @@ split_forest <- function(x, by, shared_axis = FALSE, ...) {
   }
 
   # Compute shared axis range if requested
+  # Respect user-set axis values from base spec
+  base_axis <- base_spec@theme@axis
+  has_explicit_min <- !is.null(base_axis@range_min) && !is.na(base_axis@range_min)
+  has_explicit_max <- !is.null(base_axis@range_max) && !is.na(base_axis@range_max)
+  has_explicit_ticks <- !is.null(base_axis@tick_values) && length(base_axis@tick_values) > 0
+
   axis_range <- c(NA_real_, NA_real_)
   if (shared_axis) {
-    all_lower <- unlist(lapply(specs, function(s) s@data[[s@lower_col]]))
-    all_upper <- unlist(lapply(specs, function(s) s@data[[s@upper_col]]))
-    all_point <- unlist(lapply(specs, function(s) s@data[[s@point_col]]))
+    # Only calculate from data if user didn't set explicit values
+    if (!has_explicit_min || !has_explicit_max) {
+      all_lower <- unlist(lapply(specs, function(s) s@data[[s@lower_col]]))
+      all_upper <- unlist(lapply(specs, function(s) s@data[[s@upper_col]]))
+      all_point <- unlist(lapply(specs, function(s) s@data[[s@point_col]]))
 
-    axis_range <- c(
-      min(c(all_lower, all_point), na.rm = TRUE),
-      max(c(all_upper, all_point), na.rm = TRUE)
-    )
+      data_range <- c(
+        min(c(all_lower, all_point), na.rm = TRUE),
+        max(c(all_upper, all_point), na.rm = TRUE)
+      )
+
+      axis_range <- c(
+        if (has_explicit_min) base_axis@range_min else data_range[1],
+        if (has_explicit_max) base_axis@range_max else data_range[2]
+      )
+    } else {
+      axis_range <- c(base_axis@range_min, base_axis@range_max)
+    }
 
     # Apply to each spec's theme axis config
     for (key in names(specs)) {
       specs[[key]]@theme@axis@range_min <- axis_range[1]
       specs[[key]]@theme@axis@range_max <- axis_range[2]
+      # Also propagate explicit tick values if set
+      if (has_explicit_ticks) {
+        specs[[key]]@theme@axis@tick_values <- base_axis@tick_values
+      }
     }
   }
 
@@ -256,6 +276,9 @@ create_subset_spec <- function(base_spec, subset_data, label) {
     row_icon_col = base_spec@row_icon_col,
     row_indent_col = base_spec@row_indent_col,
     row_type_col = base_spec@row_type_col,
+    row_emphasis_col = base_spec@row_emphasis_col,
+    row_muted_col = base_spec@row_muted_col,
+    row_accent_col = base_spec@row_accent_col,
     weight_col = base_spec@weight_col
   )
 }

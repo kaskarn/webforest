@@ -31,8 +31,8 @@ col_events(
 
 \item{thousands_sep}{Thousands separator (default ",")}
 
-\item{abbreviate}{Abbreviate large numbers (default FALSE). When TRUE or a number,
-values >= 1000 are shortened (e.g., "1.1K/12K" instead of "1,100/12,000").}
+\item{abbreviate}{Logical. When TRUE, values >= 1000 are shortened with at most
+1 decimal place (e.g., "1.1K/12K" instead of "1,100/12,000"). Default FALSE.}
 
 \item{...}{Additional arguments passed to web_col}
 }

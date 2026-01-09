@@ -1,3 +1,41 @@
+# webforest 0.1.4
+
+## New Features
+
+* **Theme-controlled markers**: Multi-effect plots now use theme-defined colors and shapes by default. Configure via `set_marker_colors()` and `set_marker_shapes()`, or set in theme with `shapes$marker_colors` and `shapes$marker_shapes`. Effects without explicit styling cycle through defaults (square, circle, diamond, triangle).
+
+* **Semantic row styling**: New row styling options for conditional formatting:
+  - `row_emphasis`: Bold text, darker color for key rows
+  - `row_muted`: Lighter color, reduced prominence
+  - `row_accent`: Theme accent color highlight
+  - Use via `web_spec()` parameters or CSS classes in custom rendering
+
+* **Fluent theme API**: New `set_theme()` function accepts either a theme name string (`"jama"`, `"lancet"`, etc.) or a WebTheme object for easy theme switching in pipelines.
+
+* **Enhanced col_percent()**: Now supports `digits` parameter for significant figures, and `multiply` defaults to `TRUE` (expects proportions 0-1, displays as percentages).
+
+## Improvements
+
+* **Axis padding reduced**: Domain padding decreased from 15% to 8% for tighter axis ranges.
+
+* **Split forest axis settings**: `axis_range` and `axis_ticks` now properly propagate to all splits when `shared_axis=TRUE`.
+
+* **Multiple col_interval()**: Using multiple `col_interval()` columns now works correctly by generating unique internal field names.
+
+* **Number abbreviation**: `abbreviateNumber()` now uses max 1 decimal (e.g., "11.1M" not "11M"), errors on values >= 1 trillion.
+
+* **P-value width calculation**: Column auto-width now correctly measures superscript characters in formatted p-values.
+
+## Bug Fixes
+
+* **SVG border alignment**: Summary rows now render with correct 2px top borders in SVG export, matching web display.
+
+* **Sparkline NaN handling**: `renderSparklinePath()` now filters NaN/Infinity values before rendering, preventing "M30,NaNZ" path errors.
+
+* **Sigfig/decimals validation**: `col_numeric()`, `col_n()`, and `col_percent()` now error if both `digits` and `decimals` are specified.
+
+---
+
 # webforest 0.1.3
 
 ## Bug Fixes

@@ -898,8 +898,18 @@ function renderTableRow(
   if (includeLabel) {
     // Use depth for indentation (overrides row.style.indent for grouped rows)
     const indent = depth * SPACING.INDENT_PER_LEVEL + (row.style?.indent ?? 0) * SPACING.INDENT_PER_LEVEL;
-    const fontWeight = row.style?.bold ? theme.typography.fontWeightBold : theme.typography.fontWeightNormal;
+    // Emphasis and bold both apply bold font weight
+    const fontWeight = (row.style?.bold || row.style?.emphasis) ? theme.typography.fontWeightBold : theme.typography.fontWeightNormal;
     const fontStyle = row.style?.italic ? "italic" : "normal";
+    // Color priority: explicit color > emphasis > muted > accent > default
+    let textColor = theme.colors.foreground;
+    if (row.style?.color) {
+      textColor = row.style.color;
+    } else if (row.style?.muted) {
+      textColor = theme.colors.muted;
+    } else if (row.style?.accent) {
+      textColor = theme.colors.accent;
+    }
 
     // Truncate label if too long for column width
     const availableLabelWidth = labelWidth - indent - SPACING.TEXT_PADDING * 2;
@@ -910,7 +920,7 @@ function renderTableRow(
       font-size="${fontSize}px"
       font-weight="${fontWeight}"
       font-style="${fontStyle}"
-      fill="${row.style?.color ?? theme.colors.foreground}">${escapeXml(truncatedLabel)}</text>`);
+      fill="${textColor}">${escapeXml(truncatedLabel)}</text>`);
 
     // Badge (if present)
     if (row.style?.badge) {
@@ -1083,14 +1093,23 @@ function getCellValue(row: Row, col: ColumnSpec): string {
 }
 
 function renderSparklinePath(data: number[], x: number, y: number, width: number, height: number): string {
-  if (data.length === 0) return "";
+  // Filter out NaN and non-finite values to prevent invalid SVG paths
+  const validData = data.filter(v => Number.isFinite(v));
+  if (validData.length === 0) return "";
 
-  const min = Math.min(...data);
-  const max = Math.max(...data);
+  // Handle single value case (avoid division by zero in i / (length - 1))
+  if (validData.length === 1) {
+    const px = x + width / 2;
+    const py = y + height / 2;
+    return `M${px.toFixed(1)},${py.toFixed(1)}`;
+  }
+
+  const min = Math.min(...validData);
+  const max = Math.max(...validData);
   const range = max - min || 1;
 
-  const points = data.map((v, i) => {
-    const px = x + (i / (data.length - 1)) * width;
+  const points = validData.map((v, i) => {
+    const px = x + (i / (validData.length - 1)) * width;
     const py = y + height - ((v - min) / range) * height;
     return `${px.toFixed(1)},${py.toFixed(1)}`;
   });
@@ -1208,24 +1227,41 @@ function renderInterval(
     const isPrimary = idx === 0;
     const markerStyle = row.markerStyle;
 
-    // Color priority: row.markerStyle (primary) > effect > theme.colors.interval
+    // Theme marker defaults for multi-effect plots
+    const themeMarkerColors = theme.shapes.markerColors;
+    const themeMarkerShapes = theme.shapes.markerShapes;
+    const defaultShapes: MarkerShape[] = ["square", "circle", "diamond", "triangle"];
+
+    // Color priority:
+    // 1. Primary effect: row.markerStyle.color (if set)
+    // 2. effect.color (if set)
+    // 3. theme.shapes.markerColors[idx] (if defined)
+    // 4. theme.colors.interval (fallback)
     let color: string;
     if (isPrimary && markerStyle?.color) {
       color = markerStyle.color;
     } else if (effect.color) {
       color = effect.color;
+    } else if (themeMarkerColors && themeMarkerColors.length > 0) {
+      color = themeMarkerColors[idx % themeMarkerColors.length];
     } else {
       color = theme.colors.interval ?? theme.colors.primary ?? "#2563eb";
     }
 
-    // Shape priority: row.markerStyle (primary) > effect > default square
+    // Shape priority:
+    // 1. Primary effect: row.markerStyle.shape (if set)
+    // 2. effect.shape (if set)
+    // 3. theme.shapes.markerShapes[idx] (if defined)
+    // 4. Default shapes: square, circle, diamond, triangle (cycling)
     let shape: MarkerShape;
     if (isPrimary && markerStyle?.shape) {
       shape = markerStyle.shape;
     } else if (effect.shape) {
       shape = effect.shape;
+    } else if (themeMarkerShapes && themeMarkerShapes.length > 0) {
+      shape = themeMarkerShapes[idx % themeMarkerShapes.length];
     } else {
-      shape = "square";
+      shape = defaultShapes[idx % defaultShapes.length];
     }
 
     // Opacity priority: row.markerStyle (primary) > effect > 1
@@ -1677,10 +1713,31 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       }
     }
 
-    // Row border
-    parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
-      y1="${y + layout.rowHeight}" y2="${y + layout.rowHeight}"
-      stroke="${theme.colors.border}" stroke-width="1" opacity="0.5"/>`);
+    // Row borders
+    if (displayRow.type === "data") {
+      const row = displayRow.row;
+      const isSummaryRow = row.style?.type === "summary";
+      const isSpacerRow = row.style?.type === "spacer";
+
+      // Summary rows get a 2px top border
+      if (isSummaryRow) {
+        parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
+          y1="${y}" y2="${y}"
+          stroke="${theme.colors.border}" stroke-width="2"/>`);
+      }
+
+      // Bottom border (skip for spacer rows)
+      if (!isSpacerRow) {
+        parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
+          y1="${y + layout.rowHeight}" y2="${y + layout.rowHeight}"
+          stroke="${theme.colors.border}" stroke-width="1" opacity="0.5"/>`);
+      }
+    } else {
+      // Group headers get a normal 1px bottom border
+      parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
+        y1="${y + layout.rowHeight}" y2="${y + layout.rowHeight}"
+        stroke="${theme.colors.border}" stroke-width="1" opacity="0.5"/>`);
+    }
   });
 
   // Footer (caption, footnote)

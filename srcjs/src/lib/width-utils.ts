@@ -18,14 +18,24 @@ import { AUTO_WIDTH } from "./rendering-constants";
  * This uses font-specific average character widths rather than a single multiplier.
  */
 export function estimateTextWidth(text: string, fontSize: number): number {
-  // More accurate character width estimation
-  // Narrow chars: i, l, 1, ., ,, :, ;, |, !, (, ), [, ], {, }, space
-  // Wide chars: m, w, M, W, @, %
-  // Normal chars: everything else
+  // Character width categories:
+  // Very narrow: superscript/subscript characters (used in scientific notation)
+  // Narrow: i, l, 1, punctuation, space
+  // Wide: m, w, M, W, @, %
+  // Medium digits: 0-9 (tabular numbers)
+  // Normal: everything else
+  const SUPERSCRIPTS = "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻";
+
   let width = 0;
   for (const char of text) {
-    if ("il1.,;:|!()[]{}' ".includes(char)) {
+    if (SUPERSCRIPTS.includes(char)) {
+      // Superscript characters are very narrow
+      width += fontSize * 0.3;
+    } else if ("il1.,;:|!()[]{}' ".includes(char)) {
       width += fontSize * 0.35;
+    } else if ("×−".includes(char)) {
+      // Math operators (multiplication sign, minus sign)
+      width += fontSize * 0.5;
     } else if ("mwMW@%".includes(char)) {
       width += fontSize * 0.85;
     } else if (char >= "0" && char <= "9") {

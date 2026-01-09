@@ -221,3 +221,86 @@ set_marker_style <- function(
     spec
   }
 }
+
+#' Set theme on a WebSpec
+#'
+#' Provides a fluent API for setting or changing the theme on a WebSpec or widget.
+#' Accepts either a theme name (string) or a WebTheme object.
+#'
+#' @param x A WebSpec object or an htmlwidget created by forest_plot/webtable
+#' @param theme Either a WebTheme object or a string matching a built-in theme name:
+#'   "default", "minimal", "dark", "jama", "lancet", "modern", "presentation",
+#'   "cochrane", or "nature"
+#'
+#' @return The modified WebSpec object (or widget)
+#'
+#' @examples
+#' \dontrun{
+#' # Using a theme name
+#' forest_data |>
+#'   web_spec(hr, lower, upper) |>
+#'   set_theme("jama") |>
+#'   forest_plot()
+#'
+#' # Using a WebTheme object
+#' my_theme <- web_theme_jama() |>
+#'   set_colors(interval = "#0066cc")
+#'
+#' forest_data |>
+#'   web_spec(hr, lower, upper) |>
+#'   set_theme(my_theme) |>
+#'   forest_plot()
+#' }
+#'
+#' @export
+set_theme <- function(x, theme) {
+  # Extract WebSpec from widget if needed
+  spec <- if (inherits(x, "htmlwidget")) {
+    attr(x, "webspec")
+  } else if (S7_inherits(x, WebSpec)) {
+    x
+  } else {
+    cli_abort("x must be a WebSpec or htmlwidget")
+  }
+
+  # Resolve theme from name or use directly
+  resolved_theme <- if (is.character(theme) && length(theme) == 1) {
+    theme_name <- theme
+    # Map of theme names to theme functions
+    theme_map <- list(
+      default = web_theme_default,
+      minimal = web_theme_minimal,
+      dark = web_theme_dark,
+      jama = web_theme_jama,
+      lancet = web_theme_lancet,
+      modern = web_theme_modern,
+      presentation = web_theme_presentation,
+      cochrane = web_theme_cochrane,
+      nature = web_theme_nature
+    )
+    if (!theme_name %in% names(theme_map)) {
+      valid_names <- paste(names(theme_map), collapse = ", ")
+      cli_abort("Unknown theme name: {.val {theme_name}}. Valid names: {valid_names}")
+    }
+    theme_map[[theme_name]]()
+  } else if (S7_inherits(theme, WebTheme)) {
+    theme
+  } else {
+    cli_abort("theme must be a theme name string or a WebTheme object")
+  }
+
+  # Update spec theme
+  spec@theme <- resolved_theme
+
+  # Return same type as input
+  if (inherits(x, "htmlwidget")) {
+    # Re-create widget with updated spec
+    if (identical(attr(x, "widget_type"), "webtable")) {
+      webtable(spec)
+    } else {
+      forest_plot(spec)
+    }
+  } else {
+    spec
+  }
+}

@@ -14,6 +14,10 @@ export interface RowStyle {
   indent?: number;
   icon?: string | null;
   badge?: string | null;
+  // Semantic styling classes
+  emphasis?: boolean;  // Bold, darker color
+  muted?: boolean;     // Lighter, reduced prominence
+  accent?: boolean;    // Theme accent color highlight
 }
 
 export type MarkerShape = "square" | "circle" | "diamond" | "triangle";
@@ -134,8 +138,9 @@ export interface IntervalColumnOptions {
 }
 
 export interface PercentColumnOptions {
-  decimals?: number;  // Decimal places (default: 1)
-  multiply?: boolean; // Multiply by 100 if value is proportion (default: false)
+  decimals?: number;  // Decimal places (default: 1). Cannot use with digits.
+  digits?: number;    // Significant figures. Cannot use with decimals.
+  multiply?: boolean; // Multiply by 100 if value is proportion (default: true)
   symbol?: boolean;   // Show % symbol (default: true)
 }
 
@@ -304,6 +309,9 @@ export interface Shapes {
   summaryHeight: number;
   lineWidth: number;
   borderRadius: number;
+  // Multi-effect marker defaults (colors and shapes for effects 1, 2, 3, ...)
+  markerColors?: string[] | null;  // null = use theme.colors.interval as first color
+  markerShapes?: MarkerShape[] | null;  // Shapes for each effect (cycles if more effects than shapes)
 }
 
 export interface AxisConfig {

@@ -6,9 +6,9 @@
 \usage{
 web_spec(
   data,
-  point,
-  lower,
-  upper,
+  point = NULL,
+  lower = NULL,
+  upper = NULL,
   label = NULL,
   label_header = "Study",
   group = NULL,
@@ -30,6 +30,9 @@ web_spec(
   row_icon = NULL,
   row_indent = NULL,
   row_type = NULL,
+  row_emphasis = NULL,
+  row_muted = NULL,
+  row_accent = NULL,
   marker_color = NULL,
   marker_shape = NULL,
   marker_opacity = NULL,
@@ -42,11 +45,12 @@ web_spec(
 \arguments{
 \item{data}{A data.frame, data.table, or tibble}
 
-\item{point}{Column name for point estimates (unquoted or string)}
+\item{point}{Column name for point estimates. Can be NULL if \code{effects} is provided
+(will use first effect's columns).}
 
-\item{lower}{Column name for lower bounds of intervals}
+\item{lower}{Column name for lower bounds of intervals. Can be NULL if \code{effects} is provided.}
 
-\item{upper}{Column name for upper bounds of intervals}
+\item{upper}{Column name for upper bounds of intervals. Can be NULL if \code{effects} is provided.}
 
 \item{label}{Column name for row labels (optional)}
 
@@ -95,6 +99,12 @@ to innermost, e.g., \code{c("region", "country")} creates region > country
 \item{row_indent}{Column name for row indentation (numeric values)}
 
 \item{row_type}{Column name for row type ("data", "header", "summary", "spacer")}
+
+\item{row_emphasis}{Column name for emphasis styling (logical: bold, darker text)}
+
+\item{row_muted}{Column name for muted styling (logical: lighter, reduced prominence)}
+
+\item{row_accent}{Column name for accent styling (logical: theme accent color)}
 
 \item{marker_color}{Column name for marker fill color (CSS color strings)}
 

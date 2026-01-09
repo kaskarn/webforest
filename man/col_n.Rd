@@ -22,14 +22,14 @@ col_n(
 
 \item{width}{Column width in pixels (NULL for auto-sizing based on content)}
 
-\item{decimals}{Number of decimal places (default 0 for integers)}
+\item{decimals}{Number of decimal places (default 0 for integers). Cannot be used with \code{digits}.}
 
-\item{digits}{Number of significant figures (takes precedence over decimals if set)}
+\item{digits}{Number of significant figures. Cannot be used with \code{decimals}.}
 
 \item{thousands_sep}{Thousands separator (default "," for integer columns)}
 
-\item{abbreviate}{Abbreviate large numbers (default FALSE). When TRUE or a number,
-values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").}
+\item{abbreviate}{Logical. When TRUE, values >= 1000 are shortened with at most
+1 decimal place (e.g., 1100 -> "1.1K", 12345 -> "12.3K"). Default FALSE.}
 
 \item{...}{Additional arguments passed to web_col}
 }
@@ -46,6 +46,6 @@ col_n("n")
 # Disable thousands separator
 col_n("n", thousands_sep = FALSE)
 
-# Abbreviate large sample sizes: 12,345 -> "12K"
+# Abbreviate large sample sizes: 12,345 -> "12.3K"
 col_n("n", abbreviate = TRUE)
 }

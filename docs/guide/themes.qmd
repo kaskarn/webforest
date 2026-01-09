@@ -147,9 +147,27 @@ set_shapes(
   point_size = 6,
   summary_height = 10,
   line_width = 1.5,
-  border_radius = 4
+  border_radius = 4,
+  marker_colors = NULL,   # Vector of colors for multi-effect plots
+  marker_shapes = c("square", "circle", "diamond", "triangle")
 )
 ```
+
+### Multi-Effect Marker Defaults
+
+For plots with multiple effects, markers cycle through theme-defined colors and shapes:
+
+```{r}
+#| eval: false
+# Set custom marker colors and shapes for multi-effect plots
+custom_theme <- web_theme_default() |>
+  set_marker_colors(c("#2563eb", "#dc2626", "#16a34a")) |>
+  set_marker_shapes(c("square", "circle", "diamond"))
+
+forest_plot(data, ..., theme = custom_theme)
+```
+
+Effects without explicit `color` or `shape` in `web_effect()` use these theme defaults in order.
 
 ### Axis
 
@@ -180,6 +198,7 @@ set_layout(
 | Colors | `set_colors()` | background, foreground, primary, interval, interval_line |
 | Typography | `set_typography()` | font_family, font_size_*, font_weight_* |
 | Spacing | `set_spacing()` | row_height, header_height, column_gap, padding |
-| Shapes | `set_shapes()` | point_size, summary_height, line_width |
+| Shapes | `set_shapes()` | point_size, summary_height, line_width, marker_colors, marker_shapes |
 | Axis | `set_axis()` | range_min/max, tick_count, tick_values, gridlines |
 | Layout | `set_layout()` | plot_position, row_border |
+| Markers | `set_marker_colors()`, `set_marker_shapes()` | Multi-effect default colors/shapes |

@@ -6,6 +6,16 @@
 \usage{
 forest_plot(
   x,
+  point = NULL,
+  lower = NULL,
+  upper = NULL,
+  label = NULL,
+  group = NULL,
+  columns = NULL,
+  scale = NULL,
+  null_value = NULL,
+  axis_label = NULL,
+  theme = NULL,
   ...,
   split_by = NULL,
   shared_axis = FALSE,
@@ -26,9 +36,29 @@ forest_plot(
 \arguments{
 \item{x}{Either a WebSpec object, a SplitForest object, or a data.frame/data.table/tibble}
 
-\item{...}{Arguments passed to \code{web_spec()} when x is a data frame.
-Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{group},
-\code{columns}, \code{scale}, \code{null_value}, \code{axis_label}, \code{weight}, \code{theme}, \code{interaction}}
+\item{point}{Column name for point estimates (string). Required when x is a data frame.}
+
+\item{lower}{Column name for lower bounds of intervals (string). Required when x is a data frame.}
+
+\item{upper}{Column name for upper bounds of intervals (string). Required when x is a data frame.}
+
+\item{label}{Column name for row labels (optional string)}
+
+\item{group}{Grouping column name(s) or list of \code{web_group()} objects}
+
+\item{columns}{List of column specifications (use \verb{col_*()} helpers)}
+
+\item{scale}{Scale type: "linear" (default) or "log"}
+
+\item{null_value}{Reference value for null effect. Default: 0 for linear, 1 for log}
+
+\item{axis_label}{Label for the graphical axis}
+
+\item{theme}{Theme object (use \verb{web_theme_*()} functions)}
+
+\item{...}{Additional arguments passed to \code{web_spec()} when x is a data frame.
+See \code{?web_spec} for all available options including row styling, marker styling,
+effects, annotations, and labels.}
 
 \item{split_by}{Column name(s) to split data into separate plots. When specified,
 creates a SplitForest with sidebar navigation. Can be a single column name or

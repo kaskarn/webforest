@@ -16,21 +16,43 @@ export function addThousandsSep(numStr: string, separator: string): string {
   return parts.join(".");
 }
 
-/** Abbreviate large numbers: 1234567 -> "1.2M", 5300 -> "5.3K" */
-export function abbreviateNumber(value: number, sigfigs: number = 2): string {
+/**
+ * Abbreviate large numbers with at most 1 decimal place.
+ * Examples: 11111111 -> "11.1M", 5300 -> "5.3K", 1000 -> "1K"
+ * Throws error for values >= 1e12 (trillions not supported).
+ */
+export function abbreviateNumber(value: number): string {
   const absValue = Math.abs(value);
   const sign = value < 0 ? "-" : "";
 
+  if (absValue >= 1e12) {
+    throw new Error(`Cannot abbreviate value >= 1 trillion: ${value}`);
+  }
   if (absValue >= 1e9) {
-    return sign + (absValue / 1e9).toPrecision(sigfigs) + "B";
+    const scaled = absValue / 1e9;
+    return sign + formatAbbreviated(scaled) + "B";
   }
   if (absValue >= 1e6) {
-    return sign + (absValue / 1e6).toPrecision(sigfigs) + "M";
+    const scaled = absValue / 1e6;
+    return sign + formatAbbreviated(scaled) + "M";
   }
   if (absValue >= 1e3) {
-    return sign + (absValue / 1e3).toPrecision(sigfigs) + "K";
+    const scaled = absValue / 1e3;
+    return sign + formatAbbreviated(scaled) + "K";
   }
-  return value.toPrecision(sigfigs);
+  // Values under 1000 are returned as-is (rounded to integer)
+  return sign + Math.round(absValue).toString();
+}
+
+/** Format abbreviated value with at most 1 decimal, no trailing zeros */
+function formatAbbreviated(value: number): string {
+  // Round to 1 decimal place
+  const rounded = Math.round(value * 10) / 10;
+  // If it's a whole number, return without decimal
+  if (rounded === Math.floor(rounded)) {
+    return rounded.toFixed(0);
+  }
+  return rounded.toFixed(1);
 }
 
 /** Unicode superscript character mapping */
@@ -57,17 +79,19 @@ export function formatNumber(value: number | undefined | null, options?: ColumnO
 
   // Percent formatting
   if (options?.percent) {
-    const { decimals = 1, multiply = false, symbol = true } = options.percent;
+    const { decimals, digits, multiply = true, symbol = true } = options.percent;
     const displayValue = multiply ? value * 100 : value;
-    const formatted = displayValue.toFixed(decimals);
+    // Use significant figures if digits is specified, otherwise use decimals
+    const formatted = digits != null
+      ? displayValue.toPrecision(digits)
+      : displayValue.toFixed(decimals ?? 1);
     return symbol ? `${formatted}%` : formatted;
   }
 
   // Handle abbreviation for large numbers
   const abbreviate = options?.numeric?.abbreviate;
   if (abbreviate && Math.abs(value) >= 1000) {
-    const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
-    return abbreviateNumber(value, sigfigs);
+    return abbreviateNumber(value);
   }
 
   // Use significant figures if digits specified
@@ -120,9 +144,8 @@ export function formatEvents(row: Row, options: ColumnOptions): string {
 
   // Handle abbreviation for large numbers
   if (abbreviate && (eventsNum >= 1000 || nNum >= 1000)) {
-    const sigfigs = typeof abbreviate === "number" ? abbreviate : 2;
-    eventsStr = eventsNum >= 1000 ? abbreviateNumber(eventsNum, sigfigs) : String(eventsNum);
-    nStr = nNum >= 1000 ? abbreviateNumber(nNum, sigfigs) : String(nNum);
+    eventsStr = eventsNum >= 1000 ? abbreviateNumber(eventsNum) : String(eventsNum);
+    nStr = nNum >= 1000 ? abbreviateNumber(nNum) : String(nNum);
   } else {
     eventsStr = String(eventsNum);
     nStr = String(nNum);

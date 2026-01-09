@@ -62,4 +62,4 @@ export function niceDomain(
 }
 
 /** Domain padding constant - how much extra space to add beyond data range */
-export const DOMAIN_PADDING = 0.15;
+export const DOMAIN_PADDING = 0.08;

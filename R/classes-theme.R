@@ -68,6 +68,13 @@ Spacing <- new_class(
 
 #' Shapes: Shape rendering settings
 #'
+#' @description
+#' Configures marker shapes and sizes for forest plots.
+#'
+#' The `marker_colors` and `marker_shapes` properties define the default
+#' appearance for multi-effect plots. When effects don't specify their own
+#' color or shape, they use these defaults in order (effect 1 uses index 1, etc.).
+#'
 #' @usage NULL
 #' @export
 Shapes <- new_class(
@@ -76,8 +83,25 @@ Shapes <- new_class(
     point_size = new_property(class_numeric, default = 6),
     summary_height = new_property(class_numeric, default = 10),
     line_width = new_property(class_numeric, default = 1.5),
-    border_radius = new_property(class_numeric, default = 2)  # Cleaner, more professional
-  )
+    border_radius = new_property(class_numeric, default = 2),
+    # Multi-effect marker defaults (colors cycle from theme.colors.interval)
+    marker_colors = new_property(class_any, default = NULL),  # NULL = use theme.colors.interval
+    marker_shapes = new_property(
+      class_any,
+      default = c("square", "circle", "diamond", "triangle")
+    )
+  ),
+  validator = function(self) {
+    valid_shapes <- c("square", "circle", "diamond", "triangle")
+    if (!is.null(self@marker_shapes)) {
+      invalid <- setdiff(self@marker_shapes, valid_shapes)
+      if (length(invalid) > 0) {
+        return(paste("marker_shapes contains invalid values:", paste(invalid, collapse = ", "),
+                     "- must be one of:", paste(valid_shapes, collapse = ", ")))
+      }
+    }
+    NULL
+  }
 )
 
 #' AxisConfig: Axis rendering configuration
@@ -447,6 +471,47 @@ set_shapes <- function(theme, ...) {
     }
   }
   theme@shapes <- current
+  theme
+}
+
+#' Set marker colors for multi-effect plots
+#'
+#' Convenience function to set theme marker colors for multi-effect forest plots.
+#' Effects without an explicit color will use these colors in order.
+#'
+#' @param theme A WebTheme object
+#' @param colors Character vector of colors for effects (e.g., c("#2563eb", "#dc2626"))
+#'
+#' @return Modified WebTheme object
+#' @export
+#' @examples
+#' web_theme_default() |>
+#'   set_marker_colors(c("#0891b2", "#dc2626", "#16a34a"))
+set_marker_colors <- function(theme, colors) {
+  stopifnot(S7_inherits(theme, WebTheme))
+  checkmate::assert_character(colors, min.len = 1)
+  theme@shapes@marker_colors <- colors
+  theme
+}
+
+#' Set marker shapes for multi-effect plots
+#'
+#' Convenience function to set theme marker shapes for multi-effect forest plots.
+#' Effects without an explicit shape will use these shapes in order.
+#'
+#' @param theme A WebTheme object
+#' @param shapes Character vector of shapes: "square", "circle", "diamond", "triangle"
+#'
+#' @return Modified WebTheme object
+#' @export
+#' @examples
+#' web_theme_default() |>
+#'   set_marker_shapes(c("square", "circle", "diamond"))
+set_marker_shapes <- function(theme, shapes) {
+  stopifnot(S7_inherits(theme, WebTheme))
+  valid_shapes <- c("square", "circle", "diamond", "triangle")
+  checkmate::assert_subset(shapes, valid_shapes)
+  theme@shapes@marker_shapes <- shapes
   theme
 }
 

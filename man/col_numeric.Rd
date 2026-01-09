@@ -22,16 +22,16 @@ col_numeric(
 
 \item{width}{Column width in pixels (NULL for auto-sizing based on content)}
 
-\item{decimals}{Number of decimal places to display (default 2, NULL for auto)}
+\item{decimals}{Number of decimal places to display (default 2). Cannot be used with \code{digits}.}
 
-\item{digits}{Number of significant figures (takes precedence over decimals if set)}
+\item{digits}{Number of significant figures. Cannot be used with \code{decimals}.}
 
 \item{thousands_sep}{Thousands separator (default FALSE for decimal columns,
 use "," or other string to enable)}
 
-\item{abbreviate}{Abbreviate large numbers (default FALSE). When TRUE or a number,
-values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").
-If a number, specifies significant figures for abbreviated values (default 2).}
+\item{abbreviate}{Logical. When TRUE, values >= 1000 are shortened with at most
+1 decimal place (e.g., 1100 -> "1.1K", 2500000 -> "2.5M", 11111111 -> "11.1M").
+Values >= 1 trillion will cause an error. Default FALSE.}
 
 \item{...}{Additional arguments passed to web_col}
 }

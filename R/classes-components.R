@@ -184,13 +184,13 @@ col_text <- function(field, header = NULL, width = NULL, ...) {
 #' @param field Field name
 #' @param header Column header
 #' @param width Column width in pixels (NULL for auto-sizing based on content)
-#' @param decimals Number of decimal places to display (default 2, NULL for auto)
-#' @param digits Number of significant figures (takes precedence over decimals if set)
+#' @param decimals Number of decimal places to display (default 2). Cannot be used with `digits`.
+#' @param digits Number of significant figures. Cannot be used with `decimals`.
 #' @param thousands_sep Thousands separator (default FALSE for decimal columns,
 #'   use "," or other string to enable)
-#' @param abbreviate Abbreviate large numbers (default FALSE). When TRUE or a number,
-#'   values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").
-#'   If a number, specifies significant figures for abbreviated values (default 2).
+#' @param abbreviate Logical. When TRUE, values >= 1000 are shortened with at most
+#'   1 decimal place (e.g., 1100 -> "1.1K", 2500000 -> "2.5M", 11111111 -> "11.1M").
+#'   Values >= 1 trillion will cause an error. Default FALSE.
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -213,9 +213,14 @@ col_text <- function(field, header = NULL, width = NULL, ...) {
 col_numeric <- function(field, header = NULL, width = NULL, decimals = 2,
                         digits = NULL, thousands_sep = FALSE, abbreviate = FALSE,
                         ...) {
+  # Validate mutual exclusivity of decimals and digits
+  if (!is.null(digits) && decimals != 2) {
+    cli::cli_abort("Cannot specify both {.arg decimals} and {.arg digits}. Use one or the other.")
+  }
+
   opts <- list(
     numeric = list(
-      decimals = decimals,
+      decimals = if (is.null(digits)) decimals else NULL,
       digits = digits,
       thousandsSep = thousands_sep,
       abbreviate = abbreviate
@@ -231,11 +236,11 @@ col_numeric <- function(field, header = NULL, width = NULL, decimals = 2,
 #' @param field Field name (default "n")
 #' @param header Column header (default "N")
 #' @param width Column width in pixels (NULL for auto-sizing based on content)
-#' @param decimals Number of decimal places (default 0 for integers)
-#' @param digits Number of significant figures (takes precedence over decimals if set)
+#' @param decimals Number of decimal places (default 0 for integers). Cannot be used with `digits`.
+#' @param digits Number of significant figures. Cannot be used with `decimals`.
 #' @param thousands_sep Thousands separator (default "," for integer columns)
-#' @param abbreviate Abbreviate large numbers (default FALSE). When TRUE or a number,
-#'   values >= 1000 are shortened (e.g., 1100 -> "1.1K", 2500000 -> "2.5M").
+#' @param abbreviate Logical. When TRUE, values >= 1000 are shortened with at most
+#'   1 decimal place (e.g., 1100 -> "1.1K", 12345 -> "12.3K"). Default FALSE.
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -247,13 +252,18 @@ col_numeric <- function(field, header = NULL, width = NULL, decimals = 2,
 #' # Disable thousands separator
 #' col_n("n", thousands_sep = FALSE)
 #'
-#' # Abbreviate large sample sizes: 12,345 -> "12K"
+#' # Abbreviate large sample sizes: 12,345 -> "12.3K"
 #' col_n("n", abbreviate = TRUE)
 col_n <- function(field = "n", header = "N", width = NULL, decimals = 0,
                   digits = NULL, thousands_sep = ",", abbreviate = FALSE, ...) {
+  # Validate mutual exclusivity of decimals and digits
+  if (!is.null(digits) && decimals != 0) {
+    cli::cli_abort("Cannot specify both {.arg decimals} and {.arg digits}. Use one or the other.")
+  }
+
   opts <- list(
     numeric = list(
-      decimals = decimals,
+      decimals = if (is.null(digits)) decimals else NULL,
       digits = digits,
       thousandsSep = thousands_sep,
       abbreviate = abbreviate
@@ -307,7 +317,14 @@ col_interval <- function(header = "95% CI", width = NULL, decimals = 2, sep = " 
       impreciseThreshold = imprecise_threshold
     )
   )
-  web_col("_interval", header, type = "interval", width = width, options = opts, ...)
+  # Create unique synthetic field name when overrides are specified
+  # This allows multiple col_interval columns with different field sources
+  if (!is.null(point)) {
+    synthetic_field <- paste0("_interval_", point)
+  } else {
+    synthetic_field <- "_interval"
+  }
+  web_col(synthetic_field, header, type = "interval", width = width, options = opts, ...)
 }
 
 #' Column helper: P-value
@@ -318,6 +335,7 @@ col_interval <- function(header = "95% CI", width = NULL, decimals = 2, sep = " 
 #'
 #' @param field Field name (default "pvalue")
 #' @param header Column header (default "P-value")
+#' @param width Column width in pixels (NULL for auto-sizing based on content)
 #' @param stars Show significance stars (default FALSE)
 #' @param thresholds Numeric vector of 3 significance thresholds (default c(0.05, 0.01, 0.001))
 #' @param format P-value format: "auto", "scientific", or "decimal"
@@ -325,7 +343,6 @@ col_interval <- function(header = "95% CI", width = NULL, decimals = 2, sep = " 
 #' @param exp_threshold Values below this use exponential notation (default 0.001)
 #' @param abbrev_threshold Values below this display as "<threshold" (default NULL = off).
 #'   For example, `abbrev_threshold = 0.0001` displays values below 0.0001 as "<0.0001".
-#' @param width Column width in pixels (NULL for auto-sizing based on content)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
@@ -349,13 +366,13 @@ col_interval <- function(header = "95% CI", width = NULL, decimals = 2, sep = " 
 col_pvalue <- function(
     field = "pvalue",
     header = "P-value",
+    width = NULL,
     stars = FALSE,
     thresholds = c(0.05, 0.01, 0.001),
     format = c("auto", "scientific", "decimal"),
     digits = 2,
     exp_threshold = 0.001,
     abbrev_threshold = NULL,
-    width = NULL,
     ...) {
   format <- match.arg(format)
   opts <- list(
@@ -431,37 +448,51 @@ col_sparkline <- function(
 #' Column helper: Percentage column
 #'
 #' Display numeric values as percentages with optional % symbol.
+#' By default, expects proportions (0-1 scale) and multiplies by 100.
 #'
 #' @param field Field name
 #' @param header Column header (default field name)
 #' @param width Column width in pixels (NULL for auto-sizing based on content)
-#' @param decimals Number of decimal places (default 1)
-#' @param multiply Whether to multiply by 100 (default FALSE, assumes data already 0-100)
+#' @param decimals Number of decimal places (default 1). Cannot be used with `digits`.
+#' @param digits Number of significant figures (takes precedence over decimals if set).
+#'   Cannot be used with `decimals`.
+#' @param multiply Whether to multiply by 100 (default TRUE, expects proportions 0-1).
+#'   Set to FALSE if data is already on 0-100 scale.
 #' @param symbol Show % symbol (default TRUE)
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object
 #' @export
 #' @examples
-#' # Data with percentages as 0-100
-#' col_percent("accuracy", "Accuracy")
+#' # Data with proportions (0-1), default behavior
+#' col_percent("rate", "Rate")  # 0.05 -> "5.0%"
 #'
-#' # Data with proportions (0-1), need multiplication
-#' col_percent("rate", "Rate", multiply = TRUE)
+#' # Data already as percentages (0-100)
+#' col_percent("accuracy", "Accuracy", multiply = FALSE)
 #'
 #' # No % symbol
 #' col_percent("pct", symbol = FALSE)
+#'
+#' # Using significant figures
+#' col_percent("rate", digits = 2)
 col_percent <- function(
     field,
     header = NULL,
     width = NULL,
     decimals = 1,
-    multiply = FALSE,
+    digits = NULL,
+    multiply = TRUE,
     symbol = TRUE,
     ...) {
+  # Validate mutual exclusivity of decimals and digits
+  if (!is.null(digits) && decimals != 1) {
+    cli::cli_abort("Cannot specify both {.arg decimals} and {.arg digits}. Use one or the other.")
+  }
+
   opts <- list(
     percent = list(
-      decimals = decimals,
+      decimals = if (is.null(digits)) decimals else NULL,
+      digits = digits,
       multiply = multiply,
       symbol = symbol
     )
@@ -481,8 +512,8 @@ col_percent <- function(
 #' @param separator Separator between events and n (default "/")
 #' @param show_pct Show percentage in parentheses (default FALSE)
 #' @param thousands_sep Thousands separator (default ",")
-#' @param abbreviate Abbreviate large numbers (default FALSE). When TRUE or a number,
-#'   values >= 1000 are shortened (e.g., "1.1K/12K" instead of "1,100/12,000").
+#' @param abbreviate Logical. When TRUE, values >= 1000 are shortened with at most
+#'   1 decimal place (e.g., "1.1K/12K" instead of "1,100/12,000"). Default FALSE.
 #' @param ... Additional arguments passed to web_col
 #'
 #' @return A ColumnSpec object

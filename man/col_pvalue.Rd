@@ -7,13 +7,13 @@
 col_pvalue(
   field = "pvalue",
   header = "P-value",
+  width = NULL,
   stars = FALSE,
   thresholds = c(0.05, 0.01, 0.001),
   format = c("auto", "scientific", "decimal"),
   digits = 2,
   exp_threshold = 0.001,
   abbrev_threshold = NULL,
-  width = NULL,
   ...
 )
 }
@@ -21,6 +21,8 @@ col_pvalue(
 \item{field}{Field name (default "pvalue")}
 
 \item{header}{Column header (default "P-value")}
+
+\item{width}{Column width in pixels (NULL for auto-sizing based on content)}
 
 \item{stars}{Show significance stars (default FALSE)}
 
@@ -34,8 +36,6 @@ col_pvalue(
 
 \item{abbrev_threshold}{Values below this display as "<threshold" (default NULL = off).
 For example, \code{abbrev_threshold = 0.0001} displays values below 0.0001 as "<0.0001".}
-
-\item{width}{Column width in pixels (NULL for auto-sizing based on content)}
 
 \item{...}{Additional arguments passed to web_col}
 }

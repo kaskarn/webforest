@@ -808,6 +808,11 @@
     if (style?.bold) classes.push("row-bold");
     if (style?.italic) classes.push("row-italic");
 
+    // Semantic styling classes
+    if (style?.emphasis) classes.push("row-emphasis");
+    if (style?.muted) classes.push("row-muted");
+    if (style?.accent) classes.push("row-accent");
+
     // Add depth-based banding class when there are groups (skip for styled rows)
     if (!isStyledRow) {
       if (depth && depth > 0) {
@@ -1136,6 +1141,20 @@
 
   .row-italic {
     font-style: italic;
+  }
+
+  /* Semantic styling classes */
+  .row-emphasis {
+    font-weight: var(--wf-font-weight-bold, 600);
+    color: var(--wf-fg, #1a1a1a);
+  }
+
+  .row-muted {
+    color: var(--wf-muted, #94a3b8);
+  }
+
+  .row-accent {
+    color: var(--wf-accent, #8b5cf6);
   }
 
   .row-icon {

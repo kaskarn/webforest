@@ -9,7 +9,8 @@ col_percent(
   header = NULL,
   width = NULL,
   decimals = 1,
-  multiply = FALSE,
+  digits = NULL,
+  multiply = TRUE,
   symbol = TRUE,
   ...
 )
@@ -21,9 +22,13 @@ col_percent(
 
 \item{width}{Column width in pixels (NULL for auto-sizing based on content)}
 
-\item{decimals}{Number of decimal places (default 1)}
+\item{decimals}{Number of decimal places (default 1). Cannot be used with \code{digits}.}
 
-\item{multiply}{Whether to multiply by 100 (default FALSE, assumes data already 0-100)}
+\item{digits}{Number of significant figures (takes precedence over decimals if set).
+Cannot be used with \code{decimals}.}
+
+\item{multiply}{Whether to multiply by 100 (default TRUE, expects proportions 0-1).
+Set to FALSE if data is already on 0-100 scale.}
 
 \item{symbol}{Show \% symbol (default TRUE)}
 
@@ -34,14 +39,18 @@ A ColumnSpec object
 }
 \description{
 Display numeric values as percentages with optional \% symbol.
+By default, expects proportions (0-1 scale) and multiplies by 100.
 }
 \examples{
-# Data with percentages as 0-100
-col_percent("accuracy", "Accuracy")
+# Data with proportions (0-1), default behavior
+col_percent("rate", "Rate")  # 0.05 -> "5.0\%"
 
-# Data with proportions (0-1), need multiplication
-col_percent("rate", "Rate", multiply = TRUE)
+# Data already as percentages (0-100)
+col_percent("accuracy", "Accuracy", multiply = FALSE)
 
 # No \% symbol
 col_percent("pct", symbol = FALSE)
+
+# Using significant figures
+col_percent("rate", digits = 2)
 }
