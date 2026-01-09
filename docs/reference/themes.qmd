@@ -70,6 +70,29 @@ web_theme_minimal()
 
 All modifiers return the modified theme and can be chained with pipes.
 
+### set_theme {#set_theme}
+
+Set or change theme on a WebSpec or widget. Accepts theme name or object.
+```r
+set_theme(x, theme)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `x` | WebSpec object or htmlwidget |
+| `theme` | Theme name string or WebTheme object |
+
+**Available theme names**: `"default"`, `"minimal"`, `"dark"`, `"jama"`, `"lancet"`, `"modern"`, `"presentation"`, `"cochrane"`, `"nature"`
+
+**Examples**:
+```r
+# Using theme name
+forest_plot(data, ...) |> set_theme("jama")
+
+# Using theme object
+forest_plot(data, ...) |> set_theme(web_theme_lancet())
+```
+
 ### set_colors {#set_colors}
 
 Customize theme colors.
@@ -175,7 +198,9 @@ set_shapes(
   point_size = NULL,
   summary_height = NULL,
   line_width = NULL,
-  border_radius = NULL
+  border_radius = NULL,
+  marker_colors = NULL,
+  marker_shapes = NULL
 )
 ```
 
@@ -185,6 +210,46 @@ set_shapes(
 | `summary_height` | Summary diamond height |
 | `line_width` | Interval line width |
 | `border_radius` | Border radius for containers |
+| `marker_colors` | Vector of colors for multi-effect plots |
+| `marker_shapes` | Vector of shapes for multi-effect plots |
+
+### set_marker_colors {#set_marker_colors}
+
+Set default marker colors for multi-effect plots.
+
+```r
+set_marker_colors(theme, colors)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `theme` | WebTheme object |
+| `colors` | Character vector of CSS colors |
+
+**Example**:
+```r
+web_theme_default() |>
+  set_marker_colors(c("#2563eb", "#dc2626", "#16a34a"))
+```
+
+### set_marker_shapes {#set_marker_shapes}
+
+Set default marker shapes for multi-effect plots.
+
+```r
+set_marker_shapes(theme, shapes)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `theme` | WebTheme object |
+| `shapes` | Character vector: `"square"`, `"circle"`, `"diamond"`, `"triangle"` |
+
+**Example**:
+```r
+web_theme_default() |>
+  set_marker_shapes(c("square", "circle", "diamond"))
+```
 
 ### set_axis {#set_axis}
 

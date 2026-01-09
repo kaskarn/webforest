@@ -28,25 +28,48 @@ Complete reference for all webforest functions, organized by category.
 
 | Function | Description |
 |----------|-------------|
+| [`set_theme()`](themes.qmd#set_theme) | Set theme by name or object |
 | [`set_colors()`](themes.qmd#set_colors) | Customize theme colors |
 | [`set_typography()`](themes.qmd#set_typography) | Customize fonts |
 | [`set_spacing()`](themes.qmd#set_spacing) | Customize spacing |
 | [`set_shapes()`](themes.qmd#set_shapes) | Customize shapes |
+| [`set_marker_colors()`](themes.qmd#set_marker_colors) | Set multi-effect marker colors |
+| [`set_marker_shapes()`](themes.qmd#set_marker_shapes) | Set multi-effect marker shapes |
 | [`set_axis()`](themes.qmd#set_axis) | Customize axis |
 | [`set_layout()`](themes.qmd#set_layout) | Customize layout |
 
 ## Columns
 
+### Basic Columns
+
 | Function | Description |
 |----------|-------------|
 | [`col_text()`](columns.qmd#col_text) | Text column |
-| [`col_numeric()`](columns.qmd#col_numeric) | Numeric column |
-| [`col_interval()`](columns.qmd#col_interval) | Confidence interval display |
-| [`col_bar()`](columns.qmd#col_bar) | Horizontal bar chart |
-| [`col_pvalue()`](columns.qmd#col_pvalue) | P-value with significance stars |
-| [`col_sparkline()`](columns.qmd#col_sparkline) | Inline sparkline |
+| [`col_numeric()`](columns.qmd#col_numeric) | Numeric column with formatting |
 | [`col_n()`](columns.qmd#col_n) | Sample size column |
+| [`col_percent()`](columns.qmd#col_percent) | Percentage column |
+| [`col_interval()`](columns.qmd#col_interval) | Confidence interval display |
+| [`col_events()`](columns.qmd#col_events) | Events/N format |
+
+### Visualization Columns
+
+| Function | Description |
+|----------|-------------|
+| [`col_bar()`](columns.qmd#col_bar) | Horizontal bar chart |
+| [`col_pvalue()`](columns.qmd#col_pvalue) | P-value with formatting |
+| [`col_sparkline()`](columns.qmd#col_sparkline) | Inline sparkline |
 | [`col_weight()`](columns.qmd#col_weight) | Weight column with bar |
+| [`col_icon()`](columns.qmd#col_icon) | Icon/emoji column |
+| [`col_badge()`](columns.qmd#col_badge) | Colored status badges |
+| [`col_stars()`](columns.qmd#col_stars) | Star ratings |
+| [`col_img()`](columns.qmd#col_img) | Inline images |
+| [`col_reference()`](columns.qmd#col_reference) | Truncated references with links |
+| [`col_range()`](columns.qmd#col_range) | Min-max range display |
+
+### Column Groups
+
+| Function | Description |
+|----------|-------------|
 | [`col_group()`](columns.qmd#col_group) | Group columns under header |
 
 ## Annotations
@@ -55,6 +78,14 @@ Complete reference for all webforest functions, organized by category.
 |----------|-------------|
 | [`forest_refline()`](annotations.qmd#forest_refline) | Add reference line |
 | [`forest_annotation()`](annotations.qmd#forest_annotation) | Custom annotation |
+
+## Fluent API Modifiers
+
+| Function | Description |
+|----------|-------------|
+| [`set_row_style()`](columns.qmd#set_row_style) | Apply row-level styling |
+| [`set_column_style()`](columns.qmd#set_column_style) | Apply cell-level styling to column |
+| [`set_marker_style()`](columns.qmd#set_marker_style) | Apply marker styling |
 
 ## Specification Objects
 

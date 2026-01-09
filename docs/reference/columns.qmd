@@ -208,16 +208,17 @@ col_sparkline(field, header = NULL, width = 80, type = "line")
 Sample size column with optional abbreviation for large values.
 
 ```r
-col_n(field = "n", header = "N", width = 60,
-      digits = NULL, abbreviate = FALSE)
+col_n(field = "n", header = "N", width = NULL,
+      digits = NULL, decimals = 0, abbreviate = FALSE)
 ```
 
 | Argument | Description |
 |----------|-------------|
 | `field` | Column name (default: "n") |
 | `header` | Column header (default: "N") |
-| `width` | Column width (default: 60) |
-| `digits` | Significant figures (optional) |
+| `width` | Column width (NULL = auto) |
+| `digits` | Significant figures (optional, mutually exclusive with decimals) |
+| `decimals` | Fixed decimal places (default: 0) |
 | `abbreviate` | Abbreviate large values with K/M suffixes |
 
 **Examples**:
@@ -230,12 +231,181 @@ col_n("sample_size")
 col_n("sample_size", abbreviate = TRUE)
 ```
 
+### col_percent {#col_percent}
+
+Percentage column for displaying proportions.
+
+```r
+col_percent(field, header = NULL, width = NULL,
+            decimals = 1, digits = NULL, multiply = TRUE, symbol = TRUE)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `field` | Column name containing values |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `decimals` | Fixed decimal places (default: 1, mutually exclusive with digits) |
+| `digits` | Significant figures (optional) |
+| `multiply` | Multiply by 100 (default: TRUE, expects 0-1 proportions) |
+| `symbol` | Show % symbol (default: TRUE) |
+
+**Examples**:
+
+```r
+# Proportion 0-1 → percentage: 0.25 → "25.0%"
+col_percent("rate")
+
+# Already a percentage (0-100): 25 → "25.0%"
+col_percent("pct", multiply = FALSE)
+
+# Significant figures instead of fixed decimals
+col_percent("rate", digits = 2)
+```
+
+### col_events {#col_events}
+
+Events column showing "events/n" format for clinical data.
+
+```r
+col_events(events_field, n_field, header = "Events",
+           width = NULL, separator = "/", show_pct = FALSE,
+           abbreviate = FALSE)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `events_field` | Column name for event count |
+| `n_field` | Column name for total N |
+| `header` | Column header (default: "Events") |
+| `width` | Column width (NULL = auto) |
+| `separator` | Separator between events and N (default: "/") |
+| `show_pct` | Show percentage after (default: FALSE) |
+| `abbreviate` | Abbreviate large numbers |
+
+**Examples**:
+
+```r
+# Basic: "45/120"
+col_events("events", "n")
+
+# With percentage: "45/120 (37.5%)"
+col_events("events", "n", show_pct = TRUE)
+```
+
 ### col_weight {#col_weight}
 
 Weight column with bar visualization for meta-analysis.
 
 ```r
 col_weight(field = "weight", header = "Weight", width = 100)
+```
+
+### col_icon {#col_icon}
+
+Icon column for displaying emoji or unicode symbols.
+
+```r
+col_icon(field, header = NULL, width = NULL, mapping = NULL)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `field` | Column name containing values to map |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `mapping` | Named list mapping values to icons |
+
+**Example**:
+```r
+col_icon("status", mapping = list(
+  "success" = "✓",
+  "failure" = "✗",
+  "pending" = "○"
+))
+```
+
+### col_badge {#col_badge}
+
+Badge column for colored status labels.
+
+```r
+col_badge(field, header = NULL, width = NULL, variant = "default")
+```
+
+| Argument | Description |
+|----------|-------------|
+| `field` | Column name containing badge text |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `variant` | `"default"`, `"success"`, `"warning"`, `"error"`, `"info"`, `"muted"` |
+
+### col_stars {#col_stars}
+
+Star rating column (1-5 scale).
+
+```r
+col_stars(field, header = NULL, width = NULL, max_stars = 5, color = NULL)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `field` | Column name containing numeric rating |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `max_stars` | Maximum stars (default: 5) |
+| `color` | Star color |
+
+### col_img {#col_img}
+
+Image column for inline images from URLs.
+
+```r
+col_img(field, header = NULL, width = NULL, shape = "square")
+```
+
+| Argument | Description |
+|----------|-------------|
+| `field` | Column name containing image URLs |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `shape` | `"square"`, `"circle"`, or `"rounded"` |
+
+### col_reference {#col_reference}
+
+Reference column for DOIs, citations, or links with truncation.
+
+```r
+col_reference(field, header = NULL, width = NULL, href_field = NULL)
+```
+
+| Argument | Description |
+|----------|-------------|
+| `field` | Column name containing reference text |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `href_field` | Column name containing URLs for links |
+
+### col_range {#col_range}
+
+Range column showing min-max values.
+
+```r
+col_range(min_field, max_field, header = NULL, width = NULL, separator = " – ")
+```
+
+| Argument | Description |
+|----------|-------------|
+| `min_field` | Column name for minimum value |
+| `max_field` | Column name for maximum value |
+| `header` | Column header |
+| `width` | Column width (NULL = auto) |
+| `separator` | Separator between values (default: " – ") |
+
+**Example**:
+```r
+# Age range: "18 – 65"
+col_range("age_min", "age_max", header = "Age Range")
 ```
 
 ## Column Groups
