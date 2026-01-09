@@ -7,6 +7,7 @@
 col_sparkline(
   field = "trend",
   header = "Trend",
+  width = NULL,
   type = c("line", "bar", "area"),
   height = 20,
   color = NULL,
@@ -17,6 +18,8 @@ col_sparkline(
 \item{field}{Field name containing numeric vector for sparkline}
 
 \item{header}{Column header (default "Trend")}
+
+\item{width}{Column width in pixels (NULL for auto-sizing)}
 
 \item{type}{Chart type: "line", "bar", or "area"}
 

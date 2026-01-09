@@ -392,6 +392,7 @@ col_pvalue <- function(
 #'
 #' @param field Field name (default "weight")
 #' @param header Column header (default "Weight")
+#' @param width Column width in pixels (NULL for auto-sizing)
 #' @param max_value Maximum value for the bar (NULL = auto-compute from data)
 #' @param show_label Show numeric label next to bar (default TRUE)
 #' @param color Bar fill color (NULL = theme primary color)
@@ -402,6 +403,7 @@ col_pvalue <- function(
 col_bar <- function(
     field = "weight",
     header = "Weight",
+    width = NULL,
     max_value = NULL,
     show_label = TRUE,
     color = NULL,
@@ -413,13 +415,14 @@ col_bar <- function(
       color = color
     )
   )
-  web_col(field, header, type = "bar", options = opts, ...)
+  web_col(field, header, type = "bar", width = width, options = opts, ...)
 }
 
 #' Column helper: Sparkline chart
 #'
 #' @param field Field name containing numeric vector for sparkline
 #' @param header Column header (default "Trend")
+#' @param width Column width in pixels (NULL for auto-sizing)
 #' @param type Chart type: "line", "bar", or "area"
 #' @param height Chart height in pixels (default 20)
 #' @param color Chart color (NULL = theme primary color)
@@ -430,6 +433,7 @@ col_bar <- function(
 col_sparkline <- function(
     field = "trend",
     header = "Trend",
+    width = NULL,
     type = c("line", "bar", "area"),
     height = 20,
     color = NULL,
@@ -442,7 +446,7 @@ col_sparkline <- function(
       color = color
     )
   )
-  web_col(field, header, type = "sparkline", options = opts, ...)
+  web_col(field, header, type = "sparkline", width = width, options = opts, ...)
 }
 
 #' Column helper: Percentage column

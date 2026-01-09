@@ -85,7 +85,7 @@
 
 <style>
   .webforest-tooltip {
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     min-width: 160px;
     max-width: 280px;

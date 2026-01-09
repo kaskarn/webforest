@@ -8,6 +8,7 @@
 col_bar(
   field = "weight",
   header = "Weight",
+  width = NULL,
   max_value = NULL,
   show_label = TRUE,
   color = NULL,
@@ -20,6 +21,8 @@ col_weight(field = "weight", header = "Weight", show_bar = TRUE, ...)
 \item{field}{Field name (default "weight")}
 
 \item{header}{Column header (default "Weight")}
+
+\item{width}{Column width in pixels (NULL for auto-sizing)}
 
 \item{max_value}{Maximum value for the bar (NULL = auto-compute from data)}
 

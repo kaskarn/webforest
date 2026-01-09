@@ -18,6 +18,8 @@
 #' @param null_value Reference value for null effect. Default: 0 for linear, 1 for log
 #' @param axis_label Label for the graphical axis
 #' @param theme Theme object (use `web_theme_*()` functions)
+#' @param row_bg Column name for row background color (CSS color strings).
+#'   Use this for data-driven row highlighting.
 #' @param ... Additional arguments passed to `web_spec()` when x is a data frame.
 #'   See `?web_spec` for all available options including row styling, marker styling,
 #'   effects, annotations, and labels.
@@ -97,6 +99,7 @@ forest_plot <- function(
     null_value = NULL,
     axis_label = NULL,
     theme = NULL,
+    row_bg = NULL,
     ...,
     split_by = NULL,
     shared_axis = FALSE,
@@ -149,6 +152,7 @@ forest_plot <- function(
     if (!is.null(null_value)) spec_args$null_value <- null_value
     if (!is.null(axis_label)) spec_args$axis_label <- axis_label
     if (!is.null(theme)) spec_args$theme <- theme
+    if (!is.null(row_bg)) spec_args$row_bg <- row_bg
 
     # Add any extra args from ...
     extra_args <- list(...)

@@ -16,6 +16,7 @@ forest_plot(
   null_value = NULL,
   axis_label = NULL,
   theme = NULL,
+  row_bg = NULL,
   ...,
   split_by = NULL,
   shared_axis = FALSE,
@@ -55,6 +56,9 @@ forest_plot(
 \item{axis_label}{Label for the graphical axis}
 
 \item{theme}{Theme object (use \verb{web_theme_*()} functions)}
+
+\item{row_bg}{Column name for row background color (CSS color strings).
+Use this for data-driven row highlighting.}
 
 \item{...}{Additional arguments passed to \code{web_spec()} when x is a data frame.
 See \code{?web_spec} for all available options including row styling, marker styling,
