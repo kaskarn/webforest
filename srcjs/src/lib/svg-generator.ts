@@ -479,18 +479,41 @@ function escapeXml(text: string): string {
 
 /**
  * Truncate text to fit within a given width (approximate)
- * Uses rough character width estimation for proportional fonts
+ * Uses character-class width estimation matching estimateTextWidth()
  */
 function truncateText(text: string, maxWidth: number, fontSize: number, padding: number = 0): string {
-  const avgCharWidth = fontSize * 0.55; // Rough estimate
   const availableWidth = maxWidth - padding * 2;
-  const maxChars = Math.floor(availableWidth / avgCharWidth);
 
-  if (text.length <= maxChars) {
+  // Check if full text fits using accurate estimation
+  const fullWidth = estimateTextWidth(text, fontSize);
+  if (fullWidth <= availableWidth) {
     return text;
   }
-  // Truncate with ellipsis
-  return text.slice(0, maxChars - 1) + "…";
+
+  // Binary search for the longest substring that fits (including ellipsis)
+  const ellipsis = "…";
+  const ellipsisWidth = fontSize * 0.55; // Ellipsis is roughly average width
+
+  let left = 0;
+  let right = text.length;
+
+  while (left < right) {
+    const mid = Math.ceil((left + right) / 2);
+    const truncated = text.slice(0, mid);
+    const truncatedWidth = estimateTextWidth(truncated, fontSize) + ellipsisWidth;
+
+    if (truncatedWidth <= availableWidth) {
+      left = mid;
+    } else {
+      right = mid - 1;
+    }
+  }
+
+  // Return truncated text with ellipsis
+  if (left === 0) {
+    return ellipsis; // Nothing fits, just show ellipsis
+  }
+  return text.slice(0, left) + ellipsis;
 }
 
 // Note: formatNumber, formatEvents, formatInterval, formatPvalue are imported from ./formatters

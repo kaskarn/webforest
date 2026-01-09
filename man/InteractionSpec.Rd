@@ -35,6 +35,13 @@ InteractionSpec(
 \item{enable_export}{Enable download/export button}
 
 \item{tooltip_fields}{Character vector of column names to show in hover tooltip (NULL = no tooltip)}
+
+\item{enable_themes}{Control theme selection menu:
+\itemize{
+\item \code{"default"} (default): Enable theme menu with all \code{package_themes()}
+\item \code{NULL}: Disable theme selection entirely
+\item A list of WebTheme objects: Enable with specified themes only
+}}
 }
 \description{
 InteractionSpec: Interaction settings

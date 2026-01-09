@@ -12,8 +12,9 @@
 ^README\.Rmd$
 ^\.lintr$
 ^_pkgdown\.yml$
-^inst/scripts$
-^inst/scripts/node_modules
-^srcjs/node_modules
+^inst/scripts
 ^cran-comments\.md$
 ^data-raw$
+^.*\.Rcheck$
+^.*\.tar\.gz$
+^\.quarto$

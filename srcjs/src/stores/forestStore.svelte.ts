@@ -515,6 +515,31 @@ export function createForestStore() {
     for (const colDef of spec.columns) {
       processColumn(colDef);
     }
+
+    // Measure label column width
+    if (spec.data.labelCol) {
+      let maxLabelWidth = 0;
+
+      // Measure label header with bold font
+      if (spec.data.labelHeader) {
+        ctx!.font = headerFont;
+        maxLabelWidth = Math.max(maxLabelWidth, ctx!.measureText(spec.data.labelHeader).width);
+      }
+
+      // Measure all row labels with normal font (accounting for indentation)
+      ctx!.font = dataFont;
+      for (const row of spec.data.rows) {
+        if (row.label) {
+          const indent = row.style?.indent ?? 0;
+          const indentWidth = indent * 16; // INDENT_PER_LEVEL
+          maxLabelWidth = Math.max(maxLabelWidth, ctx!.measureText(row.label).width + indentWidth);
+        }
+      }
+
+      // Apply padding and constraints (label column has higher max)
+      const computedLabelWidth = Math.min(AUTO_WIDTH.LABEL_MAX, Math.max(AUTO_WIDTH.MIN, Math.ceil(maxLabelWidth + AUTO_WIDTH.PADDING)));
+      columnWidths["__label__"] = computedLabelWidth;
+    }
   }
 
   function setDimensions(w: number, h: number) {

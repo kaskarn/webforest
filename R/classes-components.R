@@ -931,6 +931,10 @@ col_group <- function(header, ..., position = c("left", "right")) {
 #' @param enable_resize Enable column resizing
 #' @param enable_export Enable download/export button
 #' @param tooltip_fields Character vector of column names to show in hover tooltip (NULL = no tooltip)
+#' @param enable_themes Control theme selection menu:
+#'   - `"default"` (default): Enable theme menu with all `package_themes()`
+#'   - `NULL`: Disable theme selection entirely
+#'   - A list of WebTheme objects: Enable with specified themes only
 #'
 #' @export
 InteractionSpec <- new_class(
