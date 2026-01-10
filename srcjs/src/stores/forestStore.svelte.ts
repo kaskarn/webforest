@@ -340,7 +340,7 @@ export function createForestStore() {
     const forestWidth = includeForest
       ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
       : 0;
-    const tableWidth = width - forestWidth - (includeForest ? spec.theme.spacing.columnGap : 0);
+    const tableWidth = width - forestWidth;
 
     const hasOverall = !!spec.data.overall;
 
@@ -410,11 +410,10 @@ export function createForestStore() {
       ? (plotWidthOverride ?? DEFAULT_FOREST_WIDTH)
       : 0;
 
-    // Add gaps and padding
-    const columnGap = spec.data.includeForest ? spec.theme.spacing.columnGap : 0;
+    // Add padding
     const padding = spec.theme.spacing.padding * 2;
 
-    return totalColumnWidth + forestWidth + columnGap + padding;
+    return totalColumnWidth + forestWidth + padding;
   });
 
   // Actions

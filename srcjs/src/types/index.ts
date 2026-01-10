@@ -295,7 +295,6 @@ export interface Typography {
 export interface Spacing {
   rowHeight: number;
   headerHeight: number;
-  columnGap: number;
   sectionGap: number;
   padding: number;
   cellPaddingX: number;

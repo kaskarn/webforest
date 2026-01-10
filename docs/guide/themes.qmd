@@ -135,8 +135,9 @@ set_typography(
 set_spacing(
   row_height = 28,
   header_height = 36,
-  column_gap = 8,
-  padding = 12
+  padding = 12,
+  cell_padding_x = 10,
+  cell_padding_y = 4
 )
 ```
 
@@ -197,7 +198,7 @@ set_layout(
 |-----------|----------|----------------|
 | Colors | `set_colors()` | background, foreground, primary, interval, interval_line |
 | Typography | `set_typography()` | font_family, font_size_*, font_weight_* |
-| Spacing | `set_spacing()` | row_height, header_height, column_gap, padding |
+| Spacing | `set_spacing()` | row_height, header_height, padding, cell_padding_x/y |
 | Shapes | `set_shapes()` | point_size, summary_height, line_width, marker_colors, marker_shapes |
 | Axis | `set_axis()` | range_min/max, tick_count, tick_values, gridlines |
 | Layout | `set_layout()` | plot_position, row_border |

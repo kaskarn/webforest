@@ -146,7 +146,7 @@ custom_theme <- web_theme_default() |>
 | `set_theme()` | Switch themes | Theme name string or WebTheme object |
 | `set_colors()` | Color palette | `background`, `foreground`, `primary`, `interval`, `interval_line` |
 | `set_typography()` | Fonts | `font_family`, `font_size_base`, `font_weight_bold` |
-| `set_spacing()` | Dimensions | `row_height`, `header_height`, `column_gap`, `padding` |
+| `set_spacing()` | Dimensions | `row_height`, `header_height`, `padding`, `cell_padding_x/y` |
 | `set_shapes()` | Marker shapes | `point_size`, `summary_height`, `line_width` |
 | `set_marker_colors()` | Multi-effect colors | Vector of CSS color strings |
 | `set_marker_shapes()` | Multi-effect shapes | Vector: `"square"`, `"circle"`, `"diamond"`, `"triangle"` |

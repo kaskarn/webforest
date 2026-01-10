@@ -13,7 +13,6 @@ set_spacing(theme, ...)
 \itemize{
 \item \code{row_height}: Height of data rows in pixels
 \item \code{header_height}: Height of header row in pixels
-\item \code{column_gap}: Gap between table and forest plot in pixels
 \item \code{section_gap}: Gap between sections in pixels
 \item \code{padding}: Overall padding in pixels
 \item \code{axis_gap}: Gap between table content and x-axis (default 12px)

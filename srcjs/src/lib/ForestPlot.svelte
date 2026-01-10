@@ -282,7 +282,6 @@
       --wf-line-height: ${theme.typography.lineHeight};
       --wf-row-height: ${theme.spacing.rowHeight}px;
       --wf-header-height: ${theme.spacing.headerHeight}px;
-      --wf-column-gap: ${theme.spacing.columnGap}px;
       --wf-padding: ${theme.spacing.padding}px;
       --wf-cell-padding-x: ${theme.spacing.cellPaddingX}px;
       --wf-cell-padding-y: ${theme.spacing.cellPaddingY}px;
@@ -1061,7 +1060,7 @@
   .webforest-label-col {
     flex: 1;
     min-width: 120px;
-    padding: 0 10px;
+    padding: var(--wf-cell-padding-y) var(--wf-cell-padding-x);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1072,7 +1071,7 @@
   }
 
   .webforest-col {
-    padding: 0 10px;
+    padding: var(--wf-cell-padding-y) var(--wf-cell-padding-x);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
     overflow: hidden;

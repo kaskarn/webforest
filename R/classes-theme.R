@@ -58,7 +58,6 @@ Spacing <- new_class(
   properties = list(
     row_height = new_property(class_numeric, default = 28),
     header_height = new_property(class_numeric, default = 36),
-    column_gap = new_property(class_numeric, default = 8),
     section_gap = new_property(class_numeric, default = 16),
     padding = new_property(class_numeric, default = 12),
     axis_gap = new_property(class_numeric, default = 12),
@@ -421,7 +420,6 @@ set_typography <- function(theme, ...) {
 #' @param ... Named spacing values to override. Available properties:
 #'   - `row_height`: Height of data rows in pixels
 #'   - `header_height`: Height of header row in pixels
-#'   - `column_gap`: Gap between table and forest plot in pixels
 #'   - `section_gap`: Gap between sections in pixels
 #'   - `padding`: Overall padding in pixels
 #'   - `axis_gap`: Gap between table content and x-axis (default 12px)
@@ -613,7 +611,6 @@ web_theme_jama <- function() {
     spacing = Spacing(
       row_height = 20,
       header_height = 26,
-      column_gap = 6,
       section_gap = 12,
       padding = 8
     ),
@@ -664,7 +661,6 @@ web_theme_lancet <- function() {
     spacing = Spacing(
       row_height = 24,
       header_height = 32,
-      column_gap = 8,
       section_gap = 14,
       padding = 10
     ),
@@ -716,7 +712,6 @@ web_theme_modern <- function() {
     spacing = Spacing(
       row_height = 32,
       header_height = 40,
-      column_gap = 10,
       section_gap = 20,
       padding = 14
     ),
@@ -768,7 +763,6 @@ web_theme_presentation <- function() {
     spacing = Spacing(
       row_height = 40,
       header_height = 48,
-      column_gap = 12,
       section_gap = 24,
       padding = 16
     ),
@@ -820,7 +814,6 @@ web_theme_cochrane <- function() {
     spacing = Spacing(
       row_height = 22,
       header_height = 28,
-      column_gap = 6,
       section_gap = 10,
       padding = 8
     ),
@@ -876,7 +869,6 @@ web_theme_nature <- function() {
     spacing = Spacing(
       row_height = 26,
       header_height = 34,
-      column_gap = 8,
       section_gap = 14,
       padding = 10
     ),

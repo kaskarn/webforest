@@ -170,7 +170,6 @@ set_spacing(
   theme,
   row_height = NULL,
   header_height = NULL,
-  column_gap = NULL,
   section_gap = NULL,
   padding = NULL,
   cell_padding_x = NULL,
@@ -182,7 +181,6 @@ set_spacing(
 |----------|-------------|
 | `row_height` | Data row height in pixels |
 | `header_height` | Header row height in pixels |
-| `column_gap` | Gap between columns |
 | `section_gap` | Gap between sections |
 | `padding` | Container padding |
 | `cell_padding_x` | Horizontal cell padding |

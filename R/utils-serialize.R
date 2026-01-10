@@ -268,7 +268,6 @@ serialize_theme <- function(theme) {
     spacing = list(
       rowHeight = theme@spacing@row_height,
       headerHeight = theme@spacing@header_height,
-      columnGap = theme@spacing@column_gap,
       sectionGap = theme@spacing@section_gap,
       padding = theme@spacing@padding,
       cellPaddingX = theme@layout@cell_padding_x,
