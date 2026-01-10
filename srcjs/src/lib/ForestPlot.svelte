@@ -1033,13 +1033,11 @@
   .webforest-table-left {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--wf-border);
   }
 
   .webforest-table-right {
     display: flex;
     flex-direction: column;
-    border-left: 1px solid var(--wf-border);
   }
 
   .webforest-table-row {
@@ -1106,6 +1104,9 @@
   .webforest-plot-wrapper {
     position: relative;
     flex-shrink: 0;
+    /* Vertical separator borders - placed here so SVG gridlines can overlap them */
+    border-left: 1px solid var(--wf-border);
+    border-right: 1px solid var(--wf-border);
   }
 
   .plot-resize-handle {
