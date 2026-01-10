@@ -556,12 +556,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  theme,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_height =</span> <span class="cn">NULL</span>,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">header_height =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">column_gap =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_gap =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_y =</span> <span class="cn">NULL</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_gap =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_y =</span> <span class="cn">NULL</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -579,22 +578,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Header row height in pixels</td>
 </tr>
 <tr class="odd">
-<td><code>column_gap</code></td>
-<td>Gap between columns</td>
-</tr>
-<tr class="even">
 <td><code>section_gap</code></td>
 <td>Gap between sections</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>padding</code></td>
 <td>Container padding</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>cell_padding_x</code></td>
 <td>Horizontal cell padding</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>cell_padding_y</code></td>
 <td>Vertical cell padding</td>
 </tr>
@@ -1475,173 +1470,171 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a>  theme,</span>
 <span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_height =</span> <span class="cn">NULL</span>,</span>
 <span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a>  <span class="at">header_height =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>  <span class="at">column_gap =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_gap =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_y =</span> <span class="cn">NULL</span></span>
-<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`row_height`</span> <span class="pp">|</span> Data row height in pixels <span class="pp">|</span></span>
-<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header_height`</span> <span class="pp">|</span> Header row height in pixels <span class="pp">|</span></span>
-<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`column_gap`</span> <span class="pp">|</span> Gap between columns <span class="pp">|</span></span>
-<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`section_gap`</span> <span class="pp">|</span> Gap between sections <span class="pp">|</span></span>
-<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`padding`</span> <span class="pp">|</span> Container padding <span class="pp">|</span></span>
-<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cell_padding_x`</span> <span class="pp">|</span> Horizontal cell padding <span class="pp">|</span></span>
-<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cell_padding_y`</span> <span class="pp">|</span> Vertical cell padding <span class="pp">|</span></span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>  <span class="at">section_gap =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>  <span class="at">padding =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>  <span class="at">cell_padding_y =</span> <span class="cn">NULL</span></span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`row_height`</span> <span class="pp">|</span> Data row height in pixels <span class="pp">|</span></span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`header_height`</span> <span class="pp">|</span> Header row height in pixels <span class="pp">|</span></span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`section_gap`</span> <span class="pp">|</span> Gap between sections <span class="pp">|</span></span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`padding`</span> <span class="pp">|</span> Container padding <span class="pp">|</span></span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cell_padding_x`</span> <span class="pp">|</span> Horizontal cell padding <span class="pp">|</span></span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`cell_padding_y`</span> <span class="pp">|</span> Vertical cell padding <span class="pp">|</span></span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_shapes {#set_shapes}</span></span>
 <span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_shapes {#set_shapes}</span></span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>Customize shapes and visual elements.</span>
 <span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>Customize shapes and visual elements.</span>
-<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a><span class="fu">set_shapes</span>(</span>
-<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a>  theme,</span>
-<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">point_size =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">summary_height =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>  <span class="at">line_width =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">border_radius =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>  <span class="at">marker_colors =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>  <span class="at">marker_shapes =</span> <span class="cn">NULL</span></span>
-<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`point_size`</span> <span class="pp">|</span> Point marker radius <span class="pp">|</span></span>
-<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary_height`</span> <span class="pp">|</span> Summary diamond height <span class="pp">|</span></span>
-<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`line_width`</span> <span class="pp">|</span> Interval line width <span class="pp">|</span></span>
-<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`border_radius`</span> <span class="pp">|</span> Border radius for containers <span class="pp">|</span></span>
-<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`marker_colors`</span> <span class="pp">|</span> Vector of colors for multi-effect plots <span class="pp">|</span></span>
-<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`marker_shapes`</span> <span class="pp">|</span> Vector of shapes for multi-effect plots <span class="pp">|</span></span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a><span class="fu">set_shapes</span>(</span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a>  theme,</span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a>  <span class="at">point_size =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a>  <span class="at">summary_height =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a>  <span class="at">line_width =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a>  <span class="at">border_radius =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>  <span class="at">marker_colors =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>  <span class="at">marker_shapes =</span> <span class="cn">NULL</span></span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`point_size`</span> <span class="pp">|</span> Point marker radius <span class="pp">|</span></span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`summary_height`</span> <span class="pp">|</span> Summary diamond height <span class="pp">|</span></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`line_width`</span> <span class="pp">|</span> Interval line width <span class="pp">|</span></span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`border_radius`</span> <span class="pp">|</span> Border radius for containers <span class="pp">|</span></span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`marker_colors`</span> <span class="pp">|</span> Vector of colors for multi-effect plots <span class="pp">|</span></span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`marker_shapes`</span> <span class="pp">|</span> Vector of shapes for multi-effect plots <span class="pp">|</span></span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_marker_colors {#set_marker_colors}</span></span>
 <span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_marker_colors {#set_marker_colors}</span></span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a>Set default marker colors for multi-effect plots.</span>
 <span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a>Set default marker colors for multi-effect plots.</span>
-<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="fu">set_marker_colors</span>(theme, colors)</span>
-<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`theme`</span> <span class="pp">|</span> WebTheme object <span class="pp">|</span></span>
-<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`colors`</span> <span class="pp">|</span> Character vector of CSS colors <span class="pp">|</span></span>
-<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
-<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_marker_colors</span>(<span class="fu">c</span>(<span class="st">"#2563eb"</span>, <span class="st">"#dc2626"</span>, <span class="st">"#16a34a"</span>))</span>
-<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a><span class="fu">set_marker_colors</span>(theme, colors)</span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`theme`</span> <span class="pp">|</span> WebTheme object <span class="pp">|</span></span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`colors`</span> <span class="pp">|</span> Character vector of CSS colors <span class="pp">|</span></span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_marker_colors</span>(<span class="fu">c</span>(<span class="st">"#2563eb"</span>, <span class="st">"#dc2626"</span>, <span class="st">"#16a34a"</span>))</span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_marker_shapes {#set_marker_shapes}</span></span>
 <span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_marker_shapes {#set_marker_shapes}</span></span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>Set default marker shapes for multi-effect plots.</span>
 <span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a>Set default marker shapes for multi-effect plots.</span>
-<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a><span class="fu">set_marker_shapes</span>(theme, shapes)</span>
-<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`theme`</span> <span class="pp">|</span> WebTheme object <span class="pp">|</span></span>
-<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`shapes`</span> <span class="pp">|</span> Character vector: <span class="in">`"square"`</span>, <span class="in">`"circle"`</span>, <span class="in">`"diamond"`</span>, <span class="in">`"triangle"`</span> <span class="pp">|</span></span>
-<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
-<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_marker_shapes</span>(<span class="fu">c</span>(<span class="st">"square"</span>, <span class="st">"circle"</span>, <span class="st">"diamond"</span>))</span>
-<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a><span class="fu">set_marker_shapes</span>(theme, shapes)</span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`theme`</span> <span class="pp">|</span> WebTheme object <span class="pp">|</span></span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`shapes`</span> <span class="pp">|</span> Character vector: <span class="in">`"square"`</span>, <span class="in">`"circle"`</span>, <span class="in">`"diamond"`</span>, <span class="in">`"triangle"`</span> <span class="pp">|</span></span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_marker_shapes</span>(<span class="fu">c</span>(<span class="st">"square"</span>, <span class="st">"circle"</span>, <span class="st">"diamond"</span>))</span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_axis {#set_axis}</span></span>
 <span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_axis {#set_axis}</span></span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a>Customize axis appearance.</span>
 <span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a>Customize axis appearance.</span>
-<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a><span class="fu">set_axis</span>(</span>
-<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a>  theme,</span>
-<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a>  <span class="at">range_min =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a>  <span class="at">range_max =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a>  <span class="at">tick_count =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>  <span class="at">tick_values =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a>  <span class="at">gridlines =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a>  <span class="at">gridline_style =</span> <span class="cn">NULL</span></span>
-<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`range_min`</span> <span class="pp">|</span> Minimum axis value (NULL = auto) <span class="pp">|</span></span>
-<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`range_max`</span> <span class="pp">|</span> Maximum axis value (NULL = auto) <span class="pp">|</span></span>
-<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tick_count`</span> <span class="pp">|</span> Target number of ticks <span class="pp">|</span></span>
-<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tick_values`</span> <span class="pp">|</span> Explicit tick positions (numeric vector) <span class="pp">|</span></span>
-<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gridlines`</span> <span class="pp">|</span> Show gridlines (TRUE/FALSE) <span class="pp">|</span></span>
-<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gridline_style`</span> <span class="pp">|</span> <span class="in">`"solid"`</span>, <span class="in">`"dashed"`</span>, or <span class="in">`"dotted"`</span> <span class="pp">|</span></span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a><span class="fu">set_axis</span>(</span>
+<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a>  theme,</span>
+<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a>  <span class="at">range_min =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a>  <span class="at">range_max =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a>  <span class="at">tick_count =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a>  <span class="at">tick_values =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a>  <span class="at">gridlines =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a>  <span class="at">gridline_style =</span> <span class="cn">NULL</span></span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`range_min`</span> <span class="pp">|</span> Minimum axis value (NULL = auto) <span class="pp">|</span></span>
+<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`range_max`</span> <span class="pp">|</span> Maximum axis value (NULL = auto) <span class="pp">|</span></span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tick_count`</span> <span class="pp">|</span> Target number of ticks <span class="pp">|</span></span>
+<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`tick_values`</span> <span class="pp">|</span> Explicit tick positions (numeric vector) <span class="pp">|</span></span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gridlines`</span> <span class="pp">|</span> Show gridlines (TRUE/FALSE) <span class="pp">|</span></span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`gridline_style`</span> <span class="pp">|</span> <span class="in">`"solid"`</span>, <span class="in">`"dashed"`</span>, or <span class="in">`"dotted"`</span> <span class="pp">|</span></span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_layout {#set_layout}</span></span>
 <span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### set_layout {#set_layout}</span></span>
+<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a>Customize layout options.</span>
 <span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a>Customize layout options.</span>
-<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a><span class="fu">set_layout</span>(</span>
-<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>  theme,</span>
-<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot_position =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a>  <span class="at">table_width =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot_width =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_border =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_border_style =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a>  <span class="at">container_border =</span> <span class="cn">NULL</span>,</span>
-<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>  <span class="at">container_border_radius =</span> <span class="cn">NULL</span></span>
-<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot_position`</span> <span class="pp">|</span> <span class="in">`"left"`</span> or <span class="in">`"right"`</span> <span class="pp">|</span></span>
-<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`table_width`</span> <span class="pp">|</span> Table width (<span class="in">`"auto"`</span> or pixels) <span class="pp">|</span></span>
-<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot_width`</span> <span class="pp">|</span> Plot width (<span class="in">`"auto"`</span> or pixels) <span class="pp">|</span></span>
-<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`row_border`</span> <span class="pp">|</span> Show row borders (TRUE/FALSE) <span class="pp">|</span></span>
-<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`row_border_style`</span> <span class="pp">|</span> <span class="in">`"solid"`</span>, <span class="in">`"dashed"`</span>, <span class="in">`"dotted"`</span> <span class="pp">|</span></span>
-<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`container_border`</span> <span class="pp">|</span> Show container border (TRUE/FALSE) <span class="pp">|</span></span>
-<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`container_border_radius`</span> <span class="pp">|</span> Container border radius <span class="pp">|</span></span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a><span class="fu">set_layout</span>(</span>
+<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a>  theme,</span>
+<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot_position =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>  <span class="at">table_width =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot_width =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_border =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_border_style =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a>  <span class="at">container_border =</span> <span class="cn">NULL</span>,</span>
+<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a>  <span class="at">container_border_radius =</span> <span class="cn">NULL</span></span>
+<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
+<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot_position`</span> <span class="pp">|</span> <span class="in">`"left"`</span> or <span class="in">`"right"`</span> <span class="pp">|</span></span>
+<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`table_width`</span> <span class="pp">|</span> Table width (<span class="in">`"auto"`</span> or pixels) <span class="pp">|</span></span>
+<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot_width`</span> <span class="pp">|</span> Plot width (<span class="in">`"auto"`</span> or pixels) <span class="pp">|</span></span>
+<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`row_border`</span> <span class="pp">|</span> Show row borders (TRUE/FALSE) <span class="pp">|</span></span>
+<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`row_border_style`</span> <span class="pp">|</span> <span class="in">`"solid"`</span>, <span class="in">`"dashed"`</span>, <span class="in">`"dotted"`</span> <span class="pp">|</span></span>
+<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`container_border`</span> <span class="pp">|</span> Show container border (TRUE/FALSE) <span class="pp">|</span></span>
+<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`container_border_radius`</span> <span class="pp">|</span> Container border radius <span class="pp">|</span></span>
+<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
 <span id="cb22-307"><a href="#cb22-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
+<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chaining Modifiers</span></span>
 <span id="cb22-309"><a href="#cb22-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chaining Modifiers</span></span>
-<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_jama</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(<span class="at">primary =</span> <span class="st">"#0066cc"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(<span class="at">font_family =</span> <span class="st">"Georgia, serif"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">28</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-312"><a href="#cb22-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_jama</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(<span class="at">primary =</span> <span class="st">"#0066cc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(<span class="at">font_family =</span> <span class="st">"Georgia, serif"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">28</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### Custom Theme for Publication</span></span>
 <span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a><span class="fu">### Custom Theme for Publication</span></span>
-<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a>publication_theme <span class="ot">&lt;-</span> <span class="fu">web_theme_minimal</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(</span>
-<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a>    <span class="at">foreground =</span> <span class="st">"#1a1a1a"</span>,</span>
-<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval_line =</span> <span class="st">"#333333"</span></span>
-<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(</span>
-<span id="cb22-335"><a href="#cb22-335" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_family =</span> <span class="st">"Times New Roman, serif"</span>,</span>
-<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size_base =</span> <span class="st">"11pt"</span></span>
-<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
-<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a>publication_theme <span class="ot">&lt;-</span> <span class="fu">web_theme_minimal</span>() <span class="sc">|&gt;</span></span>
+<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(</span>
+<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a>    <span class="at">foreground =</span> <span class="st">"#1a1a1a"</span>,</span>
+<span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval_line =</span> <span class="st">"#333333"</span></span>
+<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(</span>
+<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_family =</span> <span class="st">"Times New Roman, serif"</span>,</span>
+<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size_base =</span> <span class="st">"11pt"</span></span>
+<span id="cb22-335"><a href="#cb22-335" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
 <span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-344"><a href="#cb22-344" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">forest_plot()</span><span class="co">](forest_plot.qmd)</span> for using themes</span>
-<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Themes Guide</span><span class="co">](../guide/themes.qmd)</span> for detailed customization</span>
+<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">forest_plot()</span><span class="co">](forest_plot.qmd)</span> for using themes</span>
+<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Themes Guide</span><span class="co">](../guide/themes.qmd)</span> for detailed customization</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
