@@ -2,7 +2,6 @@
 % Please edit documentation in R/classes-components.R
 \name{col_bar}
 \alias{col_bar}
-\alias{col_weight}
 \title{Column helper: Bar/weight column}
 \usage{
 col_bar(
@@ -14,8 +13,6 @@ col_bar(
   color = NULL,
   ...
 )
-
-col_weight(field = "weight", header = "Weight", show_bar = TRUE, ...)
 }
 \arguments{
 \item{field}{Field name (default "weight")}
@@ -31,8 +28,6 @@ col_weight(field = "weight", header = "Weight", show_bar = TRUE, ...)
 \item{color}{Bar fill color (NULL = theme primary color)}
 
 \item{...}{Additional arguments passed to web_col}
-
-\item{show_bar}{Show as bar chart (default TRUE)}
 }
 \value{
 A ColumnSpec object

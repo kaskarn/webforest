@@ -58,7 +58,6 @@ Complete reference for all webforest functions, organized by category.
 | [`col_bar()`](columns.qmd#col_bar) | Horizontal bar chart |
 | [`col_pvalue()`](columns.qmd#col_pvalue) | P-value with formatting |
 | [`col_sparkline()`](columns.qmd#col_sparkline) | Inline sparkline |
-| [`col_weight()`](columns.qmd#col_weight) | Weight column with bar |
 | [`col_icon()`](columns.qmd#col_icon) | Icon/emoji column |
 | [`col_badge()`](columns.qmd#col_badge) | Colored status badges |
 | [`col_stars()`](columns.qmd#col_stars) | Star ratings |

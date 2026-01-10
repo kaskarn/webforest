@@ -29,7 +29,7 @@ forest_plot(
   weight = "weight",  # Scale marker sizes by study weight
   columns = list(
     col_n("n"),
-    col_weight("weight"),
+    col_bar("weight"),
     col_interval("OR (95% CI)")
   ),
   annotations = list(

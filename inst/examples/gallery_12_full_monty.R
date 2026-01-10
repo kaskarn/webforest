@@ -47,7 +47,7 @@ forest_plot(
   weight = "weight",  # Explicit weight column for marker sizing
   columns = list(
     col_n("n"),
-    col_weight("weight"),
+    col_bar("weight"),
     col_group("Results",
       col_interval("HR (95% CI)"),
       col_pvalue("pvalue", "P"),

@@ -293,14 +293,6 @@ col_events("events", "n")
 col_events("events", "n", show_pct = TRUE)
 ```
 
-### col_weight {#col_weight}
-
-Weight column with bar visualization for meta-analysis.
-
-```r
-col_weight(field = "weight", header = "Weight", width = 100)
-```
-
 ### col_icon {#col_icon}
 
 Icon column for displaying emoji or unicode symbols.
@@ -443,7 +435,7 @@ forest_plot(data,
   label = "study",
   columns = list(
     col_n("n"),
-    col_weight("weight"),
+    col_bar("weight"),
     col_interval("HR (95% CI)"),
     col_pvalue("pval")
   ),

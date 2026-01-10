@@ -559,18 +559,6 @@ col_events <- function(
   web_col(synthetic_field, header, type = "custom", width = width, options = opts, ...)
 }
 
-# Deprecated alias
-#' @rdname col_bar
-#' @param show_bar Show as bar chart (default TRUE)
-#' @export
-col_weight <- function(field = "weight", header = "Weight", show_bar = TRUE, ...) {
-  if (show_bar) {
-    col_bar(field, header, ...)
-  } else {
-    col_numeric(field, header, ...)
-  }
-}
-
 # ============================================================================
 # New Column Helpers
 # ============================================================================

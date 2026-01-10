@@ -22,7 +22,7 @@ forest_plot(
   columns = list(
     col_numeric("n", "N"),
     col_numeric("events", "Events"),
-    col_weight("weight"),
+    col_bar("weight"),
     col_interval("HR (95% CI)")
   ),
   theme = web_theme_minimal(),

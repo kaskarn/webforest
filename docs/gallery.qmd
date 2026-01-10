@@ -617,7 +617,7 @@ forest_plot(
   label = "study", group = c("program", "phase"),
   columns = list(
     col_n("n"),
-    col_weight("weight"),
+    col_bar("weight"),
     col_group("Results",
       col_interval("HR (95% CI)"),
       col_pvalue("pvalue", "P"),
@@ -776,7 +776,7 @@ forest_plot(
       position = "left"
     ),
     col_group("Results",
-      col_weight("weight"),
+      col_bar("weight"),
       col_interval("HR (95% CI)"),
       position = "right"
     )
