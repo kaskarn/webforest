@@ -790,10 +790,11 @@ function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptio
   const nullValue = spec.data.nullValue;
 
   // Extract axis config with defaults
-  const padding = axisConfig?.padding ?? 0.10;
+  const padding = axisConfig?.padding ?? 0.15;
   const includeNull = axisConfig?.includeNull ?? true;
   const symmetric = axisConfig?.symmetric;  // null = auto
   const markerMargin = axisConfig?.markerMargin ?? true;
+  const ciTruncationThreshold = axisConfig?.ciTruncationThreshold ?? 3.0;
 
   // Guard against R serialization returning {} instead of null for missing values
   const hasExplicitMin = typeof axisConfig?.rangeMin === "number";
@@ -821,14 +822,36 @@ function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptio
         maxEst = Math.max(maxEst, nullValue);
       }
 
-      // Calculate estimate range for padding
+      // Calculate estimate range for CI truncation threshold
       const estimateRange = maxEst - minEst || 1;
+      const truncationLimit = estimateRange * ciTruncationThreshold;
 
-      // Step 3: Add padding as fraction of estimate range
+      // Step 3: Extend range to include CI bounds within truncation threshold
+      // This reduces how often CIs get truncated (shown with arrows)
+      const lowerBounds = rows
+        .map((r) => r.lower)
+        .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
+      const upperBounds = rows
+        .map((r) => r.upper)
+        .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
+
+      // Include CI bounds that are within the truncation threshold
+      for (const lb of lowerBounds) {
+        if (minEst - lb <= truncationLimit) {
+          minEst = Math.min(minEst, lb);
+        }
+      }
+      for (const ub of upperBounds) {
+        if (ub - maxEst <= truncationLimit) {
+          maxEst = Math.max(maxEst, ub);
+        }
+      }
+
+      // Step 4: Add padding as fraction of the range
       let domainMin = hasExplicitMin ? axisConfig.rangeMin! : minEst - estimateRange * padding;
       let domainMax = hasExplicitMax ? axisConfig.rangeMax! : maxEst + estimateRange * padding;
 
-      // Step 4: Apply symmetry around null if configured
+      // Step 5: Apply symmetry around null if configured
       const hasEffectsBothSides = pointEstimates.some(e => e < nullValue) &&
                                    pointEstimates.some(e => e > nullValue);
       const shouldBeSymmetric = symmetric === true || (symmetric === null && hasEffectsBothSides);
@@ -1689,8 +1712,8 @@ function renderInterval(
       // Build left end: whisker or arrow
       let leftEnd = "";
       if (clippedLeft) {
-        // Arrow pointing left
-        leftEnd = `<path d="M ${minX + 4} ${effectY} L ${minX + 10} ${effectY - 4} L ${minX + 10} ${effectY + 4} Z" fill="${lineColor}"/>`;
+        // Arrow pointing left - tip at edge so line is hidden beneath
+        leftEnd = `<path d="M ${minX} ${effectY} L ${minX + 6} ${effectY - 4} L ${minX + 6} ${effectY + 4} Z" fill="${lineColor}"/>`;
       } else {
         // Normal whisker
         leftEnd = `<line x1="${clampedX1}" x2="${clampedX1}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
@@ -1699,8 +1722,8 @@ function renderInterval(
       // Build right end: whisker or arrow
       let rightEnd = "";
       if (clippedRight) {
-        // Arrow pointing right
-        rightEnd = `<path d="M ${maxX - 4} ${effectY} L ${maxX - 10} ${effectY - 4} L ${maxX - 10} ${effectY + 4} Z" fill="${lineColor}"/>`;
+        // Arrow pointing right - tip at edge so line is hidden beneath
+        rightEnd = `<path d="M ${maxX} ${effectY} L ${maxX - 6} ${effectY - 4} L ${maxX - 6} ${effectY + 4} Z" fill="${lineColor}"/>`;
       } else {
         // Normal whisker
         rightEnd = `<line x1="${clampedX2}" x2="${clampedX2}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
