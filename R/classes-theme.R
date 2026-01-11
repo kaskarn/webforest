@@ -231,18 +231,21 @@ GroupHeaderStyles <- new_class(
     # Level 1 (top-level groups, like h1)
     level1_font_size = new_property(class_character, default = "1rem"),
     level1_font_weight = new_property(class_numeric, default = 700),
+    level1_italic = new_property(class_logical, default = FALSE),
     level1_background = new_property(class_any, default = NULL),  # NULL = computed
     level1_border_bottom = new_property(class_logical, default = FALSE),
 
     # Level 2 (like h2)
     level2_font_size = new_property(class_character, default = "0.9375rem"),
-    level2_font_weight = new_property(class_numeric, default = 600),
+    level2_font_weight = new_property(class_numeric, default = 500),
+    level2_italic = new_property(class_logical, default = TRUE),
     level2_background = new_property(class_any, default = NULL),  # NULL = computed
     level2_border_bottom = new_property(class_logical, default = FALSE),
 
     # Level 3+ (like h3)
     level3_font_size = new_property(class_character, default = "0.875rem"),
-    level3_font_weight = new_property(class_numeric, default = 500),
+    level3_font_weight = new_property(class_numeric, default = 400),
+    level3_italic = new_property(class_logical, default = FALSE),
     level3_background = new_property(class_any, default = NULL),  # NULL = computed
     level3_border_bottom = new_property(class_logical, default = FALSE),
 
@@ -914,15 +917,18 @@ set_layout <- function(
 #' @param theme A WebTheme object
 #' @param level1_font_size Font size for top-level groups (default: "1rem")
 #' @param level1_font_weight Font weight for top-level groups (default: 700)
-#' @param level1_background Background color for level 1. NULL = computed from primary at 8% opacity.
+#' @param level1_italic Use italic text for level 1 headers (default: FALSE)
+#' @param level1_background Background color for level 1. NULL = computed from primary at 15% opacity.
 #' @param level1_border_bottom Show bottom border on level 1 headers (default: FALSE)
 #' @param level2_font_size Font size for second-level groups (default: "0.9375rem")
-#' @param level2_font_weight Font weight for second-level groups (default: 600)
-#' @param level2_background Background color for level 2. NULL = computed from primary at 5% opacity.
+#' @param level2_font_weight Font weight for second-level groups (default: 500)
+#' @param level2_italic Use italic text for level 2 headers (default: TRUE)
+#' @param level2_background Background color for level 2. NULL = computed from primary at 10% opacity.
 #' @param level2_border_bottom Show bottom border on level 2 headers (default: FALSE)
 #' @param level3_font_size Font size for third-level and deeper groups (default: "0.875rem")
-#' @param level3_font_weight Font weight for third-level groups (default: 500)
-#' @param level3_background Background color for level 3+. NULL = computed from primary at 3% opacity.
+#' @param level3_font_weight Font weight for third-level groups (default: 400)
+#' @param level3_italic Use italic text for level 3+ headers (default: FALSE)
+#' @param level3_background Background color for level 3+. NULL = computed from primary at 6% opacity.
 #' @param level3_border_bottom Show bottom border on level 3+ headers (default: FALSE)
 #' @param indent_per_level Indentation per nesting level in pixels (default: 16)
 #'
@@ -932,6 +938,7 @@ set_layout <- function(
 #' web_theme_default() |>
 #'   set_group_headers(
 #'     level1_font_weight = 800,
+#'     level2_italic = FALSE,
 #'     level1_background = "#f0f9ff",
 #'     indent_per_level = 24
 #'   )
@@ -939,14 +946,17 @@ set_group_headers <- function(
     theme,
     level1_font_size = NULL,
     level1_font_weight = NULL,
+    level1_italic = NULL,
     level1_background = NULL,
     level1_border_bottom = NULL,
     level2_font_size = NULL,
     level2_font_weight = NULL,
+    level2_italic = NULL,
     level2_background = NULL,
     level2_border_bottom = NULL,
     level3_font_size = NULL,
     level3_font_weight = NULL,
+    level3_italic = NULL,
     level3_background = NULL,
     level3_border_bottom = NULL,
     indent_per_level = NULL
@@ -956,14 +966,17 @@ set_group_headers <- function(
 
   if (!is.null(level1_font_size)) current@level1_font_size <- level1_font_size
   if (!is.null(level1_font_weight)) current@level1_font_weight <- level1_font_weight
+  if (!is.null(level1_italic)) current@level1_italic <- level1_italic
   if (!is.null(level1_background)) current@level1_background <- level1_background
   if (!is.null(level1_border_bottom)) current@level1_border_bottom <- level1_border_bottom
   if (!is.null(level2_font_size)) current@level2_font_size <- level2_font_size
   if (!is.null(level2_font_weight)) current@level2_font_weight <- level2_font_weight
+  if (!is.null(level2_italic)) current@level2_italic <- level2_italic
   if (!is.null(level2_background)) current@level2_background <- level2_background
   if (!is.null(level2_border_bottom)) current@level2_border_bottom <- level2_border_bottom
   if (!is.null(level3_font_size)) current@level3_font_size <- level3_font_size
   if (!is.null(level3_font_weight)) current@level3_font_weight <- level3_font_weight
+  if (!is.null(level3_italic)) current@level3_italic <- level3_italic
   if (!is.null(level3_background)) current@level3_background <- level3_background
   if (!is.null(level3_border_bottom)) current@level3_border_bottom <- level3_border_bottom
   if (!is.null(indent_per_level)) current@indent_per_level <- indent_per_level

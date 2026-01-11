@@ -311,14 +311,17 @@ serialize_theme <- function(theme) {
     groupHeaders = list(
       level1FontSize = theme@group_headers@level1_font_size,
       level1FontWeight = theme@group_headers@level1_font_weight,
+      level1Italic = theme@group_headers@level1_italic,
       level1Background = theme@group_headers@level1_background,
       level1BorderBottom = theme@group_headers@level1_border_bottom,
       level2FontSize = theme@group_headers@level2_font_size,
       level2FontWeight = theme@group_headers@level2_font_weight,
+      level2Italic = theme@group_headers@level2_italic,
       level2Background = theme@group_headers@level2_background,
       level2BorderBottom = theme@group_headers@level2_border_bottom,
       level3FontSize = theme@group_headers@level3_font_size,
       level3FontWeight = theme@group_headers@level3_font_weight,
+      level3Italic = theme@group_headers@level3_italic,
       level3Background = theme@group_headers@level3_background,
       level3BorderBottom = theme@group_headers@level3_border_bottom,
       indentPerLevel = theme@group_headers@indent_per_level

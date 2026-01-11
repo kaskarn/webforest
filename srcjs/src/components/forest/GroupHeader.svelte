@@ -13,27 +13,30 @@
   // Get level-specific styles from theme
   function getLevelStyles(level: number, theme: WebTheme | undefined) {
     const gh = theme?.groupHeaders;
-    if (!gh) return { fontSize: undefined, fontWeight: undefined, background: undefined, borderBottom: false };
+    if (!gh) return { fontSize: undefined, fontWeight: undefined, italic: false, background: undefined, borderBottom: false };
 
     if (level === 1) {
       return {
         fontSize: gh.level1FontSize,
         fontWeight: gh.level1FontWeight,
-        background: gh.level1Background ?? computeBackground(theme, 0.08),
+        italic: gh.level1Italic,
+        background: gh.level1Background ?? computeBackground(theme, 0.15),
         borderBottom: gh.level1BorderBottom,
       };
     } else if (level === 2) {
       return {
         fontSize: gh.level2FontSize,
         fontWeight: gh.level2FontWeight,
-        background: gh.level2Background ?? computeBackground(theme, 0.05),
+        italic: gh.level2Italic,
+        background: gh.level2Background ?? computeBackground(theme, 0.10),
         borderBottom: gh.level2BorderBottom,
       };
     } else {
       return {
         fontSize: gh.level3FontSize,
         fontWeight: gh.level3FontWeight,
-        background: gh.level3Background ?? computeBackground(theme, 0.03),
+        italic: gh.level3Italic,
+        background: gh.level3Background ?? computeBackground(theme, 0.06),
         borderBottom: gh.level3BorderBottom,
       };
     }
@@ -58,6 +61,7 @@
 <div
   class="group-header"
   class:has-border={levelStyles.borderBottom}
+  class:italic={levelStyles.italic}
   aria-expanded={!group.collapsed}
   style:font-size={levelStyles.fontSize}
   style:font-weight={levelStyles.fontWeight}
@@ -85,6 +89,10 @@
 
   .group-header.has-border {
     border-bottom: 1px solid var(--wf-border, #e2e8f0);
+  }
+
+  .group-header.italic {
+    font-style: italic;
   }
 
   .group-chevron {

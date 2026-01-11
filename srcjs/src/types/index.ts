@@ -343,14 +343,17 @@ export interface LayoutConfig {
 export interface GroupHeaderStyles {
   level1FontSize: string;
   level1FontWeight: number;
+  level1Italic: boolean;
   level1Background: string | null;
   level1BorderBottom: boolean;
   level2FontSize: string;
   level2FontWeight: number;
+  level2Italic: boolean;
   level2Background: string | null;
   level2BorderBottom: boolean;
   level3FontSize: string;
   level3FontWeight: number;
+  level3Italic: boolean;
   level3Background: string | null;
   level3BorderBottom: boolean;
   indentPerLevel: number;

@@ -407,14 +407,17 @@ set_group_headers(
   theme,
   level1_font_size = NULL,
   level1_font_weight = NULL,
+  level1_italic = NULL,
   level1_background = NULL,
   level1_border_bottom = NULL,
   level2_font_size = NULL,
   level2_font_weight = NULL,
+  level2_italic = NULL,
   level2_background = NULL,
   level2_border_bottom = NULL,
   level3_font_size = NULL,
   level3_font_weight = NULL,
+  level3_italic = NULL,
   level3_background = NULL,
   level3_border_bottom = NULL,
   indent_per_level = NULL
@@ -425,14 +428,17 @@ set_group_headers(
 |----------|---------|-------------|
 | `level1_font_size` | `"1rem"` | Font size for top-level groups |
 | `level1_font_weight` | `700` | Font weight for top-level groups |
+| `level1_italic` | `FALSE` | Use italic text for level 1 |
 | `level1_background` | `NULL` | Background color (NULL = 15% primary opacity) |
-| `level1_border_bottom` | `TRUE` | Show bottom border on level 1 |
+| `level1_border_bottom` | `FALSE` | Show bottom border on level 1 |
 | `level2_font_size` | `"0.9375rem"` | Font size for second-level groups |
-| `level2_font_weight` | `600` | Font weight for second-level groups |
+| `level2_font_weight` | `500` | Font weight for second-level groups |
+| `level2_italic` | `TRUE` | Use italic text for level 2 |
 | `level2_background` | `NULL` | Background color (NULL = 10% primary opacity) |
-| `level2_border_bottom` | `TRUE` | Show bottom border on level 2 |
+| `level2_border_bottom` | `FALSE` | Show bottom border on level 2 |
 | `level3_font_size` | `"0.875rem"` | Font size for third-level groups |
-| `level3_font_weight` | `500` | Font weight for third-level groups |
+| `level3_font_weight` | `400` | Font weight for third-level groups |
+| `level3_italic` | `FALSE` | Use italic text for level 3+ |
 | `level3_background` | `NULL` | Background color (NULL = 6% primary opacity) |
 | `level3_border_bottom` | `FALSE` | Show bottom border on level 3+ |
 | `indent_per_level` | `16` | Indentation per nesting level (px) |
@@ -442,6 +448,7 @@ set_group_headers(
 web_theme_default() |>
   set_group_headers(
     level1_font_weight = 800,
+    level2_italic = FALSE,  # Disable default italic on level 2
     level1_background = "#f0f9ff",
     indent_per_level = 24
   )
@@ -489,10 +496,11 @@ web_theme_default() |>
     level1_font_weight = 800,
     level1_background = "#e0f2fe",  # Light blue
     level2_font_size = "0.95rem",
-    level2_font_weight = 600,
+    level2_font_weight = 500,
+    level2_italic = TRUE,           # Italic for level 2 (default)
     level2_background = "#f0f9ff",  # Lighter blue
     level3_font_size = "0.875rem",
-    level3_font_weight = 500,
+    level3_font_weight = 400,
     level3_background = "#fafafa"   # Near white
   )
 ```

@@ -1120,22 +1120,26 @@ function renderGroupHeader(
 
   let fontSize: number;
   let fontWeight: number;
+  let italic: boolean;
   let background: string | null;
   let borderBottom: boolean;
 
   if (level === 1) {
     fontSize = parseFontSize(gh?.level1FontSize ?? theme.typography.fontSizeBase);
     fontWeight = gh?.level1FontWeight ?? theme.typography.fontWeightBold;
+    italic = gh?.level1Italic ?? false;
     background = gh?.level1Background ?? null;
-    borderBottom = gh?.level1BorderBottom ?? true;
+    borderBottom = gh?.level1BorderBottom ?? false;
   } else if (level === 2) {
     fontSize = parseFontSize(gh?.level2FontSize ?? theme.typography.fontSizeBase);
     fontWeight = gh?.level2FontWeight ?? theme.typography.fontWeightMedium;
+    italic = gh?.level2Italic ?? true;
     background = gh?.level2Background ?? null;
-    borderBottom = gh?.level2BorderBottom ?? true;
+    borderBottom = gh?.level2BorderBottom ?? false;
   } else {
     fontSize = parseFontSize(gh?.level3FontSize ?? theme.typography.fontSizeBase);
     fontWeight = gh?.level3FontWeight ?? theme.typography.fontWeightNormal;
+    italic = gh?.level3Italic ?? false;
     background = gh?.level3Background ?? null;
     borderBottom = gh?.level3BorderBottom ?? false;
   }
@@ -1167,10 +1171,11 @@ function renderGroupHeader(
   }
 
   // Group header text
+  const fontStyle = italic ? ' font-style="italic"' : '';
   lines.push(`<text x="${x + SPACING.TEXT_PADDING + indent}" y="${textY}"
     font-family="${theme.typography.fontFamily}"
     font-size="${fontSize}px"
-    font-weight="${fontWeight}"
+    font-weight="${fontWeight}"${fontStyle}
     fill="${theme.colors.foreground}">${escapeXml(label)}</text>`);
 
   return lines.join("\n");
