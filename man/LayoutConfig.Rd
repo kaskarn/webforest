@@ -33,8 +33,6 @@ LayoutConfig(
 LayoutConfig: Layout and visual configuration
 }
 \details{
-Container styling can also be modified using \code{\link[=set_container]{set_container()}}.
-
 Note: \code{cell_padding_x} and \code{cell_padding_y} have been moved to the \link{Spacing} class.
 Use \code{\link[=set_spacing]{set_spacing()}} to modify cell padding.
 }

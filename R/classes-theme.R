@@ -183,8 +183,6 @@ AxisConfig <- new_class(
 #' @param container_border_radius Corner radius for container in pixels (default: 8)
 #'
 #' @details
-#' Container styling can also be modified using [set_container()].
-#'
 #' Note: `cell_padding_x` and `cell_padding_y` have been moved to the [Spacing] class.
 #' Use [set_spacing()] to modify cell padding.
 #'
@@ -912,43 +910,6 @@ set_layout <- function(
   }
   if (!is.null(container_border)) current@container_border <- container_border
   if (!is.null(container_border_radius)) current@container_border_radius <- container_border_radius
-
-  theme@layout <- current
-  theme
-}
-
-#' Modify container appearance
-#'
-#' Pipe-friendly function to style the outer container of the forest plot.
-#' Controls the border and corner radius of the plot wrapper.
-#'
-#' @param theme A WebTheme object
-#' @param border Show border around the container (default: FALSE).
-#'   When TRUE, displays a 1px solid border using the theme's border color.
-#' @param border_radius Corner radius in pixels (default: 8).
-#'   Set to 0 for sharp corners. Only visible when `border = TRUE` or
-#'   when container has a background color.
-#'
-#' @return Modified WebTheme object
-#' @export
-#' @examples
-#' # Add a subtle border with rounded corners
-#' web_theme_default() |>
-#'   set_container(border = TRUE, border_radius = 8)
-#'
-#' # Sharp corners, no border
-#' web_theme_default() |>
-#'   set_container(border = FALSE, border_radius = 0)
-set_container <- function(
-    theme,
-    border = NULL,
-    border_radius = NULL
-) {
-  stopifnot(S7_inherits(theme, WebTheme))
-  current <- theme@layout
-
-  if (!is.null(border)) current@container_border <- border
-  if (!is.null(border_radius)) current@container_border_radius <- border_radius
 
   theme@layout <- current
   theme

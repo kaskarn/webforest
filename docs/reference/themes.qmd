@@ -326,34 +326,6 @@ set_layout(
 | `container_border` | `FALSE` | Show container border |
 | `container_border_radius` | `8` | Container border radius in pixels |
 
-### set_container {#set_container}
-
-Customize the outer container appearance. This is a convenience function for container-specific styling.
-
-```r
-set_container(
-  theme,
-  border = NULL,
-  border_radius = NULL
-)
-```
-
-| Argument | Default | Description |
-|----------|---------|-------------|
-| `border` | `FALSE` | Show border around the container |
-| `border_radius` | `8` | Corner radius in pixels |
-
-**Examples**:
-```r
-# Add a subtle border with rounded corners
-web_theme_default() |>
-  set_container(border = TRUE, border_radius = 8)
-
-# Sharp corners, no border
-web_theme_default() |>
-  set_container(border = FALSE, border_radius = 0)
-```
-
 ### set_group_headers {#set_group_headers}
 
 Customize hierarchical styling for nested row groups (h1/h2/h3-style visual hierarchy).
