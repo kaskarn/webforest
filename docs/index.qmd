@@ -139,7 +139,8 @@ Learn how to use webforest:
 | [Quick Start](guide/quick-start.qmd) | Installation and basic usage |
 | [Themes](guide/themes.qmd) | Preset themes and customization |
 | [Columns](guide/columns.qmd) | Data columns and special formatting |
-| [Grouping & Rows](guide/grouping-rows.qmd) | Hierarchical data and row styling |
+| [Grouping Studies](guide/grouping.qmd) | Collapsible groups from column values |
+| [Row Styling](guide/row-styling.qmd) | Headers, summaries, indentation, and badges |
 | [Exporting](guide/exporting.qmd) | Save plots as SVG, PNG, or PDF |
 | [Axis & Annotations](guide/axis-annotations.qmd) | Axis control and reference lines |
 

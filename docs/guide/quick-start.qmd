@@ -225,6 +225,7 @@ forest_plot(direction_data,
 | [Customizing Plots](fluent-api.qmd) | Build plots step-by-step with the fluent API |
 | [Themes](themes.qmd) | Preset themes and customization |
 | [Columns](columns.qmd) | Data columns with special formatting |
-| [Grouping & Rows](grouping-rows.qmd) | Organize studies into collapsible groups |
+| [Grouping Studies](grouping.qmd) | Organize studies into collapsible groups |
+| [Row Styling](row-styling.qmd) | Headers, summaries, indentation, and badges |
 | [Cell Styling](cell-styling.qmd) | Conditional formatting for individual cells |
 | [Exporting](exporting.qmd) | Save plots as SVG, PNG, or PDF |

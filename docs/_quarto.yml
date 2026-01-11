@@ -23,8 +23,10 @@ website:
             href: guide/themes.qmd
           - text: "Columns"
             href: guide/columns.qmd
-          - text: "Grouping & Rows"
-            href: guide/grouping-rows.qmd
+          - text: "Grouping Studies"
+            href: guide/grouping.qmd
+          - text: "Row Styling"
+            href: guide/row-styling.qmd
           - text: "Cell Styling"
             href: guide/cell-styling.qmd
           - text: "Interactivity & Tooltips"
