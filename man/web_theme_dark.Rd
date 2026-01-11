@@ -13,5 +13,7 @@ forest_theme_dark()
 A WebTheme object with dark mode colors
 }
 \description{
-Create a dark theme
+Sophisticated dark mode theme inspired by Catppuccin Mocha palette.
+Features muted, comfortable colors with reduced contrast for extended
+viewing. Blue-tinted accents and soft pastel markers.
 }

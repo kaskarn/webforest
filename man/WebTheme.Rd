@@ -17,6 +17,8 @@
 \item{axis}{AxisConfig object}
 
 \item{layout}{LayoutConfig object}
+
+\item{group_headers}{GroupHeaderStyles object for nested row group hierarchy}
 }
 \description{
 WebTheme: Complete theme specification

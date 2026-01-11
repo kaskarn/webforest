@@ -10,6 +10,7 @@ web_theme_cochrane()
 A WebTheme object
 }
 \description{
-Theme designed for Cochrane systematic reviews.
-Uses Cochrane blue (#0099CC), Arial font, compact spacing, and no border radius.
+Theme designed for Cochrane systematic reviews and meta-analyses.
+Uses Cochrane teal (#0099CC), Arial font, compact spacing optimized
+for data density. Clean, utilitarian design with no decorative elements.
 }

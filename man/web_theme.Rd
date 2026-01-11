@@ -12,6 +12,7 @@ web_theme(
   shapes = NULL,
   axis = NULL,
   layout = NULL,
+  group_headers = NULL,
   base_theme = web_theme_default()
 )
 }
@@ -29,6 +30,8 @@ web_theme(
 \item{axis}{Named list of axis config overrides}
 
 \item{layout}{Named list of layout config overrides}
+
+\item{group_headers}{Named list of group header style overrides}
 
 \item{base_theme}{Base theme to extend (default: web_theme_default())}
 }

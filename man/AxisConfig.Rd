@@ -10,7 +10,13 @@ AxisConfig(
   tick_count = NA_real_,
   tick_values = NULL,
   gridlines = FALSE,
-  gridline_style = "dotted"
+  gridline_style = "dotted",
+  padding = 0.1,
+  ci_truncation_threshold = 2,
+  include_null = TRUE,
+  symmetric = NULL,
+  null_tick = TRUE,
+  marker_margin = TRUE
 )
 }
 \arguments{
@@ -25,7 +31,36 @@ AxisConfig(
 \item{gridlines}{Show gridlines on the plot}
 
 \item{gridline_style}{Style of gridlines: "solid", "dashed", or "dotted"}
+
+\item{padding}{Fraction of estimate range to add as padding on each side (default: 0.10)}
+
+\item{ci_truncation_threshold}{Truncate CIs extending beyond this multiple of
+the estimate range (default: 2.0). Use \code{Inf} to never truncate.}
+
+\item{include_null}{Always include the null value in the axis range (default: TRUE)}
+
+\item{symmetric}{Make axis symmetric around null value (default: NULL for auto,
+which enables symmetry only when effects appear on both sides of null)}
+
+\item{null_tick}{Always show a tick at the null value (default: TRUE)}
+
+\item{marker_margin}{Add half-marker-width padding at edges so markers don't clip (default: TRUE)}
 }
 \description{
-AxisConfig: Axis rendering configuration
+Controls how the x-axis range and ticks are calculated.
 }
+\section{Auto-Scaling Algorithm}{
+
+When \code{range_min}/\code{range_max} are NA (auto), the axis range is calculated as:
+\enumerate{
+\item Collect all point estimates (not CI bounds)
+\item Extend range to include null value (if \code{include_null = TRUE})
+\item Add padding as a fraction of the estimate range
+\item Optionally make symmetric around null (if \code{symmetric = TRUE})
+\item Apply nice rounding for clean tick values
+}
+
+CIs extending beyond \verb{ci_truncation_threshold × estimate_range} are truncated
+with arrow indicators rather than expanding the axis.
+}
+

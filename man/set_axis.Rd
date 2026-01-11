@@ -4,12 +4,50 @@
 \alias{set_axis}
 \title{Modify theme axis configuration}
 \usage{
-set_axis(theme, ...)
+set_axis(
+  theme,
+  range_min = NULL,
+  range_max = NULL,
+  tick_count = NULL,
+  tick_values = NULL,
+  gridlines = NULL,
+  gridline_style = NULL,
+  padding = NULL,
+  ci_truncation_threshold = NULL,
+  include_null = NULL,
+  symmetric = NULL,
+  null_tick = NULL,
+  marker_margin = NULL
+)
 }
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named axis config values to override}
+\item{range_min}{Minimum axis value. NA for auto-calculation from data.}
+
+\item{range_max}{Maximum axis value. NA for auto-calculation from data.}
+
+\item{tick_count}{Target number of axis ticks. NA for auto-calculation.}
+
+\item{tick_values}{Explicit tick positions as numeric vector. Overrides tick_count.}
+
+\item{gridlines}{Show vertical gridlines on plot (default: FALSE)}
+
+\item{gridline_style}{Gridline style: "solid", "dashed", or "dotted" (default: "dotted")}
+
+\item{padding}{Fraction of data range to add as padding (default: 0.10, range: 0-1)}
+
+\item{ci_truncation_threshold}{Truncate CIs beyond this multiple of estimate range (default: 2.0).
+Use Inf to never truncate.}
+
+\item{include_null}{Always include null value in axis range (default: TRUE)}
+
+\item{symmetric}{Make axis symmetric around null value. NULL for auto-detection,
+TRUE/FALSE to force.}
+
+\item{null_tick}{Always show a tick at the null value (default: TRUE)}
+
+\item{marker_margin}{Add half-marker-width padding at edges to prevent clipping (default: TRUE)}
 }
 \value{
 Modified WebTheme object

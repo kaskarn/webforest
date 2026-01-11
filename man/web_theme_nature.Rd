@@ -10,6 +10,8 @@ web_theme_nature()
 A WebTheme object
 }
 \description{
-Theme following Nature family journal styling.
-Uses Nature blue (#1976D2), Helvetica Neue font, and modern clean aesthetic.
+Theme following Nature family journal styling guidelines.
+Uses Nature blue (#1976D2), Helvetica Neue font with tight letter-spacing,
+and precise, refined aesthetic. Balanced between academic rigor and
+modern digital readability.
 }

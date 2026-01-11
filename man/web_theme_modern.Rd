@@ -10,6 +10,8 @@ web_theme_modern()
 A WebTheme object
 }
 \description{
-Clean, contemporary design with generous spacing.
-Uses Inter font family (system fallback) and zinc color palette.
+Bold, contemporary design with vibrant colors and generous spacing.
+Uses Inter font family (system fallback) with zinc color palette.
+Features larger elements, prominent rounded corners, and vivid
+color contrast suitable for digital reports and dashboards.
 }

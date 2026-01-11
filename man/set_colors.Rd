@@ -4,12 +4,54 @@
 \alias{set_colors}
 \title{Modify theme colors}
 \usage{
-set_colors(theme, ...)
+set_colors(
+  theme,
+  background = NULL,
+  foreground = NULL,
+  primary = NULL,
+  secondary = NULL,
+  accent = NULL,
+  muted = NULL,
+  border = NULL,
+  interval = NULL,
+  interval_positive = NULL,
+  interval_negative = NULL,
+  interval_neutral = NULL,
+  interval_line = NULL,
+  summary_fill = NULL,
+  summary_border = NULL
+)
 }
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named color values to override (e.g., primary = "#ff0000")}
+\item{background}{Background color (default: "#ffffff")}
+
+\item{foreground}{Primary text color (default: "#333333")}
+
+\item{primary}{Primary accent color for markers and highlights (default: "#0891b2")}
+
+\item{secondary}{Secondary text/UI color (default: "#64748b")}
+
+\item{accent}{Accent color for emphasis (default: "#8b5cf6")}
+
+\item{muted}{Muted/disabled text color (default: "#94a3b8")}
+
+\item{border}{Border color for containers and dividers (default: "#e2e8f0")}
+
+\item{interval}{Default marker/interval color (default: "#0891b2")}
+
+\item{interval_positive}{Deprecated. Color for favorable effects.}
+
+\item{interval_negative}{Deprecated. Color for unfavorable effects.}
+
+\item{interval_neutral}{Color for neutral effects (default: "#64748b")}
+
+\item{interval_line}{Confidence interval line color (default: "#475569")}
+
+\item{summary_fill}{Summary diamond fill color (default: "#0891b2")}
+
+\item{summary_border}{Summary diamond border color (default: "#0e7490")}
 }
 \value{
 Modified WebTheme object

@@ -11,5 +11,5 @@ A WebTheme object
 }
 \description{
 Large fonts, bold colors, and high contrast.
-Optimized for visibility at distance.
+Optimized for visibility at distance with thick lines and oversized markers.
 }

@@ -13,5 +13,7 @@ forest_theme_publication()
 A WebTheme object
 }
 \description{
-Optimized for publication and print
+Academic publication-ready theme with pure black and white styling.
+Uses serif typography (Georgia) and sharp corners for a classic,
+authoritative look suitable for journal submissions.
 }

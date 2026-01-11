@@ -10,5 +10,6 @@ web_theme_lancet()
 A WebTheme object
 }
 \description{
-Lancet blue palette with serif typography.
+Elegant academic theme with Lancet navy blue and warm gold accents.
+Features refined serif typography with generous spacing.
 }

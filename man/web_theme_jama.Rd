@@ -10,6 +10,8 @@ web_theme_jama()
 A WebTheme object
 }
 \description{
-Black & white, dense layout, optimized for print.
-Follows JAMA (Journal of the American Medical Association) style guidelines.
+Dense, black & white layout optimized for print and medical journals.
+Follows JAMA (Journal of the American Medical Association) style guidelines
+with maximum data density, thick borders, and compact rows. Uses point-based
+font sizes for print consistency.
 }

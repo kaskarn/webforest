@@ -8,8 +8,6 @@ LayoutConfig(
   plot_position = "right",
   table_width = "auto",
   plot_width = "auto",
-  cell_padding_x = 10,
-  cell_padding_y = 4,
   row_border = TRUE,
   row_border_style = "solid",
   container_border = TRUE,
@@ -23,10 +21,6 @@ LayoutConfig(
 
 \item{plot_width}{Width of plot area ("auto" or numeric pixels)}
 
-\item{cell_padding_x}{Horizontal cell padding in pixels}
-
-\item{cell_padding_y}{Vertical cell padding in pixels}
-
 \item{row_border}{Show row borders}
 
 \item{row_border_style}{Style of row borders: "solid", "dashed", or "dotted"}
@@ -37,4 +31,8 @@ LayoutConfig(
 }
 \description{
 LayoutConfig: Layout and visual configuration
+}
+\details{
+Note: \code{cell_padding_x} and \code{cell_padding_y} have been moved to the \link{Spacing} class.
+Use \code{\link[=set_spacing]{set_spacing()}} to modify cell padding.
 }

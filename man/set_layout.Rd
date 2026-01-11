@@ -4,12 +4,39 @@
 \alias{set_layout}
 \title{Modify theme layout configuration}
 \usage{
-set_layout(theme, ...)
+set_layout(
+  theme,
+  plot_position = NULL,
+  table_width = NULL,
+  plot_width = NULL,
+  cell_padding_x = NULL,
+  cell_padding_y = NULL,
+  row_border = NULL,
+  row_border_style = NULL,
+  container_border = NULL,
+  container_border_radius = NULL
+)
 }
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named layout config values to override}
+\item{plot_position}{Position of forest plot: "left" or "right" (default: "right")}
+
+\item{table_width}{Width of table area: "auto" or numeric pixels (default: "auto")}
+
+\item{plot_width}{Width of plot area: "auto" or numeric pixels (default: "auto")}
+
+\item{cell_padding_x}{Deprecated. Use \code{\link[=set_spacing]{set_spacing()}} instead.}
+
+\item{cell_padding_y}{Deprecated. Use \code{\link[=set_spacing]{set_spacing()}} instead.}
+
+\item{row_border}{Show row borders (default: TRUE)}
+
+\item{row_border_style}{Row border style: "solid", "dashed", or "dotted" (default: "solid")}
+
+\item{container_border}{Show container border (default: TRUE)}
+
+\item{container_border_radius}{Container border radius in pixels (default: 8)}
 }
 \value{
 Modified WebTheme object
@@ -19,5 +46,5 @@ Pipe-friendly function to modify layout settings.
 }
 \examples{
 web_theme_default() |>
-  set_layout(plot_position = "left", cell_padding_x = 12)
+  set_layout(plot_position = "left", container_border = FALSE)
 }

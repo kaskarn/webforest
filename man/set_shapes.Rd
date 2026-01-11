@@ -4,12 +4,32 @@
 \alias{set_shapes}
 \title{Modify theme shapes}
 \usage{
-set_shapes(theme, ...)
+set_shapes(
+  theme,
+  point_size = NULL,
+  summary_height = NULL,
+  line_width = NULL,
+  border_radius = NULL,
+  marker_colors = NULL,
+  marker_shapes = NULL
+)
 }
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named shape values to override}
+\item{point_size}{Marker point radius in pixels (default: 6)}
+
+\item{summary_height}{Summary diamond height in pixels (default: 10)}
+
+\item{line_width}{Confidence interval line width in pixels (default: 1.5)}
+
+\item{border_radius}{Border radius for containers in pixels (default: 2)}
+
+\item{marker_colors}{Character vector of colors for multi-effect plots.
+Effects without explicit colors use these in order. NULL uses theme interval color.}
+
+\item{marker_shapes}{Character vector of shapes for multi-effect plots:
+"square", "circle", "diamond", "triangle" (default: all four in order)}
 }
 \value{
 Modified WebTheme object

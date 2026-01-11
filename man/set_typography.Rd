@@ -4,12 +4,36 @@
 \alias{set_typography}
 \title{Modify theme typography}
 \usage{
-set_typography(theme, ...)
+set_typography(
+  theme,
+  font_family = NULL,
+  font_size_sm = NULL,
+  font_size_base = NULL,
+  font_size_lg = NULL,
+  font_weight_normal = NULL,
+  font_weight_medium = NULL,
+  font_weight_bold = NULL,
+  line_height = NULL
+)
 }
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named typography values to override}
+\item{font_family}{CSS font-family string (default: "system-ui, -apple-system, sans-serif")}
+
+\item{font_size_sm}{Small text size, e.g., "0.75rem" or "9pt"}
+
+\item{font_size_base}{Base text size (default: "0.875rem")}
+
+\item{font_size_lg}{Large text size (default: "1rem")}
+
+\item{font_weight_normal}{Normal font weight (default: 400)}
+
+\item{font_weight_medium}{Medium font weight (default: 500)}
+
+\item{font_weight_bold}{Bold font weight (default: 600)}
+
+\item{line_height}{Line height multiplier (default: 1.5)}
 }
 \value{
 Modified WebTheme object

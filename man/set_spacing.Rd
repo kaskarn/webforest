@@ -4,20 +4,36 @@
 \alias{set_spacing}
 \title{Modify theme spacing}
 \usage{
-set_spacing(theme, ...)
+set_spacing(
+  theme,
+  row_height = NULL,
+  header_height = NULL,
+  section_gap = NULL,
+  padding = NULL,
+  axis_gap = NULL,
+  group_padding = NULL,
+  cell_padding_x = NULL,
+  cell_padding_y = NULL
+)
 }
 \arguments{
 \item{theme}{A WebTheme object}
 
-\item{...}{Named spacing values to override. Available properties:
-\itemize{
-\item \code{row_height}: Height of data rows in pixels
-\item \code{header_height}: Height of header row in pixels
-\item \code{section_gap}: Gap between sections in pixels
-\item \code{padding}: Overall padding in pixels
-\item \code{axis_gap}: Gap between table content and x-axis (default 12px)
-\item \code{group_padding}: Left/right padding for column group headers (default 8px)
-}}
+\item{row_height}{Height of data rows in pixels (default: 28)}
+
+\item{header_height}{Height of header row in pixels (default: 36)}
+
+\item{section_gap}{Gap between sections in pixels (default: 16)}
+
+\item{padding}{Overall container padding in pixels (default: 12)}
+
+\item{axis_gap}{Gap between table content and x-axis in pixels (default: 12)}
+
+\item{group_padding}{Left/right padding for column group headers in pixels (default: 8)}
+
+\item{cell_padding_x}{Horizontal cell padding in pixels (default: 10)}
+
+\item{cell_padding_y}{Vertical cell padding in pixels (default: 4)}
 }
 \value{
 Modified WebTheme object
@@ -27,5 +43,5 @@ Pipe-friendly function to modify spacing values.
 }
 \examples{
 web_theme_default() |>
-  set_spacing(row_height = 32, axis_gap = 16, group_padding = 12)
+  set_spacing(row_height = 32, cell_padding_x = 12, cell_padding_y = 6)
 }

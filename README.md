@@ -1,6 +1,7 @@
 # webforest
 
 [![R-CMD-check](https://github.com/kaskarn/webforest/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kaskarn/webforest/actions/workflows/R-CMD-check.yaml)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 **Interactive, publication-ready forest plots for R.** Built with Svelte 5 and D3.js for speed and flexibility.
 
