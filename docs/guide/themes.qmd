@@ -192,11 +192,29 @@ set_colors(
 )
 ```
 
+::: {.callout-note}
+## Color Usage Reference
+
+| Color | Where It's Used |
+|-------|-----------------|
+| `background` | Plot container background, table cells |
+| `foreground` | Primary text: study labels, data values, column headers |
+| `primary` | Row group header backgrounds (at reduced opacity), alternating row stripes, hover/selection highlights |
+| `secondary` | Subtitles, less prominent text elements |
+| `accent` | Reserved for custom use; not used by default forest plot elements |
+| `muted` | Footnotes, captions, disabled/inactive text |
+| `border` | Row dividers, container borders, table grid lines |
+| `interval` | Confidence interval marker fill (squares, circles, diamonds) |
+| `interval_line` | CI whisker lines connecting lower to upper bounds |
+| `summary_fill` | Summary row diamond fill color |
+| `summary_border` | Summary diamond outline/stroke |
+:::
+
 ::: {.callout-tip}
-## Semantic Color Usage
-- Use `interval` for the main marker color
-- Use `interval_line` for the CI whisker lines (often slightly darker/muted)
-- For significant vs non-significant, create columns in your data with computed colors and use `marker_color`
+## Semantic Color Tips
+- Set `interval` and `primary` to the same value for a cohesive look
+- Use a slightly darker `interval_line` than `interval` for subtle depth
+- For conditional coloring (e.g., significant vs non-significant), add a color column to your data and map it with `marker_color` in `web_effect()`
 :::
 
 ### Typography
@@ -306,18 +324,19 @@ Control the hierarchical styling for nested row groups (h1/h2/h3-style visual hi
 
 ```r
 set_group_headers(
-  level1_font_size = "1rem",
-  level1_font_weight = 700,
+  level1_font_size = "0.9375rem",
+  level1_font_weight = 600,
   level1_background = NULL,      # NULL = 15% primary opacity
-  level1_border_bottom = TRUE,
+  level1_border_bottom = FALSE,
 
-  level2_font_size = "0.9375rem",
-  level2_font_weight = 600,
+  level2_font_size = "0.875rem",
+  level2_font_weight = 500,
+  level2_italic = FALSE,
   level2_background = NULL,      # NULL = 10% primary opacity
-  level2_border_bottom = TRUE,
+  level2_border_bottom = FALSE,
 
   level3_font_size = "0.875rem",
-  level3_font_weight = 500,
+  level3_font_weight = 400,
   level3_background = NULL,      # NULL = 6% primary opacity
   level3_border_bottom = FALSE,
 

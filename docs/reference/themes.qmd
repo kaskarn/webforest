@@ -124,22 +124,22 @@ set_colors(
 )
 ```
 
-| Argument | Default | Description |
-|----------|---------|-------------|
-| `background` | `"#ffffff"` | Background color |
-| `foreground` | `"#333333"` | Primary text color |
-| `primary` | `"#0891b2"` | Primary accent color for highlights |
-| `secondary` | `"#64748b"` | Secondary text/UI color |
-| `accent` | `"#8b5cf6"` | Accent color for emphasis |
-| `muted` | `"#94a3b8"` | Muted/disabled text color |
-| `border` | `"#e2e8f0"` | Border color for containers/dividers |
-| `interval` | `"#0891b2"` | Default marker/interval color |
-| `interval_positive` | *(deprecated)* | Color for favorable effects |
-| `interval_negative` | *(deprecated)* | Color for unfavorable effects |
-| `interval_neutral` | `"#64748b"` | Color for neutral effects |
-| `interval_line` | `"#475569"` | Confidence interval line color |
-| `summary_fill` | `"#0891b2"` | Summary diamond fill color |
-| `summary_border` | `"#0e7490"` | Summary diamond border color |
+| Argument | Default | Description | Used For |
+|----------|---------|-------------|----------|
+| `background` | `"#ffffff"` | Background color | Plot container, table cells |
+| `foreground` | `"#333333"` | Primary text color | Labels, data values, headers |
+| `primary` | `"#0891b2"` | Primary accent color | Row group backgrounds, hover states, selection |
+| `secondary` | `"#64748b"` | Secondary text/UI color | Subtitles, less prominent text |
+| `accent` | `"#8b5cf6"` | Accent color for emphasis | Reserved for custom use |
+| `muted` | `"#94a3b8"` | Muted/disabled text color | Footnotes, captions |
+| `border` | `"#e2e8f0"` | Border color | Row dividers, container borders |
+| `interval` | `"#0891b2"` | Default marker/interval color | CI marker fill (squares, circles) |
+| `interval_positive` | *(deprecated)* | Color for favorable effects | — |
+| `interval_negative` | *(deprecated)* | Color for unfavorable effects | — |
+| `interval_neutral` | `"#64748b"` | Color for neutral effects | — |
+| `interval_line` | `"#475569"` | Confidence interval line color | CI whisker lines |
+| `summary_fill` | `"#0891b2"` | Summary diamond fill color | Summary row diamonds |
+| `summary_border` | `"#0e7490"` | Summary diamond border color | Summary diamond outline |
 
 ### set_typography {#set_typography}
 
@@ -358,14 +358,14 @@ set_group_headers(
 
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `level1_font_size` | `"1rem"` | Font size for top-level groups |
-| `level1_font_weight` | `700` | Font weight for top-level groups |
+| `level1_font_size` | `"0.9375rem"` | Font size for top-level groups |
+| `level1_font_weight` | `600` | Font weight for top-level groups |
 | `level1_italic` | `FALSE` | Use italic text for level 1 |
 | `level1_background` | `NULL` | Background color (NULL = 15% primary opacity) |
 | `level1_border_bottom` | `FALSE` | Show bottom border on level 1 |
-| `level2_font_size` | `"0.9375rem"` | Font size for second-level groups |
+| `level2_font_size` | `"0.875rem"` | Font size for second-level groups |
 | `level2_font_weight` | `500` | Font weight for second-level groups |
-| `level2_italic` | `TRUE` | Use italic text for level 2 |
+| `level2_italic` | `FALSE` | Use italic text for level 2 |
 | `level2_background` | `NULL` | Background color (NULL = 10% primary opacity) |
 | `level2_border_bottom` | `FALSE` | Show bottom border on level 2 |
 | `level3_font_size` | `"0.875rem"` | Font size for third-level groups |
