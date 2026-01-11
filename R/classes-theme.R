@@ -117,7 +117,7 @@ Shapes <- new_class(
 #' 4. Optionally make symmetric around null (if `symmetric = TRUE`)
 #' 5. Apply nice rounding for clean tick values
 #'
-#' CIs extending beyond `ci_truncation_threshold × estimate_range` are truncated
+#' CIs extending beyond ci_truncation_threshold \enc{×}{x} estimate_range are truncated
 #' with arrow indicators rather than expanding the axis.
 #'
 #' @param range_min Minimum value for axis (NA = auto from data)

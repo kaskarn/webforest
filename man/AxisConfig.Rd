@@ -60,7 +60,7 @@ When \code{range_min}/\code{range_max} are NA (auto), the axis range is calculat
 \item Apply nice rounding for clean tick values
 }
 
-CIs extending beyond \verb{ci_truncation_threshold × estimate_range} are truncated
+CIs extending beyond ci_truncation_threshold \enc{×}{x} estimate_range are truncated
 with arrow indicators rather than expanding the axis.
 }
 

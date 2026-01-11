@@ -45,7 +45,7 @@ A ColumnSpec object
 \description{
 Display p-values with optional significance stars and smart formatting.
 Very small values are displayed using Unicode superscript notation
-(e.g., 1.2×10⁻⁵) for improved readability.
+(e.g., 1.2\enc{×}{x}10\enc{⁻⁵}{^-5}) for improved readability.
 }
 \examples{
 # Default: 2 significant figures, exponential below 0.001

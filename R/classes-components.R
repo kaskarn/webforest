@@ -331,7 +331,7 @@ col_interval <- function(header = "95% CI", width = NULL, decimals = 2, sep = " 
 #'
 #' Display p-values with optional significance stars and smart formatting.
 #' Very small values are displayed using Unicode superscript notation
-#' (e.g., 1.2×10⁻⁵) for improved readability.
+#' (e.g., 1.2\enc{×}{x}10\enc{⁻⁵}{^-5}) for improved readability.
 #'
 #' @param field Field name (default "pvalue")
 #' @param header Column header (default "P-value")
@@ -572,7 +572,7 @@ col_events <- function(
 #' @param header Column header (default NULL, uses field name)
 #' @param width Column width in pixels (NULL for auto-sizing based on content)
 #' @param mapping Named character vector mapping values to icons/emoji
-#'   (e.g., `c("yes" = "✓", "no" = "✗")`)
+#'   (e.g., `c("yes" = "Y", "no" = "N")` or use actual emoji/unicode)
 #' @param size Icon size: "sm", "base", or "lg" (default "base")
 #' @param color Optional CSS color for the icon (default NULL, uses theme)
 #' @param ... Additional arguments passed to web_col
@@ -584,7 +584,7 @@ col_events <- function(
 #' col_icon("status_icon")
 #'
 #' # Map values to icons
-#' col_icon("result", mapping = c("pass" = "✓", "fail" = "✗", "pending" = "○"))
+#' col_icon("result", mapping = c("pass" = "Y", "fail" = "N", "pending" = "?"))
 #'
 #' # With color
 #' col_icon("status", color = "#16a34a")
@@ -664,7 +664,7 @@ col_badge <- function(
 
 #' Column helper: Star rating
 #'
-#' Display star ratings using Unicode stars (★ filled, ☆ empty).
+#' Display star ratings using Unicode stars (\enc{★}{*} filled, \enc{☆}{o} empty).
 #'
 #' @param field Field name containing numeric rating (1-5 or custom range)
 #' @param header Column header (default NULL, uses field name)

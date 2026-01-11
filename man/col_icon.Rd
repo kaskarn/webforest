@@ -22,7 +22,7 @@ col_icon(
 \item{width}{Column width in pixels (NULL for auto-sizing based on content)}
 
 \item{mapping}{Named character vector mapping values to icons/emoji
-(e.g., \code{c("yes" = "✓", "no" = "✗")})}
+(e.g., \code{c("yes" = "Y", "no" = "N")} or use actual emoji/unicode)}
 
 \item{size}{Icon size: "sm", "base", or "lg" (default "base")}
 
@@ -42,7 +42,7 @@ specific icons using the \code{mapping} parameter.
 col_icon("status_icon")
 
 # Map values to icons
-col_icon("result", mapping = c("pass" = "✓", "fail" = "✗", "pending" = "○"))
+col_icon("result", mapping = c("pass" = "Y", "fail" = "N", "pending" = "?"))
 
 # With color
 col_icon("status", color = "#16a34a")
