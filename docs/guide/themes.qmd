@@ -15,7 +15,7 @@ meta_data <- data.frame(
 )
 ```
 
-webforest includes 9 preset themes designed for different use cases. All themes can be customized using a fluent API.
+Themes control the visual appearance of forest plots—colors, typography, spacing, and shapes. You can use preset themes for common publication styles, or customize every aspect using a fluent pipe-based API.
 
 ::: {.callout-tip}
 ## Theme Design Philosophy
@@ -26,7 +26,24 @@ Each theme is designed with a specific context in mind:
 - **Utility themes** (default, minimal, cochrane): Clean and adaptable
 :::
 
+
+## Component Summary
+
+| Component | Function | Key Properties |
+|-----------|----------|----------------|
+| Colors | `set_colors()` | background, foreground, primary, interval, interval_line |
+| Typography | `set_typography()` | font_family, font_size_*, font_weight_* |
+| Spacing | `set_spacing()` | row_height, header_height, padding, cell_padding_x/y |
+| Shapes | `set_shapes()` | point_size, summary_height, line_width, marker_colors, marker_shapes |
+| Axis | `set_axis()` | range_min/max, tick_count, tick_values, gridlines, symmetric |
+| Layout | `set_layout()` | plot_position, row_border, container_border |
+| Group Headers | `set_group_headers()` | level*_font_size, level*_background, indent_per_level |
+| Markers | `set_marker_colors()`, `set_marker_shapes()` | Multi-effect default colors/shapes |
+
+
 ## Preset Themes
+
+webforest includes 9 preset themes designed for different use cases. All themes can be customized using a fluent API.
 
 ::: {.panel-tabset}
 
@@ -310,19 +327,6 @@ set_group_headers(
 ## Automatic Background Colors
 When `levelN_background = NULL`, the theme automatically computes a subtle background from the primary color at reduced opacity. Override with explicit hex colors for full control.
 :::
-
-## Component Summary
-
-| Component | Function | Key Properties |
-|-----------|----------|----------------|
-| Colors | `set_colors()` | background, foreground, primary, interval, interval_line |
-| Typography | `set_typography()` | font_family, font_size_*, font_weight_* |
-| Spacing | `set_spacing()` | row_height, header_height, padding, cell_padding_x/y |
-| Shapes | `set_shapes()` | point_size, summary_height, line_width, marker_colors, marker_shapes |
-| Axis | `set_axis()` | range_min/max, tick_count, tick_values, gridlines, symmetric |
-| Layout | `set_layout()` | plot_position, row_border, container_border |
-| Group Headers | `set_group_headers()` | level*_font_size, level*_background, indent_per_level |
-| Markers | `set_marker_colors()`, `set_marker_shapes()` | Multi-effect default colors/shapes |
 
 ## Creating Custom Themes
 
