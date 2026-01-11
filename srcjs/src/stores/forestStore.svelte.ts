@@ -116,6 +116,10 @@ export function createForestStore() {
           maxEst = Math.max(maxEst, nullValue);
         }
 
+        // Save core estimate range BEFORE CI extension (for symmetric calculation)
+        const coreMin = minEst;
+        const coreMax = maxEst;
+
         // Calculate estimate range for CI truncation threshold
         const estimateRange = maxEst - minEst || 1;
         const truncationLimit = estimateRange * ciTruncationThreshold;
@@ -156,18 +160,20 @@ export function createForestStore() {
         if (shouldBeSymmetric && !hasExplicitMin && !hasExplicitMax) {
           if (isLog) {
             // Log scale: geometric symmetry around null (e.g., 0.5 and 2.0 are equidistant from 1)
+            // Use CORE estimate range (not CI-extended) to avoid extreme expansion from outlier CIs
             const logNull = Math.log(nullValue);
             const maxLogDist = Math.max(
-              Math.abs(Math.log(Math.max(domainMin, 0.001)) - logNull),
-              Math.abs(Math.log(domainMax) - logNull)
+              Math.abs(Math.log(Math.max(coreMin, 0.001)) - logNull),
+              Math.abs(Math.log(coreMax) - logNull)
             );
             domainMin = Math.exp(logNull - maxLogDist);
             domainMax = Math.exp(logNull + maxLogDist);
           } else {
             // Linear scale: arithmetic symmetry
+            // Use CORE estimate range (not CI-extended) to avoid extreme expansion
             const maxDist = Math.max(
-              Math.abs(domainMin - nullValue),
-              Math.abs(domainMax - nullValue)
+              Math.abs(coreMin - nullValue),
+              Math.abs(coreMax - nullValue)
             );
             domainMin = nullValue - maxDist;
             domainMax = nullValue + maxDist;
