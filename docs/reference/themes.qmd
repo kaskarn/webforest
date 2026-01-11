@@ -127,11 +127,11 @@ set_colors(
 | Argument | Default | Description | Used For |
 |----------|---------|-------------|----------|
 | `background` | `"#ffffff"` | Background color | Plot container, table cells |
-| `foreground` | `"#333333"` | Primary text color | Labels, data values, headers |
+| `foreground` | `"#333333"` | Primary text color | Labels, data values, headers; `row_emphasis` text |
 | `primary` | `"#0891b2"` | Primary accent color | Row group backgrounds, hover states, selection |
-| `secondary` | `"#64748b"` | Secondary text/UI color | Subtitles, less prominent text |
-| `accent` | `"#8b5cf6"` | Accent color for emphasis | Reserved for custom use |
-| `muted` | `"#94a3b8"` | Muted/disabled text color | Footnotes, captions |
+| `secondary` | `"#64748b"` | Secondary text/UI color | Subtitles, less prominent UI text |
+| `accent` | `"#8b5cf6"` | Accent color | `row_accent` text styling, annotation labels |
+| `muted` | `"#94a3b8"` | Muted text color | Footnotes, captions; `row_muted` text styling |
 | `border` | `"#e2e8f0"` | Border color | Row dividers, container borders |
 | `interval` | `"#0891b2"` | Default marker/interval color | CI marker fill (squares, circles) |
 | `interval_positive` | *(deprecated)* | Color for favorable effects | — |
