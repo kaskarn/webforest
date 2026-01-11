@@ -230,21 +230,21 @@ LayoutConfig <- new_class(
 GroupHeaderStyles <- new_class(
   "GroupHeaderStyles",
   properties = list(
-    # Level 1 (top-level groups, like h1)
-    level1_font_size = new_property(class_character, default = "1rem"),
-    level1_font_weight = new_property(class_numeric, default = 700),
+    # Level 1 (top-level groups) - subtle prominence, close to base font
+    level1_font_size = new_property(class_character, default = "0.9375rem"),
+    level1_font_weight = new_property(class_numeric, default = 600),
     level1_italic = new_property(class_logical, default = FALSE),
     level1_background = new_property(class_any, default = NULL),  # NULL = computed
     level1_border_bottom = new_property(class_logical, default = FALSE),
 
-    # Level 2 (like h2)
-    level2_font_size = new_property(class_character, default = "0.9375rem"),
+    # Level 2 - same as base font, medium weight
+    level2_font_size = new_property(class_character, default = "0.875rem"),
     level2_font_weight = new_property(class_numeric, default = 500),
-    level2_italic = new_property(class_logical, default = TRUE),
+    level2_italic = new_property(class_logical, default = FALSE),
     level2_background = new_property(class_any, default = NULL),  # NULL = computed
     level2_border_bottom = new_property(class_logical, default = FALSE),
 
-    # Level 3+ (like h3)
+    # Level 3+ - same as base font, normal weight
     level3_font_size = new_property(class_character, default = "0.875rem"),
     level3_font_weight = new_property(class_numeric, default = 400),
     level3_italic = new_property(class_logical, default = FALSE),
@@ -345,6 +345,19 @@ web_theme_minimal <- function() {
       row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 0     # No rounded corners
+    ),
+    # Academic, understated hierarchy
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "0.9375rem",
+      level1_font_weight = 700,       # Use theme's bold
+      level1_italic = FALSE,
+      level2_font_size = "0.875rem",
+      level2_font_weight = 500,
+      level2_italic = FALSE,
+      level3_font_size = "0.875rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 14           # Slightly tighter indent
     )
   )
 }
@@ -403,6 +416,19 @@ web_theme_dark <- function() {
       row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 8
+    ),
+    # Comfortable dark mode hierarchy
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "0.9375rem",
+      level1_font_weight = 600,
+      level1_italic = FALSE,
+      level2_font_size = "0.875rem",
+      level2_font_weight = 500,
+      level2_italic = FALSE,
+      level3_font_size = "0.875rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 18           # Generous indent for comfort
     )
   )
 }
@@ -1060,6 +1086,19 @@ web_theme_jama <- function() {
       row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 0     # Sharp corners
+    ),
+    # Compact hierarchy matching dense layout
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "9.5pt",      # Slightly larger than 9pt base
+      level1_font_weight = 700,
+      level1_italic = FALSE,
+      level2_font_size = "9pt",        # Match base
+      level2_font_weight = 500,
+      level2_italic = FALSE,
+      level3_font_size = "9pt",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 12           # Tight indent for density
     )
   )
 }
@@ -1119,6 +1158,19 @@ web_theme_lancet <- function() {
       row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 0   # No rounded corners
+    ),
+    # Refined serif hierarchy with generous spacing
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "0.9375rem",
+      level1_font_weight = 700,
+      level1_italic = FALSE,
+      level2_font_size = "0.875rem",
+      level2_font_weight = 500,
+      level2_italic = TRUE,           # Subtle italic for elegance
+      level3_font_size = "0.875rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 18           # Generous indent
     )
   )
 }
@@ -1180,6 +1232,19 @@ web_theme_modern <- function() {
       row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 12     # Prominent rounded corners
+    ),
+    # Bold contemporary hierarchy with larger sizes
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "1rem",        # More pronounced for modern feel
+      level1_font_weight = 600,
+      level1_italic = FALSE,
+      level2_font_size = "0.9375rem",
+      level2_font_weight = 500,
+      level2_italic = FALSE,
+      level3_font_size = "0.9375rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 20           # Generous modern spacing
     )
   )
 }
@@ -1238,6 +1303,19 @@ web_theme_presentation <- function() {
       row_border = TRUE,
       container_border = FALSE,
       container_border_radius = 6
+    ),
+    # Large, bold hierarchy for visibility at distance
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "1.1875rem",   # Large for presentations
+      level1_font_weight = 700,
+      level1_italic = FALSE,
+      level2_font_size = "1.125rem",
+      level2_font_weight = 600,
+      level2_italic = FALSE,
+      level3_font_size = "1.125rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 24           # Wide indent for clarity
     )
   )
 }
@@ -1298,6 +1376,19 @@ web_theme_cochrane <- function() {
       row_border_style = "solid",
       container_border = FALSE,        # No outer border (Cochrane style)
       container_border_radius = 0
+    ),
+    # Very compact hierarchy matching dense data layout
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "0.8125rem",   # Match font_size_lg (13px)
+      level1_font_weight = 700,
+      level1_italic = FALSE,
+      level2_font_size = "0.75rem",     # Match base (12px)
+      level2_font_weight = 500,
+      level2_italic = FALSE,
+      level3_font_size = "0.75rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 10           # Very tight indent
     )
   )
 }
@@ -1363,6 +1454,19 @@ web_theme_nature <- function() {
     axis = AxisConfig(
       gridlines = FALSE,               # Clean axis
       null_tick = TRUE
+    ),
+    # Refined, precise hierarchy matching Nature's clean aesthetic
+    group_headers = GroupHeaderStyles(
+      level1_font_size = "0.875rem",    # Slightly above base (13px)
+      level1_font_weight = 700,
+      level1_italic = FALSE,
+      level2_font_size = "0.8125rem",   # Match base
+      level2_font_weight = 500,
+      level2_italic = FALSE,
+      level3_font_size = "0.8125rem",
+      level3_font_weight = 400,
+      level3_italic = FALSE,
+      indent_per_level = 14           # Clean, precise indent
     )
   )
 }
