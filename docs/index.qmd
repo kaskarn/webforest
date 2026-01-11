@@ -14,57 +14,40 @@ library(webforest)
 
 ```{r}
 #| echo: false
-library(dplyr)
-
-# Fun example: Streaming show ratings by genre
-shows <- tibble(
-  show = c(
-    "The Bear", "Shogun", "Baby Reindeer",
-    "Hacks", "Only Murders", "Abbott Elementary",
-    "3 Body Problem", "Fallout", "Silo"
-  ),
-  genre = c(
-    rep("Drama", 3),
-    rep("Comedy", 3),
-    rep("Sci-Fi", 3)
-  ),
-  # Effect: audience score vs critic baseline
-  score = c(92, 95, 88, 86, 89, 94, 78, 91, 87),
-  score_lower = c(88, 91, 83, 81, 84, 90, 72, 86, 82),
-  score_upper = c(96, 99, 93, 91, 94, 98, 84, 96, 92),
-  # Grouped columns
-  critic = c(97, 99, 96, 89, 92, 97, 76, 93, 89),
-  audience = c(87, 91, 80, 83, 86, 91, 80, 89, 85),
-  views_m = c(5.2, 9.1, 4.8, 3.8, 4.1, 6.2, 4.2, 8.5, 3.9),
-  weeks_top10 = c(6, 11, 8, 4, 5, 7, 5, 10, 6),
-  badge = c("Emmy Winner", "Emmy Winner", NA, NA, NA, "Emmy Winner", NA, "Hit", NA)
-)
+# GLP-1 cardiovascular outcomes meta-analysis
+data(glp1_trials)
 
 forest_plot(
-  shows,
-  point = "score", lower = "score_lower", upper = "score_upper",
-  label = "show",
-  group = "genre",
+  glp1_trials,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study",
+  group = "group",
   columns = list(
-    col_group("Ratings",
-      col_numeric("critic", "Critic"),
-      col_numeric("audience", "Audience"),
+    col_group("Study Info",
+      col_text("drug", "Drug"),
+      col_n("n"),
       position = "left"
     ),
-    col_group("Viewership",
-      col_numeric("views_m", "Views (M)"),
-      col_numeric("weeks_top10", "Wks Top 10", decimals = 0),
-      position = "left"
-    ),
-    col_interval("Score (95% CI)")
+    col_group("Results",
+      col_events("events", "n", "Events"),
+      col_interval("HR (95% CI)"),
+      col_pvalue("pvalue", "P"),
+      position = "right"
+    )
   ),
-  row_badge = "badge",
-  theme = web_theme_cochrane() |>
-    set_colors(primary = "#e50914", interval_positive = "#e50914"),
-  null_value = 85,
-  axis_label = "Combined Score",
-  title = "2024 Streaming Hits",
-  subtitle = "Row grouping by genre + column grouping for related metrics"
+  annotations = list(
+    forest_refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
+  ),
+  row_type = "row_type", row_bold = "row_bold",
+  theme = web_theme_nature(),
+  scale = "log", null_value = 1,
+  axis_range = c(0.4, 1.5),
+  axis_ticks = c(0.5, 0.75, 1.0, 1.25),
+  axis_gridlines = TRUE,
+  axis_label = "Hazard Ratio (95% CI)",
+  title = "GLP-1 Agonist Cardiovascular Outcomes",
+  subtitle = "Major adverse cardiovascular events (MACE)",
+  width_mode = "fill"
 )
 ```
 

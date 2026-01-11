@@ -1,10 +1,12 @@
-/* Import only Tailwind's theme (CSS variables).
-   We skip preflight to avoid conflicts with page-level styles (h1-h6, etc.)
-   and utilities to avoid conflicts with Bootstrap (.collapse, etc.) */
-@import "tailwindcss/theme";
+/*
+ * webforest base styles
+ *
+ * All theme CSS variables (--wf-*) are generated dynamically by the Svelte component
+ * based on the selected theme. This file contains only structural resets scoped to
+ * the widget container to avoid affecting page-level styles.
+ */
 
-/* Scoped reset - only apply normalizing styles inside webforest widgets.
-   This prevents Tailwind's preflight from affecting page-level headings. */
+/* Scoped reset - only apply normalizing styles inside webforest widgets. */
 .webforest-container {
   /* Box-sizing reset */
   *,

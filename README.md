@@ -29,28 +29,40 @@ pak::pak("kaskarn/webforest")
 ```r
 library(webforest)
 
-data <- data.frame(
-  study = c("KEYNOTE-006", "CheckMate 067", "COMBI-v",
-            "ATTRACTION-3", "KEYNOTE-590", "CheckMate 648"),
-  cancer = c("Melanoma", "Melanoma", "Melanoma",
-             "Gastric", "Esophageal", "Esophageal"),
-  hr = c(0.63, 0.55, 0.69, 0.77, 0.73, 0.64),
-  lower = c(0.52, 0.45, 0.57, 0.62, 0.60, 0.52),
-  upper = c(0.76, 0.67, 0.84, 0.95, 0.88, 0.78),
-  events = c(289, 320, 116, 198, 286, 271),
-  n = c(556, 502, 352, 330, 373, 321)
-)
+# Use the included GLP-1 trials dataset
+data(glp1_trials)
 
-forest_plot(data,
+forest_plot(
+  glp1_trials,
   point = "hr", lower = "lower", upper = "upper",
-  label = "study", group = "cancer",
+  label = "study",
+  group = "group",
   columns = list(
-    col_events("events", "n", "Events"),
-    col_interval("HR (95% CI)")
+    col_group("Study Info",
+      col_text("drug", "Drug"),
+      col_n("n"),
+      position = "left"
+    ),
+    col_group("Results",
+      col_events("events", "n", "Events"),
+      col_interval("HR (95% CI)"),
+      col_pvalue("pvalue", "P"),
+      position = "right"
+    )
   ),
+  annotations = list(
+    forest_refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
+  ),
+  row_type = "row_type", row_bold = "row_bold",
+  theme = web_theme_nature(),
   scale = "log", null_value = 1,
-  theme = web_theme_lancet(),
-  title = "Immune Checkpoint Inhibitor Trials"
+  axis_range = c(0.4, 1.5),
+  axis_ticks = c(0.5, 0.75, 1.0, 1.25),
+  axis_gridlines = TRUE,
+  axis_label = "Hazard Ratio (95% CI)",
+  title = "GLP-1 Agonist Cardiovascular Outcomes",
+  subtitle = "Major adverse cardiovascular events (MACE)",
+  width_mode = "fill"
 )
 ```
 
