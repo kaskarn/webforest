@@ -1,11 +1,51 @@
-/* Import only Tailwind's preflight (reset) and theme (CSS variables).
-   We skip utilities to avoid conflicts with Bootstrap (.collapse, etc.) */
-@import "tailwindcss/preflight";
+/* Import only Tailwind's theme (CSS variables).
+   We skip preflight to avoid conflicts with page-level styles (h1-h6, etc.)
+   and utilities to avoid conflicts with Bootstrap (.collapse, etc.) */
 @import "tailwindcss/theme";
 
-/* Base webforest styles */
-/* Note: font-family is set via --wf-font-family CSS variable from the theme
-   in ForestPlot.svelte. Don't override it here. */
+/* Scoped reset - only apply normalizing styles inside webforest widgets.
+   This prevents Tailwind's preflight from affecting page-level headings. */
+.webforest-container {
+  /* Box-sizing reset */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  /* Text normalizations */
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Element resets scoped to container */
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    vertical-align: middle;
+    max-width: 100%;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+}
 
 /* Ensure SVG text inherits font */
 .webforest-canvas text {

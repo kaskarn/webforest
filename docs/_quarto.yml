@@ -12,17 +12,16 @@ website:
         menu:
           - text: "Quick Start"
             href: guide/quick-start.qmd
-          - text: "Customizing Plots"
-            href: guide/fluent-api.qmd
-          - text: "Package Datasets"
-            href: guide/datasets.qmd
           - text: "Data Preparation"
             href: guide/data-preparation.qmd
           - text: "---"
+          - text: "Customizing Plots"
+            href: guide/fluent-api.qmd
           - text: "Themes"
             href: guide/themes.qmd
           - text: "Columns"
             href: guide/columns.qmd
+          - text: "---"
           - text: "Grouping Studies"
             href: guide/grouping.qmd
           - text: "Row Styling"
@@ -38,10 +37,13 @@ website:
             href: guide/axis-annotations.qmd
           - text: "Exporting Plots"
             href: guide/exporting.qmd
+          - text: "---"
           - text: "Shiny Integration"
             href: guide/shiny.qmd
           - text: "Troubleshooting"
             href: guide/troubleshooting.qmd
+          - text: "Package Datasets"
+            href: guide/datasets.qmd
       - text: "Cookbook"
         href: cookbook.qmd
       - text: "Gallery"
