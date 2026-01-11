@@ -18,6 +18,7 @@
 - **No JavaScript required**: R interface provides total control over the output
 - **Versatile API**: Use standard argument passing or a pipe-friendly workflow with set_* modifiers.
 - **Portable graphics**: Export as interactive HTML or high-quality static images (SVG/PDF/PNG).
+- **Web-native**: Web-ready widgets with shiny support
 
 ## Installation
 
