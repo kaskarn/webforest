@@ -130,8 +130,8 @@ Shapes <- new_class(
 #' @param ci_truncation_threshold Truncate CIs extending beyond this multiple of
 #'   the estimate range (default: 2.0). Use `Inf` to never truncate.
 #' @param include_null Always include the null value in the axis range (default: TRUE)
-#' @param symmetric Make axis symmetric around null value (default: NULL for auto,
-#'   which enables symmetry only when effects appear on both sides of null)
+#' @param symmetric Make axis symmetric around null value. Must be explicitly set
+#'   to TRUE to enable; default (NULL/FALSE) does not apply symmetry.
 #' @param null_tick Always show a tick at the null value (default: TRUE)
 #' @param marker_margin Add half-marker-width padding at edges so markers don't clip (default: TRUE)
 #'
@@ -150,7 +150,7 @@ AxisConfig <- new_class(
     padding = new_property(class_numeric, default = 0.10),
     ci_truncation_threshold = new_property(class_numeric, default = 2.0),
     include_null = new_property(class_logical, default = TRUE),
-    symmetric = new_property(class_any, default = NULL),  # NULL = auto
+    symmetric = new_property(class_any, default = NULL),  # NULL/FALSE = off, TRUE = on
     null_tick = new_property(class_logical, default = TRUE),
     marker_margin = new_property(class_logical, default = TRUE)
   ),
@@ -166,7 +166,7 @@ AxisConfig <- new_class(
       return("ci_truncation_threshold must be non-negative")
     }
     if (!is.null(self@symmetric) && !is.logical(self@symmetric)) {
-      return("symmetric must be TRUE, FALSE, or NULL (auto)")
+      return("symmetric must be TRUE, FALSE, or NULL")
     }
     NULL
   }
@@ -778,8 +778,8 @@ set_marker_shapes <- function(theme, shapes) {
 #' @param ci_truncation_threshold Truncate CIs beyond this multiple of estimate range (default: 2.0).
 #'   Use Inf to never truncate.
 #' @param include_null Always include null value in axis range (default: TRUE)
-#' @param symmetric Make axis symmetric around null value. NULL for auto-detection,
-#'   TRUE/FALSE to force.
+#' @param symmetric Make axis symmetric around null value. Set to TRUE to enable;
+#'   default (NULL/FALSE) does not apply symmetry.
 #' @param null_tick Always show a tick at the null value (default: TRUE)
 #' @param marker_margin Add half-marker-width padding at edges to prevent clipping (default: TRUE)
 #'

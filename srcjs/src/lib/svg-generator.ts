@@ -855,10 +855,10 @@ function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptio
       let domainMin = hasExplicitMin ? axisConfig.rangeMin! : minEst - estimateRange * padding;
       let domainMax = hasExplicitMax ? axisConfig.rangeMax! : maxEst + estimateRange * padding;
 
-      // Step 5: Apply symmetry around null if configured
-      const hasEffectsBothSides = pointEstimates.some(e => e < nullValue) &&
-                                   pointEstimates.some(e => e > nullValue);
-      const shouldBeSymmetric = symmetric === true || (symmetric === null && hasEffectsBothSides);
+      // Step 5: Apply symmetry around null if explicitly requested
+      // symmetric = true: force symmetry (user must opt-in)
+      // symmetric = false/null: no symmetry (default)
+      const shouldBeSymmetric = symmetric === true;
 
       if (shouldBeSymmetric && !hasExplicitMin && !hasExplicitMax) {
         if (isLog) {
