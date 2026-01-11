@@ -12,13 +12,13 @@ This guide covers common issues and their solutions when using webforest.
 
 ## Quick Diagnostic Checklist
 
-When something isn't working:
+When something isn't working, check:
 
-1. **Check column names** - Are they spelled correctly and exist in the data?
-2. **Check data types** - Are numeric columns actually numeric?
-3. **Check for NAs** - Are there unexpected missing values?
-4. **Check scale** - Using `scale = "log"` with non-positive values?
-5. **Check dependencies** - Is V8 installed for exports?
+1. **Column names** - Are they spelled correctly and exist in the data?
+2. **Data types** - Are numeric columns actually numeric?
+3. **NAs** - Are there unexpected missing values?
+4. **Scale** - Using `scale = "log"` with non-positive values?
+5. **Dependencies** - Is V8 installed for exports?
 
 ## Data Issues
 

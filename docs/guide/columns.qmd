@@ -13,6 +13,7 @@ Columns display data alongside the forest plot. Each column type has specialized
 
 ::: {.callout-tip}
 ## Column Design Philosophy
+
 webforest uses a **declarative column system**:
 
 1. **You specify what** to display (column type + field)
@@ -79,7 +80,9 @@ columns = list(
 
 ::: {.callout-note}
 ## Default Position
+
 Most column types default to `position = "right"`. The convention is:
+
 - **Left**: Study metadata (sample size, events, weights)
 - **Right**: Results and effect estimates (intervals, p-values)
 :::
@@ -111,6 +114,7 @@ col_numeric("population", abbreviate = TRUE)
 
 ::: {.callout-tip}
 ## Decimals vs Digits
+
 - `decimals`: Fixed decimal places (e.g., `decimals = 2` → "1.23")
 - `digits`: Significant figures (e.g., `digits = 3` → "1.23", "12.3", "123")
 
@@ -346,7 +350,9 @@ forest_plot(outcomes_data,
 
 ::: {.callout-tip}
 ## Column Group Pattern
+
 Use column groups when you have:
+
 - Multiple outcomes (primary, secondary)
 - Multiple time points (30-day, 1-year)
 - Multiple analysis types (ITT, per-protocol)
@@ -364,7 +370,9 @@ col_interval()                          # Auto (uses content width)
 
 ::: {.callout-note}
 ## Auto-Width Behavior
+
 When `width = NULL` (default), columns auto-size based on:
+
 1. Header text width
 2. Maximum cell content width
 3. Column type minimums (e.g., bars need space)

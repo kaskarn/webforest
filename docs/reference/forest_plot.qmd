@@ -72,6 +72,7 @@ forest_plot(
 
 ::: {.callout-note}
 ## Constructor Arguments vs Fluent API
+
 Every styling argument (like `row_bold`, `marker_color`) has an equivalent fluent method (`set_row_style(bold = ...)`, `set_marker_style(color = ...)`). Both produce identical results. See [Customizing Plots](../guide/fluent-api.qmd) for details.
 :::
 
@@ -89,6 +90,7 @@ Every styling argument (like `row_bold`, `marker_color`) has an equivalent fluen
 
 ::: {.callout-tip}
 ## Semantic Styling Shortcuts
+
 For quick conditional formatting, use these semantic options that automatically use theme colors:
 
 | Argument | Effect |
@@ -112,6 +114,7 @@ These adapt automatically when you switch themes.
 
 ::: {.callout-note}
 ## Weight vs Size
+
 `weight` is typically used for meta-analysis study weights - larger weights produce larger markers proportionally. `marker_size` is for explicit size control via a multiplier column.
 :::
 
@@ -136,6 +139,7 @@ These override theme settings for quick adjustments:
 
 ::: {.callout-tip}
 ## Equivalence with Theme Modifiers
+
 Direct arguments are shortcuts for theme modifications:
 ```r
 # These are equivalent:
@@ -238,6 +242,7 @@ forest_plot(styled,
 
 ::: {.callout-warning}
 ## Row Types and NA Values
+
 Rows with `row_type = "header"` or `"spacer"` should have `NA` for point, lower, and upper. The plot will display them as label-only rows without intervals.
 :::
 

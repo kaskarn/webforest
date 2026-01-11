@@ -862,12 +862,16 @@ function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptio
   const nicedDomain = niceDomain(domain, isLog);
 
   // Step 5: Account for marker margin at edges
+  // Match web view by using effective pixel range (forestWidth minus axis label padding)
+  const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
+  const effectivePixelRange = forestWidth - 2 * axisLabelPadding;
+
   let finalDomain = nicedDomain;
-  if (markerMargin && forestWidth > 0) {
+  if (markerMargin && effectivePixelRange > 0) {
     const pointSize = spec.theme.shapes.pointSize;
-    // Convert pixel margin to domain units
+    // Convert pixel margin to domain units (using effective range, matching web view)
     const domainRange = nicedDomain[1] - nicedDomain[0];
-    const marginInDomainUnits = (pointSize / 2) * (domainRange / forestWidth);
+    const marginInDomainUnits = (pointSize / 2) * (domainRange / effectivePixelRange);
 
     if (isLog) {
       const logMargin = marginInDomainUnits / nicedDomain[0];
@@ -883,14 +887,18 @@ function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptio
     }
   }
 
+  // Apply axis label padding to range (matching web view forestStore)
+  const rangeStart = axisLabelPadding;
+  const rangeEnd = Math.max(forestWidth - axisLabelPadding, rangeStart + 50);
+
   if (isLog) {
     return createLogScale(
       [Math.max(finalDomain[0], 0.01), Math.max(finalDomain[1], 0.02)],
-      [0, forestWidth]
+      [rangeStart, rangeEnd]
     );
   }
 
-  return createLinearScale(finalDomain, [0, forestWidth]);
+  return createLinearScale(finalDomain, [rangeStart, rangeEnd]);
 }
 
 // ============================================================================
@@ -1669,8 +1677,10 @@ function renderInterval(
     } else {
       // Regular row: CI line with whiskers and marker
       // Detect clipping (interval extends beyond axis range)
-      const minX = forestX;
-      const maxX = forestX + forestWidth;
+      // Use padded range to match web view (AXIS_LABEL_PADDING on each side)
+      const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
+      const minX = forestX + axisLabelPadding;
+      const maxX = forestX + forestWidth - axisLabelPadding;
       const clippedLeft = x1 < minX;
       const clippedRight = x2 > maxX;
       const clampedX1 = Math.max(minX, Math.min(maxX, x1));
@@ -1723,15 +1733,20 @@ function renderDiamond(
   const diamondHeight = theme.shapes.summaryHeight;
   const halfHeight = diamondHeight / 2;
 
-  // Compute raw scale positions (0 to forestWidth), then clamp to visible area
+  // Get scale range bounds for clamping
+  const [rangeMin, rangeMax] = xScale.domain().map(d => xScale(d));
+  const scaleRangeMin = Math.min(rangeMin, rangeMax);
+  const scaleRangeMax = Math.max(rangeMin, rangeMax);
+
+  // Compute scale positions and clamp to visible area
   const rawL = xScale(lower);
   const rawP = xScale(point);
   const rawU = xScale(upper);
 
-  // Clamp to visible forest area (0 to forestWidth), then add forestX offset
-  const xL = forestX + Math.max(0, Math.min(forestWidth, rawL));
-  const xP = forestX + Math.max(0, Math.min(forestWidth, rawP));
-  const xU = forestX + Math.max(0, Math.min(forestWidth, rawU));
+  // Clamp to scale range, then add forestX offset
+  const xL = forestX + Math.max(scaleRangeMin, Math.min(scaleRangeMax, rawL));
+  const xP = forestX + Math.max(scaleRangeMin, Math.min(scaleRangeMax, rawP));
+  const xU = forestX + Math.max(scaleRangeMin, Math.min(scaleRangeMax, rawU));
 
   const points = [
     `${xL},${yPosition}`,

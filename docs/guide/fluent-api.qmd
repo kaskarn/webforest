@@ -164,7 +164,9 @@ spec |> set_column_style(column = "hr",
 
 ::: {.callout-tip}
 ## Styling Priority
+
 When both row and column styles are set:
+
 1. Column styles take precedence
 2. Row styles apply to all cells without column overrides
 
@@ -258,7 +260,9 @@ web_spec(styled_analysis,
 
 ::: {.callout-tip}
 ## Style Column Naming Convention
+
 Use consistent suffixes for style columns:
+
 - `_bold` for bold flags
 - `_color` for text colors
 - `_bg` for backgrounds

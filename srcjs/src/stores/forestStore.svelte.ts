@@ -495,7 +495,9 @@ export function createForestStore() {
 
   // Actions
   function setSpec(newSpec: WebSpec) {
-    spec = newSpec;
+    // Create a new object reference to ensure derived values recompute properly
+    // when switching between specs (e.g., in split forest navigation)
+    spec = { ...newSpec };
     // Initialize collapsed state from spec
     collapsedGroups = new Set(
       newSpec.data.groups.filter((g) => g.collapsed).map((g) => g.id)

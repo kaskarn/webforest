@@ -65,6 +65,7 @@ Every forest plot needs these four column mappings:
 
 ::: {.callout-tip}
 ## Scale Selection Rule of Thumb
+
 - **Log scale** (`scale = "log"`, `null_value = 1`): For ratios (OR, HR, RR) where effects are multiplicative
 - **Linear scale** (`scale = "linear"`, `null_value = 0`): For differences (MD, RD, SMD) where effects are additive
 :::

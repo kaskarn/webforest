@@ -9,6 +9,7 @@ library(webforest)
 
 ::: {.callout-tip}
 ## Two Types of Organization
+
 webforest provides two complementary ways to organize data:
 
 | Feature | Purpose | Visual |

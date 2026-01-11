@@ -12,6 +12,7 @@ This guide covers how to structure your data for webforest, handle missing value
 
 ::: {.callout-tip}
 ## Key Principle: Column Names, Not Values
+
 webforest uses a **column-mapping pattern**: you specify which columns contain your data, not the values themselves. This makes it easy to use any data frame without renaming columns.
 
 ```r
@@ -99,6 +100,7 @@ For data rows where an effect couldn't be calculated, `NA` values display the la
 
 ::: {.callout-warning}
 ## Log Scale Requires Positive Values
+
 When using `scale = "log"`, all values in `point`, `lower`, and `upper` must be **positive**. Zero or negative values will cause rendering errors.
 :::
 
@@ -314,6 +316,7 @@ data |>
 Use `col_text("ci_text", "HR (95% CI)")` to display it, or use `col_interval()` for automatic formatting.
 
 ## Data Validation Tips
+
 1. **Check for non-positive values before log scale**: `any(data$hr <= 0)`
 2. **Verify CI ordering**: `all(data$lower <= data$hr & data$hr <= data$upper)`
 3. **Check for character columns**: `sapply(data, class)` - numeric columns shouldn't be character

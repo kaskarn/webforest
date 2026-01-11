@@ -402,13 +402,9 @@ shinyApp(ui, server)
 ## Best Practices
 
 1. **Create proxies in reactive contexts** - Never create a proxy at the top level of your server function
-
 2. **Use debouncing for sliders** - Prevent excessive re-renders during drag
-
 3. **Prefer proxy for interactions** - Sorting, filtering, and toggling are smoother via proxy
-
 4. **Use reactive for data changes** - When the underlying data changes, let Shiny re-render
-
 5. **Combine proxy calls** - Chain multiple operations for atomic updates:
    ```r
    forestProxy("forest") |>

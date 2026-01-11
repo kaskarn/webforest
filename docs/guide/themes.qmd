@@ -139,7 +139,9 @@ forest_plot(meta_data, point = "hr", lower = "lower", upper = "upper",
 
 ::: {.callout-note}
 ## Modifier Pattern
+
 All `set_*()` functions follow the same pattern:
+
 1. Take a theme object as the first argument
 2. Accept named parameters for properties to change
 3. Return a modified theme object

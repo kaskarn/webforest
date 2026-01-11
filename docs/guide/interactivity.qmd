@@ -11,7 +11,9 @@ webforest plots are interactive by default. This guide covers tooltips, interact
 
 ::: {.callout-note}
 ## Interactive by Default
+
 All webforest plots include these interactions out of the box:
+
 - **Hover highlighting** on rows
 - **Click to select** rows
 - **Column sorting** via header clicks
@@ -79,25 +81,26 @@ Control which interactions are enabled via `web_interaction()`:
 #| eval: false
 web_interaction(
   tooltip_fields = NULL,    # Column names for tooltip (NULL = disabled)
-  enableSort = TRUE,        # Click column headers to sort
-
-  enableCollapse = TRUE,    # Click group headers to collapse/expand
-  enableSelect = TRUE,      # Click rows to select
-  enableHover = TRUE,       # Highlight rows on hover
-  enableResize = TRUE,      # Drag column borders to resize
-  enableExport = TRUE       # Show download button on hover
+  enable_sort = TRUE,       # Click column headers to sort
+  enable_collapse = TRUE,   # Click group headers to collapse/expand
+  enable_select = TRUE,     # Click rows to select
+  enable_hover = TRUE,      # Highlight rows on hover
+  enable_resize = TRUE,     # Drag column borders to resize
+  enable_export = TRUE,     # Show download button on hover
+  enable_themes = "default" # Theme selection menu
 )
 ```
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `tooltip_fields` | `NULL` | Column names to show in hover tooltip |
-| `enableSort` | `TRUE` | Click column headers to sort |
-| `enableCollapse` | `TRUE` | Click group headers to collapse/expand |
-| `enableSelect` | `TRUE` | Click rows to select them |
-| `enableHover` | `TRUE` | Highlight rows on mouse hover |
-| `enableResize` | `TRUE` | Drag column borders to resize |
-| `enableExport` | `TRUE` | Show download button (top-right on hover) |
+| `enable_sort` | `TRUE` | Click column headers to sort |
+| `enable_collapse` | `TRUE` | Click group headers to collapse/expand |
+| `enable_select` | `TRUE` | Click rows to select them |
+| `enable_hover` | `TRUE` | Highlight rows on mouse hover |
+| `enable_resize` | `TRUE` | Drag column borders to resize |
+| `enable_export` | `TRUE` | Show download button (top-right on hover) |
+| `enable_themes` | `"default"` | Theme selection menu (see below) |
 
 ### Disabling Specific Features
 
@@ -106,11 +109,56 @@ web_interaction(
 # Read-only plot (no sorting or selection)
 forest_plot(data, ...,
   interaction = web_interaction(
-    enableSort = FALSE,
-    enableSelect = FALSE
+    enable_sort = FALSE,
+    enable_select = FALSE
   )
 )
 ```
+
+### Theme Selection Menu
+
+The `enable_themes` parameter controls an interactive theme switcher that appears as a palette icon in the plot's toolbar.
+
+| Value | Description |
+|-------|-------------|
+| `"default"` | Show menu with all built-in themes from `package_themes()` |
+| `NULL` | Disable theme selection entirely (hide the palette icon) |
+| List of themes | Show menu with only the specified themes |
+
+```{r}
+#| eval: false
+# Default: all built-in themes available
+forest_plot(data, ...,
+  interaction = web_interaction(enable_themes = "default")
+)
+
+# Disable theme selection
+forest_plot(data, ...,
+  interaction = web_interaction(enable_themes = NULL)
+)
+
+# Only specific themes
+forest_plot(data, ...,
+  interaction = web_interaction(
+    enable_themes = package_themes()[c("default", "jama", "lancet")]
+  )
+)
+
+# Custom themes
+my_themes <- list(
+  dark = web_theme_dark(),
+  custom = web_theme_default() |> set_colors(primary = "#8B5CF6")
+)
+forest_plot(data, ...,
+  interaction = web_interaction(enable_themes = my_themes)
+)
+```
+
+The theme menu allows users to switch between themes interactively. This is useful for:
+
+- **Presentations**: Let viewers choose their preferred contrast
+- **Reports**: Offer light/dark mode options
+- **Exploration**: Compare how data looks across different visual styles
 
 ## Interaction Presets
 

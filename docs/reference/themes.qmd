@@ -140,6 +140,7 @@ All modifiers return the modified theme and can be chained with pipes. These are
 
 ::: {.callout-tip}
 ## Equivalence with forest_plot()
+
 Theme modifier functions and direct `forest_plot()` arguments are equivalent:
 
 ```r

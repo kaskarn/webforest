@@ -12,6 +12,7 @@ Split forest plots create **separate plots for each value** of a categorical var
 
 ::: {.callout-tip}
 ## When to Use Split vs Group
+
 | Feature | Use When |
 |---------|----------|
 | **`split_by`** | Many subgroups (5+), each deserves focused attention |
@@ -116,11 +117,11 @@ This ensures the same visual scale across all subgroups.
 
 The sidebar includes:
 
-- **Section headers**: Split variable names displayed as uppercase labels
-- **Collapsible**: Click the chevron to collapse the sidebar
-- **Search**: Filter subgroups by typing in the search box
-- **Keyboard navigation**: Use arrow keys to move between subgroups
-- **Bold active**: Currently selected subgroup is highlighted
+- **Section headers** - Split variable names displayed as uppercase labels
+- **Collapsible** - Click the chevron to collapse the sidebar
+- **Search** - Filter subgroups by typing in the search box
+- **Keyboard navigation** - Use arrow keys to move between subgroups
+- **Bold active** - Currently selected subgroup is highlighted
 
 ## Exporting Split Forests
 

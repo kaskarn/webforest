@@ -61,6 +61,7 @@ save_plot(p, "output.svg")
 
 ::: {.callout-note}
 ## Choosing a Format
+
 - **SVG**: Best for web, editable in Illustrator/Inkscape, infinitely scalable
 - **PNG**: Best for documents and slides, set `scale = 2` for retina displays
 - **PDF**: Best for print, preserves vectors, requires `rsvg`
