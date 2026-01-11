@@ -9,79 +9,6 @@ library(webforest)
 
 Theme functions for customizing forest plot appearance.
 
-## Preset Themes
-
-### web_theme_default {#web_theme_default}
-
-Clean, modern default theme with subtle cyan accents, system fonts, and rounded corners.
-```r
-web_theme_default()
-```
-
-### web_theme_jama {#web_theme_jama}
-
-JAMA journal style: maximum density, pure black & white, Arial font, compact rows (18px). Optimized for print.
-
-```r
-web_theme_jama()
-```
-
-### web_theme_lancet {#web_theme_lancet}
-
-Elegant academic theme with Lancet navy blue (#00407A), warm off-white background, gold accents, and serif typography (Georgia). Generous spacing with sharp corners.
-
-```r
-web_theme_lancet()
-```
-
-### web_theme_modern {#web_theme_modern}
-
-Bold, vibrant design with Inter font, bright blue (#3B82F6) accents, larger elements (36px rows), and prominent rounded corners (12px). Ideal for digital reports and dashboards.
-
-```r
-web_theme_modern()
-```
-
-### web_theme_presentation {#web_theme_presentation}
-
-Oversized theme for slides and posters: extra large fonts (1-1.25rem), thick lines (2.5px), oversized markers (12px), and tall rows (44px). High visibility at distance.
-
-```r
-web_theme_presentation()
-```
-
-### web_theme_dark {#web_theme_dark}
-
-Catppuccin Mocha-inspired dark mode with comfortable low-contrast colors for extended viewing. Blue accents on dark background, soft rounded corners.
-
-```r
-web_theme_dark()
-```
-
-### web_theme_minimal {#web_theme_minimal}
-
-Academic publication-ready with pure black & white styling, Georgia serif font, sharp corners. Classic, authoritative look for journal submissions.
-
-```r
-web_theme_minimal()
-```
-
-### web_theme_cochrane {#web_theme_cochrane}
-
-Cochrane systematic review style: teal accents (#0099CC), Arial font, very compact layout (20px rows). Clean, utilitarian design without decorative elements.
-
-```r
-web_theme_cochrane()
-```
-
-### web_theme_nature {#web_theme_nature}
-
-Nature journal family styling: Nature blue (#1976D2), Helvetica Neue font, tight typography, and precise aesthetic. Balanced between academic rigor and modern readability.
-
-```r
-web_theme_nature()
-```
-
 ## Custom Theme Creation
 
 ### web_theme {#web_theme}
@@ -532,6 +459,79 @@ web_theme_default() |>
     level3_font_weight = 400,
     level3_background = "#fafafa"   # Near white
   )
+```
+
+## Preset Themes
+
+### web_theme_default {#web_theme_default}
+
+Clean, modern default theme with subtle cyan accents, system fonts, and rounded corners.
+```r
+web_theme_default()
+```
+
+### web_theme_jama {#web_theme_jama}
+
+JAMA journal style: maximum density, pure black & white, Arial font, compact rows (18px). Optimized for print.
+
+```r
+web_theme_jama()
+```
+
+### web_theme_lancet {#web_theme_lancet}
+
+Elegant academic theme with Lancet navy blue (#00407A), warm off-white background, gold accents, and serif typography (Georgia). Generous spacing with sharp corners.
+
+```r
+web_theme_lancet()
+```
+
+### web_theme_modern {#web_theme_modern}
+
+Bold, vibrant design with Inter font, bright blue (#3B82F6) accents, larger elements (36px rows), and prominent rounded corners (12px). Ideal for digital reports and dashboards.
+
+```r
+web_theme_modern()
+```
+
+### web_theme_presentation {#web_theme_presentation}
+
+Oversized theme for slides and posters: extra large fonts (1-1.25rem), thick lines (2.5px), oversized markers (12px), and tall rows (44px). High visibility at distance.
+
+```r
+web_theme_presentation()
+```
+
+### web_theme_dark {#web_theme_dark}
+
+Catppuccin Mocha-inspired dark mode with comfortable low-contrast colors for extended viewing. Blue accents on dark background, soft rounded corners.
+
+```r
+web_theme_dark()
+```
+
+### web_theme_minimal {#web_theme_minimal}
+
+Academic publication-ready with pure black & white styling, Georgia serif font, sharp corners. Classic, authoritative look for journal submissions.
+
+```r
+web_theme_minimal()
+```
+
+### web_theme_cochrane {#web_theme_cochrane}
+
+Cochrane systematic review style: teal accents (#0099CC), Arial font, very compact layout (20px rows). Clean, utilitarian design without decorative elements.
+
+```r
+web_theme_cochrane()
+```
+
+### web_theme_nature {#web_theme_nature}
+
+Nature journal family styling: Nature blue (#1976D2), Helvetica Neue font, tight typography, and precise aesthetic. Balanced between academic rigor and modern readability.
+
+```r
+web_theme_nature()
 ```
 
 ## See Also
