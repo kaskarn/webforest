@@ -254,13 +254,31 @@ export function calculateLabelColumnWidth(
   // ========================================================================
   // Group header layout: [indent][chevron][gap][label][gap][count][internal-padding]
   // See GROUP_HEADER constants in rendering-constants.ts
+
+  // Helper to count all descendant rows (matching display logic)
+  // This includes direct rows AND rows in nested subgroups
+  function countAllDescendantRows(groupId: string): number {
+    let count = 0;
+    // Direct rows in this group
+    for (const row of rows) {
+      if (row.groupId === groupId) count++;
+    }
+    // Rows in child groups (recursively)
+    for (const g of groups) {
+      if (g.parentId === groupId) {
+        count += countAllDescendantRows(g.id);
+      }
+    }
+    return count;
+  }
+
   for (const group of groups) {
     if (group.label) {
       const indentWidth = group.depth * SPACING.INDENT_PER_LEVEL;
       const labelWidth = measureText(group.label);
 
-      // Count rows in this group for the "(N)" suffix
-      const rowCount = rows.filter(r => r.groupId === group.id).length;
+      // Count all descendant rows for the "(N)" suffix, matching display
+      const rowCount = countAllDescendantRows(group.id);
       const countText = `(${rowCount})`;
       const countFontSize = fontSizeNum * 0.75; // matches theme.typography.fontSizeSm
       const countWidth = estimateTextWidth(countText, countFontSize);

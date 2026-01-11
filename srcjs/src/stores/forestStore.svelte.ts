@@ -757,14 +757,31 @@ export function createForestStore() {
       // See GROUP_HEADER constants in rendering-constants.ts
       // ========================================================================
 
+      // Helper to count all descendant rows (matching display logic in displayRows)
+      // This includes direct rows AND rows in nested subgroups
+      function countAllDescendantRowsForGroup(groupId: string): number {
+        let count = 0;
+        // Direct rows in this group
+        for (const row of spec!.data.rows) {
+          if (row.groupId === groupId) count++;
+        }
+        // Rows in child groups (recursively)
+        for (const g of spec!.data.groups) {
+          if (g.parentId === groupId) {
+            count += countAllDescendantRowsForGroup(g.id);
+          }
+        }
+        return count;
+      }
+
       ctx!.font = headerFont;
       for (const group of spec.data.groups) {
         if (group.label) {
           const indentWidth = group.depth * SPACING.INDENT_PER_LEVEL;
           const labelWidth = ctx!.measureText(group.label).width;
 
-          // Row count (e.g., "(3)") is shown in smaller font
-          const rowCount = spec.data.rows.filter(r => r.groupId === group.id).length;
+          // Row count (e.g., "(3)") includes all descendants, matching display
+          const rowCount = countAllDescendantRowsForGroup(group.id);
           const countText = `(${rowCount})`;
           const countFontSize = baseFontSize * 0.75; // font-size-sm
           ctx!.font = `${countFontSize}px ${fontFamily}`;
