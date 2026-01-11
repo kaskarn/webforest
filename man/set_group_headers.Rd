@@ -8,14 +8,17 @@ set_group_headers(
   theme,
   level1_font_size = NULL,
   level1_font_weight = NULL,
+  level1_italic = NULL,
   level1_background = NULL,
   level1_border_bottom = NULL,
   level2_font_size = NULL,
   level2_font_weight = NULL,
+  level2_italic = NULL,
   level2_background = NULL,
   level2_border_bottom = NULL,
   level3_font_size = NULL,
   level3_font_weight = NULL,
+  level3_italic = NULL,
   level3_background = NULL,
   level3_border_bottom = NULL,
   indent_per_level = NULL
@@ -28,23 +31,29 @@ set_group_headers(
 
 \item{level1_font_weight}{Font weight for top-level groups (default: 700)}
 
-\item{level1_background}{Background color for level 1. NULL = computed from primary at 8\% opacity.}
+\item{level1_italic}{Use italic text for level 1 headers (default: FALSE)}
 
-\item{level1_border_bottom}{Show bottom border on level 1 headers (default: TRUE)}
+\item{level1_background}{Background color for level 1. NULL = computed from primary at 15\% opacity.}
+
+\item{level1_border_bottom}{Show bottom border on level 1 headers (default: FALSE)}
 
 \item{level2_font_size}{Font size for second-level groups (default: "0.9375rem")}
 
-\item{level2_font_weight}{Font weight for second-level groups (default: 600)}
+\item{level2_font_weight}{Font weight for second-level groups (default: 500)}
 
-\item{level2_background}{Background color for level 2. NULL = computed from primary at 5\% opacity.}
+\item{level2_italic}{Use italic text for level 2 headers (default: TRUE)}
 
-\item{level2_border_bottom}{Show bottom border on level 2 headers (default: TRUE)}
+\item{level2_background}{Background color for level 2. NULL = computed from primary at 10\% opacity.}
+
+\item{level2_border_bottom}{Show bottom border on level 2 headers (default: FALSE)}
 
 \item{level3_font_size}{Font size for third-level and deeper groups (default: "0.875rem")}
 
-\item{level3_font_weight}{Font weight for third-level groups (default: 500)}
+\item{level3_font_weight}{Font weight for third-level groups (default: 400)}
 
-\item{level3_background}{Background color for level 3+. NULL = computed from primary at 3\% opacity.}
+\item{level3_italic}{Use italic text for level 3+ headers (default: FALSE)}
+
+\item{level3_background}{Background color for level 3+. NULL = computed from primary at 6\% opacity.}
 
 \item{level3_border_bottom}{Show bottom border on level 3+ headers (default: FALSE)}
 
@@ -61,6 +70,7 @@ Nested groups are styled with h1/h2/h3-like visual hierarchy.
 web_theme_default() |>
   set_group_headers(
     level1_font_weight = 800,
+    level2_italic = FALSE,
     level1_background = "#f0f9ff",
     indent_per_level = 24
   )

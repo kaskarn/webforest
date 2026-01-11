@@ -2,7 +2,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
 
 * This is a new submission.
 
@@ -28,3 +28,7 @@ Key features:
 ## Downstream dependencies
 
 This is a new package with no downstream dependencies.
+
+## Notes
+
+The single NOTE is the expected "New submission" message for first-time CRAN packages.

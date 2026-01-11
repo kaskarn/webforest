@@ -1,3 +1,23 @@
+# webforest 0.2.0
+
+## New Features
+
+* **Package startup message**: Shows pre-release notice with link to report issues when the package is loaded.
+
+* **Interactive theme selection documentation**: Added comprehensive documentation for `enable_themes` parameter in the interactivity guide, covering all configuration options.
+
+## Bug Fixes
+
+* **Split forest axis scaling**: Fixed x-axis being computed from all data instead of per-split subset. The axis now correctly scales to fit only the data in the currently displayed split. (Issue: switching themes caused axis to recompute correctly, revealing a reactivity issue in the store.)
+
+* **SVG axis alignment**: Fixed SVG export axis not matching web view. The SVG generator now applies the same `AXIS_LABEL_PADDING` (30px) used in the web renderer, ensuring consistent axis positioning between interactive and exported plots.
+
+## Documentation
+
+* **Markdown formatting**: Fixed list formatting across all Quarto documentation files. Lists in callout boxes now render correctly with proper spacing.
+
+---
+
 # webforest 0.1.6
 
 ## Bug Fixes
