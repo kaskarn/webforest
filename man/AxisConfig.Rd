@@ -39,8 +39,8 @@ the estimate range (default: 2.0). Use \code{Inf} to never truncate.}
 
 \item{include_null}{Always include the null value in the axis range (default: TRUE)}
 
-\item{symmetric}{Make axis symmetric around null value (default: NULL for auto,
-which enables symmetry only when effects appear on both sides of null)}
+\item{symmetric}{Make axis symmetric around null value. Must be explicitly set
+to TRUE to enable; default (NULL/FALSE) does not apply symmetry.}
 
 \item{null_tick}{Always show a tick at the null value (default: TRUE)}
 

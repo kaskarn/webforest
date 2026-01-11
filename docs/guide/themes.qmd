@@ -275,9 +275,16 @@ Use `symmetric = TRUE` when comparing benefit vs harm magnitudes. This makes a H
 set_layout(
   plot_position = "right",    # "left" or "right"
   row_border = TRUE,          # Show row borders
-  row_border_style = "solid", # "solid", "dashed", "dotted"
-  container_border = TRUE,    # Show container border
-  container_border_radius = 8 # Container corner radius
+  row_border_style = "solid"  # "solid", "dashed", "dotted"
+)
+```
+
+### Container
+
+```r
+set_container(
+  border = FALSE,        # Show border around container (default: off)
+  border_radius = 8      # Corner radius in pixels
 )
 ```
 
@@ -320,7 +327,8 @@ When `levelN_background = NULL`, the theme automatically computes a subtle backg
 | Spacing | `set_spacing()` | row_height, header_height, padding, cell_padding_x/y |
 | Shapes | `set_shapes()` | point_size, summary_height, line_width, marker_colors, marker_shapes |
 | Axis | `set_axis()` | range_min/max, tick_count, tick_values, gridlines, symmetric |
-| Layout | `set_layout()` | plot_position, row_border, container_border |
+| Layout | `set_layout()` | plot_position, row_border, row_border_style |
+| Container | `set_container()` | border, border_radius |
 | Group Headers | `set_group_headers()` | level*_font_size, level*_background, indent_per_level |
 | Markers | `set_marker_colors()`, `set_marker_shapes()` | Multi-effect default colors/shapes |
 

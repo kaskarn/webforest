@@ -49,7 +49,7 @@ const binding: HTMLWidgetsBinding = {
 
     return {
       renderValue: (x: WebSpec & {
-        widthMode?: 'fit' | 'fill' | 'responsive';
+        widthMode?: 'natural' | 'fill';
         heightPreset?: 'small' | 'medium' | 'large' | 'full' | 'container';
         heightMode?: 'auto' | 'scroll';  // Deprecated, kept for backwards compatibility
       }) => {

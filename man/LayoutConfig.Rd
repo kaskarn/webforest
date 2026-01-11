@@ -10,29 +10,31 @@ LayoutConfig(
   plot_width = "auto",
   row_border = TRUE,
   row_border_style = "solid",
-  container_border = TRUE,
+  container_border = FALSE,
   container_border_radius = 8
 )
 }
 \arguments{
-\item{plot_position}{Position of forest plot: "left" or "right"}
+\item{plot_position}{Position of forest plot: "left" or "right" (default: "right")}
 
-\item{table_width}{Width of table area ("auto" or numeric pixels)}
+\item{table_width}{Width of table area: "auto" or numeric pixels (default: "auto")}
 
-\item{plot_width}{Width of plot area ("auto" or numeric pixels)}
+\item{plot_width}{Width of plot area: "auto" or numeric pixels (default: "auto")}
 
-\item{row_border}{Show row borders}
+\item{row_border}{Show horizontal borders between rows (default: TRUE)}
 
-\item{row_border_style}{Style of row borders: "solid", "dashed", or "dotted"}
+\item{row_border_style}{Style of row borders: "solid", "dashed", or "dotted" (default: "solid")}
 
-\item{container_border}{Show container border}
+\item{container_border}{Show border around the plot container (default: FALSE)}
 
-\item{container_border_radius}{Container border radius in pixels}
+\item{container_border_radius}{Corner radius for container in pixels (default: 8)}
 }
 \description{
 LayoutConfig: Layout and visual configuration
 }
 \details{
+Container styling can also be modified using \code{\link[=set_container]{set_container()}}.
+
 Note: \code{cell_padding_x} and \code{cell_padding_y} have been moved to the \link{Spacing} class.
 Use \code{\link[=set_spacing]{set_spacing()}} to modify cell padding.
 }

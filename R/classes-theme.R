@@ -174,15 +174,17 @@ AxisConfig <- new_class(
 
 #' LayoutConfig: Layout and visual configuration
 #'
-#' @param plot_position Position of forest plot: "left" or "right"
-#' @param table_width Width of table area ("auto" or numeric pixels)
-#' @param plot_width Width of plot area ("auto" or numeric pixels)
-#' @param row_border Show row borders
-#' @param row_border_style Style of row borders: "solid", "dashed", or "dotted"
-#' @param container_border Show container border
-#' @param container_border_radius Container border radius in pixels
+#' @param plot_position Position of forest plot: "left" or "right" (default: "right")
+#' @param table_width Width of table area: "auto" or numeric pixels (default: "auto")
+#' @param plot_width Width of plot area: "auto" or numeric pixels (default: "auto")
+#' @param row_border Show horizontal borders between rows (default: TRUE)
+#' @param row_border_style Style of row borders: "solid", "dashed", or "dotted" (default: "solid")
+#' @param container_border Show border around the plot container (default: FALSE)
+#' @param container_border_radius Corner radius for container in pixels (default: 8)
 #'
 #' @details
+#' Container styling can also be modified using [set_container()].
+#'
 #' Note: `cell_padding_x` and `cell_padding_y` have been moved to the [Spacing] class.
 #' Use [set_spacing()] to modify cell padding.
 #'
@@ -195,7 +197,7 @@ LayoutConfig <- new_class(
     plot_width = new_property(class_any, default = "auto"),
     row_border = new_property(class_logical, default = TRUE),
     row_border_style = new_property(class_character, default = "solid"),
-    container_border = new_property(class_logical, default = TRUE),
+    container_border = new_property(class_logical, default = FALSE),
     container_border_radius = new_property(class_numeric, default = 8)
   ),
   validator = function(self) {
@@ -341,7 +343,7 @@ web_theme_minimal <- function() {
     layout = LayoutConfig(
       row_border = TRUE,
       row_border_style = "solid",
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 0     # No rounded corners
     )
   )
@@ -399,7 +401,7 @@ web_theme_dark <- function() {
     layout = LayoutConfig(
       row_border = TRUE,
       row_border_style = "solid",
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 8
     )
   )
@@ -849,16 +851,22 @@ set_axis <- function(
 #' @param plot_width Width of plot area: "auto" or numeric pixels (default: "auto")
 #' @param cell_padding_x Deprecated. Use [set_spacing()] instead.
 #' @param cell_padding_y Deprecated. Use [set_spacing()] instead.
-#' @param row_border Show row borders (default: TRUE)
+#' @param row_border Show horizontal borders between rows (default: TRUE)
 #' @param row_border_style Row border style: "solid", "dashed", or "dotted" (default: "solid")
-#' @param container_border Show container border (default: TRUE)
-#' @param container_border_radius Container border radius in pixels (default: 8)
+#' @param container_border Show border around the entire plot container (default: FALSE)
+#' @param container_border_radius Corner radius for container in pixels (default: 8).
+#'   Only visible when `container_border = TRUE`.
 #'
 #' @return Modified WebTheme object
 #' @export
 #' @examples
+#' # Move plot to left side
 #' web_theme_default() |>
-#'   set_layout(plot_position = "left", container_border = FALSE)
+#'   set_layout(plot_position = "left")
+#'
+#' # Add a border around the container
+#' web_theme_default() |>
+#'   set_layout(container_border = TRUE, container_border_radius = 4)
 set_layout <- function(
     theme,
     plot_position = NULL,
@@ -904,6 +912,43 @@ set_layout <- function(
   }
   if (!is.null(container_border)) current@container_border <- container_border
   if (!is.null(container_border_radius)) current@container_border_radius <- container_border_radius
+
+  theme@layout <- current
+  theme
+}
+
+#' Modify container appearance
+#'
+#' Pipe-friendly function to style the outer container of the forest plot.
+#' Controls the border and corner radius of the plot wrapper.
+#'
+#' @param theme A WebTheme object
+#' @param border Show border around the container (default: FALSE).
+#'   When TRUE, displays a 1px solid border using the theme's border color.
+#' @param border_radius Corner radius in pixels (default: 8).
+#'   Set to 0 for sharp corners. Only visible when `border = TRUE` or
+#'   when container has a background color.
+#'
+#' @return Modified WebTheme object
+#' @export
+#' @examples
+#' # Add a subtle border with rounded corners
+#' web_theme_default() |>
+#'   set_container(border = TRUE, border_radius = 8)
+#'
+#' # Sharp corners, no border
+#' web_theme_default() |>
+#'   set_container(border = FALSE, border_radius = 0)
+set_container <- function(
+    theme,
+    border = NULL,
+    border_radius = NULL
+) {
+  stopifnot(S7_inherits(theme, WebTheme))
+  current <- theme@layout
+
+  if (!is.null(border)) current@container_border <- border
+  if (!is.null(border_radius)) current@container_border_radius <- border_radius
 
   theme@layout <- current
   theme
@@ -1044,7 +1089,7 @@ web_theme_jama <- function() {
     layout = LayoutConfig(
       row_border = TRUE,
       row_border_style = "solid",
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 0     # Sharp corners
     )
   )
@@ -1103,7 +1148,7 @@ web_theme_lancet <- function() {
     layout = LayoutConfig(
       row_border = TRUE,
       row_border_style = "solid",
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 0   # No rounded corners
     )
   )
@@ -1164,7 +1209,7 @@ web_theme_modern <- function() {
     layout = LayoutConfig(
       row_border = TRUE,
       row_border_style = "solid",
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 12     # Prominent rounded corners
     )
   )
@@ -1222,7 +1267,7 @@ web_theme_presentation <- function() {
     ),
     layout = LayoutConfig(
       row_border = TRUE,
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 6
     )
   )
@@ -1343,7 +1388,7 @@ web_theme_nature <- function() {
     layout = LayoutConfig(
       row_border = TRUE,
       row_border_style = "solid",
-      container_border = TRUE,
+      container_border = FALSE,
       container_border_radius = 2      # Minimal rounding
     ),
     axis = AxisConfig(

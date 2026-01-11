@@ -42,8 +42,8 @@ Use Inf to never truncate.}
 
 \item{include_null}{Always include null value in axis range (default: TRUE)}
 
-\item{symmetric}{Make axis symmetric around null value. NULL for auto-detection,
-TRUE/FALSE to force.}
+\item{symmetric}{Make axis symmetric around null value. Set to TRUE to enable;
+default (NULL/FALSE) does not apply symmetry.}
 
 \item{null_tick}{Always show a tick at the null value (default: TRUE)}
 

@@ -30,13 +30,14 @@ set_layout(
 
 \item{cell_padding_y}{Deprecated. Use \code{\link[=set_spacing]{set_spacing()}} instead.}
 
-\item{row_border}{Show row borders (default: TRUE)}
+\item{row_border}{Show horizontal borders between rows (default: TRUE)}
 
 \item{row_border_style}{Row border style: "solid", "dashed", or "dotted" (default: "solid")}
 
-\item{container_border}{Show container border (default: TRUE)}
+\item{container_border}{Show border around the entire plot container (default: FALSE)}
 
-\item{container_border_radius}{Container border radius in pixels (default: 8)}
+\item{container_border_radius}{Corner radius for container in pixels (default: 8).
+Only visible when \code{container_border = TRUE}.}
 }
 \value{
 Modified WebTheme object
@@ -45,6 +46,11 @@ Modified WebTheme object
 Pipe-friendly function to modify layout settings.
 }
 \examples{
+# Move plot to left side
 web_theme_default() |>
-  set_layout(plot_position = "left", container_border = FALSE)
+  set_layout(plot_position = "left")
+
+# Add a border around the container
+web_theme_default() |>
+  set_layout(container_border = TRUE, container_border_radius = 4)
 }

@@ -82,7 +82,7 @@ const DEFAULT_THEME: WebTheme = {
     plotWidth: "auto",
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 8,
   },
   groupHeaders: {
@@ -155,7 +155,7 @@ const MINIMAL_THEME: WebTheme = {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 0,    // No rounded corners
   },
 };
@@ -210,7 +210,7 @@ const DARK_THEME: WebTheme = {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 8,
   },
 };
@@ -267,7 +267,7 @@ const JAMA_THEME: WebTheme = {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 0,      // Sharp corners
   },
 };
@@ -324,7 +324,7 @@ const LANCET_THEME: WebTheme = {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 0,        // No rounded corners
   },
 };
@@ -381,7 +381,7 @@ const MODERN_THEME: WebTheme = {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 12,       // Prominent rounded corners
   },
 };
@@ -437,7 +437,7 @@ const PRESENTATION_THEME: WebTheme = {
   layout: {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 6,
   },
 };
@@ -551,7 +551,7 @@ const NATURE_THEME: WebTheme = {
     ...DEFAULT_THEME.layout,
     rowBorder: true,
     rowBorderStyle: "solid",
-    containerBorder: true,
+    containerBorder: false,
     containerBorderRadius: 2,        // Minimal rounding
   },
   axis: {

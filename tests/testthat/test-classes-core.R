@@ -176,7 +176,7 @@ test_that("web_theme_nature creates valid theme", {
   expect_equal(theme@name, "nature")
   expect_equal(theme@colors@primary, "#1976d2")
   expect_equal(theme@shapes@border_radius, 1)
-  expect_true(theme@layout@container_border)
+  expect_false(theme@layout@container_border)
 })
 
 test_that("col_numeric supports decimals parameter", {

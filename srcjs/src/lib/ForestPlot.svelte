@@ -544,6 +544,7 @@
       --wf-point-size: ${theme.shapes.pointSize}px;
       --wf-line-width: ${theme.shapes.lineWidth}px;
       --wf-border-radius: ${theme.shapes.borderRadius}px;
+      --wf-container-border: ${theme.layout.containerBorder ? `1px solid var(--wf-border)` : 'none'};
       --wf-container-border-radius: ${theme.layout.containerBorderRadius}px;
       --wf-row-odd-opacity: ${ROW_ODD_OPACITY};
       --wf-group-header-opacity: ${GROUP_HEADER_OPACITY};
@@ -1069,8 +1070,8 @@
     font-size: var(--wf-font-size-base);
     color: var(--wf-fg);
     background: var(--wf-bg);
-    border: 1px solid var(--wf-border);
-    border-radius: 8px;
+    border: var(--wf-container-border, none);
+    border-radius: var(--wf-container-border-radius, 8px);
     overflow: hidden;
     display: flex;
     flex-direction: column;
