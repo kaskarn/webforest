@@ -1040,18 +1040,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  theme,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_font_size =</span> <span class="cn">NULL</span>,</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_font_weight =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_background =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_border_bottom =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_size =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_weight =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_background =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_border_bottom =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_size =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_weight =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_background =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_border_bottom =</span> <span class="cn">NULL</span>,</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">indent_per_level =</span> <span class="cn">NULL</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_italic =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_background =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_border_bottom =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_size =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_weight =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_italic =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_background =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_border_bottom =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_size =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_weight =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_italic =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_background =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_border_bottom =</span> <span class="cn">NULL</span>,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">indent_per_level =</span> <span class="cn">NULL</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
@@ -1077,24 +1080,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Font weight for top-level groups</td>
 </tr>
 <tr class="odd">
+<td><code>level1_italic</code></td>
+<td><code>FALSE</code></td>
+<td>Use italic text for level 1</td>
+</tr>
+<tr class="even">
 <td><code>level1_background</code></td>
 <td><code>NULL</code></td>
 <td>Background color (NULL = 15% primary opacity)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>level1_border_bottom</code></td>
-<td><code>TRUE</code></td>
+<td><code>FALSE</code></td>
 <td>Show bottom border on level 1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>level2_font_size</code></td>
 <td><code>"0.9375rem"</code></td>
 <td>Font size for second-level groups</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>level2_font_weight</code></td>
-<td><code>600</code></td>
+<td><code>500</code></td>
 <td>Font weight for second-level groups</td>
+</tr>
+<tr class="even">
+<td><code>level2_italic</code></td>
+<td><code>TRUE</code></td>
+<td>Use italic text for level 2</td>
 </tr>
 <tr class="odd">
 <td><code>level2_background</code></td>
@@ -1103,7 +1116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><code>level2_border_bottom</code></td>
-<td><code>TRUE</code></td>
+<td><code>FALSE</code></td>
 <td>Show bottom border on level 2</td>
 </tr>
 <tr class="odd">
@@ -1113,20 +1126,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><code>level3_font_weight</code></td>
-<td><code>500</code></td>
+<td><code>400</code></td>
 <td>Font weight for third-level groups</td>
 </tr>
 <tr class="odd">
+<td><code>level3_italic</code></td>
+<td><code>FALSE</code></td>
+<td>Use italic text for level 3+</td>
+</tr>
+<tr class="even">
 <td><code>level3_background</code></td>
 <td><code>NULL</code></td>
 <td>Background color (NULL = 6% primary opacity)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><code>level3_border_bottom</code></td>
 <td><code>FALSE</code></td>
 <td>Show bottom border on level 3+</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><code>indent_per_level</code></td>
 <td><code>16</code></td>
 <td>Indentation per nesting level (px)</td>
@@ -1137,9 +1155,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_group_headers</span>(</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_weight =</span> <span class="dv">800</span>,</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#f0f9ff"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">indent_per_level =</span> <span class="dv">24</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_italic =</span> <span class="cn">FALSE</span>,  <span class="co"># Disable default italic on level 2</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#f0f9ff"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">indent_per_level =</span> <span class="dv">24</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="examples" class="level2">
@@ -1189,12 +1208,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_weight =</span> <span class="dv">800</span>,</span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#e0f2fe"</span>,  <span class="co"># Light blue</span></span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_size =</span> <span class="st">"0.95rem"</span>,</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_weight =</span> <span class="dv">600</span>,</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_background =</span> <span class="st">"#f0f9ff"</span>,  <span class="co"># Lighter blue</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_size =</span> <span class="st">"0.875rem"</span>,</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_weight =</span> <span class="dv">500</span>,</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_background =</span> <span class="st">"#fafafa"</span>   <span class="co"># Near white</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_weight =</span> <span class="dv">500</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_italic =</span> <span class="cn">TRUE</span>,           <span class="co"># Italic for level 2 (default)</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_background =</span> <span class="st">"#f0f9ff"</span>,  <span class="co"># Lighter blue</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_size =</span> <span class="st">"0.875rem"</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_weight =</span> <span class="dv">400</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_background =</span> <span class="st">"#fafafa"</span>   <span class="co"># Near white</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -2072,100 +2092,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb30-409"><a href="#cb30-409" aria-hidden="true" tabindex="-1"></a>  theme,</span>
 <span id="cb30-410"><a href="#cb30-410" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_font_size =</span> <span class="cn">NULL</span>,</span>
 <span id="cb30-411"><a href="#cb30-411" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_font_weight =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-412"><a href="#cb30-412" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_background =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-413"><a href="#cb30-413" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_border_bottom =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-414"><a href="#cb30-414" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_size =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-415"><a href="#cb30-415" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_weight =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-416"><a href="#cb30-416" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_background =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-417"><a href="#cb30-417" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_border_bottom =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-418"><a href="#cb30-418" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_size =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-419"><a href="#cb30-419" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_weight =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-420"><a href="#cb30-420" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_background =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-421"><a href="#cb30-421" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_border_bottom =</span> <span class="cn">NULL</span>,</span>
-<span id="cb30-422"><a href="#cb30-422" aria-hidden="true" tabindex="-1"></a>  <span class="at">indent_per_level =</span> <span class="cn">NULL</span></span>
-<span id="cb30-423"><a href="#cb30-423" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb30-424"><a href="#cb30-424" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-425"><a href="#cb30-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-426"><a href="#cb30-426" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Default <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb30-427"><a href="#cb30-427" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|---------|-------------|</span></span>
-<span id="cb30-428"><a href="#cb30-428" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_font_size`</span> <span class="pp">|</span> <span class="in">`"1rem"`</span> <span class="pp">|</span> Font size for top-level groups <span class="pp">|</span></span>
-<span id="cb30-429"><a href="#cb30-429" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_font_weight`</span> <span class="pp">|</span> <span class="in">`700`</span> <span class="pp">|</span> Font weight for top-level groups <span class="pp">|</span></span>
-<span id="cb30-430"><a href="#cb30-430" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_background`</span> <span class="pp">|</span> <span class="in">`NULL`</span> <span class="pp">|</span> Background color (NULL = 15% primary opacity) <span class="pp">|</span></span>
-<span id="cb30-431"><a href="#cb30-431" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_border_bottom`</span> <span class="pp">|</span> <span class="in">`TRUE`</span> <span class="pp">|</span> Show bottom border on level 1 <span class="pp">|</span></span>
-<span id="cb30-432"><a href="#cb30-432" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_font_size`</span> <span class="pp">|</span> <span class="in">`"0.9375rem"`</span> <span class="pp">|</span> Font size for second-level groups <span class="pp">|</span></span>
-<span id="cb30-433"><a href="#cb30-433" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_font_weight`</span> <span class="pp">|</span> <span class="in">`600`</span> <span class="pp">|</span> Font weight for second-level groups <span class="pp">|</span></span>
-<span id="cb30-434"><a href="#cb30-434" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_background`</span> <span class="pp">|</span> <span class="in">`NULL`</span> <span class="pp">|</span> Background color (NULL = 10% primary opacity) <span class="pp">|</span></span>
-<span id="cb30-435"><a href="#cb30-435" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_border_bottom`</span> <span class="pp">|</span> <span class="in">`TRUE`</span> <span class="pp">|</span> Show bottom border on level 2 <span class="pp">|</span></span>
-<span id="cb30-436"><a href="#cb30-436" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_font_size`</span> <span class="pp">|</span> <span class="in">`"0.875rem"`</span> <span class="pp">|</span> Font size for third-level groups <span class="pp">|</span></span>
-<span id="cb30-437"><a href="#cb30-437" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_font_weight`</span> <span class="pp">|</span> <span class="in">`500`</span> <span class="pp">|</span> Font weight for third-level groups <span class="pp">|</span></span>
-<span id="cb30-438"><a href="#cb30-438" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_background`</span> <span class="pp">|</span> <span class="in">`NULL`</span> <span class="pp">|</span> Background color (NULL = 6% primary opacity) <span class="pp">|</span></span>
-<span id="cb30-439"><a href="#cb30-439" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_border_bottom`</span> <span class="pp">|</span> <span class="in">`FALSE`</span> <span class="pp">|</span> Show bottom border on level 3+ <span class="pp">|</span></span>
-<span id="cb30-440"><a href="#cb30-440" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`indent_per_level`</span> <span class="pp">|</span> <span class="in">`16`</span> <span class="pp">|</span> Indentation per nesting level (px) <span class="pp">|</span></span>
-<span id="cb30-441"><a href="#cb30-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-442"><a href="#cb30-442" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
-<span id="cb30-443"><a href="#cb30-443" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb30-444"><a href="#cb30-444" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-445"><a href="#cb30-445" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_group_headers</span>(</span>
-<span id="cb30-446"><a href="#cb30-446" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_weight =</span> <span class="dv">800</span>,</span>
-<span id="cb30-447"><a href="#cb30-447" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#f0f9ff"</span>,</span>
-<span id="cb30-448"><a href="#cb30-448" aria-hidden="true" tabindex="-1"></a>    <span class="at">indent_per_level =</span> <span class="dv">24</span></span>
-<span id="cb30-449"><a href="#cb30-449" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb30-450"><a href="#cb30-450" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-451"><a href="#cb30-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-452"><a href="#cb30-452" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
-<span id="cb30-453"><a href="#cb30-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-454"><a href="#cb30-454" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chaining Modifiers</span></span>
-<span id="cb30-455"><a href="#cb30-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-458"><a href="#cb30-458" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-459"><a href="#cb30-459" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb30-460"><a href="#cb30-460" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_jama</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-461"><a href="#cb30-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(<span class="at">primary =</span> <span class="st">"#0066cc"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-462"><a href="#cb30-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(<span class="at">font_family =</span> <span class="st">"Georgia, serif"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-463"><a href="#cb30-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">28</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-464"><a href="#cb30-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb30-465"><a href="#cb30-465" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-466"><a href="#cb30-466" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-467"><a href="#cb30-467" aria-hidden="true" tabindex="-1"></a><span class="fu">### Custom Theme for Publication</span></span>
-<span id="cb30-468"><a href="#cb30-468" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-471"><a href="#cb30-471" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-472"><a href="#cb30-472" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb30-473"><a href="#cb30-473" aria-hidden="true" tabindex="-1"></a>publication_theme <span class="ot">&lt;-</span> <span class="fu">web_theme_minimal</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-474"><a href="#cb30-474" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(</span>
-<span id="cb30-475"><a href="#cb30-475" aria-hidden="true" tabindex="-1"></a>    <span class="at">foreground =</span> <span class="st">"#1a1a1a"</span>,</span>
-<span id="cb30-476"><a href="#cb30-476" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">"#333333"</span>,</span>
-<span id="cb30-477"><a href="#cb30-477" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval_line =</span> <span class="st">"#333333"</span></span>
-<span id="cb30-478"><a href="#cb30-478" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb30-479"><a href="#cb30-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(</span>
-<span id="cb30-480"><a href="#cb30-480" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_family =</span> <span class="st">"Times New Roman, serif"</span>,</span>
-<span id="cb30-481"><a href="#cb30-481" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size_base =</span> <span class="st">"11pt"</span></span>
-<span id="cb30-482"><a href="#cb30-482" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb30-483"><a href="#cb30-483" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-484"><a href="#cb30-484" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb30-485"><a href="#cb30-485" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-486"><a href="#cb30-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-487"><a href="#cb30-487" aria-hidden="true" tabindex="-1"></a><span class="fu">### Customizing Group Header Hierarchy</span></span>
-<span id="cb30-488"><a href="#cb30-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-491"><a href="#cb30-491" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb30-492"><a href="#cb30-492" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb30-493"><a href="#cb30-493" aria-hidden="true" tabindex="-1"></a><span class="co"># Create distinct visual levels for nested groups</span></span>
-<span id="cb30-494"><a href="#cb30-494" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-495"><a href="#cb30-495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_group_headers</span>(</span>
-<span id="cb30-496"><a href="#cb30-496" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_size =</span> <span class="st">"1.1rem"</span>,</span>
-<span id="cb30-497"><a href="#cb30-497" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_weight =</span> <span class="dv">800</span>,</span>
-<span id="cb30-498"><a href="#cb30-498" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#e0f2fe"</span>,  <span class="co"># Light blue</span></span>
-<span id="cb30-499"><a href="#cb30-499" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_size =</span> <span class="st">"0.95rem"</span>,</span>
-<span id="cb30-500"><a href="#cb30-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_weight =</span> <span class="dv">600</span>,</span>
-<span id="cb30-501"><a href="#cb30-501" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_background =</span> <span class="st">"#f0f9ff"</span>,  <span class="co"># Lighter blue</span></span>
-<span id="cb30-502"><a href="#cb30-502" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_size =</span> <span class="st">"0.875rem"</span>,</span>
-<span id="cb30-503"><a href="#cb30-503" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_weight =</span> <span class="dv">500</span>,</span>
-<span id="cb30-504"><a href="#cb30-504" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_background =</span> <span class="st">"#fafafa"</span>   <span class="co"># Near white</span></span>
-<span id="cb30-505"><a href="#cb30-505" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb30-506"><a href="#cb30-506" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb30-507"><a href="#cb30-507" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-508"><a href="#cb30-508" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb30-509"><a href="#cb30-509" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-510"><a href="#cb30-510" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">forest_plot()</span><span class="co">](forest_plot.qmd)</span> for using themes</span>
-<span id="cb30-511"><a href="#cb30-511" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Themes Guide</span><span class="co">](../guide/themes.qmd)</span> for detailed customization</span>
+<span id="cb30-412"><a href="#cb30-412" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_italic =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-413"><a href="#cb30-413" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_background =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-414"><a href="#cb30-414" aria-hidden="true" tabindex="-1"></a>  <span class="at">level1_border_bottom =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-415"><a href="#cb30-415" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_size =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-416"><a href="#cb30-416" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_font_weight =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-417"><a href="#cb30-417" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_italic =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-418"><a href="#cb30-418" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_background =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-419"><a href="#cb30-419" aria-hidden="true" tabindex="-1"></a>  <span class="at">level2_border_bottom =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-420"><a href="#cb30-420" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_size =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-421"><a href="#cb30-421" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_font_weight =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-422"><a href="#cb30-422" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_italic =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-423"><a href="#cb30-423" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_background =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-424"><a href="#cb30-424" aria-hidden="true" tabindex="-1"></a>  <span class="at">level3_border_bottom =</span> <span class="cn">NULL</span>,</span>
+<span id="cb30-425"><a href="#cb30-425" aria-hidden="true" tabindex="-1"></a>  <span class="at">indent_per_level =</span> <span class="cn">NULL</span></span>
+<span id="cb30-426"><a href="#cb30-426" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-427"><a href="#cb30-427" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-428"><a href="#cb30-428" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-429"><a href="#cb30-429" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Default <span class="pp">|</span> Description <span class="pp">|</span></span>
+<span id="cb30-430"><a href="#cb30-430" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|---------|-------------|</span></span>
+<span id="cb30-431"><a href="#cb30-431" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_font_size`</span> <span class="pp">|</span> <span class="in">`"1rem"`</span> <span class="pp">|</span> Font size for top-level groups <span class="pp">|</span></span>
+<span id="cb30-432"><a href="#cb30-432" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_font_weight`</span> <span class="pp">|</span> <span class="in">`700`</span> <span class="pp">|</span> Font weight for top-level groups <span class="pp">|</span></span>
+<span id="cb30-433"><a href="#cb30-433" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_italic`</span> <span class="pp">|</span> <span class="in">`FALSE`</span> <span class="pp">|</span> Use italic text for level 1 <span class="pp">|</span></span>
+<span id="cb30-434"><a href="#cb30-434" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_background`</span> <span class="pp">|</span> <span class="in">`NULL`</span> <span class="pp">|</span> Background color (NULL = 15% primary opacity) <span class="pp">|</span></span>
+<span id="cb30-435"><a href="#cb30-435" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level1_border_bottom`</span> <span class="pp">|</span> <span class="in">`FALSE`</span> <span class="pp">|</span> Show bottom border on level 1 <span class="pp">|</span></span>
+<span id="cb30-436"><a href="#cb30-436" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_font_size`</span> <span class="pp">|</span> <span class="in">`"0.9375rem"`</span> <span class="pp">|</span> Font size for second-level groups <span class="pp">|</span></span>
+<span id="cb30-437"><a href="#cb30-437" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_font_weight`</span> <span class="pp">|</span> <span class="in">`500`</span> <span class="pp">|</span> Font weight for second-level groups <span class="pp">|</span></span>
+<span id="cb30-438"><a href="#cb30-438" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_italic`</span> <span class="pp">|</span> <span class="in">`TRUE`</span> <span class="pp">|</span> Use italic text for level 2 <span class="pp">|</span></span>
+<span id="cb30-439"><a href="#cb30-439" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_background`</span> <span class="pp">|</span> <span class="in">`NULL`</span> <span class="pp">|</span> Background color (NULL = 10% primary opacity) <span class="pp">|</span></span>
+<span id="cb30-440"><a href="#cb30-440" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level2_border_bottom`</span> <span class="pp">|</span> <span class="in">`FALSE`</span> <span class="pp">|</span> Show bottom border on level 2 <span class="pp">|</span></span>
+<span id="cb30-441"><a href="#cb30-441" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_font_size`</span> <span class="pp">|</span> <span class="in">`"0.875rem"`</span> <span class="pp">|</span> Font size for third-level groups <span class="pp">|</span></span>
+<span id="cb30-442"><a href="#cb30-442" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_font_weight`</span> <span class="pp">|</span> <span class="in">`400`</span> <span class="pp">|</span> Font weight for third-level groups <span class="pp">|</span></span>
+<span id="cb30-443"><a href="#cb30-443" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_italic`</span> <span class="pp">|</span> <span class="in">`FALSE`</span> <span class="pp">|</span> Use italic text for level 3+ <span class="pp">|</span></span>
+<span id="cb30-444"><a href="#cb30-444" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_background`</span> <span class="pp">|</span> <span class="in">`NULL`</span> <span class="pp">|</span> Background color (NULL = 6% primary opacity) <span class="pp">|</span></span>
+<span id="cb30-445"><a href="#cb30-445" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`level3_border_bottom`</span> <span class="pp">|</span> <span class="in">`FALSE`</span> <span class="pp">|</span> Show bottom border on level 3+ <span class="pp">|</span></span>
+<span id="cb30-446"><a href="#cb30-446" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`indent_per_level`</span> <span class="pp">|</span> <span class="in">`16`</span> <span class="pp">|</span> Indentation per nesting level (px) <span class="pp">|</span></span>
+<span id="cb30-447"><a href="#cb30-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-448"><a href="#cb30-448" aria-hidden="true" tabindex="-1"></a>**Example**:</span>
+<span id="cb30-449"><a href="#cb30-449" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb30-450"><a href="#cb30-450" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-451"><a href="#cb30-451" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_group_headers</span>(</span>
+<span id="cb30-452"><a href="#cb30-452" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_weight =</span> <span class="dv">800</span>,</span>
+<span id="cb30-453"><a href="#cb30-453" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_italic =</span> <span class="cn">FALSE</span>,  <span class="co"># Disable default italic on level 2</span></span>
+<span id="cb30-454"><a href="#cb30-454" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#f0f9ff"</span>,</span>
+<span id="cb30-455"><a href="#cb30-455" aria-hidden="true" tabindex="-1"></a>    <span class="at">indent_per_level =</span> <span class="dv">24</span></span>
+<span id="cb30-456"><a href="#cb30-456" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-457"><a href="#cb30-457" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-458"><a href="#cb30-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-459"><a href="#cb30-459" aria-hidden="true" tabindex="-1"></a><span class="fu">## Examples</span></span>
+<span id="cb30-460"><a href="#cb30-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-461"><a href="#cb30-461" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chaining Modifiers</span></span>
+<span id="cb30-462"><a href="#cb30-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-465"><a href="#cb30-465" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-466"><a href="#cb30-466" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb30-467"><a href="#cb30-467" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_jama</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-468"><a href="#cb30-468" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(<span class="at">primary =</span> <span class="st">"#0066cc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-469"><a href="#cb30-469" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(<span class="at">font_family =</span> <span class="st">"Georgia, serif"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-470"><a href="#cb30-470" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">28</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-471"><a href="#cb30-471" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-472"><a href="#cb30-472" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-473"><a href="#cb30-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-474"><a href="#cb30-474" aria-hidden="true" tabindex="-1"></a><span class="fu">### Custom Theme for Publication</span></span>
+<span id="cb30-475"><a href="#cb30-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-478"><a href="#cb30-478" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-479"><a href="#cb30-479" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb30-480"><a href="#cb30-480" aria-hidden="true" tabindex="-1"></a>publication_theme <span class="ot">&lt;-</span> <span class="fu">web_theme_minimal</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-481"><a href="#cb30-481" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_colors</span>(</span>
+<span id="cb30-482"><a href="#cb30-482" aria-hidden="true" tabindex="-1"></a>    <span class="at">foreground =</span> <span class="st">"#1a1a1a"</span>,</span>
+<span id="cb30-483"><a href="#cb30-483" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval =</span> <span class="st">"#333333"</span>,</span>
+<span id="cb30-484"><a href="#cb30-484" aria-hidden="true" tabindex="-1"></a>    <span class="at">interval_line =</span> <span class="st">"#333333"</span></span>
+<span id="cb30-485"><a href="#cb30-485" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-486"><a href="#cb30-486" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_typography</span>(</span>
+<span id="cb30-487"><a href="#cb30-487" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_family =</span> <span class="st">"Times New Roman, serif"</span>,</span>
+<span id="cb30-488"><a href="#cb30-488" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size_base =</span> <span class="st">"11pt"</span></span>
+<span id="cb30-489"><a href="#cb30-489" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-490"><a href="#cb30-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_spacing</span>(<span class="at">row_height =</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-491"><a href="#cb30-491" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_axis</span>(<span class="at">gridlines =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb30-492"><a href="#cb30-492" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-493"><a href="#cb30-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-494"><a href="#cb30-494" aria-hidden="true" tabindex="-1"></a><span class="fu">### Customizing Group Header Hierarchy</span></span>
+<span id="cb30-495"><a href="#cb30-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-498"><a href="#cb30-498" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb30-499"><a href="#cb30-499" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb30-500"><a href="#cb30-500" aria-hidden="true" tabindex="-1"></a><span class="co"># Create distinct visual levels for nested groups</span></span>
+<span id="cb30-501"><a href="#cb30-501" aria-hidden="true" tabindex="-1"></a><span class="fu">web_theme_default</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-502"><a href="#cb30-502" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_group_headers</span>(</span>
+<span id="cb30-503"><a href="#cb30-503" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_size =</span> <span class="st">"1.1rem"</span>,</span>
+<span id="cb30-504"><a href="#cb30-504" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_font_weight =</span> <span class="dv">800</span>,</span>
+<span id="cb30-505"><a href="#cb30-505" aria-hidden="true" tabindex="-1"></a>    <span class="at">level1_background =</span> <span class="st">"#e0f2fe"</span>,  <span class="co"># Light blue</span></span>
+<span id="cb30-506"><a href="#cb30-506" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_size =</span> <span class="st">"0.95rem"</span>,</span>
+<span id="cb30-507"><a href="#cb30-507" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_font_weight =</span> <span class="dv">500</span>,</span>
+<span id="cb30-508"><a href="#cb30-508" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_italic =</span> <span class="cn">TRUE</span>,           <span class="co"># Italic for level 2 (default)</span></span>
+<span id="cb30-509"><a href="#cb30-509" aria-hidden="true" tabindex="-1"></a>    <span class="at">level2_background =</span> <span class="st">"#f0f9ff"</span>,  <span class="co"># Lighter blue</span></span>
+<span id="cb30-510"><a href="#cb30-510" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_size =</span> <span class="st">"0.875rem"</span>,</span>
+<span id="cb30-511"><a href="#cb30-511" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_font_weight =</span> <span class="dv">400</span>,</span>
+<span id="cb30-512"><a href="#cb30-512" aria-hidden="true" tabindex="-1"></a>    <span class="at">level3_background =</span> <span class="st">"#fafafa"</span>   <span class="co"># Near white</span></span>
+<span id="cb30-513"><a href="#cb30-513" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-514"><a href="#cb30-514" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb30-515"><a href="#cb30-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-516"><a href="#cb30-516" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb30-517"><a href="#cb30-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-518"><a href="#cb30-518" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">forest_plot()</span><span class="co">](forest_plot.qmd)</span> for using themes</span>
+<span id="cb30-519"><a href="#cb30-519" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Themes Guide</span><span class="co">](../guide/themes.qmd)</span> for detailed customization</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
