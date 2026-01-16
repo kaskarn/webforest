@@ -13,11 +13,11 @@ import type {
   GroupHeaderRow,
   DataRow,
 } from "$types";
-import { niceDomain, DOMAIN_PADDING } from "$lib/scale-utils";
+import { niceDomain } from "$lib/scale-utils";
 import { computeAxis, type AxisComputation, AXIS_LABEL_PADDING } from "$lib/axis-utils";
 import { THEME_PRESETS, type ThemeName } from "$lib/theme-presets";
 import { getColumnDisplayText } from "$lib/formatters";
-import { AUTO_WIDTH, SPACING, GROUP_HEADER, COLUMN_GROUP, TEXT_MEASUREMENT } from "$lib/rendering-constants";
+import { AUTO_WIDTH, SPACING, GROUP_HEADER, TEXT_MEASUREMENT } from "$lib/rendering-constants";
 
 // Svelte 5 runes-based store
 export function createForestStore() {
