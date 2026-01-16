@@ -111,3 +111,54 @@
 #' head(climate_temps)
 #'
 "climate_temps"
+
+#' Effect Sizes with Varying Precision (Stress Test Dataset)
+#'
+#' A dataset designed to stress test forest plot axis rendering and subgroup
+#' splitting logic. Contains studies with widely varying confidence interval
+#' widths, from highly precise large trials to exploratory studies with CIs
+#' that extend far beyond typical axis limits.
+#'
+#' This dataset is useful for testing:
+#' \itemize{
+#'   \item Axis range calculation with extreme CI bounds
+#'   \item CI clipping and arrow indicators
+#'   \item \code{split_by} / \code{plot_by} with multiple grouping variables
+#'   \item Edge cases: very wide CIs, null effects, extreme effect sizes
+#' }
+#'
+#' @format A data frame with 20 rows and 12 variables:
+#' \describe{
+#'   \item{study}{Study or site name}
+#'   \item{region}{Geographic region: North America, Europe, or Asia Pacific}
+#'   \item{outcome}{Outcome type: Primary, Secondary, or Exploratory}
+#'   \item{treatment}{Treatment arm: Drug A, Drug B, or Combination}
+#'   \item{phase}{Trial phase: Phase 1, Phase 2, or Phase 3}
+#'   \item{n}{Sample size}
+#'   \item{hr}{Hazard ratio point estimate}
+#'   \item{lower}{Lower bound of 95 percent confidence interval}
+#'   \item{upper}{Upper bound of 95 percent confidence interval}
+#'   \item{se}{Standard error (log scale)}
+#'   \item{significant}{Logical: whether CI excludes 1.0}
+#'   \item{direction}{Effect direction: Favors Treatment or Favors Control}
+#' }
+#'
+#' @source Simulated data designed to test edge cases in forest plot rendering.
+#'
+#' @examples
+#' data(effect_sizes)
+#'
+#' # Basic plot - note how axis adapts to varying CI widths
+#' forest_plot(effect_sizes, hr, lower, upper, study, scale = "log")
+#'
+#' # Split by region to test subgroup navigation
+#' forest_plot(effect_sizes, hr, lower, upper, study,
+#'             scale = "log", split_by = "region")
+#'
+#' # Split by multiple variables for hierarchical navigation
+#' effect_sizes |>
+#'   web_spec(hr, lower, upper, study, scale = "log") |>
+#'   split_forest(by = c("outcome", "treatment")) |>
+#'   forest_plot()
+#'
+"effect_sizes"

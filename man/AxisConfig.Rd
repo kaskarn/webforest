@@ -11,8 +11,7 @@ AxisConfig(
   tick_values = NULL,
   gridlines = FALSE,
   gridline_style = "dotted",
-  padding = 0.1,
-  ci_truncation_threshold = 2,
+  ci_clip_factor = 2,
   include_null = TRUE,
   symmetric = NULL,
   null_tick = TRUE,
@@ -32,10 +31,9 @@ AxisConfig(
 
 \item{gridline_style}{Style of gridlines: "solid", "dashed", or "dotted"}
 
-\item{padding}{Fraction of estimate range to add as padding on each side (default: 0.10)}
-
-\item{ci_truncation_threshold}{Truncate CIs extending beyond this multiple of
-the estimate range (default: 2.0). Use \code{Inf} to never truncate.}
+\item{ci_clip_factor}{CIs extending beyond this multiple of the estimate range
+are clipped with arrows (default: 2.0). For example, 2.0 means CIs that extend
+more than 2x the estimate range will be truncated. Use \code{Inf} to never clip.}
 
 \item{include_null}{Always include the null value in the axis range (default: TRUE)}
 
@@ -55,12 +53,12 @@ When \code{range_min}/\code{range_max} are NA (auto), the axis range is calculat
 \enumerate{
 \item Collect all point estimates (not CI bounds)
 \item Extend range to include null value (if \code{include_null = TRUE})
-\item Add padding as a fraction of the estimate range
+\item Extend range to include CIs within \code{ci_clip_factor} of the estimate range
 \item Optionally make symmetric around null (if \code{symmetric = TRUE})
 \item Apply nice rounding for clean tick values
 }
 
-CIs extending beyond ci_truncation_threshold \enc{×}{x} estimate_range are truncated
+CIs extending beyond ci_clip_factor \enc{×}{x} estimate_range are clipped
 with arrow indicators rather than expanding the axis.
 }
 

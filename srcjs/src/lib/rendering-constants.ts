@@ -282,6 +282,34 @@ export const COLUMN_GROUP = {
 } as const;
 
 // ============================================================================
+// Multi-Effect Rendering Constants
+// ============================================================================
+
+/**
+ * Constants for rendering multiple effects per row (e.g., comparing treatments).
+ * Used by both RowInterval.svelte and svg-generator.ts.
+ */
+export const EFFECT = {
+  /** Vertical spacing between multiple effects on the same row (pixels) */
+  SPACING: 6,
+} as const;
+
+/**
+ * Calculate vertical offset for each effect (centered around yPosition).
+ * When multiple effects are shown on the same row, they are vertically
+ * stacked with EFFECT.SPACING pixels between them, centered on the row.
+ *
+ * @param index - The effect index (0-based)
+ * @param total - Total number of effects
+ * @returns Vertical offset in pixels from the row center
+ */
+export function getEffectYOffset(index: number, total: number): number {
+  if (total <= 1) return 0;
+  const totalHeight = (total - 1) * EFFECT.SPACING;
+  return -totalHeight / 2 + index * EFFECT.SPACING;
+}
+
+// ============================================================================
 // CSS Custom Property Generation (for Svelte components)
 // ============================================================================
 

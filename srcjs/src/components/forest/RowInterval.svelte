@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { Row, WebTheme, ComputedLayout, EffectSpec, MarkerShape } from "$types";
   import type { ScaleLinear, ScaleLogarithmic } from "d3-scale";
+  import { computeArrowDimensions, renderArrowPath } from "$lib/arrow-utils";
+  import { AXIS_LABEL_PADDING } from "$lib/axis-utils";
+  import { getEffectValue } from "$lib/scale-utils";
+  import { getEffectYOffset } from "$lib/rendering-constants";
 
   interface Props {
     row: Row;
@@ -10,6 +14,10 @@
     theme: WebTheme | undefined;
     effects?: EffectSpec[];
     weightCol?: string | null;
+    /** Axis limits for CI clipping detection (domain units, not pixels) */
+    clipBounds?: [number, number];
+    /** Whether using log scale (for filtering non-positive values) */
+    isLog?: boolean;
     onRowClick?: () => void;
     onRowHover?: (hovered: boolean, event?: MouseEvent) => void;
   }
@@ -22,29 +30,24 @@
     theme,
     effects = [],
     weightCol = null,
+    clipBounds,
+    isLog = false,
     onRowClick,
     onRowHover,
   }: Props = $props();
 
-  // Helper to get numeric value from row (primary or metadata)
-  function getValue(row: Row, colName: string, primary: "point" | "lower" | "upper"): number | null {
-    // Check metadata first (for additional effects)
-    const metaVal = row.metadata[colName];
-    if (metaVal != null && typeof metaVal === "number" && !Number.isNaN(metaVal)) {
-      return metaVal;
-    }
-    // Fall back to primary columns if colName matches
-    if (colName === row.pointCol || primary === "point") return row.point;
-    if (colName === row.lowerCol || primary === "lower") return row.lower;
-    if (colName === row.upperCol || primary === "upper") return row.upper;
-    return null;
-  }
+  // Arrow configuration (scales with theme line width)
+  const arrowConfig = $derived(computeArrowDimensions(theme));
 
   // Compute effective effects to render
   // If no effects specified, create a default one from primary columns
   const effectsToRender = $derived.by(() => {
     if (effects.length === 0) {
       // Default effect from primary columns
+      // For log scale, filter non-positive values (consistent with svg-generator.ts)
+      const point = (!isLog || (row.point != null && row.point > 0)) ? row.point : null;
+      const lower = (!isLog || (row.lower != null && row.lower > 0)) ? row.lower : null;
+      const upper = (!isLog || (row.upper != null && row.upper > 0)) ? row.upper : null;
       return [{
         id: "primary",
         pointCol: "point",
@@ -54,30 +57,21 @@
         color: null,
         shape: null as MarkerShape | null,
         opacity: null as number | null,
-        point: row.point,
-        lower: row.lower,
-        upper: row.upper,
+        point,
+        lower,
+        upper,
       }];
     }
 
-    // Map effects with resolved values
+    // Map effects with resolved values using shared utility
+    // Pass isLog to filter out non-positive values for log scale
     return effects.map(effect => ({
       ...effect,
-      point: getValue(row, effect.pointCol, "point"),
-      lower: getValue(row, effect.lowerCol, "lower"),
-      upper: getValue(row, effect.upperCol, "upper"),
+      point: getEffectValue(row.metadata, row.point, effect.pointCol, "point", isLog),
+      lower: getEffectValue(row.metadata, row.lower, effect.lowerCol, "lower", isLog),
+      upper: getEffectValue(row.metadata, row.upper, effect.upperCol, "upper", isLog),
     }));
   });
-
-  // Vertical offset between multiple effects
-  const EFFECT_SPACING = 6; // pixels between effects
-
-  // Calculate vertical offset for each effect (centered around yPosition)
-  function getEffectYOffset(index: number, total: number): number {
-    if (total <= 1) return 0;
-    const totalHeight = (total - 1) * EFFECT_SPACING;
-    return -totalHeight / 2 + index * EFFECT_SPACING;
-  }
 
   // Check if any effect has valid values
   const hasAnyValidValues = $derived(
@@ -91,19 +85,33 @@
   // Check if this is a summary row (should render diamond instead of square)
   const isSummaryRow = $derived(row.style?.type === 'summary');
 
-  // Check if intervals are clipped (extend beyond axis)
+  // Check if intervals are clipped (extend beyond axis limits)
+  // Uses domain values (axis limits), not pixel coordinates
   function isClippedLeft(lower: number): boolean {
-    return xScale(lower) < 0;
+    if (!clipBounds) return xScale(lower) < 0;  // Fallback to pixel-based
+    return lower < clipBounds[0];
   }
 
   function isClippedRight(upper: number): boolean {
-    return xScale(upper) > layout.forestWidth;
+    if (!clipBounds) return xScale(upper) > layout.forestWidth;  // Fallback to pixel-based
+    return upper > clipBounds[1];
   }
 
-  // Clamp x-coordinate to visible range
-  function clampX(x: number): number {
-    return Math.max(0, Math.min(layout.forestWidth, x));
+  // Clamp value to axis limits (domain units) then convert to pixels
+  function clampAndScale(value: number): number {
+    if (!clipBounds) return Math.max(0, Math.min(layout.forestWidth, xScale(value)));
+    const clamped = Math.max(clipBounds[0], Math.min(clipBounds[1], value));
+    return xScale(clamped);
   }
+
+  // Arrow x positions - should be at actual axis limits, not hardcoded padding
+  // This ensures arrows align precisely with where the axis line starts/ends
+  const leftArrowX = $derived(
+    clipBounds ? xScale(clipBounds[0]) : AXIS_LABEL_PADDING
+  );
+  const rightArrowX = $derived(
+    clipBounds ? xScale(clipBounds[1]) : layout.forestWidth - AXIS_LABEL_PADDING
+  );
 
   // Diamond height for summary rows
   const diamondHeight = $derived(theme?.shapes.summaryHeight ?? 10);
@@ -216,7 +224,10 @@
         {@const lineColor = theme?.colors.intervalLine ?? "#475569"}
 
         {#if isSummaryRow}
-          <!-- Summary row: render diamond shape spanning lower to upper -->
+          <!-- Summary row: render diamond shape spanning lower to upper.
+               Note: Summary diamonds are intentionally NOT clipped - they represent
+               the overall effect size and typically shouldn't extend beyond axis limits.
+               If clipping is needed in the future, use clampAndScale() for x1/x2. -->
           {@const summaryDiamondPoints = [
             `${x1},${effectY}`,
             `${cx},${effectY - halfDiamondHeight}`,
@@ -235,8 +246,9 @@
           <!-- Regular row: CI line with whiskers -->
           {@const clippedL = isClippedLeft(effect.lower!)}
           {@const clippedR = isClippedRight(effect.upper!)}
-          {@const clampedX1 = clampX(x1)}
-          {@const clampedX2 = clampX(x2)}
+          {@const clampedX1 = clampAndScale(effect.lower!)}
+          {@const clampedX2 = clampAndScale(effect.upper!)}
+          {@const whiskerHalfHeight = arrowConfig.height / 2}
           <line
             x1={clampedX1}
             x2={clampedX2}
@@ -248,15 +260,16 @@
           <!-- Left whisker or arrow if clipped -->
           {#if clippedL}
             <path
-              d="M 0 {effectY} L 6 {effectY - 4} L 6 {effectY + 4} Z"
-              fill={lineColor}
+              d={renderArrowPath("left", leftArrowX, effectY, arrowConfig)}
+              fill={arrowConfig.color}
+              fill-opacity={arrowConfig.opacity}
             />
           {:else}
             <line
               x1={clampedX1}
               x2={clampedX1}
-              y1={effectY - 4}
-              y2={effectY + 4}
+              y1={effectY - whiskerHalfHeight}
+              y2={effectY + whiskerHalfHeight}
               stroke={lineColor}
               stroke-width={theme?.shapes.lineWidth ?? 1.5}
             />
@@ -264,24 +277,28 @@
           <!-- Right whisker or arrow if clipped -->
           {#if clippedR}
             <path
-              d="M {layout.forestWidth} {effectY} L {layout.forestWidth - 6} {effectY - 4} L {layout.forestWidth - 6} {effectY + 4} Z"
-              fill={lineColor}
+              d={renderArrowPath("right", rightArrowX, effectY, arrowConfig)}
+              fill={arrowConfig.color}
+              fill-opacity={arrowConfig.opacity}
             />
           {:else}
             <line
               x1={clampedX2}
               x2={clampedX2}
-              y1={effectY - 4}
-              y2={effectY + 4}
+              y1={effectY - whiskerHalfHeight}
+              y2={effectY + whiskerHalfHeight}
               stroke={lineColor}
               stroke-width={theme?.shapes.lineWidth ?? 1.5}
             />
           {/if}
 
-          <!-- Point estimate marker (shape varies) -->
+          <!-- Point estimate marker (shape varies).
+               Clamp to visible range so markers don't render outside forest area
+               when explicit axis limits exclude the point estimate. -->
+          {@const clampedCx = clampAndScale(effect.point!)}
           {#if style.shape === "circle"}
             <circle
-              cx={cx}
+              cx={clampedCx}
               cy={effectY}
               r={pointSize}
               fill={style.color}
@@ -290,10 +307,10 @@
             />
           {:else if style.shape === "diamond"}
             {@const diamondPts = [
-              `${cx},${effectY - pointSize}`,
-              `${cx + pointSize},${effectY}`,
-              `${cx},${effectY + pointSize}`,
-              `${cx - pointSize},${effectY}`
+              `${clampedCx},${effectY - pointSize}`,
+              `${clampedCx + pointSize},${effectY}`,
+              `${clampedCx},${effectY + pointSize}`,
+              `${clampedCx - pointSize},${effectY}`
             ].join(' ')}
             <polygon
               points={diamondPts}
@@ -303,9 +320,9 @@
             />
           {:else if style.shape === "triangle"}
             {@const trianglePts = [
-              `${cx},${effectY - pointSize}`,
-              `${cx + pointSize},${effectY + pointSize}`,
-              `${cx - pointSize},${effectY + pointSize}`
+              `${clampedCx},${effectY - pointSize}`,
+              `${clampedCx + pointSize},${effectY + pointSize}`,
+              `${clampedCx - pointSize},${effectY + pointSize}`
             ].join(' ')}
             <polygon
               points={trianglePts}
@@ -316,7 +333,7 @@
           {:else}
             <!-- Default: square -->
             <rect
-              x={cx - pointSize}
+              x={clampedCx - pointSize}
               y={effectY - pointSize}
               width={pointSize * 2}
               height={pointSize * 2}

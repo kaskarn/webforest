@@ -115,11 +115,11 @@ Shapes <- new_class(
 #' When `range_min`/`range_max` are NA (auto), the axis range is calculated as:
 #' 1. Collect all point estimates (not CI bounds)
 #' 2. Extend range to include null value (if `include_null = TRUE`)
-#' 3. Add padding as a fraction of the estimate range
+#' 3. Extend range to include CIs within `ci_clip_factor` of the estimate range
 #' 4. Optionally make symmetric around null (if `symmetric = TRUE`)
 #' 5. Apply nice rounding for clean tick values
 #'
-#' CIs extending beyond ci_truncation_threshold \enc{×}{x} estimate_range are truncated
+#' CIs extending beyond ci_clip_factor \enc{×}{x} estimate_range are clipped
 #' with arrow indicators rather than expanding the axis.
 #'
 #' @param range_min Minimum value for axis (NA = auto from data)
@@ -128,9 +128,9 @@ Shapes <- new_class(
 #' @param tick_values Explicit tick positions (overrides tick_count)
 #' @param gridlines Show gridlines on the plot
 #' @param gridline_style Style of gridlines: "solid", "dashed", or "dotted"
-#' @param padding Fraction of estimate range to add as padding on each side (default: 0.10)
-#' @param ci_truncation_threshold Truncate CIs extending beyond this multiple of
-#'   the estimate range (default: 2.0). Use `Inf` to never truncate.
+#' @param ci_clip_factor CIs extending beyond this multiple of the estimate range
+#'   are clipped with arrows (default: 2.0). For example, 2.0 means CIs that extend
+#'   more than 2x the estimate range will be truncated. Use `Inf` to never clip.
 #' @param include_null Always include the null value in the axis range (default: TRUE)
 #' @param symmetric Make axis symmetric around null value. Must be explicitly set
 #'   to TRUE to enable; default (NULL/FALSE) does not apply symmetry.
@@ -149,8 +149,7 @@ AxisConfig <- new_class(
     gridlines = new_property(class_logical, default = FALSE),
     gridline_style = new_property(class_character, default = "dotted"),
     # Auto-scaling parameters
-    padding = new_property(class_numeric, default = 0.10),
-    ci_truncation_threshold = new_property(class_numeric, default = 2.0),
+    ci_clip_factor = new_property(class_numeric, default = 2.0),
     include_null = new_property(class_logical, default = TRUE),
     symmetric = new_property(class_any, default = NULL),  # NULL/FALSE = off, TRUE = on
     null_tick = new_property(class_logical, default = TRUE),
@@ -161,11 +160,8 @@ AxisConfig <- new_class(
     if (!self@gridline_style %in% valid_styles) {
       return(paste("gridline_style must be one of:", paste(valid_styles, collapse = ", ")))
     }
-    if (!is.na(self@padding) && (self@padding < 0 || self@padding > 1)) {
-      return("padding must be between 0 and 1")
-    }
-    if (!is.na(self@ci_truncation_threshold) && self@ci_truncation_threshold < 0) {
-      return("ci_truncation_threshold must be non-negative")
+    if (!is.na(self@ci_clip_factor) && self@ci_clip_factor < 0) {
+      return("ci_clip_factor must be non-negative")
     }
     if (!is.null(self@symmetric) && !is.logical(self@symmetric)) {
       return("symmetric must be TRUE, FALSE, or NULL")
@@ -808,9 +804,9 @@ set_marker_shapes <- function(theme, shapes) {
 #' @param tick_values Explicit tick positions as numeric vector. Overrides tick_count.
 #' @param gridlines Show vertical gridlines on plot (default: FALSE)
 #' @param gridline_style Gridline style: "solid", "dashed", or "dotted" (default: "dotted")
-#' @param padding Fraction of data range to add as padding (default: 0.10, range: 0-1)
-#' @param ci_truncation_threshold Truncate CIs beyond this multiple of estimate range (default: 2.0).
-#'   Use Inf to never truncate.
+#' @param ci_clip_factor CIs extending beyond this multiple of the estimate range are
+#'   clipped with arrows (default: 2.0). For example, 2.0 means CIs that extend more
+#'   than 2x the estimate range will be truncated. Use `Inf` to never clip.
 #' @param include_null Always include null value in axis range (default: TRUE)
 #' @param symmetric Make axis symmetric around null value. Set to TRUE to enable;
 #'   default (NULL/FALSE) does not apply symmetry.
@@ -822,6 +818,14 @@ set_marker_shapes <- function(theme, shapes) {
 #' @examples
 #' web_theme_default() |>
 #'   set_axis(gridlines = TRUE, range_min = 0.5, range_max = 2.0)
+#'
+#' # Allow wider CIs before clipping with arrows
+#' web_theme_default() |>
+#'   set_axis(ci_clip_factor = 3.0)
+#'
+#' # Never clip CIs (expand axis to fit all)
+#' web_theme_default() |>
+#'   set_axis(ci_clip_factor = Inf)
 set_axis <- function(
     theme,
     range_min = NULL,
@@ -830,15 +834,15 @@ set_axis <- function(
     tick_values = NULL,
     gridlines = NULL,
     gridline_style = NULL,
-    padding = NULL,
-    ci_truncation_threshold = NULL,
+    ci_clip_factor = NULL,
     include_null = NULL,
     symmetric = NULL,
     null_tick = NULL,
     marker_margin = NULL
 ) {
   stopifnot(S7_inherits(theme, WebTheme))
-  current <- theme@axis
+
+current <- theme@axis
 
   if (!is.null(range_min)) current@range_min <- range_min
   if (!is.null(range_max)) current@range_max <- range_max
@@ -852,17 +856,11 @@ set_axis <- function(
     }
     current@gridline_style <- gridline_style
   }
-  if (!is.null(padding)) {
-    if (padding < 0 || padding > 1) {
-      cli_abort("padding must be between 0 and 1")
+  if (!is.null(ci_clip_factor)) {
+    if (ci_clip_factor < 0) {
+      cli_abort("ci_clip_factor must be non-negative")
     }
-    current@padding <- padding
-  }
-  if (!is.null(ci_truncation_threshold)) {
-    if (ci_truncation_threshold < 0) {
-      cli_abort("ci_truncation_threshold must be non-negative")
-    }
-    current@ci_truncation_threshold <- ci_truncation_threshold
+    current@ci_clip_factor <- ci_clip_factor
   }
   if (!is.null(include_null)) current@include_null <- include_null
   if (!is.null(symmetric)) current@symmetric <- symmetric

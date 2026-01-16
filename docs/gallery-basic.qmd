@@ -441,31 +441,65 @@ forest_plot(
 
 ---
 
-## 10. Axis Control
+## 10. Axis Control & CI Clipping
 
-Custom range, explicit ticks, and gridlines.
+The `ci_clip_factor` controls how far CIs can extend beyond estimate bounds. For log scale, it's a direct ratio: `ci_clip_factor = 3` means CIs can extend up to 3× beyond.
 
 ```{r}
-axis_data <- tibble(
-  study = c("Study A", "Study B", "Study C", "Study D", "Study E"),
-  or = c(0.45, 0.72, 1.00, 1.35, 2.10),
-  lower = c(0.28, 0.55, 0.78, 1.05, 1.52),
-  upper = c(0.72, 0.94, 1.28, 1.74, 2.90)
-)
+# Use the effect_sizes stress test dataset - contains studies with widely varying CI widths
+data(effect_sizes)
 
 forest_plot(
-  axis_data,
-  point = "or", lower = "lower", upper = "upper",
+  effect_sizes,
+  point = "hr", lower = "lower", upper = "upper",
   label = "study",
-  columns = list(col_interval("OR (95% CI)")),
-  theme = web_theme_modern() |> set_axis(gridlines = TRUE, gridline_style = "dashed"),
+  columns = list(
+    col_text("phase", "Phase"),
+    col_n("n"),
+    col_interval("HR (95% CI)")
+  ),
+  theme = web_theme_modern() |>
+    set_axis(gridlines = TRUE, gridline_style = "dotted"),  # default ci_clip_factor = 3
   scale = "log", null_value = 1,
-  axis_range = c(0.25, 4.0),
-  axis_ticks = c(0.25, 0.5, 1, 2, 4),
-  axis_label = "Odds Ratio (log scale)",
-  title = "Axis Control",
-  subtitle = "axis_range, axis_ticks, and gridlines",
-  caption = "Custom range [0.25, 4.0] with explicit tick positions on log scale"
+  axis_label = "Hazard Ratio (log scale)",
+  title = "Axis Control & CI Clipping",
+  subtitle = "Default ci_clip_factor = 3 allows CIs up to 3× beyond estimates",
+  caption = "Arrows indicate CIs clipped beyond axis limits"
+)
+```
+
+---
+
+## 11. Climate Science Visualization
+
+Non-clinical example showing temperature anomalies—webforest works for any interval data.
+
+```{r}
+data(climate_temps)
+
+forest_plot(
+  climate_temps,
+  point = "anomaly", lower = "lower", upper = "upper",
+  label = "region",
+  group = "category",
+  columns = list(
+    col_text("period", "Period"),
+    col_text("certainty", "Confidence"),
+    col_interval("Anomaly °C (95% CI)")
+  ),
+  marker_shape = ~ ifelse(certainty == "High", "circle", "square"),
+  marker_color = ~ ifelse(anomaly > 1.5, "#dc2626", ifelse(anomaly > 1.0, "#f59e0b", "#3b82f6")),
+  theme = web_theme_modern() |>
+    set_colors(
+      interval_positive = "#dc2626",  # Red for warming
+      interval_negative = "#3b82f6"   # Blue for cooling
+    ) |>
+    set_axis(gridlines = TRUE),
+  null_value = 0,  # Pre-industrial baseline
+  axis_label = "Temperature Anomaly (°C vs. pre-industrial)",
+  title = "Regional Temperature Anomalies",
+  subtitle = "Grouped by geographic category, shaped by confidence level",
+  caption = "Red = significant warming, Blue = cooling or below baseline"
 )
 ```
 

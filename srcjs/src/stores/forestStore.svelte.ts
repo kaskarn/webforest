@@ -14,6 +14,7 @@ import type {
   DataRow,
 } from "$types";
 import { niceDomain, DOMAIN_PADDING } from "$lib/scale-utils";
+import { computeAxis, type AxisComputation, AXIS_LABEL_PADDING } from "$lib/axis-utils";
 import { THEME_PRESETS, type ThemeName } from "$lib/theme-presets";
 import { getColumnDisplayText } from "$lib/formatters";
 import { AUTO_WIDTH, SPACING, GROUP_HEADER, COLUMN_GROUP, TEXT_MEASUREMENT } from "$lib/rendering-constants";
@@ -66,119 +67,15 @@ export function createForestStore() {
     return rows;
   });
 
-  // Derived: x-scale
-  // Implements the new auto-scaling algorithm:
-  // 1. Core range from point estimates (not CI bounds)
-  // 2. Include null value if configured
-  // 3. Add padding as fraction of estimate range
-  // 4. Apply symmetry around null if configured
-  // 5. Account for marker margin at edges
-  const xScale = $derived.by(() => {
-    if (!spec) return scaleLinear().domain([0, 1]).range([0, 100]);
-
-    const rows = spec.data.rows;
-    const axisConfig = spec.theme.axis;
-    const isLog = spec.data.scale === "log";
-    const nullValue = spec.data.nullValue;
-
-    // Extract axis config with defaults
-    const padding = axisConfig?.padding ?? 0.15;
-    const includeNull = axisConfig?.includeNull ?? true;
-    const symmetric = axisConfig?.symmetric;  // null = auto
-    const markerMargin = axisConfig?.markerMargin ?? true;
-    const ciTruncationThreshold = axisConfig?.ciTruncationThreshold ?? 3.0;
-
-    // Check if explicit range is provided in theme
-    const hasExplicitMin = axisConfig?.rangeMin != null;
-    const hasExplicitMax = axisConfig?.rangeMax != null;
-
-    let domain: [number, number];
-
-    if (hasExplicitMin && hasExplicitMax) {
-      // Use fully explicit range
-      domain = [axisConfig.rangeMin!, axisConfig.rangeMax!];
-    } else {
-      // Step 1: Collect point estimates (not CI bounds)
-      const pointEstimates = rows
-        .map((r) => r.point)
-        .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
-
-      if (pointEstimates.length === 0) {
-        // Fallback when no valid estimates
-        domain = isLog ? [0.1, 10] : [0, 1];
-      } else {
-        let minEst = Math.min(...pointEstimates);
-        let maxEst = Math.max(...pointEstimates);
-
-        // Step 2: Include null value if configured
-        if (includeNull) {
-          minEst = Math.min(minEst, nullValue);
-          maxEst = Math.max(maxEst, nullValue);
-        }
-
-        // Save core estimate range BEFORE CI extension (for symmetric calculation)
-        const coreMin = minEst;
-        const coreMax = maxEst;
-
-        // Calculate estimate range for CI truncation threshold
-        const estimateRange = maxEst - minEst || 1;
-        const truncationLimit = estimateRange * ciTruncationThreshold;
-
-        // Step 3: Extend range to include CI bounds within truncation threshold
-        // This reduces how often CIs get truncated (shown with arrows)
-        const lowerBounds = rows
-          .map((r) => r.lower)
-          .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
-        const upperBounds = rows
-          .map((r) => r.upper)
-          .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
-
-        // Include CI bounds that are within the truncation threshold
-        for (const lb of lowerBounds) {
-          if (minEst - lb <= truncationLimit) {
-            minEst = Math.min(minEst, lb);
-          }
-        }
-        for (const ub of upperBounds) {
-          if (ub - maxEst <= truncationLimit) {
-            maxEst = Math.max(maxEst, ub);
-          }
-        }
-
-        // Step 4: Add padding as fraction of the range
-        let domainMin = hasExplicitMin ? axisConfig.rangeMin! : minEst - estimateRange * padding;
-        let domainMax = hasExplicitMax ? axisConfig.rangeMax! : maxEst + estimateRange * padding;
-
-        // Step 4: Apply symmetry around null if explicitly requested
-        // symmetric = true: force symmetry (user must opt-in)
-        // symmetric = false/null: no symmetry (default)
-        const shouldBeSymmetric = symmetric === true;
-
-        if (shouldBeSymmetric && !hasExplicitMin && !hasExplicitMax) {
-          if (isLog) {
-            // Log scale: geometric symmetry around null (e.g., 0.5 and 2.0 are equidistant from 1)
-            // Use CORE estimate range (not CI-extended) to avoid extreme expansion from outlier CIs
-            const logNull = Math.log(nullValue);
-            const maxLogDist = Math.max(
-              Math.abs(Math.log(Math.max(coreMin, 0.001)) - logNull),
-              Math.abs(Math.log(coreMax) - logNull)
-            );
-            domainMin = Math.exp(logNull - maxLogDist);
-            domainMax = Math.exp(logNull + maxLogDist);
-          } else {
-            // Linear scale: arithmetic symmetry
-            // Use CORE estimate range (not CI-extended) to avoid extreme expansion
-            const maxDist = Math.max(
-              Math.abs(coreMin - nullValue),
-              Math.abs(coreMax - nullValue)
-            );
-            domainMin = nullValue - maxDist;
-            domainMax = nullValue + maxDist;
-          }
-        }
-
-        domain = [domainMin, domainMax];
-      }
+  // Derived: axis computation (axis limits, plot region, ticks)
+  // Uses the new modular axis calculation from axis-utils.ts
+  const axisComputation = $derived.by((): AxisComputation => {
+    if (!spec) {
+      return {
+        axisLimits: [0, 1],
+        plotRegion: [0, 1],
+        ticks: [0, 0.5, 1],
+      };
     }
 
     // Use override if set, otherwise calculate default (25% of width, min 200px)
@@ -186,48 +83,43 @@ export function createForestStore() {
       ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
       : 0;
 
-    // Apply consistent nice domain rounding (shared with SVG generator)
-    const nicedDomain = niceDomain(domain, isLog);
+    return computeAxis({
+      rows: spec.data.rows,
+      config: spec.theme.axis,
+      scale: spec.data.scale,
+      nullValue: spec.data.nullValue,
+      forestWidth,
+      pointSize: spec.theme.shapes.pointSize,
+      effects: spec.data.effects,
+    });
+  });
 
-    // Step 5: Account for marker margin at edges
-    // Add half-marker-width in domain units so markers don't clip
-    let finalDomain = nicedDomain;
-    if (markerMargin && forestWidth > 0) {
-      const pointSize = spec.theme.shapes.pointSize;
-      // Convert pixel margin to domain units
-      const domainRange = nicedDomain[1] - nicedDomain[0];
-      const pixelRange = forestWidth - 2 * SPACING.AXIS_LABEL_PADDING;
-      const marginInDomainUnits = (pointSize / 2) * (domainRange / pixelRange);
+  // Derived: x-scale (creates D3 scale from plot region)
+  const xScale = $derived.by(() => {
+    if (!spec) return scaleLinear().domain([0, 1]).range([0, 100]);
 
-      if (isLog) {
-        // For log scale, apply multiplicative margin
-        const logMargin = marginInDomainUnits / nicedDomain[0];
-        finalDomain = [
-          nicedDomain[0] / (1 + logMargin),
-          nicedDomain[1] * (1 + logMargin),
-        ];
-      } else {
-        finalDomain = [
-          nicedDomain[0] - marginInDomainUnits,
-          nicedDomain[1] + marginInDomainUnits,
-        ];
-      }
-    }
+    const isLog = spec.data.scale === "log";
+    const { plotRegion } = axisComputation;
+
+    // Use override if set, otherwise calculate default (25% of width, min 200px)
+    const forestWidth = spec.data.includeForest
+      ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
+      : 0;
 
     // Add padding to range so edge labels don't get clipped
-    const rangeStart = SPACING.AXIS_LABEL_PADDING;
-    const rangeEnd = Math.max(forestWidth - SPACING.AXIS_LABEL_PADDING, rangeStart + 50);
+    const rangeStart = AXIS_LABEL_PADDING;
+    const rangeEnd = Math.max(forestWidth - AXIS_LABEL_PADDING, rangeStart + 50);
 
     if (isLog) {
       // Ensure domain is positive for log scale
       const safeDomain: [number, number] = [
-        Math.max(finalDomain[0], 0.01),
-        Math.max(finalDomain[1], 0.02),
+        Math.max(plotRegion[0], 0.01),
+        Math.max(plotRegion[1], 0.02),
       ];
       return scaleLog().domain(safeDomain).range([rangeStart, rangeEnd]);
     }
 
-    return scaleLinear().domain(finalDomain).range([rangeStart, rangeEnd]);
+    return scaleLinear().domain(plotRegion).range([rangeStart, rangeEnd]);
   });
 
   // Helper to flatten group children (no position filtering - children inherit from parent)
@@ -966,6 +858,9 @@ export function createForestStore() {
     get xScale() {
       return xScale;
     },
+    get axisComputation() {
+      return axisComputation;
+    },
     get layout() {
       return layout;
     },
@@ -1017,7 +912,7 @@ export function createForestStore() {
 
     /**
      * Get current dimensions for export.
-     * Returns column widths, forest width, x-axis domain, and total width to pass to SVG generator.
+     * Returns column widths, forest width, x-axis domain, clip bounds, and total width to pass to SVG generator.
      */
     getExportDimensions() {
       // Get the current x-axis domain from xScale
@@ -1027,6 +922,7 @@ export function createForestStore() {
         columnWidths: { ...columnWidths },
         forestWidth: layout.forestWidth,
         xDomain: domain,
+        clipBounds: axisComputation.axisLimits,  // For CI clipping detection
       };
     },
 

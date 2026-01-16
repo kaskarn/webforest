@@ -9,9 +9,11 @@
     axisLabel?: string;
     position?: "top" | "bottom";
     plotHeight?: number;
+    /** Precomputed base ticks from axis-utils (will be filtered for spacing) */
+    baseTicks?: number[];
   }
 
-  let { xScale, layout, theme, axisLabel, position = "bottom", plotHeight = 0 }: Props = $props();
+  let { xScale, layout, theme, axisLabel, position = "bottom", plotHeight = 0, baseTicks }: Props = $props();
 
   // Get axis config from theme
   const axisConfig = $derived(theme?.axis);
@@ -26,16 +28,17 @@
   const shouldIncludeNullTick = $derived(axisConfig?.nullTick ?? true);
 
   // Generate nice tick values with spacing-aware filtering to prevent overlap
+  // Uses baseTicks from axis-utils if provided, otherwise falls back to D3 generation
   // Ensures: (1) null tick always present if nullTick = true, (2) at least 2 ticks
   const ticks = $derived.by(() => {
     const [domainMin, domainMax] = xScale.domain() as [number, number];
     const nullValue = layout.nullValue;
     const nullInDomain = nullValue >= domainMin && nullValue <= domainMax;
 
-    // Use explicit tick values if provided
+    // Use explicit tick values if provided (highest priority)
     if (axisConfig?.tickValues && axisConfig.tickValues.length > 0) {
       // Filter to domain bounds
-      let result = axisConfig.tickValues.filter(t => t >= domainMin && t <= domainMax);
+      let result = axisConfig.tickValues.filter((t: number) => t >= domainMin && t <= domainMax);
       // Ensure null tick is included if configured and in domain
       if (shouldIncludeNullTick && nullInDomain && !result.includes(nullValue)) {
         result = [...result, nullValue].sort((a, b) => a - b);
@@ -43,16 +46,18 @@
       return result;
     }
 
+    // Get base ticks: use precomputed baseTicks from axis-utils, or fall back to D3
     const minSpacing = 50; // minimum pixels between tick labels
     const maxTicks = Math.max(2, Math.floor(layout.forestWidth / minSpacing));
-
-    // Use tick count from config if provided
     const requestedTicks = axisConfig?.tickCount ?? null;
     const tickCount = requestedTicks ?? Math.min(7, maxTicks);
 
-    const allTicks = xScale.ticks(tickCount);
+    const allTicks = baseTicks && baseTicks.length > 0
+      ? baseTicks.filter(t => t >= domainMin && t <= domainMax)
+      : xScale.ticks(tickCount);
+
     if (allTicks.length === 0) {
-      // Even with no ticks from D3, ensure at least null + one domain boundary
+      // Even with no ticks, ensure at least null + one domain boundary
       if (shouldIncludeNullTick && nullInDomain) {
         return [nullValue];
       }
@@ -93,7 +98,7 @@
     // Combine: left + null (if present or required) + right
     const result = [...filteredLeft];
 
-    // Include null tick if: (1) it was in D3's ticks, OR (2) nullTick config requires it and it's in domain
+    // Include null tick if: (1) it was in base ticks, OR (2) nullTick config requires it and it's in domain
     if (hasNullTickInAll || (shouldIncludeNullTick && nullInDomain)) {
       result.push(nullValue);
     }

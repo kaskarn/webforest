@@ -12,8 +12,7 @@ set_axis(
   tick_values = NULL,
   gridlines = NULL,
   gridline_style = NULL,
-  padding = NULL,
-  ci_truncation_threshold = NULL,
+  ci_clip_factor = NULL,
   include_null = NULL,
   symmetric = NULL,
   null_tick = NULL,
@@ -35,10 +34,9 @@ set_axis(
 
 \item{gridline_style}{Gridline style: "solid", "dashed", or "dotted" (default: "dotted")}
 
-\item{padding}{Fraction of data range to add as padding (default: 0.10, range: 0-1)}
-
-\item{ci_truncation_threshold}{Truncate CIs beyond this multiple of estimate range (default: 2.0).
-Use Inf to never truncate.}
+\item{ci_clip_factor}{CIs extending beyond this multiple of the estimate range are
+clipped with arrows (default: 2.0). For example, 2.0 means CIs that extend more
+than 2x the estimate range will be truncated. Use \code{Inf} to never clip.}
 
 \item{include_null}{Always include null value in axis range (default: TRUE)}
 
@@ -58,4 +56,12 @@ Pipe-friendly function to modify axis settings.
 \examples{
 web_theme_default() |>
   set_axis(gridlines = TRUE, range_min = 0.5, range_max = 2.0)
+
+# Allow wider CIs before clipping with arrows
+web_theme_default() |>
+  set_axis(ci_clip_factor = 3.0)
+
+# Never clip CIs (expand axis to fit all)
+web_theme_default() |>
+  set_axis(ci_clip_factor = Inf)
 }

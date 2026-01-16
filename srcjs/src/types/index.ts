@@ -332,8 +332,7 @@ export interface AxisConfig {
   gridlines: boolean;
   gridlineStyle: "solid" | "dashed" | "dotted";
   // Auto-scaling parameters
-  padding: number;                    // Fraction of estimate range for padding (default: 0.10)
-  ciTruncationThreshold: number;      // Truncate CIs beyond this × estimate range (default: 2.0)
+  ciClipFactor: number;               // CIs beyond this × estimate range are clipped with arrows (default: 2.0)
   includeNull: boolean;               // Always include null in axis range (default: true)
   symmetric: boolean | null;          // null = auto, true/false = force (default: null)
   nullTick: boolean;                  // Always show tick at null value (default: true)

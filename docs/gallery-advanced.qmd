@@ -399,121 +399,92 @@ forest_plot(
 
 # Split Forest Plots
 
-Navigate between subgroups using an interactive sidebar.
+Navigate between subgroups using an interactive sidebar. These examples use the `effect_sizes` dataset which contains studies with widely varying CI widths—ideal for testing axis rendering and clipping.
 
-## 18. Regional Subgroup Analysis
+## 18. Single-Variable Split
 
-Split by a single variable with floating sidebar navigation.
+Split by region with shared axis to enable cross-region comparison. Extreme CIs are automatically clipped.
 
 ```{r}
-set.seed(42)
-n_studies <- 40
-regional_data <- tibble(
-  study = paste0("Study ", sprintf("%02d", 1:n_studies)),
-  region = sample(c("North America", "Europe", "Asia Pacific"), n_studies,
-                  replace = TRUE, prob = c(0.4, 0.35, 0.25)),
-  or = exp(rnorm(n_studies, log(0.78), 0.3)),
-  lower = or * exp(-1.96 * runif(n_studies, 0.15, 0.35)),
-  upper = or * exp(1.96 * runif(n_studies, 0.15, 0.35)),
-  n = sample(100:500, n_studies)
-)
+# Use effect_sizes stress test dataset - widely varying CI widths
+data(effect_sizes)
 
 forest_plot(
-  regional_data,
-  point = "or", lower = "lower", upper = "upper",
+  effect_sizes,
+  point = "hr", lower = "lower", upper = "upper",
   label = "study",
   split_by = "region",
+  shared_axis = TRUE,
   columns = list(
+    col_text("treatment", "Treatment"),
     col_n("n"),
-    col_interval("OR (95% CI)")
-  ),
-  scale = "log", null_value = 1,
-  theme = web_theme_modern(),
-  axis_label = "Odds Ratio (95% CI)",
-  title = "Regional Subgroup Analysis",
-  subtitle = "Click sidebar to navigate between regions",
-  caption = "Floating sidebar with search and keyboard navigation"
-)
-```
-
----
-
-## 19. Hierarchical Subgroups
-
-Two-level split: Sex > Age Group. Expanding tree navigation.
-
-```{r}
-set.seed(123)
-n <- 60
-hierarchical_data <- tibble(
-  study = paste0("Study ", sprintf("%02d", 1:n)),
-  sex = sample(c("Male", "Female"), n, replace = TRUE),
-  age_group = sample(c("18-40", "41-65", "65+"), n, replace = TRUE),
-  treatment = sample(c("Drug A", "Drug B"), n, replace = TRUE),
-  or = exp(rnorm(n, log(0.75), 0.28)),
-  lower = or * exp(-1.96 * 0.22),
-  upper = or * exp(1.96 * 0.22)
-)
-
-hierarchical_data |>
-  web_spec(
-    point = "or", lower = "lower", upper = "upper",
-    label = "study",
-    scale = "log", null_value = 1,
-    columns = list(
-      col_text("treatment", "Treatment"),
-      col_interval("OR (95% CI)")
-    )
-  ) |>
-  split_forest(by = c("sex", "age_group")) |>
-  forest_plot(
-    theme = web_theme_modern(),
-    axis_label = "Odds Ratio",
-    title = "Hierarchical Subgroup Analysis",
-    subtitle = "Sex > Age Group navigation tree",
-    caption = "Section headers show split variable names"
-  )
-```
-
----
-
-## 20. Three-Level Clinical Trial
-
-Region > Country > Site with shared axis for consistent comparison.
-
-```{r}
-set.seed(456)
-n <- 45
-clinical_data <- tibble(
-  site = paste0("Site ", sprintf("%02d", 1:n)),
-  region = sample(c("Americas", "Europe", "Asia"), n, replace = TRUE, prob = c(0.35, 0.35, 0.3)),
-  country = case_when(
-    region == "Americas" ~ sample(c("USA", "Canada", "Brazil"), n, replace = TRUE),
-    region == "Europe" ~ sample(c("UK", "Germany", "France"), n, replace = TRUE),
-    region == "Asia" ~ sample(c("Japan", "China", "Korea"), n, replace = TRUE)
-  ),
-  hr = exp(rnorm(n, log(0.72), 0.25)),
-  lower = hr * exp(-1.96 * 0.2),
-  upper = hr * exp(1.96 * 0.2),
-  n_patients = sample(50:300, n)
-)
-
-forest_plot(
-  clinical_data,
-  point = "hr", lower = "lower", upper = "upper",
-  label = "site",
-  split_by = c("region", "country"),
-  shared_axis = TRUE,  # Consistent scale across all subgroups
-  columns = list(
-    col_n("n_patients", "N"),
     col_interval("HR (95% CI)")
   ),
   scale = "log", null_value = 1,
-  theme = web_theme_dark(),
+  theme = web_theme_modern(),
+  axis_label = "Hazard Ratio (95% CI)",
+  title = "Treatment Effect by Region",
+  subtitle = "Click sidebar to navigate between regions",
+  caption = "Arrows indicate CIs beyond 3× the estimate bounds"
+)
+```
+
+---
+
+## 19. Hierarchical Split Navigation
+
+Two-level split: Outcome > Treatment. The sidebar expands into a tree structure.
+
+```{r}
+data(effect_sizes)
+
+forest_plot(
+  effect_sizes,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = c("outcome", "treatment"),
+  columns = list(
+    col_text("region", "Region"),
+    col_text("phase", "Phase"),
+    col_n("n"),
+    col_interval("HR (95% CI)")
+  ),
+  scale = "log", null_value = 1,
+  theme = web_theme_modern(),
   axis_label = "Hazard Ratio",
-  title = "Global Clinical Trial Program",
-  subtitle = "Region > Country hierarchy with shared axis",
-  caption = "shared_axis = TRUE ensures consistent visual comparison"
+  title = "Hierarchical Subgroup Analysis",
+  subtitle = "Outcome > Treatment navigation tree",
+  caption = "Expand tree nodes to drill into subgroups"
+)
+```
+
+---
+
+## 20. Shared Axis for Comparison
+
+When `shared_axis = TRUE`, all subgroups use the same axis range for visual comparison across splits.
+
+```{r}
+data(effect_sizes)
+
+forest_plot(
+  effect_sizes,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = "outcome",
+  shared_axis = TRUE,
+  columns = list(
+    col_text("treatment", "Treatment"),
+    col_text("phase", "Phase"),
+    col_interval("HR (95% CI)")
+  ),
+  scale = "log", null_value = 1,
+  theme = web_theme_dark() |>
+    set_axis(gridlines = TRUE, gridline_style = "dotted"),
+  axis_label = "Hazard Ratio",
+  title = "Shared Axis Comparison",
+  subtitle = "shared_axis = TRUE ensures consistent scale across outcomes",
+  caption = "Compare Primary, Secondary, and Exploratory outcomes on identical scales"
 )
 ```
 
@@ -670,6 +641,86 @@ forest_plot(
   subtitle = "Row groups by carrier type + column groups for Service / Trends",
   caption = "Negative values = ahead of schedule",
   footnote = "Satisfaction on 1-5 scale"
+)
+```
+
+---
+
+## 24. Climate Change Evidence
+
+Using `climate_temps` with split navigation to explore temperature anomalies across regions.
+
+```{r}
+data(climate_temps)
+
+forest_plot(
+  climate_temps,
+  point = "anomaly", lower = "lower", upper = "upper",
+  label = "region",
+  split_by = "category",
+  shared_axis = TRUE,
+  columns = list(
+    col_text("period", "Period"),
+    col_badge("certainty", "Confidence",
+      variants = list(High = "success", Medium = "warning")
+    ),
+    col_interval("Anomaly °C")
+  ),
+  null_value = 0,
+  theme = web_theme_modern() |>
+    set_colors(
+      interval_positive = "#dc2626",  # Red = warming
+      interval_negative = "#3b82f6"   # Blue = cooling
+    ) |>
+    set_axis(gridlines = TRUE),
+  axis_label = "Temperature Anomaly (°C vs. baseline)",
+  title = "Global Temperature Change Evidence",
+  subtitle = "Split by geographic category with shared axis",
+  caption = "Navigate between Global, Hemisphere, and Continental measurements"
+)
+```
+
+---
+
+## 25. Effect Size Stress Test
+
+The ultimate test: `effect_sizes` with all features enabled—hierarchical split, multiple effects, and tight CI clipping.
+
+```{r}
+data(effect_sizes)
+
+# Create a secondary effect (simulated sensitivity analysis)
+effect_sizes_multi <- effect_sizes |>
+  mutate(
+    # Sensitivity: slightly more conservative estimates
+    hr_sens = hr * 1.05,
+    lower_sens = lower * 1.03,
+    upper_sens = upper * 1.08
+  )
+
+forest_plot(
+  effect_sizes_multi,
+  point = "hr", lower = "lower", upper = "upper",
+  label = "study",
+  split_by = c("region", "treatment"),
+  shared_axis = TRUE,
+  columns = list(
+    col_text("phase", "Phase"),
+    col_n("n"),
+    col_interval("HR (95% CI)")
+  ),
+  effects = list(
+    web_effect("hr", "lower", "upper", label = "Primary", color = "#2563eb"),
+    web_effect("hr_sens", "lower_sens", "upper_sens", label = "Sensitivity", color = "#f59e0b")
+  ),
+  scale = "log", null_value = 1,
+  theme = web_theme_dark() |>
+    set_axis(gridlines = TRUE, ci_clip_factor = 2) |>
+    set_spacing(row_height = 36),
+  axis_label = "Hazard Ratio",
+  title = "Comprehensive Stress Test",
+  subtitle = "Region > Treatment split + dual effects + tight clipping",
+  caption = "ci_clip_factor = 2 clips CIs beyond 2× the estimate bounds"
 )
 ```
 

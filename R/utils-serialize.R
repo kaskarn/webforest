@@ -303,8 +303,7 @@ serialize_theme <- function(theme) {
       gridlines = theme@axis@gridlines,
       gridlineStyle = theme@axis@gridline_style,
       # Auto-scaling parameters
-      padding = theme@axis@padding,
-      ciTruncationThreshold = theme@axis@ci_truncation_threshold,
+      ciClipFactor = theme@axis@ci_clip_factor,
       includeNull = theme@axis@include_null,
       symmetric = theme@axis@symmetric,  # NULL or logical
       nullTick = theme@axis@null_tick,

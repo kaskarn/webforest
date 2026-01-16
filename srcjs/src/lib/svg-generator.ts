@@ -16,7 +16,9 @@ import type {
   EffectSpec,
   MarkerShape,
 } from "$types";
-import { niceDomain, DOMAIN_PADDING } from "./scale-utils";
+import { niceDomain, DOMAIN_PADDING, getEffectValue } from "./scale-utils";
+import { computeAxis, generateTicks, type AxisComputation } from "./axis-utils";
+import { computeArrowDimensions, renderArrowPath } from "./arrow-utils";
 import {
   LAYOUT,
   TYPOGRAPHY,
@@ -30,6 +32,8 @@ import {
   ROW_ODD_OPACITY,
   GROUP_HEADER_OPACITY,
   getDepthOpacity,
+  EFFECT,
+  getEffectYOffset,
 } from "./rendering-constants";
 import {
   formatNumber,
@@ -775,173 +779,90 @@ function createLogScale(domain: [number, number], range: [number, number]): Scal
 }
 
 /**
- * Compute x-scale for forest plot using the new auto-scaling algorithm:
- * 1. Core range from point estimates (not CI bounds)
- * 2. Include null value if configured
- * 3. Add padding as fraction of estimate range
- * 4. Apply symmetry around null if configured
- * 5. Account for marker margin at edges
+ * Compute axis and x-scale for forest plot.
+ *
+ * Uses the shared computeAxis() from axis-utils.ts to ensure consistent
+ * behavior between web view and SVG export.
  *
  * If options.xDomain is provided, uses that domain directly (for matching web view).
+ * If options.clipBounds is provided, uses those for clipping detection.
  */
-function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptions): Scale {
+interface ScaleAndClip {
+  scale: Scale;
+  clipBounds: [number, number];
+  ticks: number[];
+}
+
+function computeXScaleAndClip(spec: WebSpec, forestWidth: number, options?: ExportOptions): ScaleAndClip {
   const isLog = spec.data.scale === "log";
+  const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
+  const rangeStart = axisLabelPadding;
+  const rangeEnd = Math.max(forestWidth - axisLabelPadding, rangeStart + 50);
 
   // If pre-computed domain is provided, use it directly
   if (options?.xDomain) {
     const domain = options.xDomain;
+    const clipBounds = options.clipBounds ?? domain;
+    // Generate ticks for pre-computed domain using axis-utils
+    const ticks = generateTicks(
+      clipBounds,
+      spec.theme.axis,
+      spec.data.scale,
+      spec.data.nullValue
+    );
     if (isLog) {
-      return createLogScale(
-        [Math.max(domain[0], 0.01), Math.max(domain[1], 0.02)],
-        [0, forestWidth]
-      );
+      return {
+        scale: createLogScale(
+          [Math.max(domain[0], 0.01), Math.max(domain[1], 0.02)],
+          [rangeStart, rangeEnd]
+        ),
+        clipBounds,
+        ticks,
+      };
     }
-    return createLinearScale(domain, [0, forestWidth]);
+    return {
+      scale: createLinearScale(domain, [rangeStart, rangeEnd]),
+      clipBounds,
+      ticks,
+    };
   }
 
-  const rows = spec.data.rows;
-  const axisConfig = spec.theme.axis;
-  const nullValue = spec.data.nullValue;
+  // Use shared axis computation from axis-utils.ts
+  const axisResult = computeAxis({
+    rows: spec.data.rows,
+    config: spec.theme.axis,
+    scale: spec.data.scale,
+    nullValue: spec.data.nullValue,
+    forestWidth,
+    pointSize: spec.theme.shapes.pointSize,
+    effects: spec.data.effects,
+  });
 
-  // Extract axis config with defaults
-  const padding = axisConfig?.padding ?? 0.15;
-  const includeNull = axisConfig?.includeNull ?? true;
-  const symmetric = axisConfig?.symmetric;  // null = auto
-  const markerMargin = axisConfig?.markerMargin ?? true;
-  const ciTruncationThreshold = axisConfig?.ciTruncationThreshold ?? 3.0;
-
-  // Guard against R serialization returning {} instead of null for missing values
-  const hasExplicitMin = typeof axisConfig?.rangeMin === "number";
-  const hasExplicitMax = typeof axisConfig?.rangeMax === "number";
-
-  let domain: [number, number];
-
-  if (hasExplicitMin && hasExplicitMax) {
-    domain = [axisConfig.rangeMin!, axisConfig.rangeMax!];
-  } else {
-    // Step 1: Collect point estimates (not CI bounds)
-    const pointEstimates = rows
-      .map((r) => r.point)
-      .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
-
-    if (pointEstimates.length === 0) {
-      domain = isLog ? [0.1, 10] : [0, 1];
-    } else {
-      let minEst = Math.min(...pointEstimates);
-      let maxEst = Math.max(...pointEstimates);
-
-      // Step 2: Include null value if configured
-      if (includeNull) {
-        minEst = Math.min(minEst, nullValue);
-        maxEst = Math.max(maxEst, nullValue);
-      }
-
-      // Save core estimate range BEFORE CI extension (for symmetric calculation)
-      const coreMin = minEst;
-      const coreMax = maxEst;
-
-      // Calculate estimate range for CI truncation threshold
-      const estimateRange = maxEst - minEst || 1;
-      const truncationLimit = estimateRange * ciTruncationThreshold;
-
-      // Step 3: Extend range to include CI bounds within truncation threshold
-      // This reduces how often CIs get truncated (shown with arrows)
-      const lowerBounds = rows
-        .map((r) => r.lower)
-        .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
-      const upperBounds = rows
-        .map((r) => r.upper)
-        .filter((v): v is number => v != null && !Number.isNaN(v) && Number.isFinite(v));
-
-      // Include CI bounds that are within the truncation threshold
-      for (const lb of lowerBounds) {
-        if (minEst - lb <= truncationLimit) {
-          minEst = Math.min(minEst, lb);
-        }
-      }
-      for (const ub of upperBounds) {
-        if (ub - maxEst <= truncationLimit) {
-          maxEst = Math.max(maxEst, ub);
-        }
-      }
-
-      // Step 4: Add padding as fraction of the range
-      let domainMin = hasExplicitMin ? axisConfig.rangeMin! : minEst - estimateRange * padding;
-      let domainMax = hasExplicitMax ? axisConfig.rangeMax! : maxEst + estimateRange * padding;
-
-      // Step 5: Apply symmetry around null if explicitly requested
-      // symmetric = true: force symmetry (user must opt-in)
-      // symmetric = false/null: no symmetry (default)
-      const shouldBeSymmetric = symmetric === true;
-
-      if (shouldBeSymmetric && !hasExplicitMin && !hasExplicitMax) {
-        if (isLog) {
-          // Log scale: geometric symmetry around null
-          // Use CORE estimate range (not CI-extended) to avoid extreme expansion from outlier CIs
-          const logNull = Math.log(nullValue);
-          const maxLogDist = Math.max(
-            Math.abs(Math.log(Math.max(coreMin, 0.001)) - logNull),
-            Math.abs(Math.log(coreMax) - logNull)
-          );
-          domainMin = Math.exp(logNull - maxLogDist);
-          domainMax = Math.exp(logNull + maxLogDist);
-        } else {
-          // Linear scale: arithmetic symmetry
-          // Use CORE estimate range (not CI-extended) to avoid extreme expansion
-          const maxDist = Math.max(
-            Math.abs(coreMin - nullValue),
-            Math.abs(coreMax - nullValue)
-          );
-          domainMin = nullValue - maxDist;
-          domainMax = nullValue + maxDist;
-        }
-      }
-
-      domain = [domainMin, domainMax];
-    }
-  }
-
-  // Apply nice rounding to domain (matches D3's .nice() behavior)
-  const nicedDomain = niceDomain(domain, isLog);
-
-  // Step 5: Account for marker margin at edges
-  // Match web view by using effective pixel range (forestWidth minus axis label padding)
-  const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
-  const effectivePixelRange = forestWidth - 2 * axisLabelPadding;
-
-  let finalDomain = nicedDomain;
-  if (markerMargin && effectivePixelRange > 0) {
-    const pointSize = spec.theme.shapes.pointSize;
-    // Convert pixel margin to domain units (using effective range, matching web view)
-    const domainRange = nicedDomain[1] - nicedDomain[0];
-    const marginInDomainUnits = (pointSize / 2) * (domainRange / effectivePixelRange);
-
-    if (isLog) {
-      const logMargin = marginInDomainUnits / nicedDomain[0];
-      finalDomain = [
-        nicedDomain[0] / (1 + logMargin),
-        nicedDomain[1] * (1 + logMargin),
-      ];
-    } else {
-      finalDomain = [
-        nicedDomain[0] - marginInDomainUnits,
-        nicedDomain[1] + marginInDomainUnits,
-      ];
-    }
-  }
-
-  // Apply axis label padding to range (matching web view forestStore)
-  const rangeStart = axisLabelPadding;
-  const rangeEnd = Math.max(forestWidth - axisLabelPadding, rangeStart + 50);
+  const { plotRegion, axisLimits, ticks } = axisResult;
 
   if (isLog) {
-    return createLogScale(
-      [Math.max(finalDomain[0], 0.01), Math.max(finalDomain[1], 0.02)],
-      [rangeStart, rangeEnd]
-    );
+    return {
+      scale: createLogScale(
+        [Math.max(plotRegion[0], 0.01), Math.max(plotRegion[1], 0.02)],
+        [rangeStart, rangeEnd]
+      ),
+      clipBounds: axisLimits,
+      ticks,
+    };
   }
 
-  return createLinearScale(finalDomain, [rangeStart, rangeEnd]);
+  return {
+    scale: createLinearScale(plotRegion, [rangeStart, rangeEnd]),
+    clipBounds: axisLimits,
+    ticks,
+  };
+}
+
+/**
+ * Legacy wrapper for backward compatibility - returns just the scale
+ */
+function computeXScale(spec: WebSpec, forestWidth: number, options?: ExportOptions): Scale {
+  return computeXScaleAndClip(spec, forestWidth, options).scale;
 }
 
 // ============================================================================
@@ -1502,26 +1423,6 @@ function renderSparklinePath(data: number[], x: number, y: number, width: number
   return `M${points.join("L")}`;
 }
 
-// Vertical spacing between multiple effects on same row
-const EFFECT_SPACING = 6;
-
-// Helper to get numeric value from row (primary or metadata)
-function getEffectValue(row: Row, colName: string, fallback: number | null): number | null {
-  // Check metadata first (for additional effects)
-  const metaVal = row.metadata[colName];
-  if (metaVal != null && typeof metaVal === "number" && !Number.isNaN(metaVal)) {
-    return metaVal;
-  }
-  return fallback;
-}
-
-// Calculate vertical offset for each effect (centered around yPosition)
-function getEffectYOffset(index: number, total: number): number {
-  if (total <= 1) return 0;
-  const totalHeight = (total - 1) * EFFECT_SPACING;
-  return -totalHeight / 2 + index * EFFECT_SPACING;
-}
-
 function renderInterval(
   row: Row,
   yPosition: number,
@@ -1531,7 +1432,9 @@ function renderInterval(
   effects: EffectSpec[] = [],
   weightCol?: string | null,
   forestX: number = 0,
-  forestWidth: number = Infinity
+  forestWidth: number = Infinity,
+  clipBounds?: [number, number],
+  isLog: boolean = false
 ): string {
   // Build effective effects to render
   interface ResolvedEffect {
@@ -1547,20 +1450,25 @@ function renderInterval(
 
   if (effects.length === 0) {
     // Default effect from primary columns
+    // For log scale, filter non-positive values
+    const point = (!isLog || (row.point != null && row.point > 0)) ? row.point : null;
+    const lower = (!isLog || (row.lower != null && row.lower > 0)) ? row.lower : null;
+    const upper = (!isLog || (row.upper != null && row.upper > 0)) ? row.upper : null;
     effectsToRender = [{
-      point: row.point,
-      lower: row.lower,
-      upper: row.upper,
+      point,
+      lower,
+      upper,
       color: null,
       shape: null,
       opacity: null,
     }];
   } else {
-    // Map effects with resolved values from metadata
+    // Map effects with resolved values using shared utility
+    // Pass isLog to filter out non-positive values for log scale
     effectsToRender = effects.map(effect => ({
-      point: getEffectValue(row, effect.pointCol, row.point),
-      lower: getEffectValue(row, effect.lowerCol, row.lower),
-      upper: getEffectValue(row, effect.upperCol, row.upper),
+      point: getEffectValue(row.metadata, row.point, effect.pointCol, "point", isLog),
+      lower: getEffectValue(row.metadata, row.lower, effect.lowerCol, "lower", isLog),
+      upper: getEffectValue(row.metadata, row.upper, effect.upperCol, "upper", isLog),
       color: effect.color ?? null,
       shape: effect.shape ?? null,
       opacity: effect.opacity ?? null,
@@ -1581,7 +1489,6 @@ function renderInterval(
   const baseSize = theme.shapes.pointSize;
   const lineWidth = theme.shapes.lineWidth;
   const defaultLineColor = theme.colors.intervalLine;
-  const whiskerHalf = SPACING.WHISKER_HALF_HEIGHT;
 
   // Check if this is a summary row (should render diamond)
   const isSummaryRow = row.style?.type === 'summary';
@@ -1704,7 +1611,10 @@ function renderInterval(
     const lineColor = defaultLineColor;
 
     if (isSummaryRow) {
-      // Summary row: render diamond shape spanning lower to upper
+      // Summary row: render diamond shape spanning lower to upper.
+      // Note: Summary diamonds are intentionally NOT clipped - they represent
+      // the overall effect size and typically shouldn't extend beyond axis limits.
+      // If clipping is needed in the future, clamp x1/x2 to clipBounds.
       const opacityAttr = style.opacity < 1 ? ` fill-opacity="${style.opacity}"` : "";
       const diamondPoints = [
         `${x1},${effectY}`,
@@ -1719,35 +1629,59 @@ function renderInterval(
         </g>`);
     } else {
       // Regular row: CI line with whiskers and marker
-      // Detect clipping (interval extends beyond axis range)
-      // Use padded range to match web view (AXIS_LABEL_PADDING on each side)
+      // Detect clipping using domain values (clipBounds) if available, else fallback to pixel positions
       const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
       const minX = forestX + axisLabelPadding;
       const maxX = forestX + forestWidth - axisLabelPadding;
-      const clippedLeft = x1 < minX;
-      const clippedRight = x2 > maxX;
-      const clampedX1 = Math.max(minX, Math.min(maxX, x1));
-      const clampedX2 = Math.max(minX, Math.min(maxX, x2));
 
-      // Build left end: whisker or arrow
+      // Use clipBounds for clipping detection (domain units), not pixel positions
+      const clippedLeft = clipBounds ? effect.lower! < clipBounds[0] : x1 < minX;
+      const clippedRight = clipBounds ? effect.upper! > clipBounds[1] : x2 > maxX;
+
+      // Clamp values - use domain-based clamping if clipBounds available
+      let clampedX1: number, clampedX2: number;
+      if (clipBounds) {
+        const clampedLower = Math.max(clipBounds[0], Math.min(clipBounds[1], effect.lower!));
+        const clampedUpper = Math.max(clipBounds[0], Math.min(clipBounds[1], effect.upper!));
+        clampedX1 = xScale(clampedLower);
+        clampedX2 = xScale(clampedUpper);
+      } else {
+        clampedX1 = Math.max(minX, Math.min(maxX, x1));
+        clampedX2 = Math.max(minX, Math.min(maxX, x2));
+      }
+
+      // Get scaled arrow dimensions based on theme
+      const arrowConfig = computeArrowDimensions(theme);
+      const arrowHalfHeight = arrowConfig.height / 2;
+
+      // Build left end: whisker or arrow.
+      // Note: Arrow positioned at minX (= forestX + axisLabelPadding) because this
+      // renders in full document coordinate space. The web view (RowInterval.svelte)
+      // uses x=0 because its SVG container is scoped to the forest plot area.
       let leftEnd = "";
       if (clippedLeft) {
-        // Arrow pointing left - tip at edge so line is hidden beneath
-        leftEnd = `<path d="M ${minX} ${effectY} L ${minX + 6} ${effectY - 4} L ${minX + 6} ${effectY + 4} Z" fill="${lineColor}"/>`;
+        // Arrow pointing left with scaled dimensions
+        leftEnd = `<path d="${renderArrowPath("left", minX, effectY, arrowConfig)}" fill="${arrowConfig.color}"/>`;
       } else {
-        // Normal whisker
-        leftEnd = `<line x1="${clampedX1}" x2="${clampedX1}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
+        // Normal whisker (use scaled whisker height matching arrow)
+        leftEnd = `<line x1="${clampedX1}" x2="${clampedX1}" y1="${effectY - arrowHalfHeight}" y2="${effectY + arrowHalfHeight}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
       }
 
       // Build right end: whisker or arrow
       let rightEnd = "";
       if (clippedRight) {
-        // Arrow pointing right - tip at edge so line is hidden beneath
-        rightEnd = `<path d="M ${maxX} ${effectY} L ${maxX - 6} ${effectY - 4} L ${maxX - 6} ${effectY + 4} Z" fill="${lineColor}"/>`;
+        // Arrow pointing right with scaled dimensions
+        rightEnd = `<path d="${renderArrowPath("right", maxX, effectY, arrowConfig)}" fill="${arrowConfig.color}"/>`;
       } else {
         // Normal whisker
-        rightEnd = `<line x1="${clampedX2}" x2="${clampedX2}" y1="${effectY - whiskerHalf}" y2="${effectY + whiskerHalf}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
+        rightEnd = `<line x1="${clampedX2}" x2="${clampedX2}" y1="${effectY - arrowHalfHeight}" y2="${effectY + arrowHalfHeight}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
       }
+
+      // Clamp point estimate to visible range so markers don't render outside
+      // forest area when explicit axis limits exclude the point estimate
+      const clampedCx = clipBounds
+        ? xScale(Math.max(clipBounds[0], Math.min(clipBounds[1], effect.point!)))
+        : Math.max(minX, Math.min(maxX, cx));
 
       parts.push(`
         <g class="interval effect-${idx}">
@@ -1755,7 +1689,7 @@ function renderInterval(
             stroke="${lineColor}" stroke-width="${lineWidth}"/>
           ${leftEnd}
           ${rightEnd}
-          ${renderMarker(cx, effectY, pointSize, style)}
+          ${renderMarker(clampedCx, effectY, pointSize, style)}
         </g>`);
     }
   });
@@ -1810,7 +1744,8 @@ function renderAxis(
   theme: WebTheme,
   axisLabel: string,
   forestX: number,
-  nullValue: number = 1
+  nullValue: number = 1,
+  baseTicks?: number[]
 ): string {
   const lines: string[] = [];
   // Guard against R serialization returning {} instead of null
@@ -1819,7 +1754,7 @@ function renderAxis(
     : SPACING.DEFAULT_TICK_COUNT;
 
   // Generate filtered ticks matching web view logic (EffectAxis.svelte)
-  const ticks = filterAxisTicks(xScale, tickCount, theme, nullValue, layout.forestWidth);
+  const ticks = filterAxisTicks(xScale, tickCount, theme, nullValue, layout.forestWidth, baseTicks);
   const fontSize = parseFontSize(theme.typography.fontSizeSm);
 
   // Edge threshold for text anchor adjustment (matches EffectAxis.svelte EDGE_THRESHOLD)
@@ -1882,9 +1817,10 @@ function filterAxisTicks(
   tickCount: number,
   theme: WebTheme,
   nullValue: number,
-  forestWidth: number
+  forestWidth: number,
+  baseTicks?: number[]
 ): number[] {
-  // Use explicit tick values if provided
+  // Use explicit tick values if provided (highest priority)
   if (Array.isArray(theme.axis.tickValues) && theme.axis.tickValues.length > 0) {
     const [domainMin, domainMax] = xScale.domain() as [number, number];
     let result = theme.axis.tickValues.filter((t: number) => t >= domainMin && t <= domainMax);
@@ -1905,7 +1841,10 @@ function filterAxisTicks(
   const maxTicks = Math.max(2, Math.floor(forestWidth / minSpacing));
   const effectiveTickCount = Math.min(tickCount, Math.min(7, maxTicks));
 
-  const allTicks = xScale.ticks(effectiveTickCount);
+  // Use baseTicks from axis-utils if provided, otherwise fall back to D3
+  const allTicks = baseTicks && baseTicks.length > 0
+    ? baseTicks.filter(t => t >= domainMin && t <= domainMax)
+    : xScale.ticks(effectiveTickCount);
   if (allTicks.length === 0) {
     if (shouldIncludeNull && nullInDomain) {
       return [nullValue];
@@ -1946,7 +1885,7 @@ function filterAxisTicks(
   // Combine: left + null (if present or required) + right
   const result = [...filteredLeft];
 
-  // Include null tick if: (1) it was in D3's ticks, OR (2) nullTick config requires it and it's in domain
+  // Include null tick if: (1) it was in base ticks, OR (2) nullTick config requires it and it's in domain
   if (hasNullTickInAll || (shouldIncludeNull && nullInDomain)) {
     result.push(nullValue);
   }
@@ -2042,6 +1981,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
   validateSpec(spec);
 
   const theme = spec.theme;
+  const isLog = spec.data.scale === "log";
   const layout = computeLayout(spec, options);
   const padding = theme.spacing.padding;
 
@@ -2060,7 +2000,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
 
   // Forest position (with COLUMN_GAP padding on each side)
   const forestX = padding + leftTableWidth + LAYOUT.COLUMN_GAP;
-  const xScale = computeXScale(spec, layout.forestWidth, options);
+  const { scale: xScale, clipBounds, ticks: baseTicks } = computeXScaleAndClip(spec, layout.forestWidth, options);
 
   // Right table position (after forest + gap)
   const rightTableX = forestX + layout.forestWidth + LAYOUT.COLUMN_GAP;
@@ -2175,7 +2115,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     displayRows.forEach((displayRow, i) => {
       if (displayRow.type === "data") {
         const yPos = plotY + rowPositions[i] + rowHeights[i] / 2;
-        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue, spec.data.effects, spec.data.weightCol, forestX, layout.forestWidth));
+        parts.push(renderInterval(displayRow.row, yPos, (v) => forestX + xScale(v), theme, spec.data.nullValue, spec.data.effects, spec.data.weightCol, forestX, layout.forestWidth, clipBounds, isLog));
       }
     });
 
@@ -2198,7 +2138,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     }
 
     // Axis
-    parts.push(renderAxis(xScale, layout, theme, spec.data.axisLabel, forestX, spec.data.nullValue));
+    parts.push(renderAxis(xScale, layout, theme, spec.data.axisLabel, forestX, spec.data.nullValue, baseTicks));
   }
 
   // Table rows (uses display rows to interleave group headers with data)

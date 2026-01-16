@@ -107,14 +107,91 @@ split_forest <- function(x, by, shared_axis = FALSE, ...) {
   if (shared_axis) {
     # Only calculate from data if user didn't set explicit values
     if (!has_explicit_min || !has_explicit_max) {
+      # Collect values from primary effect
       all_lower <- unlist(lapply(specs, function(s) s@data[[s@lower_col]]))
       all_upper <- unlist(lapply(specs, function(s) s@data[[s@upper_col]]))
       all_point <- unlist(lapply(specs, function(s) s@data[[s@point_col]]))
 
+      # Also collect values from additional effects
+      for (effect in base_spec@effects) {
+        for (s in specs) {
+          if (effect@point_col %in% names(s@data)) {
+            all_point <- c(all_point, s@data[[effect@point_col]])
+          }
+          if (effect@lower_col %in% names(s@data)) {
+            all_lower <- c(all_lower, s@data[[effect@lower_col]])
+          }
+          if (effect@upper_col %in% names(s@data)) {
+            all_upper <- c(all_upper, s@data[[effect@upper_col]])
+          }
+        }
+      }
+
+      # Get clip factor and scale from theme
+      ci_clip_factor <- base_axis@ci_clip_factor %||% 3.0
+      is_log <- base_spec@scale == "log"
+      null_value <- base_spec@null_value %||% (if (is_log) 1 else 0)
+
+      # Filter out non-positive values for log scale (they can't be displayed)
+      if (is_log) {
+        all_point <- all_point[!is.na(all_point) & all_point > 0]
+        all_lower <- all_lower[!is.na(all_lower) & all_lower > 0]
+        all_upper <- all_upper[!is.na(all_upper) & all_upper > 0]
+      }
+
+      # Compute raw estimate range (point estimates + null value)
+      raw_min_est <- min(c(all_point, null_value), na.rm = TRUE)
+      raw_max_est <- max(c(all_point, null_value), na.rm = TRUE)
+
+      # Handle zero-span case: create reasonable spread
+      # For log scale: multiplicative spread (divide/multiply by 2)
+      # For linear scale: additive spread (max of 1 or 10% of value)
+      if (raw_max_est - raw_min_est == 0) {
+        if (is_log) {
+          # Multiplicative: keeps values positive for log scale
+          raw_min_est <- raw_min_est / 2
+          raw_max_est <- raw_max_est * 2
+        } else {
+          spread <- max(1, abs(raw_min_est) * 0.1)
+          raw_min_est <- raw_min_est - spread
+          raw_max_est <- raw_max_est + spread
+        }
+      }
+
+      # Snap estimate range to nice numbers BEFORE calculating clip boundaries
+      # This ensures clip boundaries align with the nice-rounded axis limits
+      nice_range <- nice_domain(c(raw_min_est, raw_max_est), is_log)
+      min_est <- nice_range[1]
+      max_est <- nice_range[2]
+
+      # Compute clip boundaries based on scale type
+      # For log scale: ci_clip_factor is a direct ratio multiplier
+      # For linear scale: ci_clip_factor is a span multiplier
+      if (is_log) {
+        lower_clip_bound <- min_est / ci_clip_factor
+        upper_clip_bound <- max_est * ci_clip_factor
+      } else {
+        span <- max_est - min_est
+        lower_clip_bound <- min_est - span * ci_clip_factor
+        upper_clip_bound <- max_est + span * ci_clip_factor
+      }
+
+      # Check if any CIs are clipped
+      has_clipped_lower <- any(!is.na(all_lower) & all_lower < lower_clip_bound)
+      has_clipped_upper <- any(!is.na(all_upper) & all_upper > upper_clip_bound)
+
+      # Include CI bounds that are within clip boundaries
+      valid_lower <- all_lower[!is.na(all_lower) & all_lower >= lower_clip_bound]
+      valid_upper <- all_upper[!is.na(all_upper) & all_upper <= upper_clip_bound]
+
+      # Extend axis to clip boundary if any CIs are clipped (for arrow visibility)
       data_range <- c(
-        min(c(all_lower, all_point), na.rm = TRUE),
-        max(c(all_upper, all_point), na.rm = TRUE)
+        min(c(valid_lower, min_est, if (has_clipped_lower) lower_clip_bound), na.rm = TRUE),
+        max(c(valid_upper, max_est, if (has_clipped_upper) upper_clip_bound), na.rm = TRUE)
       )
+
+      # Final snap to nice numbers (matches JS axis-utils.ts line 272)
+      data_range <- nice_domain(data_range, is_log)
 
       axis_range <- c(
         if (has_explicit_min) base_axis@range_min else data_range[1],
@@ -334,4 +411,124 @@ build_tree_level <- function(split_vars, split_combos, level, parent_path) {
       children = if (length(children) > 0) children else NULL
     )
   })
+}
+
+#' Round domain to nice round numbers
+#'
+#' Matches the JavaScript niceDomain() function for consistency between
+#' R-side and JS-side axis calculations.
+#'
+#' @param domain Numeric vector of length 2: c(min, max)
+#' @param is_log Whether this is for a log scale
+#'
+#' @return A new domain with nice round bounds
+#' @keywords internal
+nice_domain <- function(domain, is_log) {
+  if (is_log) {
+    nice_log_domain(domain)
+  } else {
+    nice_linear_domain(domain)
+  }
+}
+
+#' Nice values for log scale (matches JS NICE_LOG_VALUES)
+#' @keywords internal
+NICE_LOG_VALUES <- c(
+  0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5,
+  0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.75, 2, 2.5, 3, 4, 5, 6, 7,
+  8, 10, 12, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 300, 500, 750, 1000
+)
+
+#' Extended Wilkinson Q sequence for "nice" tick values
+#' @keywords internal
+NICE_Q <- c(1, 5, 2, 2.5, 4, 3)
+
+#' Compute nice bounds for log scale
+#' @keywords internal
+nice_log_domain <- function(domain) {
+  # Handle edge cases
+  if (domain[1] <= 0 || domain[2] <= 0) {
+    return(c(0.1, 10))  # Fallback for invalid log domain
+  }
+  if (domain[1] >= domain[2]) {
+    return(domain)
+  }
+
+  # Find nice min (largest nice value <= domain min)
+  nice_min <- NICE_LOG_VALUES[1]
+  for (val in NICE_LOG_VALUES) {
+    if (val <= domain[1]) {
+      nice_min <- val
+    } else {
+      break
+    }
+  }
+
+  # Handle values smaller than our nice list
+  if (domain[1] < NICE_LOG_VALUES[1]) {
+    magnitude <- 10^floor(log10(domain[1]))
+    nice_min <- magnitude
+  }
+
+  # Find nice max (smallest nice value >= domain max)
+  nice_max <- NICE_LOG_VALUES[length(NICE_LOG_VALUES)]
+  for (i in rev(seq_along(NICE_LOG_VALUES))) {
+    if (NICE_LOG_VALUES[i] >= domain[2]) {
+      nice_max <- NICE_LOG_VALUES[i]
+    } else {
+      break
+    }
+  }
+
+  # Handle values larger than our nice list
+  if (domain[2] > NICE_LOG_VALUES[length(NICE_LOG_VALUES)]) {
+    magnitude <- 10^ceiling(log10(domain[2]))
+    nice_max <- magnitude
+  }
+
+  c(nice_min, nice_max)
+}
+
+#' Compute nice bounds for linear scale using Extended Wilkinson approach
+#' @keywords internal
+nice_linear_domain <- function(domain) {
+  span <- domain[2] - domain[1]
+
+  # Handle edge cases
+  if (span == 0) {
+    return(domain)
+  }
+  if (span < 0) {
+    return(c(domain[2], domain[1]))  # Swap if inverted
+  }
+
+  # Find a nice step size using Q sequence
+  magnitude <- 10^floor(log10(span))
+  best_step <- magnitude
+  best_score <- Inf
+
+  # Try each Q value at current and adjacent magnitudes
+  for (q in NICE_Q) {
+    for (scale in c(0.1, 1, 10)) {
+      step <- q * magnitude * scale
+      if (step <= 0) next
+
+      candidate_min <- floor(domain[1] / step) * step
+      candidate_max <- ceiling(domain[2] / step) * step
+      candidate_span <- candidate_max - candidate_min
+
+      # Score: prefer steps that don't expand the domain too much
+      expansion <- candidate_span / span - 1
+      if (expansion >= 0 && expansion < best_score) {
+        best_score <- expansion
+        best_step <- step
+      }
+    }
+  }
+
+  nice_min <- floor(domain[1] / best_step) * best_step
+  nice_max <- ceiling(domain[2] / best_step) * best_step
+
+  # Round to fix floating point precision issues
+  c(round(nice_min * 1e10) / 1e10, round(nice_max * 1e10) / 1e10)
 }

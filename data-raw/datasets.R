@@ -314,6 +314,124 @@ climate_temps <- data.frame(
 )
 
 # ============================================================================
+# Effect Sizes Stress Test Dataset
+# ============================================================================
+# Dataset with widely varying confidence intervals to stress test:
+# - Axis range calculation and CI clipping
+# - split_by / plot_by logic with multiple grouping variables
+# - Edge cases: very wide CIs, very narrow CIs, extreme values
+
+set.seed(2024)
+
+# Design: Multi-site drug trial with varying precision across sites
+effect_sizes <- data.frame(
+
+  study = c(
+    # High precision studies (large N, narrow CI)
+    "Major Medical Center A", "University Hospital B", "National Institute C",
+    "Regional Center D", "Metro Hospital E",
+    # Medium precision studies
+    "Community Hospital F", "Clinic Network G", "Research Center H",
+    "Teaching Hospital I", "Medical Group J",
+    # Low precision studies (small N, wide CI)
+    "Rural Clinic K", "Small Practice L", "Pilot Site M",
+    # Very wide CI studies (will trigger clipping)
+    "Single-arm Study N", "Case Series O", "Exploratory P",
+    # Edge cases
+    "Outlier Site Q", "Extreme Effect R", "Null Effect S", "Borderline T"
+  ),
+
+  # Grouping variables for split_by testing
+  region = c(
+    "North America", "North America", "Europe", "Europe", "Asia Pacific",
+    "North America", "Europe", "Asia Pacific", "North America", "Europe",
+    "Asia Pacific", "North America", "Europe",
+    "North America", "Europe", "Asia Pacific",
+    "North America", "Europe", "Asia Pacific", "North America"
+  ),
+
+  outcome = c(
+    rep("Primary", 10),
+    rep("Secondary", 6),
+    rep("Exploratory", 4)
+  ),
+
+  treatment = c(
+    rep("Drug A", 7),
+    rep("Drug B", 7),
+    rep("Combination", 6)
+  ),
+
+  phase = c(
+    rep("Phase 3", 8),
+    rep("Phase 2", 7),
+    rep("Phase 1", 5)
+  ),
+
+  n = c(
+    # High precision
+    2500, 1800, 3200, 1500, 2100,
+    # Medium precision
+    450, 380, 520, 290, 410,
+    # Low precision
+    85, 62, 48,
+    # Very low precision
+    25, 18, 12,
+    # Edge cases
+    150, 95, 800, 320
+  ),
+
+  stringsAsFactors = FALSE
+)
+
+# Generate effect sizes (hazard ratios on log scale)
+# Base effects vary by treatment
+base_hr <- c(
+  # High precision - clustered around 0.75-0.85
+  0.72, 0.78, 0.81, 0.76, 0.84,
+  # Medium precision - more variable
+  0.68, 0.92, 0.71, 1.05, 0.88,
+  # Low precision - even more variable
+  0.55, 1.25, 0.62,
+  # Very wide - extreme values that WILL be clipped
+  0.40, 1.80, 0.50,
+  # Edge cases
+  0.25, 2.50, 1.00, 0.99  # outlier, extreme, null, borderline
+)
+
+effect_sizes$hr <- base_hr
+
+# Generate SEs inversely proportional to sqrt(n), with some noise
+effect_sizes$se <- 0.5 / sqrt(effect_sizes$n) * runif(nrow(effect_sizes), 0.8, 1.4)
+
+# For the very wide CI studies, use HUGE SEs to guarantee clipping
+# These will have CIs spanning multiple orders of magnitude
+effect_sizes$se[14] <- 1.8   # Single-arm Study N - very wide
+effect_sizes$se[15] <- 1.5   # Case Series O - wide
+effect_sizes$se[16] <- 2.0   # Exploratory P - extremely wide
+
+# For edge cases
+effect_sizes$se[17] <- 1.2   # Outlier - will be clipped on lower end
+effect_sizes$se[18] <- 0.8   # Extreme effect - will be clipped on upper end
+effect_sizes$se[19] <- 0.02  # Null effect - very precise
+effect_sizes$se[20] <- 0.03  # Borderline - very precise
+
+# Calculate CIs (log scale)
+effect_sizes$lower <- round(effect_sizes$hr * exp(-1.96 * effect_sizes$se), 3)
+effect_sizes$upper <- round(effect_sizes$hr * exp(1.96 * effect_sizes$se), 3)
+effect_sizes$hr <- round(effect_sizes$hr, 3)
+
+# Add derived columns useful for display
+effect_sizes$significant <- effect_sizes$upper < 1 | effect_sizes$lower > 1
+effect_sizes$direction <- ifelse(effect_sizes$hr < 1, "Favors Treatment", "Favors Control")
+
+# Reorder columns
+effect_sizes <- effect_sizes[, c(
+  "study", "region", "outcome", "treatment", "phase",
+  "n", "hr", "lower", "upper", "se", "significant", "direction"
+)]
+
+# ============================================================================
 # Save datasets
 # ============================================================================
 
@@ -321,5 +439,6 @@ usethis::use_data(glp1_trials, overwrite = TRUE)
 usethis::use_data(airline_delays, overwrite = TRUE)
 usethis::use_data(nba_efficiency, overwrite = TRUE)
 usethis::use_data(climate_temps, overwrite = TRUE)
+usethis::use_data(effect_sizes, overwrite = TRUE)
 
 message("Datasets saved to data/")

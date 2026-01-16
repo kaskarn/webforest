@@ -51,6 +51,8 @@
   const displayRows = $derived(store.displayRows);
   const layout = $derived(store.layout);
   const xScale = $derived(store.xScale);
+  const axisComputation = $derived(store.axisComputation);
+  const clipBounds = $derived(axisComputation.axisLimits);
   const theme = $derived(spec?.theme);
   const includeForest = $derived(spec?.data.includeForest ?? true);
   const leftColumns = $derived(store.leftColumns);
@@ -920,6 +922,8 @@
                 {xScale}
                 {layout}
                 {theme}
+                {clipBounds}
+                isLog={spec.data.scale === "log"}
                 effects={spec.data.effects}
                 weightCol={spec.data.weightCol}
                 onRowClick={() => store.selectRow(displayRow.row.id)}
@@ -953,7 +957,7 @@
 
           <!-- Axis at bottom (with axisGap spacing from rows) -->
           <g transform="translate(0, {rowsAreaHeight + axisGap})">
-            <EffectAxis {xScale} {layout} {theme} axisLabel={spec.data.axisLabel} position="bottom" plotHeight={layout.plotHeight} />
+            <EffectAxis {xScale} {layout} {theme} axisLabel={spec.data.axisLabel} position="bottom" plotHeight={layout.plotHeight} baseTicks={axisComputation.ticks} />
           </g>
         </svg>
         {/if}

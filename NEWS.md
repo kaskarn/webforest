@@ -1,3 +1,27 @@
+# webforest 0.2.1
+
+## Bug Fixes
+
+* **CI clipping extends axis to boundary**: When confidence intervals are clipped (extend beyond the clip threshold), the axis now extends to include the clip boundary. This ensures arrow indicators have visual space to extend to the axis edge rather than being truncated.
+
+* **Multi-effect axis calculation**: Axis range calculation now considers all effects (not just primary) when determining axis limits. Previously, additional effects could render outside the visible axis range.
+
+* **Log scale value filtering**: Non-positive values are now consistently filtered across web view and SVG export for log scale plots. Previously, the web view's default effect case didn't filter, causing potential inconsistencies.
+
+* **R-side axis consistency**: The R-side shared axis calculation (`split_forest()` with `shared_axis = TRUE`) now matches JS-side behavior:
+  - Applies `nice_domain()` before calculating clip boundaries (ensures alignment)
+  - Uses multiplicative spread for log scale zero-span case (prevents invalid domain)
+  - Applies final `nice_domain()` snap for cleaner axis limits
+
+## Improvements
+
+* **Code consolidation**: Removed duplicate implementations that could drift:
+  - `NICE_Q` constant now exported from single source (`scale-utils.ts`)
+  - `EFFECT_SPACING` and `getEffectYOffset()` moved to shared module (`rendering-constants.ts`)
+  - `getEffectValue()` unified across web view and SVG generator
+
+---
+
 # webforest 0.2.0
 
 ## New Features
