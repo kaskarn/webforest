@@ -1,26 +1,53 @@
 <script lang="ts">
+  import type { Snippet } from "svelte";
+
   interface Props {
     title?: string | null;
     subtitle?: string | null;
+    controls?: Snippet;
   }
 
-  let { title, subtitle }: Props = $props();
+  let { title, subtitle, controls }: Props = $props();
 </script>
 
 {#if title || subtitle}
-  <div class="title-area">
-    {#if title}
-      <h2 class="plot-title">{title}</h2>
-    {/if}
-    {#if subtitle}
-      <p class="plot-subtitle">{subtitle}</p>
+  <div class="header-area">
+    <div class="title-area">
+      {#if title}
+        <h2 class="plot-title">{title}</h2>
+      {/if}
+      {#if subtitle}
+        <p class="plot-subtitle">{subtitle}</p>
+      {/if}
+    </div>
+    {#if controls}
+      <div class="controls-area">
+        {@render controls()}
+      </div>
     {/if}
   </div>
 {/if}
 
 <style>
+  .header-area {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 8px 4px 2px;
+  }
+
   .title-area {
-    padding: 12px 12px 8px 2px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .controls-area {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-top: 2px;
   }
 
   .plot-title {

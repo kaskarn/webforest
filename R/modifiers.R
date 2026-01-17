@@ -313,3 +313,60 @@ set_theme <- function(x, theme) {
     spec
   }
 }
+
+#' Set zoom and container constraints
+#'
+#' Provides a fluent API for controlling zoom level and container size constraints.
+#'
+#' @param x An htmlwidget created by `forest_plot()` or `webtable()`
+#' @param zoom Zoom level (0.5 to 2.0, default 1.0)
+#' @param auto_fit When TRUE (default), shrink content to fit container if too large.
+#'   Never enlarges content. When FALSE, render at zoom level with scrollbars if needed.
+#' @param max_width Maximum container width in pixels (NULL for none)
+#' @param max_height Maximum container height in pixels (NULL for none)
+#' @param show_controls Show zoom controls on hover
+#'
+#' @return The modified htmlwidget
+#'
+#' @examples
+#' \dontrun{
+#' # Zoom to 80% with auto-fit
+#' forest_plot(data, point, lower, upper) |>
+#'   set_zoom(zoom = 0.8)
+#'
+#' # Constrain to max 800px width
+#' forest_plot(data, point, lower, upper) |>
+#'   set_zoom(max_width = 800)
+#'
+#' # Disable auto-fit, hide controls
+#' forest_plot(data, point, lower, upper) |>
+#'   set_zoom(auto_fit = FALSE, show_controls = FALSE)
+#' }
+#'
+#' @export
+set_zoom <- function(
+    x,
+    zoom = 1.0,
+    auto_fit = TRUE,
+    max_width = NULL,
+    max_height = NULL,
+    show_controls = TRUE) {
+  if (!inherits(x, "htmlwidget")) {
+    cli_abort("{.fn set_zoom} only works on htmlwidgets from {.fn forest_plot} or {.fn webtable}")
+  }
+
+  checkmate::assert_number(zoom, lower = 0.5, upper = 2.0)
+  checkmate::assert_flag(auto_fit)
+  if (!is.null(max_width)) checkmate::assert_number(max_width, lower = 100)
+  if (!is.null(max_height)) checkmate::assert_number(max_height, lower = 100)
+  checkmate::assert_flag(show_controls)
+
+  # Update widget payload directly
+  x$x$zoom <- zoom
+  x$x$autoFit <- auto_fit
+  x$x$maxWidth <- max_width
+  x$x$maxHeight <- max_height
+  x$x$showZoomControls <- show_controls
+
+  x
+}

@@ -46,8 +46,7 @@ forest_plot(
   axis_gridlines = TRUE,
   axis_label = "Hazard Ratio (95% CI)",
   title = "GLP-1 Agonist Cardiovascular Outcomes",
-  subtitle = "Major adverse cardiovascular events (MACE)",
-  width_mode = "fill"
+  subtitle = "Major adverse cardiovascular events (MACE)"
 )
 ```
 

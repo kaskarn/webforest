@@ -7,9 +7,11 @@
 webtable(
   x,
   ...,
-  width_mode = c("natural", "fill"),
-  height_preset = c("full", "small", "medium", "large", "container"),
-  height_mode = NULL,
+  zoom = 1,
+  auto_fit = TRUE,
+  max_width = NULL,
+  max_height = NULL,
+  show_zoom_controls = TRUE,
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -22,12 +24,15 @@ webtable(
 Common arguments: \code{point}, \code{lower}, \code{upper}, \code{label}, \code{group},
 \code{columns}, \code{theme}, \code{interaction}}
 
-\item{width_mode}{Layout width mode: "natural" (centered at natural width, default) or "fill" (scale to fill container)}
+\item{zoom}{Initial zoom level (0.5 to 2.0, default 1.0)}
 
-\item{height_preset}{Layout height preset: "small" (200px), "medium" (400px), "large" (600px),
-"full" (natural height, no constraint), or "container" (fill parent). Default is "full".}
+\item{auto_fit}{When TRUE (default), shrink content to fit container if too large}
 
-\item{height_mode}{Deprecated. Use \code{height_preset} instead.}
+\item{max_width}{Maximum container width in pixels (NULL for none)}
+
+\item{max_height}{Maximum container height in pixels (NULL for none)}
+
+\item{show_zoom_controls}{Show zoom controls on hover (default TRUE)}
 
 \item{width}{Widget width (default NULL for auto)}
 

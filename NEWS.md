@@ -1,3 +1,32 @@
+# webforest 0.2.2
+
+## New Features
+
+* **Simplified zoom system**: Replaced complex fit-mode system with intuitive zoom controls:
+  - **Zoom slider** (50%-200%): Set your desired scale with +/- buttons or slider
+  - **Auto-fit toggle** (default ON): Automatically shrinks content if it exceeds container width, never enlarges
+  - **Fit to width button**: One-click to set zoom level that matches container width exactly
+  - **Max size constraints**: Optional max-width and max-height limits via dropdown
+
+* **New R API for zoom control**:
+  - `zoom` parameter: Initial zoom level (0.5 to 2.0, default 1.0)
+  - `auto_fit` parameter: Shrink to fit container if too large (default TRUE)
+  - `max_width` / `max_height`: Optional pixel constraints
+  - `show_zoom_controls`: Toggle zoom UI visibility
+  - New `set_zoom()` fluent function for pipeline usage
+
+## Improvements
+
+* **Toolbar hover behavior**: Control toolbar now fades in on hover (floating mode) for a cleaner default appearance
+* **Toolbar doesn't scale**: Toolbar stays at native size regardless of zoom level
+
+## Breaking Changes
+
+* Removed `fit_mode`, `width_mode`, `height_mode`, and `height_preset` parameters (replaced by zoom system)
+* Removed `set_fit()` function (replaced by `set_zoom()`)
+
+---
+
 # webforest 0.2.1
 
 ## Bug Fixes

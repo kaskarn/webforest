@@ -73,62 +73,65 @@
   const selectedRowIds = $derived(store.selectedRowIds);
   const hoveredRowId = $derived(store.hoveredRowId);
 
-  // Layout mode state
-  const widthMode = $derived(store.widthMode);
-  const heightPreset = $derived(store.heightPreset);
+  // Zoom & auto-fit state (from store)
+  const zoom = $derived(store.zoom);
+  const autoFit = $derived(store.autoFit);
+  const actualScale = $derived(store.actualScale);
+  const maxWidth = $derived(store.maxWidth);
+  const maxHeight = $derived(store.maxHeight);
+  const showZoomControls = $derived(store.showZoomControls);
 
   // Create reactive dependency on columnWidths to trigger re-render when widths change
   const columnWidthsSnapshot = $derived({ ...store.columnWidths });
 
-  // Container ref for fill mode width detection
+  // Container refs for dimension tracking
   let containerRef: HTMLDivElement | undefined = $state();
   let scalableRef: HTMLDivElement | undefined = $state();
 
-  // Container width from ResizeObserver (for fill mode scaling)
-  let containerWidth = $state(0);
+  // Local state for dimensions (measured by ResizeObserver)
+  let containerContentWidth = $state(0);
   let scalableNaturalWidth = $state(0);
   let scalableNaturalHeight = $state(0);
 
   // Natural content width from store (calculated from column specs)
   const naturalContentWidth = $derived(store.naturalContentWidth);
 
-  // Scale factor for fill mode: stretch or shrink content to fit container
-  const fillScale = $derived.by(() => {
-    if (widthMode !== 'fill' || containerWidth <= 0) {
-      return 1;
-    }
-    // Use measured width (more accurate - includes borders, gaps)
-    // Fall back to calculated width from store if not measured yet
-    const contentWidth = scalableNaturalWidth > 0
-      ? scalableNaturalWidth
-      : naturalContentWidth;
-    if (contentWidth <= 0) return 1;
+  // Scaled dimensions for container sizing (CSS transform doesn't affect layout)
+  // Container should be sized to scaled dimensions so it responds to zoom
+  const scaledWidth = $derived(scalableNaturalWidth * actualScale);
+  const scaledHeight = $derived(scalableNaturalHeight * actualScale);
 
-    // Account for container padding: the scaled element (content + padding) must fit
-    // contentRect.width excludes padding, so we add it back for the total scaled width
-    const containerPadding = theme?.spacing?.containerPadding ?? 0;
-    const totalWidth = contentWidth + containerPadding * 2;
-
-    // Scale to fit content within container (both up and down)
-    const scale = containerWidth / totalWidth;
-    // Don't scale below 0.6 (text becomes unreadable) or above 2.0 (too stretched)
-    return Math.max(0.6, Math.min(2.0, scale));
+  // Centering margin: center the scaled content within the container
+  const centeringMargin = $derived.by(() => {
+    if (!autoFit || containerContentWidth <= 0 || scaledWidth <= 0) return 0;
+    const margin = (containerContentWidth - scaledWidth) / 2;
+    return Math.max(0, margin); // Don't allow negative margin
   });
 
-  // Scaled height for container sizing (CSS transform doesn't affect layout)
-  const scaledHeight = $derived(scalableNaturalHeight * fillScale);
-
-  // ResizeObserver for fill mode - track both container width and scalable height
+  // ResizeObserver - track container and scalable dimensions, report to store
   $effect(() => {
     if (!containerRef || !scalableRef) return;
+
+    // Report container element ID for persistence
+    if (containerRef.id) {
+      store.setContainerElementId(containerRef.id);
+    }
 
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.target === containerRef) {
-          containerWidth = entry.contentRect.width;
+          containerContentWidth = entry.contentRect.width;
+          store.setContainerDimensions(
+            entry.contentRect.width,
+            entry.contentRect.height
+          );
         } else if (entry.target === scalableRef) {
           scalableNaturalWidth = entry.contentRect.width;
           scalableNaturalHeight = entry.contentRect.height;
+          store.setScalableNaturalDimensions(
+            entry.contentRect.width,
+            entry.contentRect.height
+          );
         }
       }
     });
@@ -146,6 +149,34 @@
 
   // Get available themes for theme switcher (null = disabled, object = custom themes)
   const enableThemes = $derived(spec?.interaction?.enableThemes);
+
+  // Keyboard shortcuts for zoom control
+  function handleKeydown(event: KeyboardEvent) {
+    // Only handle if modifier key is pressed
+    if (!event.metaKey && !event.ctrlKey) return;
+    // Don't interfere with input fields
+    if ((event.target as HTMLElement)?.tagName === 'INPUT') return;
+
+    switch (event.key) {
+      case '=':
+      case '+':
+        event.preventDefault();
+        store.zoomIn();
+        break;
+      case '-':
+        event.preventDefault();
+        store.zoomOut();
+        break;
+      case '0':
+        event.preventDefault();
+        store.resetZoom();
+        break;
+      case '1':
+        event.preventDefault();
+        store.fitToWidth();
+        break;
+    }
+  }
 
   // Check if the data has any groups
   const hasGroups = $derived((spec?.data.groups?.length ?? 0) > 0);
@@ -519,24 +550,12 @@
     store.setTooltip(null, null);
   }
 
-  // Height style based on preset (must be inline to override htmlwidgets inline style)
-  // Use max-height for fixed presets so container doesn't fill with empty space
-  const heightStyle = $derived.by(() => {
-    switch (heightPreset) {
-      case 'small': return 'height: auto; max-height: 300px; overflow-y: auto;';
-      case 'medium': return 'height: auto; max-height: 500px; overflow-y: auto;';
-      case 'large': return 'height: auto; max-height: 900px; overflow-y: auto;';
-      case 'full': return 'height: auto; max-height: none; overflow: visible;';
-      case 'container': return 'height: 100%; max-height: none; overflow-y: auto;';
-      default: return '';
-    }
-  });
-
   // CSS variable style string (includes shared rendering constants for consistency)
   const cssVars = $derived.by(() => {
-    if (!theme) return heightStyle;
+    if (!theme) return '';
     return `
-      ${heightStyle}
+      --wf-max-width: ${maxWidth ? `${maxWidth}px` : 'none'};
+      --wf-max-height: ${maxHeight ? `${maxHeight}px` : 'none'};
       --wf-bg: ${theme.colors.background};
       --wf-fg: ${theme.colors.foreground};
       --wf-primary: ${theme.colors.primary};
@@ -586,24 +605,34 @@
       --wf-row-selected-opacity: ${ROW_SELECTED_OPACITY};
       --wf-row-selected-hover-opacity: ${ROW_SELECTED_HOVER_OPACITY};
       --wf-depth-base-opacity: ${DEPTH_BASE_OPACITY};
-      --wf-fill-scale: ${fillScale};
+      --wf-actual-scale: ${actualScale};
+      --wf-zoom: ${zoom};
     `.trim();
   });
 </script>
 
+<svelte:window onkeydown={handleKeydown} />
+
 <div
   bind:this={containerRef}
-  class="webforest-container width-{widthMode} height-{heightPreset}"
-  style="{cssVars}; {widthMode === 'fill' && heightPreset === 'full' && scaledHeight > 0 ? `min-height: ${scaledHeight}px` : ''}"
+  class="webforest-container"
+  class:auto-fit={autoFit}
+  class:has-max-width={maxWidth !== null}
+  class:has-max-height={maxHeight !== null}
+  class:zoomed={zoom !== 1.0}
+  data-zoom="{Math.round(actualScale * 100)}%"
+  style="{cssVars}; {autoFit && scaledHeight > 0 ? `height: ${scaledHeight}px` : ''}"
 >
   {#if spec}
-    <!-- Control toolbar (appears on hover) - outside scalable area -->
+    <!-- Control toolbar (always outside scalable so it doesn't scale with zoom) -->
     <ControlToolbar {store} {enableExport} {enableThemes} {onThemeChange} />
 
     <!-- Scalable content wrapper (header + main + footer) -->
-    <div bind:this={scalableRef} class="webforest-scalable">
-      <!-- Plot header (title, subtitle) -->
-      <PlotHeader title={spec.labels?.title} subtitle={spec.labels?.subtitle} />
+    <div bind:this={scalableRef} class="webforest-scalable" style:margin-left="{centeringMargin}px">
+      <!-- Plot header (title, subtitle) - only when there's a title/subtitle -->
+      {#if hasPlotHeader}
+        <PlotHeader title={spec.labels?.title} subtitle={spec.labels?.subtitle} />
+      {/if}
 
       <!-- Snippet for rendering cell content based on column type -->
       {#snippet renderCellContent(row: DataRow['row'], column: ColumnSpec)}
@@ -1114,94 +1143,73 @@
     background: var(--wf-bg);
     border: var(--wf-container-border, none);
     border-radius: var(--wf-container-border-radius, 8px);
-    overflow: hidden;
+    /* Note: overflow is set in auto-fit/non-auto-fit specific rules below */
     display: flex;
     flex-direction: column;
   }
 
-  /* Width modes */
-  :global(.webforest-container.width-natural) {
-    width: fit-content;
-    max-width: 100%;
+  /* ============================================================================
+     Auto-fit Scaling
+     ============================================================================ */
+
+  /* Auto-fit mode (default): scale down if content exceeds container */
+  :global(.webforest-container.auto-fit) {
+    width: 100%;
+    padding: var(--wf-container-padding, 16px);
+    /* Hide overflow - container is explicitly sized to scaled dimensions */
+    overflow: hidden;
+  }
+
+  :global(.webforest-container.auto-fit) .webforest-scalable {
+    transform: scale(var(--wf-actual-scale, 1));
+    transform-origin: top left;
+    flex: none;
+    width: max-content;
+    /* Centering is applied via inline margin-left style */
+  }
+
+  /* No auto-fit: render at zoom level, scrollbars if needed */
+  :global(.webforest-container:not(.auto-fit)) {
+    overflow: auto;
+    padding: var(--wf-container-padding, 16px);
+  }
+
+  :global(.webforest-container:not(.auto-fit)) .webforest-scalable {
+    transform: scale(var(--wf-zoom, 1));
+    transform-origin: top left;
+    width: max-content;
+  }
+
+  /* Max-width constraint - centers content */
+  :global(.webforest-container.has-max-width) {
+    max-width: var(--wf-max-width);
     margin-left: auto;
     margin-right: auto;
   }
 
-  :global(.webforest-container.width-fill) {
-    width: 100%;
-    /* Remove border/background from container in fill mode - they go on scalable */
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    /* Clip content to container - transform doesn't affect layout box width */
-    overflow: hidden;
+  /* Max-height constraint - enables vertical scroll */
+  :global(.webforest-container.has-max-height) {
+    max-height: var(--wf-max-height);
+    overflow-y: auto !important; /* Override auto-fit's overflow: hidden */
   }
 
-  :global(.webforest-container.width-fill) .webforest-scalable {
-    transform: scale(var(--wf-fill-scale, 1));
-    transform-origin: top left;
-    /* Don't use flex: 1 in fill mode - we need natural height for scaling */
-    flex: none;
-    /* Prevent flex stretch from constraining width - need natural content width for scaling */
-    align-self: flex-start;
-    width: max-content;
-    /* No margins in fill mode - we fill the container */
-    margin: 0;
-    /* Move border/background here so they scale with content */
-    background: var(--wf-bg);
-    /* Minimal border to avoid scroll issues */
-    border: none;
-    border-radius: 0;
-  }
-
-  /* In fill mode, prevent inner scrollbars - container handles clipping */
-  :global(.webforest-container.width-fill) .webforest-main {
-    overflow: visible;
-  }
-
-  /* Height presets - use max-height so container doesn't fill with empty space */
-  :global(.webforest-container.height-small) {
-    height: auto;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  :global(.webforest-container.height-medium) {
-    height: auto;
-    max-height: 500px;
-    overflow-y: auto;
-  }
-
-  :global(.webforest-container.height-large) {
-    height: auto;
-    max-height: 900px;
-    overflow-y: auto;
-  }
-
-  :global(.webforest-container.height-full) {
-    height: auto;
-    max-height: none;
-    overflow: visible;
-  }
-
-  /* Override htmlwidgets container height when in full height mode */
-  :global(.webforest:has(.webforest-container.height-full)) {
+  /* Override htmlwidgets container height */
+  :global(.webforest:has(.webforest-container)) {
     height: auto !important;
     min-height: 0 !important;
   }
 
-  :global(.webforest-container.height-container) {
-    height: 100%;
-    max-height: none;
-    overflow-y: auto;
+  /* In auto-fit mode, prevent inner scrollbars - container handles overflow */
+  :global(.webforest-container.auto-fit) .webforest-main {
+    overflow: visible;
+    width: max-content; /* Allow grid to expand to natural width */
   }
 
   .webforest-scalable {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding-left: var(--wf-container-padding, 0);
-    padding-right: var(--wf-container-padding, 0);
+    /* Note: padding is on container, not here - avoids double padding */
     min-height: 0;
   }
 

@@ -379,12 +379,14 @@ forest_plot(data, ...,
 )
 ```
 
-### Layout Modes
+### Zoom & Sizing
 
 | Argument | Options | Description |
 |----------|---------|-------------|
-| `width_mode` | `"natural"`, `"fill"` | `"natural"` = shrink-wrap; `"fill"` = expand |
-| `height_preset` | `"full"`, `"small"`, `"medium"`, `"large"`, `"container"` | Controls scrolling behavior |
+| `zoom` | 0.5 to 2.0 | Initial zoom level (default 1.0) |
+| `auto_fit` | TRUE/FALSE | Shrink to fit container if too large (default TRUE) |
+| `max_width` | pixels or NULL | Maximum container width |
+| `max_height` | pixels or NULL | Maximum container height (enables scrolling) |
 
 ---
 

@@ -49,47 +49,34 @@ const binding: HTMLWidgetsBinding = {
 
     return {
       renderValue: (x: WebSpec & {
-        widthMode?: 'natural' | 'fill';
-        heightPreset?: 'small' | 'medium' | 'large' | 'full' | 'container';
-        heightMode?: 'auto' | 'scroll';  // Deprecated, kept for backwards compatibility
+        zoom?: number;
+        autoFit?: boolean;
+        maxWidth?: number | null;
+        maxHeight?: number | null;
+        showZoomControls?: boolean;
       }) => {
         store.setSpec(x);
         store.setDimensions(width, height);
 
-        // Apply initial layout modes from R
-        if (x.widthMode) {
-          store.setWidthMode(x.widthMode);
+        // Apply zoom and sizing settings from R
+        if (typeof x.zoom === 'number') {
+          store.setZoom(x.zoom);
         }
-        // New height preset system
-        const effectivePreset = x.heightPreset ?? (x.heightMode === 'scroll' ? 'medium' : 'full');
-        store.setHeightPreset(effectivePreset);
+        if (typeof x.autoFit === 'boolean') {
+          store.setAutoFit(x.autoFit);
+        }
+        if (x.maxWidth !== undefined) {
+          store.setMaxWidth(x.maxWidth);
+        }
+        if (x.maxHeight !== undefined) {
+          store.setMaxHeight(x.maxHeight);
+        }
+        if (typeof x.showZoomControls === 'boolean') {
+          store.setShowZoomControls(x.showZoomControls);
+        }
 
-        // Override htmlwidgets container height based on preset
-        // This is necessary because htmlwidgets sets inline height on the wrapper div
-        // Use max-height for fixed presets so container doesn't fill with empty space
-        // Always hide horizontal overflow to prevent stray scrollbars from minor sizing discrepancies
-        el.style.overflowX = 'hidden';
-        if (effectivePreset === 'full') {
-          el.style.height = 'auto';
-          el.style.maxHeight = 'none';
-          el.style.overflowY = 'visible';
-        } else if (effectivePreset === 'container') {
-          el.style.height = '100%';
-          el.style.maxHeight = 'none';
-          el.style.overflowY = 'auto';
-        } else if (effectivePreset === 'small') {
-          el.style.height = 'auto';
-          el.style.maxHeight = '400px';
-          el.style.overflowY = 'auto';
-        } else if (effectivePreset === 'medium') {
-          el.style.height = 'auto';
-          el.style.maxHeight = '600px';
-          el.style.overflowY = 'auto';
-        } else if (effectivePreset === 'large') {
-          el.style.height = 'auto';
-          el.style.maxHeight = '1000px';
-          el.style.overflowY = 'auto';
-        }
+        // Let htmlwidgets container expand to fit content - sizing handled by CSS
+        el.style.height = 'auto';
 
         if (component) {
           unmount(component);

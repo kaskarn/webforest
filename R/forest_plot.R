@@ -33,10 +33,15 @@
 #' @param axis_gridlines Logical to show/hide gridlines (overrides theme)
 #' @param plot_position "left" or "right" to override plot position from theme
 #' @param row_height Numeric row height in pixels (overrides theme)
-#' @param width_mode Layout width mode: "natural" (centered at natural width, default) or "fill" (scale to fill container)
-#' @param height_preset Layout height preset: "small" (200px), "medium" (400px), "large" (600px),
-#'   "full" (natural height, no constraint), or "container" (fill parent). Default is "full".
-#' @param height_mode Deprecated. Use `height_preset` instead.
+#' @param zoom Initial zoom level (0.5 to 2.0, default 1.0). Users can adjust interactively.
+#' @param auto_fit When TRUE (default), shrink content to fit container if too large.
+#'   Never enlarges content. When FALSE, render at zoom level with scrollbars if needed.
+#' @param max_width Maximum container width in pixels (NULL for none).
+#'   Content is centered when constrained.
+#' @param max_height Maximum container height in pixels (NULL for none).
+#'   Enables vertical scrolling when content exceeds this height.
+#' @param show_zoom_controls Show zoom controls on hover (default TRUE).
+#'   Set to FALSE to hide the zoom UI but still allow programmatic zoom.
 #' @param width Widget width (default NULL for auto)
 #' @param height Widget height (default NULL for auto)
 #' @param elementId HTML element ID (optional)
@@ -104,27 +109,31 @@ forest_plot <- function(
     axis_gridlines = NULL,
     plot_position = NULL,
     row_height = NULL,
-    width_mode = c("natural", "fill"),
-    height_preset = c("full", "small", "medium", "large", "container"),
-    height_mode = NULL,
+    zoom = 1.0,
+    auto_fit = TRUE,
+    max_width = NULL,
+    max_height = NULL,
+    show_zoom_controls = TRUE,
     width = NULL,
     height = NULL,
     elementId = NULL) {
 
-  # Validate layout mode arguments
-  width_mode <- match.arg(width_mode)
+  # Validate zoom (0.5 to 2.0)
+  checkmate::assert_number(zoom, lower = 0.5, upper = 2.0)
 
-  # Handle deprecated height_mode parameter
-  if (!is.null(height_mode)) {
-    cli_warn(c(
-      "{.arg height_mode} is deprecated.",
-      "i" = "Use {.arg height_preset} instead.",
-      "i" = 'Mapping "{height_mode}" to "{if (height_mode == "auto") "full" else "medium"}".'
-    ))
-    height_preset <- if (height_mode == "auto") "full" else "medium"
-  } else {
-    height_preset <- match.arg(height_preset)
+  # Validate auto_fit
+  checkmate::assert_flag(auto_fit)
+
+  # Validate max_width/max_height
+  if (!is.null(max_width)) {
+    checkmate::assert_number(max_width, lower = 100)
   }
+  if (!is.null(max_height)) {
+    checkmate::assert_number(max_height, lower = 100)
+  }
+
+  # Validate show_zoom_controls
+  checkmate::assert_flag(show_zoom_controls)
 
   # Handle SplitForest objects directly
   if (S7_inherits(x, SplitForest)) {
@@ -200,9 +209,12 @@ forest_plot <- function(
   # Serialize to JSON-ready structure
   payload <- serialize_spec(spec, include_forest = TRUE)
 
-  # Add layout mode settings
-  payload$widthMode <- width_mode
-  payload$heightPreset <- height_preset
+  # Add zoom and sizing settings
+  payload$zoom <- zoom
+  payload$autoFit <- auto_fit
+  payload$maxWidth <- max_width
+  payload$maxHeight <- max_height
+  payload$showZoomControls <- show_zoom_controls
 
   # Create widget
   widget <- htmlwidgets::createWidget(

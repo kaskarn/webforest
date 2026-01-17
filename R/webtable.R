@@ -8,10 +8,11 @@
 #' @param ... Arguments passed to `web_spec()` when x is a data frame.
 #'   Common arguments: `point`, `lower`, `upper`, `label`, `group`,
 #'   `columns`, `theme`, `interaction`
-#' @param width_mode Layout width mode: "natural" (centered at natural width, default) or "fill" (scale to fill container)
-#' @param height_preset Layout height preset: "small" (200px), "medium" (400px), "large" (600px),
-#'   "full" (natural height, no constraint), or "container" (fill parent). Default is "full".
-#' @param height_mode Deprecated. Use `height_preset` instead.
+#' @param zoom Initial zoom level (0.5 to 2.0, default 1.0)
+#' @param auto_fit When TRUE (default), shrink content to fit container if too large
+#' @param max_width Maximum container width in pixels (NULL for none)
+#' @param max_height Maximum container height in pixels (NULL for none)
+#' @param show_zoom_controls Show zoom controls on hover (default TRUE)
 #' @param width Widget width (default NULL for auto)
 #' @param height Widget height (default NULL for auto)
 #' @param elementId HTML element ID (optional)
@@ -51,27 +52,21 @@
 webtable <- function(
     x,
     ...,
-    width_mode = c("natural", "fill"),
-    height_preset = c("full", "small", "medium", "large", "container"),
-    height_mode = NULL,
+    zoom = 1.0,
+    auto_fit = TRUE,
+    max_width = NULL,
+    max_height = NULL,
+    show_zoom_controls = TRUE,
     width = NULL,
     height = NULL,
     elementId = NULL) {
 
-  # Validate layout mode arguments
-  width_mode <- match.arg(width_mode)
-
-  # Handle deprecated height_mode parameter
-  if (!is.null(height_mode)) {
-    cli_warn(c(
-      "{.arg height_mode} is deprecated.",
-      "i" = "Use {.arg height_preset} instead.",
-      "i" = 'Mapping "{height_mode}" to "{if (height_mode == "auto") "full" else "medium"}".'
-    ))
-    height_preset <- if (height_mode == "auto") "full" else "medium"
-  } else {
-    height_preset <- match.arg(height_preset)
-  }
+  # Validate zoom parameters
+  checkmate::assert_number(zoom, lower = 0.5, upper = 2.0)
+  checkmate::assert_flag(auto_fit)
+  if (!is.null(max_width)) checkmate::assert_number(max_width, lower = 100)
+  if (!is.null(max_height)) checkmate::assert_number(max_height, lower = 100)
+  checkmate::assert_flag(show_zoom_controls)
 
   # Handle WebSpec or raw data
   if (inherits(x, "webforest::WebSpec")) {
@@ -85,9 +80,12 @@ webtable <- function(
   # Serialize to JSON-ready structure (without forest column)
   payload <- serialize_spec(spec, include_forest = FALSE)
 
-  # Add layout mode settings
-  payload$widthMode <- width_mode
-  payload$heightPreset <- height_preset
+  # Add zoom and sizing settings
+  payload$zoom <- zoom
+  payload$autoFit <- auto_fit
+  payload$maxWidth <- max_width
+  payload$maxHeight <- max_height
+  payload$showZoomControls <- show_zoom_controls
 
   # Create widget (uses same JS, but with includeForest = FALSE)
   widget <- htmlwidgets::createWidget(

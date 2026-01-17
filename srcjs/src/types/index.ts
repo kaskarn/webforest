@@ -511,6 +511,24 @@ export interface FilterConfig {
 }
 
 // ============================================================================
+// Container Fit & Zoom Types
+// ============================================================================
+
+/**
+ * Persisted zoom state for localStorage.
+ * - zoom: User's desired zoom level (0.5-2.0)
+ * - autoFit: If true, shrink content to fit container (never enlarge)
+ * - maxWidth/maxHeight: Optional container constraints
+ */
+export interface ZoomState {
+  zoom: number;
+  autoFit: boolean;
+  maxWidth: number | null;
+  maxHeight: number | null;
+  version: number;
+}
+
+// ============================================================================
 // Split Forest Types
 // ============================================================================
 

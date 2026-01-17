@@ -12,6 +12,7 @@ import type {
   DisplayRow,
   GroupHeaderRow,
   DataRow,
+  ZoomState,
 } from "$types";
 import { niceDomain } from "$lib/scale-utils";
 import { computeAxis, type AxisComputation, AXIS_LABEL_PADDING } from "$lib/axis-utils";
@@ -23,8 +24,10 @@ import { AUTO_WIDTH, SPACING, GROUP_HEADER, TEXT_MEASUREMENT } from "$lib/render
 export function createForestStore() {
   // Core state
   let spec = $state<WebSpec | null>(null);
-  let width = $state(800);
-  let height = $state(400);
+
+  // Initial dimensions (from htmlwidgets/splitStore, used as fallback before ResizeObserver fires)
+  let initialWidth = $state(800);
+  let initialHeight = $state(400);
 
   // Interaction state
   let selectedRowIds = $state<Set<string>>(new Set());
@@ -43,9 +46,24 @@ export function createForestStore() {
   // Plot width override (for resizing the forest plot area)
   let plotWidthOverride = $state<number | null>(null);
 
-  // Layout mode state
-  let widthMode = $state<'natural' | 'fill'>('natural');
-  let heightPreset = $state<'small' | 'medium' | 'large' | 'full' | 'container'>('full');
+  // Zoom & sizing state
+  let zoom = $state<number>(1.0);           // User's desired zoom (0.5-2.0)
+  let autoFit = $state<boolean>(true);      // Shrink if content exceeds container
+  let maxWidth = $state<number | null>(null);   // Optional container max-width
+  let maxHeight = $state<number | null>(null);  // Optional container max-height
+  let showZoomControls = $state<boolean>(true);
+
+  // Container dimensions (set by ForestPlot component via ResizeObserver)
+  let containerWidth = $state<number>(0);
+  let containerHeight = $state<number>(0);
+  let scalableNaturalWidth = $state<number>(0);
+  let scalableNaturalHeight = $state<number>(0);
+  let containerElementId = $state<string | null>(null);
+
+  // Effective dimensions: prefer measured containerWidth, fall back to initial
+  // This unifies the two dimension systems - layout always uses the effective value
+  const effectiveWidth = $derived(containerWidth > 0 ? containerWidth : initialWidth);
+  const effectiveHeight = $derived(containerHeight > 0 ? containerHeight : initialHeight);
 
   // Derived: visible rows (all rows after filter/sort, but NOT collapsed filtering)
   // Collapsed filtering is handled by displayRows for proper group header display
@@ -80,7 +98,7 @@ export function createForestStore() {
 
     // Use override if set, otherwise calculate default (25% of width, min 200px)
     const forestWidth = spec.data.includeForest
-      ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
+      ? (plotWidthOverride ?? Math.max(effectiveWidth * 0.25, 200))
       : 0;
 
     return computeAxis({
@@ -103,7 +121,7 @@ export function createForestStore() {
 
     // Use override if set, otherwise calculate default (25% of width, min 200px)
     const forestWidth = spec.data.includeForest
-      ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
+      ? (plotWidthOverride ?? Math.max(effectiveWidth * 0.25, 200))
       : 0;
 
     // Add padding to range so edge labels don't get clipped
@@ -310,8 +328,8 @@ export function createForestStore() {
   const layout = $derived.by((): ComputedLayout => {
     if (!spec) {
       return {
-        totalWidth: width,
-        totalHeight: height,
+        totalWidth: effectiveWidth,
+        totalHeight: effectiveHeight,
         tableWidth: 300,
         forestWidth: 400,
         headerHeight: 36,
@@ -333,9 +351,9 @@ export function createForestStore() {
     const includeForest = spec.data.includeForest;
     // Use override if set, otherwise calculate default (25% of width, min 200px)
     const forestWidth = includeForest
-      ? (plotWidthOverride ?? Math.max(width * 0.25, 200))
+      ? (plotWidthOverride ?? Math.max(effectiveWidth * 0.25, 200))
       : 0;
-    const tableWidth = width - forestWidth;
+    const tableWidth = effectiveWidth - forestWidth;
 
     const hasOverall = !!spec.data.overall;
 
@@ -361,8 +379,8 @@ export function createForestStore() {
     const plotHeight = cumulativeY + (hasOverall ? rowHeight * 1.5 : 0);
 
     return {
-      totalWidth: width,
-      totalHeight: Math.max(height, plotHeight + headerHeight + axisHeight + spec.theme.spacing.padding * 2),
+      totalWidth: effectiveWidth,
+      totalHeight: Math.max(effectiveHeight, plotHeight + headerHeight + axisHeight + spec.theme.spacing.padding * 2),
       tableWidth,
       forestWidth,
       headerHeight,
@@ -410,6 +428,32 @@ export function createForestStore() {
 
     return totalColumnWidth + forestWidth + padding;
   });
+
+  // Derived: fit scale - how much we'd need to shrink to fit container
+  // Only applies when autoFit is true; value < 1 means content is being clamped
+  const fitScale = $derived.by((): number => {
+    // Don't scale until we have measurements
+    if (containerWidth <= 0 || scalableNaturalWidth <= 0) return 1;
+
+    // Calculate scaled content width
+    // Note: padding is handled by container CSS, not in this calculation.
+    // containerWidth from ResizeObserver is the content box (excludes padding).
+    // scalableNaturalWidth is the natural width of the scalable content.
+    const contentWidth = scalableNaturalWidth * zoom;
+
+    // Only shrink if content exceeds container (never enlarge)
+    return contentWidth > containerWidth
+      ? containerWidth / contentWidth
+      : 1;
+  });
+
+  // Derived: actual rendered scale = zoom × fitScale (when autoFit) or just zoom
+  const actualScale = $derived(
+    autoFit ? Math.max(0.5, zoom * fitScale) : Math.max(0.5, Math.min(2.0, zoom))
+  );
+
+  // Derived: is auto-fit currently clamping the zoom?
+  const isClamped = $derived(autoFit && fitScale < 1);
 
   // Actions
   function setSpec(newSpec: WebSpec) {
@@ -726,8 +770,9 @@ export function createForestStore() {
   }
 
   function setDimensions(w: number, h: number) {
-    width = w;
-    height = h;
+    // Set initial dimensions (used as fallback before ResizeObserver fires)
+    initialWidth = w;
+    initialHeight = h;
   }
 
   function selectRow(id: string) {
@@ -800,23 +845,120 @@ export function createForestStore() {
     };
   }
 
-  // Layout mode controls
-  function setWidthMode(mode: 'natural' | 'fill') {
-    widthMode = mode;
+  // ============================================================================
+  // Zoom & Auto-fit Controls
+  // ============================================================================
+
+  function setZoom(value: number) {
+    zoom = Math.max(0.5, Math.min(2.0, value));
+    persistZoomState();
   }
 
-  function toggleWidthMode() {
-    widthMode = widthMode === 'natural' ? 'fill' : 'natural';
+  function resetZoom() {
+    zoom = 1.0;
+    persistZoomState();
   }
 
-  function setHeightPreset(preset: 'small' | 'medium' | 'large' | 'full' | 'container') {
-    heightPreset = preset;
+  function zoomIn() {
+    setZoom(zoom * 1.1);
   }
 
-  function toggleHeightPreset() {
-    const presets = ['small', 'medium', 'large', 'full', 'container'] as const;
-    const currentIndex = presets.indexOf(heightPreset);
-    heightPreset = presets[(currentIndex + 1) % presets.length];
+  function zoomOut() {
+    setZoom(zoom / 1.1);
+  }
+
+  function setAutoFit(value: boolean) {
+    autoFit = value;
+    persistZoomState();
+  }
+
+  function fitToWidth() {
+    if (!containerWidth || !scalableNaturalWidth) return;
+    // Set zoom so content width matches container width
+    // Note: containerWidth from ResizeObserver is already the content box (excludes padding)
+    zoom = Math.min(2.0, Math.max(0.5, containerWidth / scalableNaturalWidth));
+    persistZoomState();
+  }
+
+  function setMaxWidth(value: number | null) {
+    maxWidth = value;
+    persistZoomState();
+  }
+
+  function setMaxHeight(value: number | null) {
+    maxHeight = value;
+    persistZoomState();
+  }
+
+  function setShowZoomControls(show: boolean) {
+    showZoomControls = show;
+  }
+
+  // Container dimension setters (called by ForestPlot component)
+  function setContainerDimensions(w: number, h: number) {
+    containerWidth = w;
+    containerHeight = h;
+  }
+
+  function setScalableNaturalDimensions(w: number, h: number) {
+    scalableNaturalWidth = w;
+    scalableNaturalHeight = h;
+  }
+
+  function setContainerElementId(id: string | null) {
+    containerElementId = id;
+    // Load persisted state when container ID is set
+    if (id) {
+      loadZoomState();
+    }
+  }
+
+  // ============================================================================
+  // Zoom State Persistence (localStorage)
+  // ============================================================================
+
+  function getStorageKey(): string | null {
+    if (!containerElementId) return null;
+    return `webforest_zoom_${containerElementId}`;
+  }
+
+  function persistZoomState() {
+    const key = getStorageKey();
+    if (!key) return;
+
+    try {
+      const state: ZoomState = {
+        zoom,
+        autoFit,
+        maxWidth,
+        maxHeight,
+        version: 2,  // New version for new schema
+      };
+      localStorage.setItem(key, JSON.stringify(state));
+    } catch {
+      // localStorage unavailable or full - silently ignore
+    }
+  }
+
+  function loadZoomState() {
+    const key = getStorageKey();
+    if (!key) return;
+
+    try {
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        const state = JSON.parse(stored) as ZoomState;
+        if (state.version === 2) {
+          zoom = state.zoom ?? 1.0;
+          autoFit = state.autoFit ?? true;
+          maxWidth = state.maxWidth ?? null;
+          maxHeight = state.maxHeight ?? null;
+        }
+        // Note: version 1 (old format) is silently ignored - users get fresh defaults
+      }
+    } catch {
+      // Invalid stored state - silently ignore
+    }
   }
 
   // Reset all user-modified state to defaults
@@ -827,12 +969,15 @@ export function createForestStore() {
     filterConfig = null;
     columnWidths = {};
     plotWidthOverride = null;
-    widthMode = 'natural';
-    heightPreset = 'full';
+    zoom = 1.0;
+    autoFit = true;
+    maxWidth = null;
+    maxHeight = null;
     hoveredRowId = null;
     tooltipRowId = null;
     tooltipPosition = null;
     // Note: spec theme is not reset here - use setSpec to fully reset
+    // Note: showZoomControls is not reset - it's a UI preference
   }
 
   // Derived: tooltip row
@@ -847,10 +992,10 @@ export function createForestStore() {
       return spec;
     },
     get width() {
-      return width;
+      return effectiveWidth;
     },
     get height() {
-      return height;
+      return effectiveHeight;
     },
     get visibleRows() {
       return visibleRows;
@@ -897,11 +1042,27 @@ export function createForestStore() {
     get columnWidths() {
       return columnWidths;
     },
-    get widthMode() {
-      return widthMode;
+    // Zoom & auto-fit getters
+    get zoom() {
+      return zoom;
     },
-    get heightPreset() {
-      return heightPreset;
+    get autoFit() {
+      return autoFit;
+    },
+    get actualScale() {
+      return actualScale;
+    },
+    get isClamped() {
+      return isClamped;
+    },
+    get maxWidth() {
+      return maxWidth;
+    },
+    get maxHeight() {
+      return maxHeight;
+    },
+    get showZoomControls() {
+      return showZoomControls;
     },
     get naturalContentWidth() {
       return naturalContentWidth;
@@ -912,17 +1073,20 @@ export function createForestStore() {
 
     /**
      * Get current dimensions for export.
-     * Returns column widths, forest width, x-axis domain, clip bounds, and total width to pass to SVG generator.
+     * Returns column widths, forest width, x-axis domain, clip bounds, zoom level, and total width.
+     * Zoom level is applied to export dimensions so exports match what user sees.
      */
     getExportDimensions() {
       // Get the current x-axis domain from xScale
       const domain = xScale.domain() as [number, number];
       return {
-        width: naturalContentWidth,
+        width: naturalContentWidth * zoom,
+        height: (scalableNaturalHeight || 400) * zoom,
         columnWidths: { ...columnWidths },
-        forestWidth: layout.forestWidth,
+        forestWidth: layout.forestWidth * zoom,
         xDomain: domain,
         clipBounds: axisComputation.axisLimits,  // For CI clipping detection
+        scale: zoom,  // Pass zoom level for SVG generator
       };
     },
 
@@ -939,10 +1103,19 @@ export function createForestStore() {
     setPlotWidth,
     setTheme,
     toggleForestView,
-    setWidthMode,
-    toggleWidthMode,
-    setHeightPreset,
-    toggleHeightPreset,
+    // Zoom & auto-fit actions
+    setZoom,
+    resetZoom,
+    zoomIn,
+    zoomOut,
+    setAutoFit,
+    fitToWidth,
+    setMaxWidth,
+    setMaxHeight,
+    setShowZoomControls,
+    setContainerDimensions,
+    setScalableNaturalDimensions,
+    setContainerElementId,
     resetState,
   };
 }

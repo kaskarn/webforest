@@ -15,8 +15,11 @@ Create a table-only widget without the forest plot visualization.
 webtable(
   x,
   ...,
-  width_mode = c("natural", "fill"),
-  height_mode = c("auto", "scroll"),
+  zoom = 1.0,
+  auto_fit = TRUE,
+  max_width = NULL,
+  max_height = NULL,
+  show_zoom_controls = TRUE,
   width = NULL,
   height = NULL,
   elementId = NULL
@@ -29,8 +32,11 @@ webtable(
 |----------|-------------|
 | `x` | A data frame or WebSpec object |
 | `...` | Arguments passed to `web_spec()` when x is a data frame |
-| `width_mode` | `"natural"` (centered at natural width) or `"fill"` (scale to fill container) |
-| `height_mode` | `"auto"` or `"scroll"` |
+| `zoom` | Initial zoom level (0.5 to 2.0, default 1.0) |
+| `auto_fit` | Shrink to fit container if too large (default TRUE) |
+| `max_width` | Maximum container width in pixels (NULL for none) |
+| `max_height` | Maximum container height in pixels (NULL for none) |
+| `show_zoom_controls` | Show zoom controls on hover (default TRUE) |
 | `width` | Widget width |
 | `height` | Widget height |
 | `elementId` | HTML element ID |

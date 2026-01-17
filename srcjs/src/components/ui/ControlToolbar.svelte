@@ -2,18 +2,18 @@
   import type { ForestStore } from "$stores/forestStore.svelte";
   import type { ThemeName } from "$lib/theme-presets";
   import type { WebTheme } from "$types";
-  import LayoutToggle from "./LayoutToggle.svelte";
   import ThemeSwitcher from "./ThemeSwitcher.svelte";
   import ViewToggle from "./ViewToggle.svelte";
   import DownloadButton from "./DownloadButton.svelte";
   import ResetButton from "./ResetButton.svelte";
+  import ZoomControls from "./ZoomControls.svelte";
 
   interface Props {
     store: ForestStore;
     enableExport?: boolean;
     enableThemes?: Record<string, WebTheme> | null;  // Available themes (null = disabled)
     enableViewToggle?: boolean;
-    enableLayoutToggle?: boolean;
+    enableZoomControls?: boolean;
     enableReset?: boolean;
     onThemeChange?: (themeName: ThemeName) => void;
   }
@@ -23,18 +23,20 @@
     enableExport = true,
     enableThemes = undefined,  // undefined = show all themes (default behavior)
     enableViewToggle = true,
-    enableLayoutToggle = true,
+    enableZoomControls = true,
     enableReset = true,
     onThemeChange,
   }: Props = $props();
+
+  const showZoomControls = $derived(enableZoomControls && store.showZoomControls);
 
   // Show theme switcher if enableThemes is not null (null explicitly disables it)
   const showThemeSwitcher = $derived(enableThemes !== null);
 </script>
 
 <div class="control-toolbar">
-  {#if enableLayoutToggle}
-    <LayoutToggle {store} />
+  {#if showZoomControls}
+    <ZoomControls {store} />
   {/if}
   {#if showThemeSwitcher}
     <ThemeSwitcher {store} availableThemes={enableThemes} {onThemeChange} />
@@ -52,22 +54,22 @@
 
 <style>
   .control-toolbar {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    z-index: 100;
     display: flex;
     flex-direction: row;
     gap: 4px;
   }
 
-  /* Shared hover visibility for all buttons */
-  .control-toolbar :global(button) {
+  /* Floating mode - when placed outside header (absolute positioned) */
+  :global(.webforest-container > .control-toolbar) {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 100;
     opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.15s ease, color 0.15s ease;
+    transition: opacity 0.2s ease;
   }
 
-  :global(.webforest-container:hover) .control-toolbar :global(button) {
+  :global(.webforest-container:hover > .control-toolbar) {
     opacity: 1;
   }
 </style>
