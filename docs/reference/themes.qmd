@@ -63,17 +63,17 @@ my_theme <- web_theme(
 
 ## Theme Modifiers
 
-All modifiers return the modified theme and can be chained with pipes. These are equivalent to setting the same parameters directly in `forest_plot()`.
+All modifiers return the modified theme and can be chained with pipes. These are equivalent to setting the same parameters directly in `tabviz()`.
 
 ::: {.callout-tip}
-## Equivalence with forest_plot()
+## Equivalence with tabviz()
 
-Theme modifier functions and direct `forest_plot()` arguments are equivalent:
+Theme modifier functions and direct `tabviz()` arguments are equivalent:
 
 ```r
 # These produce the same result:
-forest_plot(data, ..., row_height = 32)
-forest_plot(data, ...) |> set_spacing(row_height = 32)
+tabviz(data, ..., row_height = 32)
+tabviz(data, ...) |> set_spacing(row_height = 32)
 ```
 :::
 
@@ -94,10 +94,10 @@ set_theme(x, theme)
 **Examples**:
 ```r
 # Using theme name
-forest_plot(data, ...) |> set_theme("jama")
+tabviz(data, ...) |> set_theme("jama")
 
 # Using theme object
-forest_plot(data, ...) |> set_theme(web_theme_lancet())
+tabviz(data, ...) |> set_theme(web_theme_lancet())
 ```
 
 ### set_colors {#set_colors}
@@ -512,5 +512,5 @@ web_theme_nature()
 
 ## See Also
 
-- [forest_plot()](forest_plot.qmd) for using themes
+- [tabviz()](tabviz.qmd) for using themes
 - [Themes Guide](../guide/themes.qmd) for detailed customization

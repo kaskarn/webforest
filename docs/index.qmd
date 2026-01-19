@@ -144,7 +144,7 @@ Learn how to use tabviz:
 | [Row Styling](guide/row-styling.qmd) | Headers, summaries, indentation, and badges |
 | [Cell Styling](guide/cell-styling.qmd) | Per-cell conditional formatting |
 | [Row Groups](guide/row-groups.qmd) | Collapsible sections from column values |
-| [Forest Plots](guide/forest-plots.qmd) | Adding forest columns with col_forest() |
+| [Forest Plots](guide/visualizations/forest-plots.qmd) | Adding forest columns with col_forest() |
 | [Split Plots](guide/split-plots.qmd) | Sidebar navigation for subgroups |
 | [Themes](guide/themes.qmd) | Preset themes and customization |
 | [Shiny Integration](guide/shiny.qmd) | Reactive tables |

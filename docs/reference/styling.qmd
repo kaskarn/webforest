@@ -12,21 +12,23 @@ The styling functions provide a fluent, pipe-friendly interface for customizing 
 
 ## The Two Styling Approaches
 
-webforest offers two equivalent ways to style your plots. Both produce identical results—choose the approach that fits your workflow:
+tabviz offers two equivalent ways to style your plots. Both produce identical results—choose the approach that fits your workflow:
 
-### Direct Arguments in forest_plot()
+### Direct Arguments in tabviz()
 
 When you know all styling upfront, pass it directly to the constructor:
 
 ```{r}
 #| eval: false
-forest_plot(data,
-  point = "hr", lower = "lower", upper = "upper", label = "study",
+tabviz(data, label = "study",
+  columns = list(
+    col_forest(point = "hr", lower = "lower", upper = "upper",
+               scale = "log", null_value = 1)
+  ),
   row_bold = "is_summary",
   row_type = "rtype",
   marker_color = "effect_color",
-  marker_shape = "shape_col",
-  scale = "log", null_value = 1
+  marker_shape = "shape_col"
 )
 ```
 
@@ -38,9 +40,11 @@ When styling depends on computation, when you're creating multiple variants, or 
 
 ```{r}
 #| eval: false
-forest_plot(data,
-  point = "hr", lower = "lower", upper = "upper", label = "study",
-  scale = "log", null_value = 1
+tabviz(data, label = "study",
+  columns = list(
+    col_forest(point = "hr", lower = "lower", upper = "upper",
+               scale = "log", null_value = 1)
+  )
 ) |>
   set_row_style(bold = "is_summary", type = "rtype") |>
   set_marker_style(color = "effect_color", shape = "shape_col")
@@ -87,7 +91,7 @@ set_row_style(
 
 | Argument | Description |
 |----------|-------------|
-| `x` | A `forest_plot()` widget, `WebSpec`, or data frame |
+| `x` | A tabviz widget, `WebSpec`, or data frame |
 | `type` | Column name containing row type: `"header"`, `"data"`, `"summary"`, `"spacer"` |
 | `bold` | Column name containing `TRUE`/`FALSE` for bold text |
 | `italic` | Column name containing `TRUE`/`FALSE` for italic text |
@@ -175,7 +179,7 @@ set_marker_style(
 
 | Argument | Description |
 |----------|-------------|
-| `x` | A `forest_plot()` widget, `WebSpec`, or data frame |
+| `x` | A tabviz widget, `WebSpec`, or data frame |
 | `color` | Column name containing CSS color strings for marker fill |
 | `shape` | Column name containing shape values: `"square"`, `"circle"`, `"diamond"`, `"triangle"` |
 | `opacity` | Column name containing opacity values from 0 (transparent) to 1 (opaque) |
@@ -317,7 +321,7 @@ set_theme(x, theme)
 
 | Argument | Description |
 |----------|-------------|
-| `x` | A `forest_plot()` widget or `WebSpec` |
+| `x` | A tabviz widget or `WebSpec` |
 | `theme` | Theme name (`"default"`, `"jama"`, `"lancet"`, etc.) or `WebTheme` object |
 
 **Available theme names**: `"default"`, `"minimal"`, `"dark"`, `"jama"`, `"lancet"`, `"modern"`, `"presentation"`, `"cochrane"`, `"nature"`
@@ -325,17 +329,17 @@ set_theme(x, theme)
 ```{r}
 #| eval: false
 # Apply by name
-forest_plot(data, ...) |> set_theme("jama")
+tabviz(data, ...) |> set_theme("jama")
 
 # Apply theme object
-forest_plot(data, ...) |> set_theme(web_theme_lancet())
+tabviz(data, ...) |> set_theme(web_theme_lancet())
 
 # Apply customized theme
 custom <- web_theme_minimal() |>
   set_colors(primary = "#1a365d") |>
   set_spacing(row_height = 24)
 
-forest_plot(data, ...) |> set_theme(custom)
+tabviz(data, ...) |> set_theme(custom)
 ```
 
 ---
@@ -407,11 +411,11 @@ forest_plot(pooled, ...) |> apply_clinical_style()
 | `set_column_style()` | WebSpec only | Per-cell styling for specific columns |
 | `set_theme()` | Widget, WebSpec | Apply complete theme |
 
-### Equivalent forest_plot() Arguments
+### Equivalent tabviz() Arguments
 
 Every styling function has equivalent direct arguments in `forest_plot()`:
 
-| set_*() Parameter | forest_plot() Argument |
+| set_*() Parameter | tabviz() Argument |
 |-------------------|------------------------|
 | `set_row_style(bold = "col")` | `row_bold = "col"` |
 | `set_row_style(type = "col")` | `row_type = "col"` |
@@ -422,6 +426,6 @@ Every styling function has equivalent direct arguments in `forest_plot()`:
 
 ## See Also
 
-- [forest_plot()](forest_plot.qmd) for core plot creation
+- [tabviz()](tabviz.qmd) for core plot creation
 - [Themes](themes.qmd) for theme customization
 - [Customizing Plots Guide](../guide/fluent-api.qmd) for workflow patterns

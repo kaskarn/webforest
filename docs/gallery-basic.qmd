@@ -3,7 +3,7 @@ title: "Gallery: Basic Examples"
 code-fold: true
 ---
 
-Single-feature showcases demonstrating key webforest capabilities.
+Single-feature showcases demonstrating key tabviz capabilities.
 
 ```{r}
 #| include: false
@@ -459,7 +459,7 @@ tabviz(
 
 ## 11. Climate Science Visualization
 
-Non-clinical example showing temperature anomalies—webforest works for any interval data.
+Non-clinical example showing temperature anomalies—tabviz works for any interval data.
 
 ```{r}
 data(climate_temps)

@@ -7,7 +7,7 @@ title: "Shiny Integration"
 library(tabviz)
 ```
 
-webforest works seamlessly with Shiny through the htmlwidgets framework. This guide covers basic integration, reactive patterns, and proxy functions for dynamic updates.
+tabviz works seamlessly with Shiny through the htmlwidgets framework. This guide covers basic integration, reactive patterns, and proxy functions for dynamic updates.
 
 ## Basic Usage
 

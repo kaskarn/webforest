@@ -9,25 +9,16 @@ Complete reference for all tabviz functions, organized by category.
 | Function | Description |
 |----------|-------------|
 | [`tabviz()`](tabviz.qmd) | **Main entry point** - Create interactive tables with any columns |
-| [`forest_plot()`](forest_plot.qmd) | Convenience wrapper for quick forest plots |
 | [`save_plot()`](export.qmd) | Export to SVG, PNG, or PDF |
 
-::: {.callout-tip}
-## Which Function Should I Use?
-
-**Use `tabviz()`** for most cases - it gives you full control over columns and works for any table type.
-
-**Use `forest_plot()`** when you just need a quick forest plot and want to specify `point`, `lower`, `upper` directly without wrapping in `col_forest()`.
-
 ```r
-# These are equivalent:
+# Create a table with a forest plot column
 tabviz(data, label = "study", columns = list(
-  col_forest(point = "hr", lower = "lo", upper = "hi")
+  col_forest(point = "hr", lower = "lo", upper = "hi"),
+  col_numeric("hr", "HR"),
+  col_pvalue("pval")
 ))
-
-forest_plot(data, point = "hr", lower = "lo", upper = "hi", label = "study")
 ```
-:::
 
 ## Column Types
 

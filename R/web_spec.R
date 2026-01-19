@@ -280,6 +280,21 @@ tabviz <- function(
         cli_abort("columns must be ColumnSpec objects or column names")
       }
     })
+
+    # Ensure unique column IDs (same field used multiple times gets _2, _3, etc.)
+    seen_ids <- list()
+    columns <- lapply(columns, function(col) {
+      if (S7_inherits(col, ColumnSpec)) {
+        base_id <- col@id
+        if (is.null(seen_ids[[base_id]])) {
+          seen_ids[[base_id]] <<- 1
+        } else {
+          seen_ids[[base_id]] <<- seen_ids[[base_id]] + 1
+          col@id <- paste0(base_id, "_", seen_ids[[base_id]])
+        }
+      }
+      col
+    })
   }
 
   # Build labels if any are provided

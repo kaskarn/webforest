@@ -1,11 +1,11 @@
 ---
 title: "Export System Architecture"
-description: "How webforest generates static images from both R and the browser"
+description: "How tabviz generates static images from both R and the browser"
 ---
 
 ## Overview
 
-webforest uses a **unified rendering architecture** for static image export. The same JavaScript SVG generator powers both:
+tabviz uses a **unified rendering architecture** for static image export. The same JavaScript SVG generator powers both:
 
 - **R-side**: `save_plot()` function (via the V8 package)
 - **Web-side**: Download button in interactive plots
@@ -109,7 +109,7 @@ The SVG generator is bundled twice:
 
 | File | Purpose | Size |
 |------|---------|------|
-| `inst/htmlwidgets/webforest.js` | Full widget bundle (includes Svelte UI) | ~142 KB |
+| `inst/htmlwidgets/tabviz.js` | Full widget bundle (includes Svelte UI) | ~142 KB |
 | `inst/js/svg-generator.js` | Standalone for V8 (export only) | ~11 KB |
 
 Build commands:

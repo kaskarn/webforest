@@ -5,7 +5,7 @@ description: "Internal class system design using R's S7 object-oriented framewor
 
 ## Overview
 
-webforest uses [S7](https://rconsortium.github.io/S7/), R's modern object-oriented system, for its internal data structures. S7 provides:
+tabviz uses [S7](https://rconsortium.github.io/S7/), R's modern object-oriented system, for its internal data structures. S7 provides:
 
 - **Type safety** — Properties are validated at construction time
 - **Composition** — Complex objects built from simpler components

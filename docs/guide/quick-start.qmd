@@ -21,15 +21,13 @@ pak::pak("kaskarn/tabviz")
 Create an interactive table with `tabviz()`:
 
 ```{r}
-# Sample meta-analysis data
-meta_data <- data.frame(
-  study = c("Smith 2020", "Jones 2021", "Lee 2022", "Chen 2023", "Park 2024"),
-  hr = c(0.72, 0.85, 0.91, 0.68, 0.79),
-  lower = c(0.55, 0.70, 0.75, 0.52, 0.61),
-  upper = c(0.95, 1.03, 1.10, 0.89, 1.02),
-  n = c(245, 180, 320, 156, 210),
-  events = c(42, 38, 55, 28, 45)
-)
+# Use the built-in glp1_trials dataset
+data(glp1_trials)
+
+# Filter to main trial results
+meta_data <- glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(5)
 
 tabviz(meta_data,
   label = "study",
@@ -42,6 +40,11 @@ tabviz(meta_data,
   )
 )
 ```
+
+::: {.callout-tip}
+## Built-in Datasets
+This example uses `glp1_trials`, one of five datasets included in the package. See [Package Data](package-data.qmd) for all available datasets.
+:::
 
 ---
 
@@ -76,9 +79,11 @@ See [Columns](columns.qmd) for all 16+ column types.
 ## Adding More Columns
 
 ```{r}
+# Add drug name and events columns
 tabviz(meta_data,
   label = "study",
   columns = list(
+    col_text("drug", "Drug"),
     col_n("n"),
     col_numeric("events", header = "Events"),
     col_forest(point = "hr", lower = "lower", upper = "upper",
@@ -213,5 +218,5 @@ tabviz(direction_data,
 | [Row Styling](row-styling.qmd) | Headers, summaries, indentation, badges |
 | [Cell Styling](cell-styling.qmd) | Conditional formatting for individual cells |
 | [Row Groups](row-groups.qmd) | Collapsible groups |
-| [Forest Plots](forest-plots.qmd) | Advanced forest column options |
+| [Forest Plots](visualizations/forest-plots.qmd) | Advanced forest column options |
 | [Themes](themes.qmd) | Preset themes and customization |

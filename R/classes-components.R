@@ -8,7 +8,7 @@
 #' @param type Column type: "text", "numeric", "interval", "bar", "pvalue", "sparkline", "forest", "custom"
 #' @param width Column width in pixels (NA for auto)
 #' @param align Text alignment for body cells: "left", "center", "right"
-#' @param header_align Text alignment for header: "left", "center", "right" (NA to inherit from align)
+#' @param header_align Text alignment for header: "left" (default), "center", "right"
 #' @param wrap Enable text wrapping (default FALSE). When TRUE, long text wraps instead of being truncated.
 #' @param sortable Whether the column is sortable
 #' @param options Named list of type-specific options
@@ -32,7 +32,7 @@ ColumnSpec <- new_class(
     type = new_property(class_character, default = "text"),
     width = new_property(class_any, default = NA_real_),  # numeric or "auto"
     align = new_property(class_character, default = "left"),
-    header_align = new_property(class_character, default = NA_character_),
+    header_align = new_property(class_character, default = "left"),
     wrap = new_property(class_logical, default = FALSE),  # Enable text wrapping
     sortable = new_property(class_logical, default = TRUE),
     options = new_property(class_list, default = list()),
@@ -82,7 +82,7 @@ ColumnSpec <- new_class(
 #' @param type Column type
 #' @param width Column width in pixels, or "auto" for content-based width
 #' @param align Text alignment for body cells
-#' @param header_align Text alignment for header (NULL to inherit from align)
+#' @param header_align Text alignment for header (default: "left")
 #' @param wrap Enable text wrapping (default FALSE). When TRUE, long text wraps
 #'   instead of being truncated with ellipsis.
 #' @param sortable Whether sortable
@@ -152,7 +152,7 @@ web_col <- function(
     type = type,
     width = width_val,
     align = align,
-    header_align = header_align %||% NA_character_,
+    header_align = header_align %||% "left",
     wrap = wrap,
     sortable = sortable,
     options = options,

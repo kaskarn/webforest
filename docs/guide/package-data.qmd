@@ -6,9 +6,10 @@ title: "Package Data"
 #| include: false
 library(tabviz)
 library(dplyr)
+library(tidyr)
 ```
 
-webforest includes four datasets for examples, testing, and learning. Each is designed to showcase different features and use cases.
+tabviz includes five datasets for examples, testing, and learning. Each is designed to showcase different features and use cases.
 
 ## Available Datasets
 
@@ -18,6 +19,7 @@ webforest includes four datasets for examples, testing, and learning. Each is de
 | `airline_delays` | 40 | Transportation | Sparkline trends, bar charts, grouped |
 | `nba_efficiency` | 30 | Sports | Player stats, conference groups, badges |
 | `climate_temps` | 20 | Science | Minimal structure, uncertainty ranges |
+| `effect_sizes` | 20 | Stress test | Extreme CIs, split testing, regions/outcomes |
 
 ---
 
@@ -205,6 +207,51 @@ climate_temps |>
 | `category` | Region type (Global, Hemisphere, Continental, Ocean) |
 | `anomaly`, `lower`, `upper` | Temperature anomaly and uncertainty |
 | `certainty` | Confidence level (High, Medium, Low) |
+
+---
+
+## effect_sizes
+
+A stress-test dataset designed to test forest plot axis rendering with varying confidence interval widths.
+
+```{r}
+data(effect_sizes)
+glimpse(effect_sizes)
+```
+
+**Best for:** Testing axis calculation, split views, extreme CIs, multi-forest columns
+
+### Example
+
+```{r}
+# Group by region and show effect sizes with marker styling
+effect_sizes |>
+  filter(outcome == "Primary") |>
+  tabviz(
+    label = "study",
+    group = "region",
+    columns = list(
+      col_n("n"),
+      col_forest(point = "hr", lower = "lower", upper = "upper",
+                 scale = "log", null_value = 1, width = 200)
+    ),
+    marker_color = ~ ifelse(significant, "#16a34a", "#94a3b8"),
+    theme = web_theme_modern(),
+    title = "Effect Sizes by Region"
+  )
+```
+
+### Variables
+
+| Variable | Description |
+|----------|-------------|
+| `study` | Study or site name |
+| `region` | Geographic region (North America, Europe, Asia Pacific) |
+| `outcome` | Outcome type (Primary, Secondary, Exploratory) |
+| `treatment` | Treatment arm |
+| `hr`, `lower`, `upper` | Hazard ratio and 95% CI |
+| `significant` | Whether CI excludes 1.0 |
+| `direction` | Effect direction (Favors Treatment, Favors Control) |
 
 ---
 

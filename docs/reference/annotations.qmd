@@ -90,5 +90,5 @@ forest_plot(data,
 
 ## See Also
 
-- [forest_plot()](forest_plot.qmd) for using annotations
-- [Forest Plots Guide](../guide/forest-plots.qmd) for detailed examples
+- [tabviz()](tabviz.qmd) for using annotations
+- [Forest Plots Guide](../guide/visualizations/forest-plots.qmd) for detailed examples

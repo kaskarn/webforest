@@ -43,7 +43,7 @@ Each theme is designed with a specific context in mind:
 
 ## Color Architecture
 
-Colors serve different purposes in webforest:
+Colors serve different purposes in tabviz:
 
 | Category | Purpose | Colors |
 |----------|---------|--------|
@@ -84,7 +84,7 @@ Row-level parameters accept column names with TRUE/FALSE values. Cell-level para
 
 ## Preset Themes
 
-webforest includes 9 preset themes designed for different use cases. All themes can be customized using a fluent API.
+tabviz includes 9 preset themes designed for different use cases. All themes can be customized using a fluent API.
 
 ::: {.panel-tabset}
 

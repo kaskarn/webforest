@@ -1,0 +1,171 @@
+---
+title: "Visualizations"
+---
+
+```{r}
+#| include: false
+library(tabviz)
+library(dplyr)
+```
+
+tabviz supports embedded visualizations within table columns. This section covers the visualization column types and their common features.
+
+## Visualization Column Types
+
+| Column | Purpose | Guide |
+|--------|---------|-------|
+| `col_forest()` | Forest plots with confidence intervals | [Forest Plots](forest-plots.qmd) |
+| `col_bar()` | Horizontal bars | [Columns](../columns.qmd#visualizations) |
+| `col_sparkline()` | Mini line/area/bar charts | [Columns](../columns.qmd#visualizations) |
+
+## Common Features
+
+All visualization columns share these capabilities:
+
+- **Axis configuration** — Range, ticks, gridlines
+- **Interactivity** — Hover, tooltips, zoom
+- **Theming** — Colors adapt to the active theme
+- **Export** — SVG, PNG, PDF output
+
+---
+
+## Interactivity
+
+::: {.callout-note}
+## Interactive by Default
+
+All tabviz widgets include these interactions out of the box:
+
+- **Hover highlighting** on rows
+- **Click to select** rows
+- **Column sorting** via header clicks
+- **Column resizing** via drag
+- **Group collapsing** via chevron clicks
+- **Download button** on hover (top-right)
+:::
+
+### Hover Tooltips
+
+Tooltips are **opt-in**. Specify fields to show when hovering over markers:
+
+```{r}
+data(glp1_trials)
+
+glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(4) |>
+  tabviz(label = "study",
+    interaction = web_interaction(tooltip_fields = c("n", "events", "pvalue")),
+    footnote = "Hover over markers to see tooltip",
+    columns = list(
+      col_forest(point = "hr", lower = "lower", upper = "upper",
+                 scale = "log", null_value = 1)
+    )
+  )
+```
+
+### Interaction Controls
+
+```r
+web_interaction(
+
+  tooltip_fields = NULL,    # Column names for tooltip
+  enable_sort = TRUE,       # Click headers to sort
+  enable_collapse = TRUE,   # Click group headers to collapse
+  enable_select = TRUE,     # Click rows to select
+  enable_hover = TRUE,      # Highlight on hover
+  enable_resize = TRUE,     # Drag column borders
+  enable_export = TRUE,     # Download button
+  enable_themes = "default" # Theme selection menu
+)
+```
+
+### Interaction Presets
+
+| Preset | Description |
+|--------|-------------|
+| `web_interaction()` | Full interactivity (default) |
+| `web_interaction_minimal()` | Hover only—no sorting/selection |
+| `web_interaction_publication()` | Fully static (for print) |
+
+```{r}
+#| eval: false
+# Publication-ready static output
+tabviz(data, label = "study",
+  interaction = web_interaction_publication(),
+  columns = list(col_forest(...))
+)
+```
+
+---
+
+## Zoom & Sizing
+
+Control how visualizations fit within their container:
+
+| Argument | Options | Description |
+|----------|---------|-------------|
+| `zoom` | 0.5 to 2.0 | Initial zoom level (default 1.0) |
+| `auto_fit` | TRUE/FALSE | Shrink to fit container if too large (default TRUE) |
+| `max_width` | pixels or NULL | Maximum container width |
+| `max_height` | pixels or NULL | Maximum container height (enables scrolling) |
+
+```{r}
+#| eval: false
+# Constrain to specific dimensions
+tabviz(data, label = "study",
+  max_width = 800,
+  max_height = 400,
+  columns = list(...)
+)
+```
+
+---
+
+## Exporting Visualizations
+
+tabviz supports exporting to SVG, PNG, and PDF.
+
+### Using save_plot()
+
+```r
+# Create a visualization
+p <- tabviz(data, label = "study", columns = list(
+  col_forest(point = "hr", lower = "lower", upper = "upper",
+             scale = "log", null_value = 1)
+))
+
+# Save as SVG (vector)
+save_plot(p, "figure.svg")
+
+# Save as PNG (raster, high-res)
+save_plot(p, "figure.png", width = 1200, scale = 2)
+
+# Save as PDF
+save_plot(p, "figure.pdf", width = 800)
+```
+
+### Output Formats
+
+| Format | Extension | Use Case | Dependencies |
+|--------|-----------|----------|--------------|
+| SVG | `.svg` | Vector graphics, web, editing | None |
+| PNG | `.png` | Documents, slides | `rsvg` package |
+| PDF | `.pdf` | Print, publications | `rsvg` package |
+
+### Browser Export
+
+Interactive plots include a download button (visible on hover in top-right):
+
+1. Hover over plot to reveal button
+2. Click to open format menu
+3. Choose SVG or PNG
+
+---
+
+## See Also
+
+- [Forest Plots](forest-plots.qmd) — Detailed `col_forest()` guide
+- [Columns](../columns.qmd) — All column types including `col_bar()` and `col_sparkline()`
+- [Export](../export.qmd) — Advanced export options
+- [Shiny Integration](../shiny.qmd) — Interactive applications

@@ -8,7 +8,7 @@ library(tabviz)
 library(dplyr)
 ```
 
-Throughout this guide, you've seen styling via direct arguments to `forest_plot()`. This chapter introduces the **fluent API**—a pipe-based alternative that lets you build and modify plots step by step using `set_*()` functions.
+Throughout this guide, you've seen styling via direct arguments to `tabviz()`. This chapter introduces the **fluent API**—a pipe-based alternative that lets you build and modify plots step by step using `set_*()` functions.
 
 Both approaches produce identical results. The fluent API shines when:
 
@@ -19,21 +19,23 @@ Both approaches produce identical results. The fluent API shines when:
 
 ## The Two Styling Approaches
 
-webforest offers two equivalent ways to style your forest plots. Both produce identical results—choose based on your workflow preferences.
+tabviz offers two equivalent ways to style your tables. Both produce identical results—choose based on your workflow preferences.
 
-### Approach 1: Direct Arguments in forest_plot()
+### Approach 1: Direct Arguments in tabviz()
 
-When you know all your styling upfront, pass everything directly to `forest_plot()`:
+When you know all your styling upfront, pass everything directly to `tabviz()`:
 
 ```{r}
 #| eval: false
-forest_plot(data,
-  point = "hr", lower = "lower", upper = "upper", label = "study",
+tabviz(data, label = "study",
+  columns = list(
+    col_forest(point = "hr", lower = "lower", upper = "upper",
+               scale = "log", null_value = 1)
+  ),
   row_type = "rtype",
   row_bold = "rbold",
   marker_color = "effect_color",
-  theme = web_theme_jama(),
-  scale = "log", null_value = 1
+  theme = web_theme_jama()
 )
 ```
 
@@ -45,9 +47,11 @@ When styling depends on computation or you want to build incrementally, use `set
 
 ```{r}
 #| eval: false
-forest_plot(data,
-  point = "hr", lower = "lower", upper = "upper", label = "study",
-  scale = "log", null_value = 1
+tabviz(data, label = "study",
+  columns = list(
+    col_forest(point = "hr", lower = "lower", upper = "upper",
+               scale = "log", null_value = 1)
+  )
 ) |>
   set_row_style(type = "rtype", bold = "rbold") |>
   set_marker_style(color = "effect_color") |>
@@ -74,7 +78,7 @@ Both produce identical output.
 The fluent API follows a simple rule: **every `set_*()` function returns a modified plot that can be piped into the next function**.
 
 ```r
-forest_plot(data, ...) |>     # Create plot
+tabviz(data, ...) |>     # Create plot
   set_row_style(...) |>       # Modify rows
   set_marker_style(...) |>    # Modify markers
   set_theme(...)              # Apply theme

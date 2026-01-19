@@ -63,6 +63,16 @@ serialize_data <- function(spec, include_forest = TRUE) {
     metadata <- as.list(row)
     names(metadata) <- names(row)
 
+    # Unwrap single-element list columns (e.g., sparkline data)
+    # In R, list columns like trend = list(c(1,2,3)) serialize as [[1,2,3]]
+    # We want flat arrays [1,2,3] for JSON
+    for (nm in names(metadata)) {
+      val <- metadata[[nm]]
+      if (is.list(val) && length(val) == 1 && !is.data.frame(val)) {
+        metadata[[nm]] <- val[[1]]
+      }
+    }
+
     # Extract row style from explicit column mappings
     style <- extract_row_style(row, spec)
 
@@ -176,7 +186,7 @@ serialize_column <- function(col) {
     type = col@type,
     width = width_val,
     align = col@align,
-    headerAlign = if (is.na(col@header_align)) NULL else col@header_align,
+    headerAlign = col@header_align,
     wrap = col@wrap,
     sortable = col@sortable,
     isGroup = FALSE

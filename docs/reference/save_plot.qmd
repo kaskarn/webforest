@@ -133,6 +133,6 @@ data |>
 
 ## See Also
 
-- [forest_plot()](forest_plot.qmd) for creating plots
+- [tabviz()](tabviz.qmd) for creating plots
 - [split_table()](split_table.qmd) for creating split forests
-- [Forest Plots Guide](../guide/forest-plots.qmd#exporting) for detailed export workflows
+- [Forest Plots Guide](../guide/visualizations/forest-plots.qmd#exporting) for detailed export workflows

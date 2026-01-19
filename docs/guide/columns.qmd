@@ -5,414 +5,363 @@ title: "Columns"
 ```{r}
 #| include: false
 library(tabviz)
+library(dplyr)
 ```
-
-## Overview
 
 Columns display data alongside the forest plot. Each column type has specialized formatting for different kinds of data.
 
-::: {.callout-tip}
-## Column Design Philosophy
+## Column Gallery
 
-webforest uses a **declarative column system**:
-
-1. **You specify what** to display (column type + field)
-2. **The renderer decides how** (formatting, width, alignment)
-
-This separates data structure from presentation, making it easy to switch themes or export formats while maintaining consistency.
-:::
-
+Here's every column type in action:
 ```{r}
-demo_data <- data.frame(
-  study = c("Alpha", "Beta", "Gamma", "Delta"),
-  or = c(1.2, 0.8, 1.5, 0.95),
-  lower = c(0.9, 0.5, 1.1, 0.7),
-  upper = c(1.6, 1.3, 2.0, 1.3),
-  n = c(500, 320, 180, 420),
-  weight = c(28, 22, 15, 35),
-  pval = c(0.042, 0.23, 0.008, 0.61)
+#| fig-height: 5
+# Create demo data showcasing all column types
+gallery_data <- data.frame(
+  study = c("EMPA-REG 2015", "CANVAS 2017", "DECLARE 2019", "CREDENCE 2019"),
+  drug = c("Empagliflozin", "Canagliflozin", "Dapagliflozin", "Canagliflozin"),
+  hr = c(0.86, 0.86, 0.93, 0.70),
+  lower = c(0.74, 0.75, 0.84, 0.59),
+  upper = c(0.99, 0.97, 1.03, 0.82),
+  n = c(7020, 10142, 17160, 4401),
+  events = c(490, 585, 882, 245),
+  pvalue = c(0.04, 0.02, 0.17, 0.001),
+  on_time_pct = c(0.89, 0.85, 0.92, 0.88),
+  weight = c(20, 29, 36, 15),
+  quality = c(5, 4, 5, 4),
+  status = c("Published", "Published", "Published", "Published"),
+  age_min = c(55, 50, 40, 45),
+  age_max = c(80, 75, 85, 78),
+  trend = I(list(c(1,2,1.5,3,2.5), c(2,1,2,1.5,2), c(1,1.5,2,2.5,3), c(3,2,2.5,1.5,1)))
 )
 
-tabviz(demo_data,
+tabviz(gallery_data,
   label = "study",
   columns = list(
-    col_numeric("n", header = "N", width = 60),
-    col_bar("weight", header = "Weight %", width = 80),
-    col_forest(point = "or", lower = "lower", upper = "upper", null_value = 1),
-    col_pvalue("pval", header = "P-value", width = 80),
-    col_interval(point = "or", lower = "lower", upper = "upper", header = "OR (95% CI)", width = 120)
+    col_text("drug", "Drug"),
+    col_n("n", "N"),
+    col_events("events", "n", "Events"),
+    col_percent("on_time_pct", "Rate"),
+    col_bar("weight", "Weight", width = 70),
+    col_sparkline("trend", "Trend", width = 60),
+    col_forest(point = "hr", lower = "lower", upper = "upper",
+               scale = "log", null_value = 1, width = 140),
+    col_interval(point = "hr", lower = "lower", upper = "upper", header = "HR (95% CI)"),
+    col_pvalue("pvalue", "P", stars = TRUE),
+    col_stars("quality", "Quality"),
+    col_badge("status", "Status")
+  ),
+  theme = web_theme_modern(),
+  title = "Column Types Gallery"
+)
+```
+
+## Quick Reference
+
+| Column | Purpose | Example |
+|--------|---------|---------|
+| `col_text()` | Any text | Study names, categories |
+| `col_numeric()` | Formatted numbers | Means, counts |
+| `col_n()` | Sample sizes | `1234` or `1.2K` |
+| `col_percent()` | Percentages | `85.2%` |
+| `col_interval()` | Point (CI) | `0.85 (0.70, 1.03)` |
+| `col_pvalue()` | P-values | `0.042` or `**` |
+| `col_events()` | Events/N | `45/120 (37.5%)` |
+| `col_range()` | Min–Max | `55 – 80` |
+| `col_bar()` | Horizontal bar | Visual weight |
+| `col_sparkline()` | Mini chart | Trends |
+| `col_forest()` | Forest plot | Effect estimates |
+| `col_badge()` | Status badge | Labels |
+| `col_icon()` | Icons/emoji | Status |
+| `col_stars()` | Star rating | Quality |
+| `col_img()` | Images | Logos |
+| `col_reference()` | Links | DOIs |
+| `col_group()` | Group header | Organize columns |
+
+***
+
+## Text & Numbers
+
+Basic columns for displaying text and numeric data.
+
+```{r}
+data(glp1_trials)
+
+glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(4) |>
+  tabviz(
+    label = "study",
+    columns = list(
+      col_text("drug", "Drug"),
+      col_numeric("hr", "HR", decimals = 2),
+      col_n("n", "N"),
+      col_n("n", "N (abbrev)", abbreviate = TRUE),
+      col_percent("pvalue", "As %", multiply = FALSE)
+    )
+  )
+```
+
+### Formatting Options
+
+See all formatting options side-by-side:
+
+```{r}
+options_data <- data.frame(
+  item = c("Small study", "Medium study", "Large study"),
+  n = c(125, 4520, 1250000),
+  rate = c(0.156, 0.892, 0.034),
+  value = c(1.234, 12.34, 123.4)
+)
+
+tabviz(options_data,
+  label = "item",
+  columns = list(
+    col_n("n", "N"),
+    col_n("n", "N (abbrev)", abbreviate = TRUE),
+    col_numeric("value", "decimals=2", decimals = 2),
+    col_numeric("value", "digits=3", digits = 3),
+    col_percent("rate", "Percent")
+  )
+)
+```
+
+***
+## Effect Estimates
+
+Columns for displaying statistical results.
+
+```{r}
+glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(4) |>
+  tabviz(
+    label = "study",
+    columns = list(
+      col_forest(point = "hr", lower = "lower", upper = "upper",
+                 scale = "log", null_value = 1, width = 180),
+      col_interval(point = "hr", lower = "lower", upper = "upper",
+                   header = "HR (95% CI)"),
+      col_pvalue("pvalue", "P-value"),
+      col_pvalue("pvalue", "P*", stars = TRUE)
+    )
+  )
+```
+
+### Formatting Options
+
+Compare interval and p-value formatting:
+
+```{r}
+pval_data <- data.frame(
+  result = c("Significant", "Marginal", "Not significant", "Highly significant"),
+  hr = c(0.72, 0.89, 1.05, 0.45),
+  lower = c(0.58, 0.78, 0.85, 0.32),
+  upper = c(0.89, 1.02, 1.30, 0.63),
+  pval = c(0.003, 0.08, 0.45, 0.00001)
+)
+
+tabviz(pval_data,
+  label = "result",
+  columns = list(
+    col_interval(point = "hr", lower = "lower", upper = "upper",
+                 header = "Default", decimals = 2),
+    col_interval(point = "hr", lower = "lower", upper = "upper",
+                 header = "1 decimal", decimals = 1),
+    col_pvalue("pval", "P"),
+    col_pvalue("pval", "P*", stars = TRUE)
+  )
+)
+```
+
+***
+
+## Clinical Data
+
+Specialized columns for clinical trial data.
+
+```{r}
+clinical_data <- data.frame(
+  study = c("SUSTAIN-6", "PIONEER 6", "LEADER", "REWIND"),
+  events = c(108, 137, 608, 594),
+  n = c(3297, 3183, 9340, 9901),
+  age_min = c(55, 50, 40, 45),
+  age_max = c(80, 75, 85, 78)
+)
+
+tabviz(clinical_data,
+  label = "study",
+  columns = list(
+    col_events("events", "n", "Events/N"),
+    col_events("events", "n", "With %", show_pct = TRUE),
+    col_range(min_field = "age_min", max_field = "age_max", header = "Age Range")
+  )
+)
+```
+
+
+***
+
+## Visualizations
+
+Columns that display data graphically.
+
+```{r}
+# Create visualization demo data
+viz_data <- data.frame(
+  carrier = c("Delta", "United", "American", "Southwest"),
+  on_time = c(0.84, 0.78, 0.76, 0.82),
+  weight = c(35, 28, 25, 32)
+)
+# Add sparkline data as list column
+viz_data$trend <- list(
+  c(82, 85, 81, 88, 84, 86, 83, 87, 85, 89, 84, 86),
+  c(75, 78, 74, 80, 77, 79, 76, 81, 78, 82, 77, 80),
+  c(73, 76, 72, 79, 75, 77, 74, 80, 76, 78, 75, 77),
+  c(80, 83, 79, 85, 81, 84, 80, 86, 82, 85, 81, 84)
+)
+
+tabviz(viz_data,
+  label = "carrier",
+  columns = list(
+    col_bar("on_time", "On-Time", width = 100),
+    col_bar("weight", "Weight", width = 80),
+    col_sparkline("trend", "Line", width = 80),
+    col_sparkline("trend", "Area", type = "area", width = 80),
+    col_sparkline("trend", "Bars", type = "bar", width = 80)
   ),
   theme = web_theme_modern()
 )
 ```
 
-## Column Types at a Glance
+**Note:** Sparklines require list-columns with numeric vectors. Create with `mutate(trend = list(c(1,2,3)))`.
 
-| Type | Function | Best For |
-|------|----------|----------|
-| `col_text()` | Text values | Study names, categories |
-| `col_numeric()` | Formatted numbers | Sample sizes, counts, means |
-| `col_interval()` | Point (CI) format | Effect size display |
-| `col_bar()` | Horizontal bar | Weights, percentages |
-| `col_pvalue()` | P-value formatting | Significance with stars |
-| `col_n()` | Sample size | Participant counts with K/M abbreviation |
-| `col_percent()` | Percentages | Rates, proportions |
-| `col_events()` | Events/N format | Clinical event counts |
-| `col_sparkline()` | Mini chart | Trends, distributions |
-| `col_icon()` | Icons/emoji | Status indicators |
-| `col_badge()` | Colored badges | Status labels |
-| `col_stars()` | Star ratings | Quality scores |
-| `col_img()` | Inline images | Logos, flags |
-| `col_reference()` | Truncated links | DOIs, citations |
-| `col_range()` | Min-max ranges | Age ranges, value bounds |
-| `col_group()` | Group header | Organize related columns |
+***
 
-## Column Ordering
+## Status Indicators
 
-Columns appear in the order they're listed. Place `col_forest()` wherever you want the forest plot:
+Columns for showing status, quality, or categories.
 
-```r
-columns = list(
-  col_numeric("n", "N"),           # Left of forest
-  col_forest(point = "hr", lower = "lower", upper = "upper"),  # Forest plot in middle
-  col_interval(point = "hr", lower = "lower", upper = "upper", header = "OR (95% CI)")  # Right of forest
+```{r}
+status_data <- data.frame(
+  study = c("Trial A", "Trial B", "Trial C", "Trial D"),
+  hr = c(0.72, 0.85, 0.91, 0.68),
+  lower = c(0.55, 0.70, 0.75, 0.52),
+  upper = c(0.95, 1.03, 1.10, 0.89),
+  quality = c(5, 3, 4, 5),
+  status = c("Published", "Preprint", "Published", "Retracted"),
+  direction = c("Benefit", "Neutral", "Neutral", "Benefit")
 )
-```
 
-::: {.callout-note}
-## Convention
-
-A common layout convention for forest plots:
-
-- **Left of forest**: Study metadata (sample size, events, weights)
-- **Right of forest**: Results and effect estimates (intervals, p-values)
-:::
-
-## Core Column Types
-
-### Text Columns
-
-Display text values from any column:
-
-```r
-col_text(field = "category", header = "Category", width = 100)
-```
-
-### Numeric Columns
-
-Format numbers with flexible precision control:
-
-```r
-# Fixed decimal places (default)
-col_numeric("value", decimals = 2)
-
-# Significant figures instead
-col_numeric("value", digits = 3)
-
-# Abbreviate large numbers: 1,234,567 → "1.2M"
-col_numeric("population", abbreviate = TRUE)
-```
-
-::: {.callout-tip}
-## Decimals vs Digits
-
-- `decimals`: Fixed decimal places (e.g., `decimals = 2` → "1.23")
-- `digits`: Significant figures (e.g., `digits = 3` → "1.23", "12.3", "123")
-
-Use `digits` for values spanning multiple orders of magnitude.
-:::
-
-### Interval Columns
-
-Show the point estimate and confidence interval in formatted text:
-
-```r
-col_interval(point = "or", lower = "lower", upper = "upper", header = "OR (95% CI)", width = 120)
-```
-
-This automatically formats as `"0.85 (0.70, 1.03)"` using the `point`, `lower`, and `upper` values from each row.
-
-**Advanced options**:
-
-```r
-# Custom formatting
-col_interval(point = "hr", lower = "lower", upper = "upper", header = "HR (95% CI)", decimals = 1, sep = ", ")
-
-# Override with different columns
-col_interval("Per-Protocol", point = "pp_hr", lower = "pp_lower", upper = "pp_upper")
-
-# Hide imprecise estimates (CI ratio > 10)
-col_interval(point = "hr", lower = "lower", upper = "upper", imprecise_threshold = 10)
-```
-
-## Visualization Columns
-
-### Bar Columns
-
-Display horizontal bars for weights or percentages:
-
-```r
-col_bar(field = "weight", header = "Weight %", width = 100)
-col_bar(field = "weight", color = "#2563eb")  # Custom color
-```
-
-### P-value Columns
-
-Format p-values with smart notation and optional significance stars:
-
-```r
-col_pvalue(field = "pval", header = "P", stars = TRUE)
-```
-
-::: {.callout-note}
-## Unicode Superscript Notation
-Very small p-values use Unicode superscript for readability:
-
-| Value | Display |
-|-------|---------|
-| 0.042 | 0.042 |
-| 0.00012 | 1.2×10⁻⁴ |
-| 0.0000003 | 3.0×10⁻⁷ |
-
-This keeps columns compact while preserving precision.
-:::
-
-**Customization**:
-
-```r
-# More precision
-col_pvalue("pval", digits = 3)
-
-# Earlier exponential notation
-col_pvalue("pval", exp_threshold = 0.01)
-
-# Show as "<0.0001" for very small values
-col_pvalue("pval", abbrev_threshold = 0.0001)
-
-# Custom star thresholds
-col_pvalue("pval", stars = TRUE, thresholds = c(0.10, 0.05, 0.01))
-```
-
-### Sample Size Columns
-
-Convenience function for participant counts:
-
-```r
-col_n("sample_size")  # Display as integer
-
-# Abbreviate large values: 10,500 → "10.5K"
-col_n("sample_size", abbreviate = TRUE)
-```
-
-### Percentage Columns
-
-Display proportions as percentages:
-
-```r
-# Proportion 0-1 → percentage: 0.25 → "25.0%"
-col_percent("rate")
-
-# Already a percentage (0-100)
-col_percent("pct", multiply = FALSE)
-```
-
-### Events Columns
-
-Show clinical events in "events/N" format:
-
-```r
-# Basic: "45/120"
-col_events("events", "n")
-
-# With percentage: "45/120 (37.5%)"
-col_events("events", "n", show_pct = TRUE)
-```
-
-### Sparkline Columns
-
-Display mini charts for trends or distributions:
-
-```r
-col_sparkline(field = "trend_data", header = "Trend", width = 80)
-col_sparkline(field = "dist", type = "bar", color = "#22c55e")
-```
-
-Sparkline types: `"line"` (default), `"area"`, `"bar"`.
-
-::: {.callout-warning}
-## List-Columns Required
-The sparkline field must contain list-columns with numeric vectors. Create these with `mutate(trend = list(c(1, 2, 3)))` or `nest()`.
-:::
-
-## Semantic Columns
-
-### Icon Columns
-
-Display icons or emoji based on data values:
-
-```r
-col_icon(field = "status_emoji", header = "Status")
-
-# With value-to-icon mapping
-col_icon(field = "status",
-  mapping = list(yes = "✓", no = "✗", pending = "⏳")
-)
-```
-
-### Badge Columns
-
-Display colored status badges:
-
-```r
-col_badge(field = "status", header = "Status",
-  variants = list(
-    published = "success",
-    draft = "warning",
-    rejected = "error"
+tabviz(status_data,
+  label = "study",
+  columns = list(
+    col_forest(point = "hr", lower = "lower", upper = "upper",
+               scale = "log", null_value = 1),
+    col_stars("quality", "Quality"),
+    col_badge("status", "Status",
+      variants = list(
+        Published = "success",
+        Preprint = "warning",
+        Retracted = "error"
+      )),
+    col_icon("direction", "Effect",
+      mapping = list(Benefit = "OK", Neutral = "-", Harm = "X"))
   )
 )
 ```
 
-Available variants: `"success"`, `"warning"`, `"error"`, `"info"`, `"muted"`, `"default"`.
+Badge variants: `"success"` (green), `"warning"` (yellow), `"error"` (red), `"info"` (blue), `"muted"` (gray).
 
-### Star Rating Columns
-
-Display 1-5 star ratings:
-
-```r
-col_stars(field = "quality", header = "Quality")
-col_stars(field = "rating", max_stars = 5, half_stars = TRUE)
-```
-
-## Metadata Columns
-
-### Image Columns
-
-Display inline images from URLs:
-
-```r
-col_img(field = "logo_url", header = "Logo", shape = "circle")
-```
-
-Shapes: `"square"`, `"circle"`, `"rounded"`.
-
-### Reference Columns
-
-Display truncated text with optional links:
-
-```r
-col_reference(field = "doi", header = "DOI")
-col_reference(field = "pmid", href_field = "pubmed_url", icon = TRUE)
-```
-
-### Range Columns
-
-Display min-max ranges from two fields:
-
-```r
-col_range(min_field = "age_min", max_field = "age_max",
-  header = "Age Range", separator = " – ")
-```
+***
 
 ## Column Groups
 
 Group related columns under a shared header:
 
 ```{r}
-set.seed(321)
 outcomes_data <- data.frame(
   study = c("PARADIGM-HF", "DAPA-HF", "EMPEROR-Reduced"),
   primary_hr = c(0.80, 0.74, 0.75),
   primary_lower = c(0.73, 0.65, 0.65),
   primary_upper = c(0.87, 0.85, 0.86),
   primary_p = c(0.001, 0.001, 0.001),
-  cvdeath_hr = c(0.80, 0.82, 0.92),
-  cvdeath_p = c(0.001, 0.029, 0.382)
+  secondary_hr = c(0.84, 0.70, 0.69),
+  secondary_p = c(0.01, 0.001, 0.001)
 )
 
 tabviz(outcomes_data,
   label = "study",
   columns = list(
-    col_forest(point = "primary_hr", lower = "primary_lower", upper = "primary_upper", null_value = 1, scale = "log"),
+    col_forest(point = "primary_hr", lower = "primary_lower", upper = "primary_upper",
+               null_value = 1, scale = "log"),
     col_group("Primary Endpoint",
-      col_interval(point = "primary_hr", lower = "primary_lower", upper = "primary_upper", header = "HR (95% CI)"),
+      col_interval(point = "primary_hr", lower = "primary_lower", upper = "primary_upper",
+                   header = "HR (95% CI)"),
       col_pvalue("primary_p", "P")
     ),
-    col_group("CV Death",
-      col_numeric("cvdeath_hr", "HR"),
-      col_pvalue("cvdeath_p", "P")
+    col_group("Secondary Endpoint",
+      col_numeric("secondary_hr", "HR", decimals = 2),
+      col_pvalue("secondary_p", "P")
     )
   ),
   theme = web_theme_modern()
 )
 ```
 
-::: {.callout-tip}
-## Column Group Pattern
-
-Use column groups when you have:
-
+Use column groups for:
 - Multiple outcomes (primary, secondary)
 - Multiple time points (30-day, 1-year)
-- Multiple analysis types (ITT, per-protocol)
+- Multiple analyses (ITT, per-protocol)
 
-The group header provides context while keeping the table compact.
-:::
+***
 
-## Column Width
+## Column Width & Styling
+
+### Width Control
 
 ```r
-col_numeric("n", "N", width = 60)      # Narrow
-col_text("notes", "Notes", width = 200) # Wide
-col_interval()                          # Auto (uses content width)
+col_numeric("n", "N", width = 60)       # Fixed width
+col_text("notes", "Notes", width = 200) # Wide column
+col_interval(...)                        # Auto-width (default)
 ```
-
-::: {.callout-note}
-## Auto-Width Behavior
-
-When `width = NULL` (default), columns auto-size based on:
-
-1. Header text width
-2. Maximum cell content width
-3. Column type minimums (e.g., bars need space)
-4. Column group header width (expands children if needed)
-:::
-
-## Styling Columns
 
 ### Per-Cell Styling
 
-Every `col_*()` function accepts styling parameters:
-
-```r
-col_numeric("hr", "HR",
-  bold = "is_significant",    # Column with TRUE/FALSE
-  color = "direction_color"   # Column with hex colors
-)
-```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `bold` | Column name (logical) | Bold text when TRUE |
-| `italic` | Column name (logical) | Italic text when TRUE |
-| `color` | Column name (CSS color) | Text color |
-| `bg` | Column name (CSS color) | Background color |
-| `badge` | Column name (text) | Badge label |
-| `icon` | Column name (text) | Emoji/unicode icon |
-
-### Using set_column_style()
-
-For fluent-style workflows:
+Every column accepts styling parameters:
 
 ```{r}
-#| eval: false
-web_spec(data,
-  point = "hr", lower = "lower", upper = "upper",
-  label = "study",
-  columns = list(col_numeric("hr", "HR"))
-) |>
-  set_column_style("hr", bold = "is_significant", color = "hr_color") |>
-  forest_plot()
+glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(4) |>
+  mutate(
+    is_sig = upper < 1,
+    hr_color = ifelse(upper < 1, "#166534", "#64748b")
+  ) |>
+  tabviz(
+    label = "study",
+    columns = list(
+      col_interval(point = "hr", lower = "lower", upper = "upper",
+                   header = "HR (95% CI)", bold = "is_sig", color = "hr_color"),
+      col_pvalue("pvalue", "P", bold = "is_sig")
+    )
+  )
 ```
 
-See [Cell Styling](cell-styling.qmd) for detailed conditional formatting patterns.
+Available style parameters:
+
+| Parameter | Type | Effect |
+|-----------|------|--------|
+| `bold` | logical column | Bold when TRUE |
+| `italic` | logical column | Italic when TRUE |
+| `color` | color column | Text color |
+| `bg` | color column | Background color |
+
+See [Cell Styling](cell-styling.qmd) for more conditional formatting patterns.
+
+***
+
+## See Also
+
+- [Package Data](package-data.qmd) — Built-in datasets for examples
+- [Forest Plots](visualizations/forest-plots.qmd) — Detailed `col_forest()` options
+- [Cell Styling](cell-styling.qmd) — Conditional formatting

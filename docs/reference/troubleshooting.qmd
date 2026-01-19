@@ -8,7 +8,7 @@ library(tabviz)
 library(dplyr)
 ```
 
-This guide covers common issues and their solutions when using webforest.
+This guide covers common issues and their solutions when using tabviz.
 
 ## Quick Diagnostic Checklist
 
@@ -233,10 +233,10 @@ install.packages("rsvg")
 ```{r}
 #| eval: false
 # Reinstall the package
-pak::pak("kaskarn/webforest", force = TRUE)
+pak::pak("kaskarn/tabviz", force = TRUE)
 
 # Verify installation
-system.file("js/svg-generator.js", package = "webforest")
+system.file("js/svg-generator.js", package = "tabviz")
 # Should return a path, not ""
 ```
 
@@ -436,7 +436,7 @@ sessionInfo()
 
 If you've tried the above and still have issues:
 
-1. Check [GitHub Issues](https://github.com/kaskarn/webforest/issues) for similar problems
+1. Check [GitHub Issues](https://github.com/kaskarn/tabviz/issues) for similar problems
 2. Create a minimal reproducible example
 3. Include `sessionInfo()` output
 4. Open a new issue with your example and session info

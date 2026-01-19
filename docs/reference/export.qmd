@@ -203,5 +203,5 @@ save_split_table(split_view, "output/subgroups", format = "pdf")
 ## See Also
 
 - [`tabviz()`](tabviz.qmd) - Create tables
-- [`forest_plot()`](forest_plot.qmd) - Create forest plots
+- [`forest_plot()`](tabviz.qmd) - Create forest plots
 - [Themes](themes.qmd) - Style for publication

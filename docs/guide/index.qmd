@@ -46,7 +46,7 @@ flowchart LR
 
 | Chapter | What You'll Learn |
 |---------|-------------------|
-| [Forest Plots](forest-plots.qmd) | Add interval visualizations with `col_forest()` |
+| [Forest Plots](visualizations/forest-plots.qmd) | Add interval visualizations with `col_forest()` |
 | [Split Plots](split-plots.qmd) | Sidebar navigation for subgroups |
 
 ### Customization & Output

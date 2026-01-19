@@ -301,7 +301,7 @@ Returns an **htmlwidget** object that:
 
 ## See Also
 
-- [forest_plot()](forest_plot.qmd) - Convenience wrapper for forest plots
+- [tabviz()](tabviz.qmd) - Convenience wrapper for forest plots
 - [Columns](columns.qmd) - All `col_*()` column types
 - [Styling Functions](styling.qmd) - `set_row_style()`, `set_marker_style()`, etc.
 - [Themes](themes.qmd) - Theme presets and customization

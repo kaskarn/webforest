@@ -303,6 +303,6 @@ server <- function(input, output, session) {
 
 ## See Also
 
-- [forest_plot()](forest_plot.qmd) for creating plots
+- [tabviz()](tabviz.qmd) for creating plots
 - [tabviz()](tabviz.qmd) for the main entry point
 - [Shiny Guide](../guide/shiny.qmd) for detailed examples

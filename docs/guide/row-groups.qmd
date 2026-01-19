@@ -40,7 +40,7 @@ Click the group headers to collapse or expand sections. Groups are rendered with
 
 ## Hierarchical Grouping
 
-For multi-level organization, pass multiple column names as a vector. webforest creates nested, collapsible hierarchies:
+For multi-level organization, pass multiple column names as a vector. tabviz creates nested, collapsible hierarchies:
 
 ```{r}
 hierarchical_data <- data.frame(
@@ -130,7 +130,7 @@ This is useful for large datasets where you want users to expand only the sectio
 
 ## Grouping vs Row Styling
 
-webforest provides two complementary ways to organize data:
+tabviz provides two complementary ways to organize data:
 
 | Feature | Purpose | Best For |
 |---------|---------|----------|
@@ -147,4 +147,4 @@ You can combine both approaches—use `group` for automatic organization and `ro
 
 - [Row Styling](row-styling.qmd) — Manual row types, headers, summaries, and visual styling
 - [Themes](themes.qmd) — Customize group header appearance
-- [forest_plot()](../reference/forest_plot.qmd) — Complete argument reference
+- [forest_plot()](../reference/tabviz.qmd) — Complete argument reference

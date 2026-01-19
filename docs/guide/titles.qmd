@@ -1,0 +1,119 @@
+---
+title: "Titles and Labels"
+---
+
+```{r}
+#| include: false
+library(tabviz)
+library(dplyr)
+```
+
+Add context to any tabviz table with titles, subtitles, captions, and footnotes.
+
+## Basic Usage
+
+```{r}
+data(glp1_trials)
+
+glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(4) |>
+  tabviz(
+    label = "study",
+    title = "GLP-1 Agonist Cardiovascular Outcomes",
+    subtitle = "Major randomized controlled trials",
+    caption = "HR < 1 favors treatment",
+    footnote = "Data from published trial results",
+    columns = list(
+      col_text("drug", "Drug"),
+      col_forest(point = "hr", lower = "lower", upper = "upper",
+                 scale = "log", null_value = 1),
+      col_interval(point = "hr", lower = "lower", upper = "upper", header = "HR (95% CI)")
+    )
+  )
+```
+
+## Label Positions
+
+| Argument | Position | Typical Use |
+|----------|----------|-------------|
+| `title` | Top, prominent | Main figure title |
+| `subtitle` | Below title, smaller | Additional context, date range |
+| `caption` | Bottom left | Interpretation help, scale explanation |
+| `footnote` | Bottom right | Data source, methodology notes |
+
+## Without Visualizations
+
+Labels work on any tabviz table, not just those with forest plots:
+
+```{r}
+data(nba_efficiency)
+
+nba_efficiency |>
+  filter(conference == "West") |>
+  head(5) |>
+  tabviz(
+    label = "player",
+    title = "Top Western Conference Players",
+    subtitle = "2023-24 Season Statistics",
+    caption = "PER: Player Efficiency Rating (15 = average)",
+    columns = list(
+      col_text("team", "Team"),
+      col_numeric("ppg", "PPG", decimals = 1),
+      col_numeric("per", "PER", decimals = 1),
+      col_badge("award", "Award", variants = list(
+        MVP = "success",
+        `All-NBA 1st` = "info",
+        `All-NBA 2nd` = "warning"
+      ))
+    ),
+    theme = web_theme_modern()
+  )
+```
+
+## Styling Labels
+
+Label appearance is controlled by the theme. Different themes style labels differently:
+
+```{r}
+demo_data <- data.frame(
+  item = c("Alpha", "Beta", "Gamma"),
+  value = c(1.23, 4.56, 7.89)
+)
+
+tabviz(demo_data,
+  label = "item",
+  title = "Presentation Theme",
+  subtitle = "Larger fonts for slides",
+  caption = "Source: Example data",
+  columns = list(col_numeric("value", "Value", decimals = 2)),
+  theme = web_theme_presentation()
+)
+```
+
+## Axis Labels
+
+For forest plot columns, use `axis_label` within `col_forest()` to label the x-axis:
+
+```{r}
+glp1_trials |>
+  filter(row_type == "data", group == "Main Trials") |>
+  head(3) |>
+  tabviz(
+    label = "study",
+    title = "Treatment Effect",
+    columns = list(
+      col_forest(point = "hr", lower = "lower", upper = "upper",
+                 scale = "log", null_value = 1,
+                 axis_label = "Hazard Ratio (95% CI)")
+    )
+  )
+```
+
+---
+
+## See Also
+
+- [Themes](themes.qmd) — Control label typography and colors
+- [Visualizations](visualizations/) — Forest plots and other graphical columns
+- [Export](export.qmd) — Save figures with labels intact
