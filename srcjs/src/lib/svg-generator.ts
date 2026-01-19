@@ -2858,8 +2858,23 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     const fcScale = forestOpts?.scale ?? "linear";
     const fcNullValue = forestOpts?.nullValue ?? (fcScale === "log" ? 1 : 0);
     const fcAxisLabel = forestOpts?.axisLabel ?? "Effect";
-    const fcEffects = forestOpts?.effects ?? [];
     const isLog = fcScale === "log";
+
+    // Build effects array - if no explicit effects but forest column has point/lower/upper columns,
+    // create a default effect that reads from those columns
+    let fcEffects = forestOpts?.effects ?? [];
+    const fcPointCol = forestOpts?.point ?? null;
+    const fcLowerCol = forestOpts?.lower ?? null;
+    const fcUpperCol = forestOpts?.upper ?? null;
+
+    // If forest column specifies custom columns but no effects, create a default effect
+    if (fcEffects.length === 0 && (fcPointCol || fcLowerCol || fcUpperCol)) {
+      fcEffects = [{
+        pointCol: fcPointCol,
+        lowerCol: fcLowerCol,
+        upperCol: fcUpperCol,
+      }];
+    }
 
     // Compute X scale for this forest column
     const fcSettings: ForestColumnSettings = {
