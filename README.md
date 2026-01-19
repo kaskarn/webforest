@@ -11,14 +11,14 @@
 
 ## Why tabviz?
 
-- **Simple interface**: `forest_plot` function able to generate complex interactive plots with succinct parameters/arguments.
-- **Granular customization**: Multiple mechanisms provide precise control over rendering at the cell, row, and column levels.
-- **Themable**: Full theming system, with support for detailed custom theming. Varied preset themes available, including based on JAMA, Lancet, Cochrane, Nature.
-- **Rich column types**: Native support for rendering badges, star ratings, sparklines, images, p-values, and more.
-- **No JavaScript required**: R interface provides total control over the output.
-- **Versatile API**: Use standard argument passing or a pipe-friendly workflow with set_* modifiers.
-- **Portable graphics**: Export as interactive HTML or high-quality static images (SVG/PDF/PNG).
-- **Web-native**: Web-ready widgets with shiny support.
+- **One function, any table**: `tabviz()` creates tables with any combination of 16+ column types—forest plots are just one option.
+- **Granular customization**: Precise control at the cell, row, and column levels.
+- **Themable**: Full theming system with presets for JAMA, Lancet, Cochrane, Nature, and more.
+- **Rich column types**: Badges, star ratings, sparklines, images, p-values, intervals, bars, and more.
+- **No JavaScript required**: Complete control from R.
+- **Fluent API**: Use direct arguments or pipe-friendly `set_*()` modifiers.
+- **Portable graphics**: Export as interactive HTML or static images (SVG/PDF/PNG).
+- **Shiny-ready**: Full Shiny integration with proxy updates.
 
 ## Installation
 
@@ -33,16 +33,23 @@ pak::pak("kaskarn/tabviz")
 library(tabviz)
 data(glp1_trials)                                    # included example dataset
 
-forest_plot(
+tabviz(
   glp1_trials,
-  point = "hr", lower = "lower", upper = "upper",    # effect size columns
   label = "study",                                   # row labels
   group = "group",                                   # collapsible sections
-  columns = list(                                    # additional data columns
-    col_group("Study Info",                          # grouped header
+  columns = list(
+    col_group("Study Info",
       col_text("drug", "Drug"),
       col_n("n"),
       position = "left"
+    ),
+    col_forest(                                      # forest plot column
+      point = "hr", lower = "lower", upper = "upper",
+      scale = "log", null_value = 1,
+      axis_range = c(0.4, 1.5),
+      axis_ticks = c(0.5, 0.75, 1.0, 1.25),
+      axis_gridlines = TRUE,
+      axis_label = "Hazard Ratio (95% CI)"
     ),
     col_group("Results",
       col_events("events", "n", "Events"),           # "42/156" format
@@ -51,19 +58,14 @@ forest_plot(
       position = "right"
     )
   ),
-  annotations = list(                                # reference lines
+  annotations = list(
     forest_refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
   ),
   row_type = "row_type", row_bold = "row_bold",      # row styling from data
   theme = web_theme_nature(),                        # publication theme
-  scale = "log", null_value = 1,                     # log scale, null at 1
-  axis_range = c(0.4, 1.5),                          # explicit axis bounds
-  axis_ticks = c(0.5, 0.75, 1.0, 1.25),              # custom tick marks
-  axis_gridlines = TRUE,
-  axis_label = "Hazard Ratio (95% CI)",
   title = "GLP-1 Agonist Cardiovascular Outcomes",
   subtitle = "Major adverse cardiovascular events (MACE)",
-  width_mode = "fill"                                # scale to container width
+  width_mode = "fill"
 )
 ```
 
@@ -94,7 +96,7 @@ Display any data with the right visualization:
 Nine built-in themes with full customization:
 
 ```r
-forest_plot(data, ..., theme = web_theme_lancet())
+tabviz(data, ..., theme = web_theme_lancet())
 
 # Customize any theme
 web_theme_jama() |>
@@ -120,7 +122,8 @@ web_theme_jama() |>
 Full control over row appearance and marker shapes:
 
 ```r
-forest_plot(data, ...,
+tabviz(data, label = "study",
+  columns = list(col_forest(point = "hr", lower = "lo", upper = "hi")),
   # Row styling
   row_type = "type",        # "header", "data", "summary", "spacer"
   row_bold = "is_primary",  # Bold important rows
@@ -134,12 +137,12 @@ forest_plot(data, ...,
 )
 ```
 
-### Split Forest Plots
+### Split Tables
 
 Navigate between subgroups with an interactive sidebar:
 
 ```r
-forest_plot(data, ...,
+tabviz(data, ...,
   split_by = c("region", "country"),  # Hierarchical navigation
   shared_axis = TRUE                   # Consistent scale across all
 )
@@ -167,7 +170,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$plot <- renderForest({
-    forest_plot(data, ...)
+    tabviz(data, ...)
   })
 }
 ```
