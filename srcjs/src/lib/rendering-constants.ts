@@ -74,7 +74,7 @@ export const LAYOUT = {
   AXIS_HEIGHT: 32,
 
   /** Height reserved for axis label text below axis */
-  AXIS_LABEL_HEIGHT: 20,
+  AXIS_LABEL_HEIGHT: 32,
 
   /** Bottom margin buffer */
   BOTTOM_MARGIN: 16,
@@ -218,7 +218,7 @@ export const AUTO_WIDTH = {
   MAX: 600,
 
   /** Maximum width for auto-sized label column */
-  LABEL_MAX: 400,
+  LABEL_MAX: 500,
 
   /** Minimum widths for visual column types (element width + cell padding) */
   VISUAL_MIN: {
