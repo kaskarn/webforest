@@ -153,6 +153,8 @@ across all split plots. Default is \code{FALSE}.}
 
 \item{.spec_only}{If TRUE, return the WebSpec object instead of rendering.
 Useful for programmatic manipulation before rendering.}
+
+\item{...}{Arguments passed to \code{tabviz()}}
 }
 \value{
 An htmlwidget object, or a WebSpec object if \code{.spec_only = TRUE}

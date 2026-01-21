@@ -665,6 +665,7 @@ render_tabviz_widget <- function(
 }
 
 #' @rdname tabviz
+#' @param ... Arguments passed to `tabviz()`
 #' @export
 web_spec <- function(..., .spec_only = TRUE) {
   tabviz(..., .spec_only = .spec_only)
