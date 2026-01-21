@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6d8a317f6d7170feb81ce6008a9cc2e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-86e1a688590f93f51b8053c58a4078b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,12 +103,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+<script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="../site_libs/tabviz-styles-0.3.0/tabviz.css" rel="stylesheet">
+<script src="../site_libs/tabviz-binding-0.4.0/tabviz.js"></script>
 
 
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -125,73 +129,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-guide" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Guide</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-guide">    
-        <li>
-    <a class="dropdown-item" href="../guide/index.html">
- <span class="dropdown-text">Overview</span></a>
+  <li class="nav-item">
+    <a class="nav-link active" href="../guide/index.html" aria-current="page"> 
+<span class="menu-text">Guide</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/quick-start.html">
- <span class="dropdown-text">1. Quick Start</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/package-data.html">
- <span class="dropdown-text">2. Package Data</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/columns.html">
- <span class="dropdown-text">3. Columns</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/row-styling.html">
- <span class="dropdown-text">4. Row Styling</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/cell-styling.html">
- <span class="dropdown-text">5. Cell Styling</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/row-groups.html">
- <span class="dropdown-text">6. Row Groups</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/titles.html">
- <span class="dropdown-text">7. Titles and Labels</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/visualizations/index.html">
- <span class="dropdown-text">8. Visualizations</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/visualizations/forest-plots.html">
- <span class="dropdown-text">9. Forest Plots</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/split-plots.html">
- <span class="dropdown-text">10. Split Plots</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/themes.html">
- <span class="dropdown-text">11. Themes</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/shiny.html">
- <span class="dropdown-text">12. Shiny Integration</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/export.html">
- <span class="dropdown-text">13. Export</span></a>
-  </li>  
-    </ul>
-  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-concepts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Concepts</span>
@@ -230,6 +171,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Clinical Examples</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../gallery/business.html">
+ <span class="dropdown-text">Business Examples</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../gallery/dashboards.html">
  <span class="dropdown-text">Dashboard Examples</span></a>
   </li>  
@@ -253,6 +198,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../reference/tabviz.html">
  <span class="dropdown-text">tabviz()</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../reference/forest_plot.html">
+ <span class="dropdown-text">forest_plot()</span></a>
+  </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
     <a class="dropdown-item" href="../reference/columns.html">
@@ -269,6 +218,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../reference/annotations.html">
  <span class="dropdown-text">Annotations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reference/interaction.html">
+ <span class="dropdown-text">Interaction Settings</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -311,45 +264,207 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guide/export.html">Export</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/quick-start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Start</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Structure</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/columns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Column Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/row-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Row Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/titles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Titles &amp; Labels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/split-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Split Plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../guide/styling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Styling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/row-styling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Row Styling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/cell-styling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cell Styling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/themes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Themes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/fluent-api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fluent API</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../guide/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/forest-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Forest Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/bar-charts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bar Charts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Boxplots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/violin-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Violin Plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/interactivity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactivity</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Integration</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/shiny.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shiny</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/export.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Export</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/package-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package Data</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quick-start" id="toc-quick-start" class="nav-link active" data-scroll-target="#quick-start">Quick Start</a></li>
+  <li><a href="#quick-example" id="toc-quick-example" class="nav-link active" data-scroll-target="#quick-example">Quick Example</a></li>
   <li><a href="#format-comparison" id="toc-format-comparison" class="nav-link" data-scroll-target="#format-comparison">Format Comparison</a></li>
   <li><a href="#svg-export" id="toc-svg-export" class="nav-link" data-scroll-target="#svg-export">SVG Export</a></li>
-  <li><a href="#png-export" id="toc-png-export" class="nav-link" data-scroll-target="#png-export">PNG Export</a>
+  <li><a href="#themed-exports" id="toc-themed-exports" class="nav-link" data-scroll-target="#themed-exports">Themed Exports</a>
   <ul class="collapse">
-  <li><a href="#resolution-control" id="toc-resolution-control" class="nav-link" data-scroll-target="#resolution-control">Resolution Control</a></li>
+  <li><a href="#jama-theme" id="toc-jama-theme" class="nav-link" data-scroll-target="#jama-theme">JAMA Theme</a></li>
+  <li><a href="#dark-theme" id="toc-dark-theme" class="nav-link" data-scroll-target="#dark-theme">Dark Theme</a></li>
   </ul></li>
-  <li><a href="#pdf-export" id="toc-pdf-export" class="nav-link" data-scroll-target="#pdf-export">PDF Export</a></li>
-  <li><a href="#width-and-height" id="toc-width-and-height" class="nav-link" data-scroll-target="#width-and-height">Width and Height</a></li>
-  <li><a href="#publication-workflows" id="toc-publication-workflows" class="nav-link" data-scroll-target="#publication-workflows">Publication Workflows</a>
+  <li><a href="#png-and-pdf-export" id="toc-png-and-pdf-export" class="nav-link" data-scroll-target="#png-and-pdf-export">PNG and PDF Export</a>
   <ul class="collapse">
-  <li><a href="#journal-figure" id="toc-journal-figure" class="nav-link" data-scroll-target="#journal-figure">Journal Figure</a></li>
-  <li><a href="#presentation-slide" id="toc-presentation-slide" class="nav-link" data-scroll-target="#presentation-slide">Presentation Slide</a></li>
-  <li><a href="#batch-export" id="toc-batch-export" class="nav-link" data-scroll-target="#batch-export">Batch Export</a></li>
-  </ul></li>
-  <li><a href="#split-forest-export" id="toc-split-forest-export" class="nav-link" data-scroll-target="#split-forest-export">Split Forest Export</a></li>
-  <li><a href="#requirements" id="toc-requirements" class="nav-link" data-scroll-target="#requirements">Requirements</a>
-  <ul class="collapse">
-  <li><a href="#svg" id="toc-svg" class="nav-link" data-scroll-target="#svg">SVG</a></li>
-  <li><a href="#png-and-pdf" id="toc-png-and-pdf" class="nav-link" data-scroll-target="#png-and-pdf">PNG and PDF</a></li>
-  </ul></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
-  <ul class="collapse">
-  <li><a href="#chrome-not-found" id="toc-chrome-not-found" class="nav-link" data-scroll-target="#chrome-not-found">“Chrome not found”</a></li>
-  <li><a href="#export-looks-different-from-viewer" id="toc-export-looks-different-from-viewer" class="nav-link" data-scroll-target="#export-looks-different-from-viewer">Export looks different from viewer</a></li>
-  <li><a href="#large-files" id="toc-large-files" class="nav-link" data-scroll-target="#large-files">Large files</a></li>
+  <li><a href="#resolution-guide" id="toc-resolution-guide" class="nav-link" data-scroll-target="#resolution-guide">Resolution Guide</a></li>
   </ul></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   </ul>
@@ -378,284 +493,168 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Export your tabviz widgets to static files for publications, presentations, and sharing.</p>
-<section id="quick-start" class="level2">
-<h2 class="anchored" data-anchor-id="quick-start">Quick Start</h2>
+<section id="quick-example" class="level2">
+<h2 class="anchored" data-anchor-id="quick-example">Quick Example</h2>
+<p>Let’s create a forest plot and export it to SVG.</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a widget</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(data,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Export to SVG (vector)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"my_table.svg"</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Export to PNG (raster)</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"my_table.png"</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Export to PDF (print)</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"my_table.pdf"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(glp1_trials)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> glp1_trials <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(row_type <span class="sc">==</span> <span class="st">"data"</span>, group <span class="sc">==</span> <span class="st">"Main Trials"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabviz</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_text</span>(<span class="st">"drug"</span>, <span class="st">"Drug"</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">180</span>),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">web_theme_jama</span>(),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"GLP-1 Agonist Cardiovascular Outcomes"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output-display">
+<div class="tabviz html-widget html-fill-item" id="htmlwidget-33e3edbfcc658951c373" style="width:100%;height:400px;"></div>
+<script type="application/json" data-for="htmlwidget-33e3edbfcc658951c373">{"x":{"data":{"rows":[{"id":"row_1","label":"SUSTAIN-6","groupId":null,"metadata":{"study":"SUSTAIN-6","drug":"Semaglutide 1mg","year":2016,"n":3297,"events":108,"hr":0.74,"lower":0.58,"upper":0.95,"pvalue":0.016,"endpoint":"MACE","row_type":"data","row_bold":false,"group":"Main Trials"}},{"id":"row_2","label":"PIONEER 6","groupId":null,"metadata":{"study":"PIONEER 6","drug":"Oral Semaglutide","year":2019,"n":3183,"events":137,"hr":0.79,"lower":0.57,"upper":1.11,"pvalue":0.17,"endpoint":"MACE","row_type":"data","row_bold":false,"group":"Main Trials"}},{"id":"row_3","label":"LEADER","groupId":null,"metadata":{"study":"LEADER","drug":"Liraglutide","year":2016,"n":9340,"events":608,"hr":0.87,"lower":0.78,"upper":0.97,"pvalue":0.01,"endpoint":"MACE","row_type":"data","row_bold":false,"group":"Main Trials"}},{"id":"row_4","label":"REWIND","groupId":null,"metadata":{"study":"REWIND","drug":"Dulaglutide","year":2019,"n":9901,"events":594,"hr":0.88,"lower":0.79,"upper":0.99,"pvalue":0.026,"endpoint":"MACE","row_type":"data","row_bold":false,"group":"Main Trials"}},{"id":"row_5","label":"EXSCEL","groupId":null,"metadata":{"study":"EXSCEL","drug":"Exenatide QW","year":2017,"n":14752,"events":839,"hr":0.91,"lower":0.83,"upper":1,"pvalue":0.06,"endpoint":"MACE","row_type":"data","row_bold":false,"group":"Main Trials"}}],"groups":[],"summaries":[],"overall":{"point":[],"lower":[],"upper":[],"metadata":[]},"labelCol":"study","labelHeader":"Study","groupCol":null,"weightCol":null},"columns":[{"id":"drug","header":"Drug","field":"drug","type":"text","width":"auto","align":"left","headerAlign":"left","wrap":false,"sortable":true,"isGroup":false},{"id":"_forest_hr","header":"","field":"_forest_hr","type":"forest","width":180,"align":"left","headerAlign":"left","wrap":false,"sortable":false,"isGroup":false,"options":{"forest":{"point":"hr","lower":"lower","upper":"upper","effects":null,"scale":"log","nullValue":1,"axisLabel":"Effect","axisRange":null,"axisTicks":null,"axisGridlines":false,"showAxis":true,"annotations":null,"sharedAxis":null,"width":180}}},{"id":"_interval_hr","header":"HR (95% CI)","field":"_interval_hr","type":"interval","width":"auto","align":"left","headerAlign":"left","wrap":false,"sortable":true,"isGroup":false,"options":{"interval":{"decimals":2,"sep":" ","point":"hr","lower":"lower","upper":"upper","impreciseThreshold":null}}}],"annotations":[],"theme":{"name":"jama","colors":{"background":"#ffffff","foreground":"#000000","primary":"#000000","secondary":"#333333","accent":"#000000","muted":"#555555","border":"#000000","rowBg":"#ffffff","altBg":"#f9fafb","interval":"#000000","intervalPositive":"#000000","intervalNegative":"#000000","intervalNeutral":"#555555","intervalLine":"#000000","summaryFill":"#000000","summaryBorder":"#000000"},"typography":{"fontFamily":"Arial, Helvetica, sans-serif","fontSizeSm":"8pt","fontSizeBase":"9pt","fontSizeLg":"10pt","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":700,"lineHeight":1.2,"headerFontScale":1.05},"spacing":{"rowHeight":18,"headerHeight":24,"sectionGap":8,"padding":6,"containerPadding":0,"cellPaddingX":8,"cellPaddingY":2,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":4,"summaryHeight":7,"lineWidth":1.25,"borderRadius":0,"effectColors":["#1a1a1a","#4a4a4a","#7a7a7a","#9a9a9a","#bababa"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":0,"banding":true},"groupHeaders":{"level1FontSize":"9.5pt","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"9pt","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"9pt","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":12}},"interaction":{"showFilters":false,"showLegend":true,"enableSort":true,"enableCollapse":true,"enableSelect":true,"enableHover":true,"enableResize":true,"enableExport":true,"tooltipFields":null,"enableThemes":{"default":{"name":"default","colors":{"background":"#ffffff","foreground":"#333333","primary":"#0891b2","secondary":"#64748b","accent":"#8b5cf6","muted":"#94a3b8","border":"#e2e8f0","rowBg":"#ffffff","altBg":"#f8fafc","interval":"#0891b2","intervalPositive":"#0891b2","intervalNegative":"#dc2626","intervalNeutral":"#64748b","intervalLine":"#475569","summaryFill":"#0891b2","summaryBorder":"#0e7490"},"typography":{"fontFamily":"system-ui, -apple-system, sans-serif","fontSizeSm":"0.75rem","fontSizeBase":"0.875rem","fontSizeLg":"1rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":600,"lineHeight":1.5,"headerFontScale":1.05},"spacing":{"rowHeight":24,"headerHeight":32,"sectionGap":16,"padding":12,"containerPadding":0,"cellPaddingX":10,"cellPaddingY":4,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":6,"summaryHeight":10,"lineWidth":1.5,"borderRadius":2,"effectColors":["#0891b2","#16a34a","#f59e0b","#ef4444","#8b5cf6"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":8,"banding":true},"groupHeaders":{"level1FontSize":"0.9375rem","level1FontWeight":600,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.875rem","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.875rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":16}},"minimal":{"name":"minimal","colors":{"background":"#ffffff","foreground":"#000000","primary":"#000000","secondary":"#333333","accent":"#000000","muted":"#666666","border":"#000000","rowBg":"#ffffff","altBg":"#fafafa","interval":"#000000","intervalPositive":"#000000","intervalNegative":"#000000","intervalNeutral":"#666666","intervalLine":"#000000","summaryFill":"#000000","summaryBorder":"#000000"},"typography":{"fontFamily":"Georgia, 'Times New Roman', serif","fontSizeSm":"0.75rem","fontSizeBase":"0.875rem","fontSizeLg":"1rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":700,"lineHeight":1.4,"headerFontScale":1.05},"spacing":{"rowHeight":22,"headerHeight":28,"sectionGap":12,"padding":10,"containerPadding":0,"cellPaddingX":10,"cellPaddingY":4,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":5,"summaryHeight":8,"lineWidth":1,"borderRadius":0,"effectColors":["#64748b","#94a3b8","#cbd5e1","#475569","#334155"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":0,"banding":true},"groupHeaders":{"level1FontSize":"0.9375rem","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.875rem","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.875rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":14}},"dark":{"name":"dark","colors":{"background":"#1e1e2e","foreground":"#cdd6f4","primary":"#89b4fa","secondary":"#a6adc8","accent":"#f5c2e7","muted":"#6c7086","border":"#313244","rowBg":"#1e1e2e","altBg":"#232334","interval":"#89b4fa","intervalPositive":"#a6e3a1","intervalNegative":"#f38ba8","intervalNeutral":"#6c7086","intervalLine":"#9399b2","summaryFill":"#89b4fa","summaryBorder":"#74c7ec"},"typography":{"fontFamily":"system-ui, -apple-system, sans-serif","fontSizeSm":"0.75rem","fontSizeBase":"0.875rem","fontSizeLg":"1rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":600,"lineHeight":1.5,"headerFontScale":1.05},"spacing":{"rowHeight":26,"headerHeight":32,"sectionGap":16,"padding":12,"containerPadding":0,"cellPaddingX":10,"cellPaddingY":4,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":6,"summaryHeight":10,"lineWidth":1.5,"borderRadius":4,"effectColors":["#89b4fa","#a6e3a1","#fab387","#f38ba8","#cba6f7"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":8,"banding":true},"groupHeaders":{"level1FontSize":"0.9375rem","level1FontWeight":600,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.875rem","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.875rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":18}},"jama":{"name":"jama","colors":{"background":"#ffffff","foreground":"#000000","primary":"#000000","secondary":"#333333","accent":"#000000","muted":"#555555","border":"#000000","rowBg":"#ffffff","altBg":"#f9fafb","interval":"#000000","intervalPositive":"#000000","intervalNegative":"#000000","intervalNeutral":"#555555","intervalLine":"#000000","summaryFill":"#000000","summaryBorder":"#000000"},"typography":{"fontFamily":"Arial, Helvetica, sans-serif","fontSizeSm":"8pt","fontSizeBase":"9pt","fontSizeLg":"10pt","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":700,"lineHeight":1.2,"headerFontScale":1.05},"spacing":{"rowHeight":18,"headerHeight":24,"sectionGap":8,"padding":6,"containerPadding":0,"cellPaddingX":8,"cellPaddingY":2,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":4,"summaryHeight":7,"lineWidth":1.25,"borderRadius":0,"effectColors":["#1a1a1a","#4a4a4a","#7a7a7a","#9a9a9a","#bababa"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":0,"banding":true},"groupHeaders":{"level1FontSize":"9.5pt","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"9pt","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"9pt","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":12}},"lancet":{"name":"lancet","colors":{"background":"#fdfcfb","foreground":"#1e3a5f","primary":"#00407a","secondary":"#3d5a80","accent":"#b8860b","muted":"#6b7c93","border":"#d4dce6","rowBg":"#fdfcfb","altBg":"#f8f7f5","interval":"#00407a","intervalPositive":"#00407a","intervalNegative":"#9d2933","intervalNeutral":"#3d5a80","intervalLine":"#1e3a5f","summaryFill":"#00407a","summaryBorder":"#002d54"},"typography":{"fontFamily":"Georgia, 'Times New Roman', serif","fontSizeSm":"0.75rem","fontSizeBase":"0.875rem","fontSizeLg":"1rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":700,"lineHeight":1.5,"headerFontScale":1.05},"spacing":{"rowHeight":24,"headerHeight":30,"sectionGap":14,"padding":12,"containerPadding":0,"cellPaddingX":12,"cellPaddingY":4,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":5,"summaryHeight":9,"lineWidth":1.25,"borderRadius":0,"effectColors":["#00468b","#ed0000","#42b540","#0099b4","#925e9f"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":0,"banding":true},"groupHeaders":{"level1FontSize":"0.9375rem","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.875rem","level2FontWeight":500,"level2Italic":true,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.875rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":18}},"modern":{"name":"modern","colors":{"background":"#fafafa","foreground":"#18181b","primary":"#3b82f6","secondary":"#52525b","accent":"#8b5cf6","muted":"#a1a1aa","border":"#d4d4d8","rowBg":"#fafafa","altBg":"#f5f5f5","interval":"#3b82f6","intervalPositive":"#22c55e","intervalNegative":"#ef4444","intervalNeutral":"#71717a","intervalLine":"#27272a","summaryFill":"#3b82f6","summaryBorder":"#2563eb"},"typography":{"fontFamily":"Inter, system-ui, -apple-system, sans-serif","fontSizeSm":"0.8125rem","fontSizeBase":"0.9375rem","fontSizeLg":"1.0625rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":600,"lineHeight":1.5,"headerFontScale":1.05},"spacing":{"rowHeight":30,"headerHeight":36,"sectionGap":20,"padding":14,"containerPadding":0,"cellPaddingX":12,"cellPaddingY":5,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":8,"summaryHeight":12,"lineWidth":1.75,"borderRadius":8,"effectColors":["#3b82f6","#22c55e","#f59e0b","#ef4444","#8b5cf6"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":12,"banding":true},"groupHeaders":{"level1FontSize":"1rem","level1FontWeight":600,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.9375rem","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.9375rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":20}},"presentation":{"name":"presentation","colors":{"background":"#ffffff","foreground":"#0f172a","primary":"#0369a1","secondary":"#334155","accent":"#ea580c","muted":"#64748b","border":"#94a3b8","rowBg":"#ffffff","altBg":"#f8fafc","interval":"#0369a1","intervalPositive":"#047857","intervalNegative":"#be123c","intervalNeutral":"#334155","intervalLine":"#0f172a","summaryFill":"#0369a1","summaryBorder":"#0c4a6e"},"typography":{"fontFamily":"'Source Sans Pro', 'Segoe UI', Roboto, sans-serif","fontSizeSm":"1rem","fontSizeBase":"1.125rem","fontSizeLg":"1.25rem","fontWeightNormal":400,"fontWeightMedium":600,"fontWeightBold":700,"lineHeight":1.4,"headerFontScale":1.05},"spacing":{"rowHeight":36,"headerHeight":44,"sectionGap":24,"padding":18,"containerPadding":0,"cellPaddingX":14,"cellPaddingY":5,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":12,"summaryHeight":16,"lineWidth":2.5,"borderRadius":4,"effectColors":["#2563eb","#16a34a","#ea580c","#dc2626","#7c3aed"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":6,"banding":true},"groupHeaders":{"level1FontSize":"1.1875rem","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"1.125rem","level2FontWeight":600,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"1.125rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":24}},"cochrane":{"name":"cochrane","colors":{"background":"#ffffff","foreground":"#2c2c2c","primary":"#0099cc","secondary":"#555555","accent":"#006699","muted":"#888888","border":"#b3b3b3","rowBg":"#ffffff","altBg":"#f5f5f5","interval":"#0099cc","intervalPositive":"#0099cc","intervalNegative":"#cc3333","intervalNeutral":"#555555","intervalLine":"#2c2c2c","summaryFill":"#0099cc","summaryBorder":"#006699"},"typography":{"fontFamily":"Arial, Helvetica, sans-serif","fontSizeSm":"0.6875rem","fontSizeBase":"0.75rem","fontSizeLg":"0.8125rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":700,"lineHeight":1.25,"headerFontScale":1.05},"spacing":{"rowHeight":20,"headerHeight":26,"sectionGap":8,"padding":6,"containerPadding":0,"cellPaddingX":6,"cellPaddingY":2,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":4,"summaryHeight":7,"lineWidth":1,"borderRadius":0,"effectColors":["#0c4da2","#dd5129","#1a8a4f","#6d4e92","#e89a47"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":0,"banding":true},"groupHeaders":{"level1FontSize":"0.8125rem","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.75rem","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.75rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":10}},"nature":{"name":"nature","colors":{"background":"#ffffff","foreground":"#1a1a1a","primary":"#1976d2","secondary":"#424242","accent":"#c62828","muted":"#616161","border":"#bdbdbd","rowBg":"#ffffff","altBg":"#fafafa","interval":"#1976d2","intervalPositive":"#1976d2","intervalNegative":"#c62828","intervalNeutral":"#616161","intervalLine":"#1a1a1a","summaryFill":"#1976d2","summaryBorder":"#0d47a1"},"typography":{"fontFamily":"'Helvetica Neue', Helvetica, Arial, sans-serif","fontSizeSm":"0.75rem","fontSizeBase":"0.8125rem","fontSizeLg":"0.9375rem","fontWeightNormal":400,"fontWeightMedium":500,"fontWeightBold":700,"lineHeight":1.35,"headerFontScale":1.05},"spacing":{"rowHeight":22,"headerHeight":28,"sectionGap":12,"padding":10,"containerPadding":0,"cellPaddingX":10,"cellPaddingY":4,"axisGap":12,"groupPadding":8,"columnGap":8},"shapes":{"pointSize":5,"summaryHeight":8,"lineWidth":1.25,"borderRadius":1,"effectColors":["#e64b35","#4dbbd5","#00a087","#3c5488","#f39b7f"],"markerShapes":["square","circle","diamond","triangle"]},"axis":{"rangeMin":null,"rangeMax":null,"tickCount":null,"tickValues":null,"gridlines":false,"gridlineStyle":"dotted","ciClipFactor":2,"includeNull":true,"symmetric":null,"nullTick":true,"markerMargin":true},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto","rowBorder":true,"rowBorderStyle":"solid","containerBorder":false,"containerBorderRadius":2,"banding":true},"groupHeaders":{"level1FontSize":"0.875rem","level1FontWeight":700,"level1Italic":false,"level1Background":null,"level1BorderBottom":false,"level2FontSize":"0.8125rem","level2FontWeight":500,"level2Italic":false,"level2Background":null,"level2BorderBottom":false,"level3FontSize":"0.8125rem","level3FontWeight":400,"level3Italic":false,"level3Background":null,"level3BorderBottom":false,"indentPerLevel":14}}}},"labels":{"title":"GLP-1 Agonist Cardiovascular Outcomes","subtitle":null,"caption":null,"footnote":null},"layout":{"plotPosition":"right","tableWidth":"auto","plotWidth":"auto"},"zoom":1,"autoFit":true,"showZoomControls":true},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Now export to SVG:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"export-examples/forest_example.svg"</span>, <span class="at">width =</span> <span class="dv">700</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Here’s the exported SVG:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="export-examples/forest_example.svg" class="img-fluid figure-img" width="700"></p>
+<figcaption>Exported SVG</figcaption>
+</figure>
 </div>
 </section>
 <section id="format-comparison" class="level2">
 <h2 class="anchored" data-anchor-id="format-comparison">Format Comparison</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 15%">
-<col style="width: 19%">
-<col style="width: 17%">
-<col style="width: 21%">
-<col style="width: 26%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Format</th>
-<th>Best For</th>
-<th>Quality</th>
-<th>File Size</th>
-<th>Requirements</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SVG</td>
-<td>Web, editing, journals</td>
-<td>Vector (infinite)</td>
-<td>Small</td>
-<td>None</td>
-</tr>
-<tr class="even">
-<td>PNG</td>
-<td>Presentations, sharing</td>
-<td>Raster (scale-dependent)</td>
-<td>Medium</td>
-<td>Chrome/Chromium</td>
-</tr>
-<tr class="odd">
-<td>PDF</td>
-<td>Print publications</td>
-<td>Vector (infinite)</td>
-<td>Medium</td>
-<td>Chrome/Chromium</td>
-</tr>
-</tbody>
-</table>
+<ul>
+<li><strong>SVG</strong>: Vector format, infinite scalability, best for journals and editing</li>
+<li><strong>PNG</strong>: Raster format, good for presentations (use <code>scale = 2</code> or higher)</li>
+<li><strong>PDF</strong>: Vector format, best for print publications</li>
+</ul>
 </section>
 <section id="svg-export" class="level2">
 <h2 class="anchored" data-anchor-id="svg-export">SVG Export</h2>
-<p>SVG (Scalable Vector Graphics) is the recommended format for most uses:</p>
+<p>SVG is the recommended format for most uses. No external dependencies required.</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure1.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar chart example</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bar_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">department =</span> <span class="fu">c</span>(<span class="st">"Cardiology"</span>, <span class="st">"Oncology"</span>, <span class="st">"Neurology"</span>, <span class="st">"Pediatrics"</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">enrollment =</span> <span class="fu">c</span>(<span class="dv">245</span>, <span class="dv">312</span>, <span class="dv">189</span>, <span class="dv">156</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p_bar <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(bar_data, <span class="at">label =</span> <span class="st">"department"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">viz_bar</span>(<span class="fu">viz_bar_effect</span>(<span class="st">"enrollment"</span>, <span class="at">color =</span> <span class="st">"#3b82f6"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">header =</span> <span class="st">"Enrollment"</span>, <span class="at">width =</span> <span class="dv">180</span>, <span class="at">axis_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">350</span>)),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_numeric</span>(<span class="st">"enrollment"</span>, <span class="st">"N"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">web_theme_modern</span>(),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Trial Enrollment by Department"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_bar, <span class="st">"export-examples/bar_example.svg"</span>, <span class="at">width =</span> <span class="dv">500</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><strong>Advantages:</strong> - Infinite scalability - looks sharp at any size - Small file size - Editable in Illustrator, Inkscape, etc. - No external dependencies</p>
-<p><strong>When to use:</strong> - Journal submissions - Web display - Post-production editing - Archival</p>
-</section>
-<section id="png-export" class="level2">
-<h2 class="anchored" data-anchor-id="png-export">PNG Export</h2>
-<p>PNG is a raster format, best for presentations and quick sharing:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure1.png"</span>, <span class="at">width =</span> <span class="dv">1200</span>, <span class="at">scale =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<section id="resolution-control" class="level3">
-<h3 class="anchored" data-anchor-id="resolution-control">Resolution Control</h3>
-<p>The <code>scale</code> parameter controls the output resolution:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Scale</th>
-<th>Effective Resolution</th>
-<th>Use Case</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>72 DPI</td>
-<td>Quick preview</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>144 DPI</td>
-<td>Web, email</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>216 DPI</td>
-<td>Presentations</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>288 DPI</td>
-<td>High-quality print</td>
-</tr>
-</tbody>
-</table>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard web resolution</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"web.png"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># High-resolution for print</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"print.png"</span>, <span class="at">width =</span> <span class="dv">1600</span>, <span class="at">scale =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="export-examples/bar_example.svg" class="img-fluid figure-img" width="500"></p>
+<figcaption>Bar Chart Export</figcaption>
+</figure>
 </div>
 </section>
-</section>
-<section id="pdf-export" class="level2">
-<h2 class="anchored" data-anchor-id="pdf-export">PDF Export</h2>
-<p>PDF is ideal for print publications:</p>
+<section id="themed-exports" class="level2">
+<h2 class="anchored" data-anchor-id="themed-exports">Themed Exports</h2>
+<section id="jama-theme" class="level3">
+<h3 class="anchored" data-anchor-id="jama-theme">JAMA Theme</h3>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure1.pdf"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p_jama <span class="ot">&lt;-</span> glp1_trials <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(row_type <span class="sc">==</span> <span class="st">"data"</span>, group <span class="sc">==</span> <span class="st">"Main Trials"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabviz</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">160</span>),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">web_theme_jama</span>(),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Figure 1. Primary Endpoint"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_jama, <span class="st">"export-examples/jama_theme.svg"</span>, <span class="at">width =</span> <span class="dv">500</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<p><strong>Advantages:</strong> - Vector quality - Universal compatibility - Print-ready</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="export-examples/jama_theme.svg" class="img-fluid figure-img" width="500"></p>
+<figcaption>JAMA Theme</figcaption>
+</figure>
+</div>
 </section>
-<section id="width-and-height" class="level2">
-<h2 class="anchored" data-anchor-id="width-and-height">Width and Height</h2>
-<p>Control dimensions with <code>width</code> and <code>height</code> (in pixels):</p>
+<section id="dark-theme" class="level3">
+<h3 class="anchored" data-anchor-id="dark-theme">Dark Theme</h3>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed width, auto height</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"output.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>p_dark <span class="ot">&lt;-</span> glp1_trials <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(row_type <span class="sc">==</span> <span class="st">"data"</span>, group <span class="sc">==</span> <span class="st">"Main Trials"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabviz</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">160</span>),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">web_theme_dark</span>(),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Dark Theme Export"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_dark, <span class="st">"export-examples/dark_theme.svg"</span>, <span class="at">width =</span> <span class="dv">500</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="export-examples/dark_theme.svg" class="img-fluid figure-img" width="500"></p>
+<figcaption>Dark Theme</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="png-and-pdf-export" class="level2">
+<h2 class="anchored" data-anchor-id="png-and-pdf-export">PNG and PDF Export</h2>
+<p>PNG and PDF require Chrome/Chromium installed on your system.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PNG at 2x resolution</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure.png"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed dimensions</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"output.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>When <code>height</code> is NULL (default), it’s calculated automatically based on content.</p>
-</section>
-<section id="publication-workflows" class="level2">
-<h2 class="anchored" data-anchor-id="publication-workflows">Publication Workflows</h2>
-<section id="journal-figure" class="level3">
-<h3 class="anchored" data-anchor-id="journal-figure">Journal Figure</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create publication-quality figure</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(trial_data,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>, <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_n</span>(<span class="st">"n"</span>),</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_events</span>(<span class="st">"events"</span>, <span class="st">"n"</span>),</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>),</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_pvalue</span>(<span class="st">"pval"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">web_theme_jama</span>(),</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Figure 1. Primary Analysis"</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Export multiple formats</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figures/figure1.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>)  <span class="co"># For editing</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figures/figure1.pdf"</span>, <span class="at">width =</span> <span class="dv">800</span>)  <span class="co"># For submission</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="presentation-slide" class="level3">
-<h3 class="anchored" data-anchor-id="presentation-slide">Presentation Slide</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># High-contrast theme for slides</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(data, ...,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">web_theme_presentation</span>()</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Export at high resolution</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"slides/forest_plot.png"</span>, <span class="at">width =</span> <span class="dv">1920</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="batch-export" class="level3">
-<h3 class="anchored" data-anchor-id="batch-export">Batch Export</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Export multiple analyses</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>analyses <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">primary =</span> data_primary,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sensitivity =</span> data_sensitivity,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">subgroup =</span> data_subgroup</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (name <span class="cf">in</span> <span class="fu">names</span>(analyses)) {</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(analyses[[name]], ...)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_plot</span>(p, <span class="fu">sprintf</span>(<span class="st">"output/%s.svg"</span>, name))</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-</section>
-<section id="split-forest-export" class="level2">
-<h2 class="anchored" data-anchor-id="split-forest-export">Split Forest Export</h2>
-<p>Export all sub-plots from a split view:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create split view</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(data,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(<span class="fu">col_forest</span>(...)),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">split_by =</span> <span class="fu">c</span>(<span class="st">"region"</span>, <span class="st">"age_group"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Export all to directory</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save_split_table</span>(p, <span class="st">"output/subgroups"</span>, <span class="at">format =</span> <span class="st">"svg"</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates:</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># output/subgroups/North/North_Young.svg</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># output/subgroups/North/North_Old.svg</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># output/subgroups/South/South_Young.svg</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="requirements" class="level2">
-<h2 class="anchored" data-anchor-id="requirements">Requirements</h2>
-<section id="svg" class="level3">
-<h3 class="anchored" data-anchor-id="svg">SVG</h3>
-<p>No external dependencies required.</p>
-</section>
-<section id="png-and-pdf" class="level3">
-<h3 class="anchored" data-anchor-id="png-and-pdf">PNG and PDF</h3>
-<p>Requires Chrome, Chromium, or Google Chrome installed on your system.</p>
-<p>The export process: 1. Renders the widget to SVG 2. Uses headless Chrome to convert to PNG/PDF</p>
-<p>If you encounter issues, ensure Chrome is installed and accessible.</p>
-</section>
-</section>
-<section id="troubleshooting" class="level2">
-<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<section id="chrome-not-found" class="level3">
-<h3 class="anchored" data-anchor-id="chrome-not-found">“Chrome not found”</h3>
-<p>Install Google Chrome or Chromium, or set the <code>CHROMOTE_CHROME</code> environment variable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">CHROMOTE_CHROME =</span> <span class="st">"/path/to/chrome"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="export-looks-different-from-viewer" class="level3">
-<h3 class="anchored" data-anchor-id="export-looks-different-from-viewer">Export looks different from viewer</h3>
-<p>The export renders consistently regardless of browser. Small differences from the RStudio Viewer are normal due to different rendering engines.</p>
-</section>
-<section id="large-files" class="level3">
-<h3 class="anchored" data-anchor-id="large-files">Large files</h3>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF for print</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure.pdf"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="resolution-guide" class="level3">
+<h3 class="anchored" data-anchor-id="resolution-guide">Resolution Guide</h3>
+<p>For PNG exports, use <code>scale</code> parameter:</p>
 <ul>
-<li>Use SVG for vector outputs (smaller files)</li>
-<li>Reduce <code>scale</code> for PNG exports</li>
-<li>Simplify complex tables with many rows</li>
+<li><code>scale = 1</code>: 72 DPI (quick preview)</li>
+<li><code>scale = 2</code>: 144 DPI (web/screen)</li>
+<li><code>scale = 3</code>: 216 DPI (presentations)</li>
+<li><code>scale = 4</code>: 288 DPI (high-res print)</li>
 </ul>
 </section>
 </section>
@@ -663,7 +662,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="see-also">See Also</h2>
 <ul>
 <li><a href="../guide/themes.html">Themes</a> - Style for publication</li>
-<li><a href="../reference/export.html">Reference: export</a> - Complete API details</li>
+<li><a href="../reference/export.html">Reference: save_plot()</a> - Complete API</li>
 </ul>
 
 
@@ -1123,243 +1122,159 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Export"</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tabviz)</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>Export your tabviz widgets to static files for publications, presentations, and sharing.</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Start</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a widget</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(data,</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>),</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Export to SVG (vector)</span></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"my_table.svg"</span>)</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Export to PNG (raster)</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"my_table.png"</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Export to PDF (print)</span></span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"my_table.pdf"</span>)</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Format Comparison</span></span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Format <span class="pp">|</span> Best For <span class="pp">|</span> Quality <span class="pp">|</span> File Size <span class="pp">|</span> Requirements <span class="pp">|</span></span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|----------|---------|-----------|--------------|</span></span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> SVG <span class="pp">|</span> Web, editing, journals <span class="pp">|</span> Vector (infinite) <span class="pp">|</span> Small <span class="pp">|</span> None <span class="pp">|</span></span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> PNG <span class="pp">|</span> Presentations, sharing <span class="pp">|</span> Raster (scale-dependent) <span class="pp">|</span> Medium <span class="pp">|</span> Chrome/Chromium <span class="pp">|</span></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> PDF <span class="pp">|</span> Print publications <span class="pp">|</span> Vector (infinite) <span class="pp">|</span> Medium <span class="pp">|</span> Chrome/Chromium <span class="pp">|</span></span>
-<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## SVG Export</span></span>
-<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>SVG (Scalable Vector Graphics) is the recommended format for most uses:</span>
-<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure1.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span>
-<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Infinite scalability - looks sharp at any size</span>
-<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Small file size</span>
-<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Editable in Illustrator, Inkscape, etc.</span>
-<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>No external dependencies</span>
-<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>**When to use:**</span>
-<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Journal submissions</span>
-<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Web display</span>
-<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Post-production editing</span>
-<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Archival</span>
-<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## PNG Export</span></span>
-<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>PNG is a raster format, best for presentations and quick sharing:</span>
-<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure1.png"</span>, <span class="at">width =</span> <span class="dv">1200</span>, <span class="at">scale =</span> <span class="dv">3</span>)</span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a><span class="fu">### Resolution Control</span></span>
-<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>The <span class="in">`scale`</span> parameter controls the output resolution:</span>
-<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Scale <span class="pp">|</span> Effective Resolution <span class="pp">|</span> Use Case <span class="pp">|</span></span>
-<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|-------|---------------------|----------|</span></span>
-<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> 72 DPI <span class="pp">|</span> Quick preview <span class="pp">|</span></span>
-<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> 144 DPI <span class="pp">|</span> Web, email <span class="pp">|</span></span>
-<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> 216 DPI <span class="pp">|</span> Presentations <span class="pp">|</span></span>
-<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> 288 DPI <span class="pp">|</span> High-quality print <span class="pp">|</span></span>
-<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a><span class="co"># Standard web resolution</span></span>
-<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"web.png"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
-<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a><span class="co"># High-resolution for print</span></span>
-<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"print.png"</span>, <span class="at">width =</span> <span class="dv">1600</span>, <span class="at">scale =</span> <span class="dv">4</span>)</span>
-<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## PDF Export</span></span>
-<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>PDF is ideal for print publications:</span>
-<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure1.pdf"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span>
-<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>**Advantages:**</span>
-<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Vector quality</span>
-<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Universal compatibility</span>
-<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print-ready</span>
-<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Width and Height</span></span>
-<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>Control dimensions with <span class="in">`width`</span> and <span class="in">`height`</span> (in pixels):</span>
-<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-125"><a href="#cb12-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-126"><a href="#cb12-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-127"><a href="#cb12-127" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed width, auto height</span></span>
-<span id="cb12-128"><a href="#cb12-128" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"output.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span>
-<span id="cb12-129"><a href="#cb12-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-130"><a href="#cb12-130" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed dimensions</span></span>
-<span id="cb12-131"><a href="#cb12-131" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"output.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>)</span>
-<span id="cb12-132"><a href="#cb12-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-133"><a href="#cb12-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-134"><a href="#cb12-134" aria-hidden="true" tabindex="-1"></a>When <span class="in">`height`</span> is NULL (default), it's calculated automatically based on content.</span>
-<span id="cb12-135"><a href="#cb12-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-136"><a href="#cb12-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Publication Workflows</span></span>
-<span id="cb12-137"><a href="#cb12-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-138"><a href="#cb12-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### Journal Figure</span></span>
-<span id="cb12-139"><a href="#cb12-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-142"><a href="#cb12-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-143"><a href="#cb12-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-144"><a href="#cb12-144" aria-hidden="true" tabindex="-1"></a><span class="co"># Create publication-quality figure</span></span>
-<span id="cb12-145"><a href="#cb12-145" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(trial_data,</span>
-<span id="cb12-146"><a href="#cb12-146" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb12-147"><a href="#cb12-147" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb12-148"><a href="#cb12-148" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>, <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>),</span>
-<span id="cb12-149"><a href="#cb12-149" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_n</span>(<span class="st">"n"</span>),</span>
-<span id="cb12-150"><a href="#cb12-150" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_events</span>(<span class="st">"events"</span>, <span class="st">"n"</span>),</span>
-<span id="cb12-151"><a href="#cb12-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>),</span>
-<span id="cb12-152"><a href="#cb12-152" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_pvalue</span>(<span class="st">"pval"</span>)</span>
-<span id="cb12-153"><a href="#cb12-153" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb12-154"><a href="#cb12-154" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">web_theme_jama</span>(),</span>
-<span id="cb12-155"><a href="#cb12-155" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Figure 1. Primary Analysis"</span></span>
-<span id="cb12-156"><a href="#cb12-156" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-157"><a href="#cb12-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-158"><a href="#cb12-158" aria-hidden="true" tabindex="-1"></a><span class="co"># Export multiple formats</span></span>
-<span id="cb12-159"><a href="#cb12-159" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figures/figure1.svg"</span>, <span class="at">width =</span> <span class="dv">800</span>)  <span class="co"># For editing</span></span>
-<span id="cb12-160"><a href="#cb12-160" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figures/figure1.pdf"</span>, <span class="at">width =</span> <span class="dv">800</span>)  <span class="co"># For submission</span></span>
-<span id="cb12-161"><a href="#cb12-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-162"><a href="#cb12-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-163"><a href="#cb12-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Presentation Slide</span></span>
-<span id="cb12-164"><a href="#cb12-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-167"><a href="#cb12-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-168"><a href="#cb12-168" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-169"><a href="#cb12-169" aria-hidden="true" tabindex="-1"></a><span class="co"># High-contrast theme for slides</span></span>
-<span id="cb12-170"><a href="#cb12-170" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(data, ...,</span>
-<span id="cb12-171"><a href="#cb12-171" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">web_theme_presentation</span>()</span>
-<span id="cb12-172"><a href="#cb12-172" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-173"><a href="#cb12-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-174"><a href="#cb12-174" aria-hidden="true" tabindex="-1"></a><span class="co"># Export at high resolution</span></span>
-<span id="cb12-175"><a href="#cb12-175" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"slides/forest_plot.png"</span>, <span class="at">width =</span> <span class="dv">1920</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
-<span id="cb12-176"><a href="#cb12-176" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-177"><a href="#cb12-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-178"><a href="#cb12-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Batch Export</span></span>
-<span id="cb12-179"><a href="#cb12-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-182"><a href="#cb12-182" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-183"><a href="#cb12-183" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-184"><a href="#cb12-184" aria-hidden="true" tabindex="-1"></a><span class="co"># Export multiple analyses</span></span>
-<span id="cb12-185"><a href="#cb12-185" aria-hidden="true" tabindex="-1"></a>analyses <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb12-186"><a href="#cb12-186" aria-hidden="true" tabindex="-1"></a>  <span class="at">primary =</span> data_primary,</span>
-<span id="cb12-187"><a href="#cb12-187" aria-hidden="true" tabindex="-1"></a>  <span class="at">sensitivity =</span> data_sensitivity,</span>
-<span id="cb12-188"><a href="#cb12-188" aria-hidden="true" tabindex="-1"></a>  <span class="at">subgroup =</span> data_subgroup</span>
-<span id="cb12-189"><a href="#cb12-189" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-190"><a href="#cb12-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-191"><a href="#cb12-191" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (name <span class="cf">in</span> <span class="fu">names</span>(analyses)) {</span>
-<span id="cb12-192"><a href="#cb12-192" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(analyses[[name]], ...)</span>
-<span id="cb12-193"><a href="#cb12-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_plot</span>(p, <span class="fu">sprintf</span>(<span class="st">"output/%s.svg"</span>, name))</span>
-<span id="cb12-194"><a href="#cb12-194" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-195"><a href="#cb12-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-196"><a href="#cb12-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-197"><a href="#cb12-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Split Forest Export</span></span>
-<span id="cb12-198"><a href="#cb12-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-199"><a href="#cb12-199" aria-hidden="true" tabindex="-1"></a>Export all sub-plots from a split view:</span>
-<span id="cb12-200"><a href="#cb12-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-203"><a href="#cb12-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-204"><a href="#cb12-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb12-205"><a href="#cb12-205" aria-hidden="true" tabindex="-1"></a><span class="co"># Create split view</span></span>
-<span id="cb12-206"><a href="#cb12-206" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(data,</span>
-<span id="cb12-207"><a href="#cb12-207" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
-<span id="cb12-208"><a href="#cb12-208" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(<span class="fu">col_forest</span>(...)),</span>
-<span id="cb12-209"><a href="#cb12-209" aria-hidden="true" tabindex="-1"></a>  <span class="at">split_by =</span> <span class="fu">c</span>(<span class="st">"region"</span>, <span class="st">"age_group"</span>)</span>
-<span id="cb12-210"><a href="#cb12-210" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a><span class="co"># Export all to directory</span></span>
-<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a><span class="fu">save_split_table</span>(p, <span class="st">"output/subgroups"</span>, <span class="at">format =</span> <span class="st">"svg"</span>)</span>
-<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates:</span></span>
-<span id="cb12-216"><a href="#cb12-216" aria-hidden="true" tabindex="-1"></a><span class="co"># output/subgroups/North/North_Young.svg</span></span>
-<span id="cb12-217"><a href="#cb12-217" aria-hidden="true" tabindex="-1"></a><span class="co"># output/subgroups/North/North_Old.svg</span></span>
-<span id="cb12-218"><a href="#cb12-218" aria-hidden="true" tabindex="-1"></a><span class="co"># output/subgroups/South/South_Young.svg</span></span>
-<span id="cb12-219"><a href="#cb12-219" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span>
-<span id="cb12-220"><a href="#cb12-220" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-221"><a href="#cb12-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-222"><a href="#cb12-222" aria-hidden="true" tabindex="-1"></a><span class="fu">## Requirements</span></span>
-<span id="cb12-223"><a href="#cb12-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-224"><a href="#cb12-224" aria-hidden="true" tabindex="-1"></a><span class="fu">### SVG</span></span>
-<span id="cb12-225"><a href="#cb12-225" aria-hidden="true" tabindex="-1"></a>No external dependencies required.</span>
-<span id="cb12-226"><a href="#cb12-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-227"><a href="#cb12-227" aria-hidden="true" tabindex="-1"></a><span class="fu">### PNG and PDF</span></span>
-<span id="cb12-228"><a href="#cb12-228" aria-hidden="true" tabindex="-1"></a>Requires Chrome, Chromium, or Google Chrome installed on your system.</span>
-<span id="cb12-229"><a href="#cb12-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-230"><a href="#cb12-230" aria-hidden="true" tabindex="-1"></a>The export process:</span>
-<span id="cb12-231"><a href="#cb12-231" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Renders the widget to SVG</span>
-<span id="cb12-232"><a href="#cb12-232" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Uses headless Chrome to convert to PNG/PDF</span>
-<span id="cb12-233"><a href="#cb12-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-234"><a href="#cb12-234" aria-hidden="true" tabindex="-1"></a>If you encounter issues, ensure Chrome is installed and accessible.</span>
-<span id="cb12-235"><a href="#cb12-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-236"><a href="#cb12-236" aria-hidden="true" tabindex="-1"></a><span class="fu">## Troubleshooting</span></span>
-<span id="cb12-237"><a href="#cb12-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-238"><a href="#cb12-238" aria-hidden="true" tabindex="-1"></a><span class="fu">### "Chrome not found"</span></span>
-<span id="cb12-239"><a href="#cb12-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-240"><a href="#cb12-240" aria-hidden="true" tabindex="-1"></a>Install Google Chrome or Chromium, or set the <span class="in">`CHROMOTE_CHROME`</span> environment variable:</span>
-<span id="cb12-241"><a href="#cb12-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-242"><a href="#cb12-242" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb12-243"><a href="#cb12-243" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">CHROMOTE_CHROME =</span> <span class="st">"/path/to/chrome"</span>)</span>
-<span id="cb12-244"><a href="#cb12-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-245"><a href="#cb12-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-246"><a href="#cb12-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### Export looks different from viewer</span></span>
-<span id="cb12-247"><a href="#cb12-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-248"><a href="#cb12-248" aria-hidden="true" tabindex="-1"></a>The export renders consistently regardless of browser. Small differences from the RStudio Viewer are normal due to different rendering engines.</span>
-<span id="cb12-249"><a href="#cb12-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-250"><a href="#cb12-250" aria-hidden="true" tabindex="-1"></a><span class="fu">### Large files</span></span>
-<span id="cb12-251"><a href="#cb12-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-252"><a href="#cb12-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use SVG for vector outputs (smaller files)</span>
-<span id="cb12-253"><a href="#cb12-253" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reduce <span class="in">`scale`</span> for PNG exports</span>
-<span id="cb12-254"><a href="#cb12-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Simplify complex tables with many rows</span>
-<span id="cb12-255"><a href="#cb12-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-256"><a href="#cb12-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
-<span id="cb12-257"><a href="#cb12-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-258"><a href="#cb12-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Themes</span><span class="co">](themes.qmd)</span> - Style for publication</span>
-<span id="cb12-259"><a href="#cb12-259" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Reference: export</span><span class="co">](../reference/export.qmd)</span> - Complete API details</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Export"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tabviz)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create output directory for examples</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"export-examples"</span>)) <span class="fu">dir.create</span>(<span class="st">"export-examples"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>Export your tabviz widgets to static files for publications, presentations, and sharing.</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quick Example</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>Let's create a forest plot and export it to SVG.</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(glp1_trials)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> glp1_trials <span class="sc">|&gt;</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(row_type <span class="sc">==</span> <span class="st">"data"</span>, group <span class="sc">==</span> <span class="st">"Main Trials"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabviz</span>(</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_text</span>(<span class="st">"drug"</span>, <span class="st">"Drug"</span>),</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">180</span>),</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">web_theme_jama</span>(),</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"GLP-1 Agonist Cardiovascular Outcomes"</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>Now export to SVG:</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"export-examples/forest_example.svg"</span>, <span class="at">width =</span> <span class="dv">700</span>)</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>Here's the exported SVG:</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="al">![Exported SVG](export-examples/forest_example.svg)</span>{width=700}</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Format Comparison</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**SVG**: Vector format, infinite scalability, best for journals and editing</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**PNG**: Raster format, good for presentations (use <span class="in">`scale = 2`</span> or higher)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**PDF**: Vector format, best for print publications</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## SVG Export</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>SVG is the recommended format for most uses. No external dependencies required.</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar chart example</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>bar_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  <span class="at">department =</span> <span class="fu">c</span>(<span class="st">"Cardiology"</span>, <span class="st">"Oncology"</span>, <span class="st">"Neurology"</span>, <span class="st">"Pediatrics"</span>),</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>  <span class="at">enrollment =</span> <span class="fu">c</span>(<span class="dv">245</span>, <span class="dv">312</span>, <span class="dv">189</span>, <span class="dv">156</span>)</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>p_bar <span class="ot">&lt;-</span> <span class="fu">tabviz</span>(bar_data, <span class="at">label =</span> <span class="st">"department"</span>,</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">viz_bar</span>(<span class="fu">viz_bar_effect</span>(<span class="st">"enrollment"</span>, <span class="at">color =</span> <span class="st">"#3b82f6"</span>),</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>            <span class="at">header =</span> <span class="st">"Enrollment"</span>, <span class="at">width =</span> <span class="dv">180</span>, <span class="at">axis_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">350</span>)),</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_numeric</span>(<span class="st">"enrollment"</span>, <span class="st">"N"</span>)</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">web_theme_modern</span>(),</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Trial Enrollment by Department"</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_bar, <span class="st">"export-examples/bar_example.svg"</span>, <span class="at">width =</span> <span class="dv">500</span>)</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="al">![Bar Chart Export](export-examples/bar_example.svg)</span>{width=500}</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Themed Exports</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a><span class="fu">### JAMA Theme</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>p_jama <span class="ot">&lt;-</span> glp1_trials <span class="sc">|&gt;</span></span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(row_type <span class="sc">==</span> <span class="st">"data"</span>, group <span class="sc">==</span> <span class="st">"Main Trials"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabviz</span>(</span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">160</span>),</span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>)</span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">web_theme_jama</span>(),</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Figure 1. Primary Endpoint"</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_jama, <span class="st">"export-examples/jama_theme.svg"</span>, <span class="at">width =</span> <span class="dv">500</span>)</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="al">![JAMA Theme](export-examples/jama_theme.svg)</span>{width=500}</span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### Dark Theme</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>p_dark <span class="ot">&lt;-</span> glp1_trials <span class="sc">|&gt;</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(row_type <span class="sc">==</span> <span class="st">"data"</span>, group <span class="sc">==</span> <span class="st">"Main Trials"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tabviz</span>(</span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">160</span>),</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>)</span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>    <span class="at">theme =</span> <span class="fu">web_theme_dark</span>(),</span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Dark Theme Export"</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p_dark, <span class="st">"export-examples/dark_theme.svg"</span>, <span class="at">width =</span> <span class="dv">500</span>)</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a><span class="al">![Dark Theme](export-examples/dark_theme.svg)</span>{width=500}</span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a><span class="fu">## PNG and PDF Export</span></span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>PNG and PDF require Chrome/Chromium installed on your system.</span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a><span class="co"># PNG at 2x resolution</span></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure.png"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">scale =</span> <span class="dv">2</span>)</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a><span class="co"># PDF for print</span></span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(p, <span class="st">"figure.pdf"</span>, <span class="at">width =</span> <span class="dv">800</span>)</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Resolution Guide</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>For PNG exports, use <span class="in">`scale`</span> parameter:</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`scale = 1`</span>: 72 DPI (quick preview)</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`scale = 2`</span>: 144 DPI (web/screen)</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`scale = 3`</span>: 216 DPI (presentations)</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`scale = 4`</span>: 288 DPI (high-res print)</span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## See Also</span></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Themes</span><span class="co">](themes.qmd)</span> - Style for publication</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Reference: save_plot()</span><span class="co">](../reference/export.qmd)</span> - Complete API</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6d8a317f6d7170feb81ce6008a9cc2e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-86e1a688590f93f51b8053c58a4078b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -129,73 +129,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-guide" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Guide</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-guide">    
-        <li>
-    <a class="dropdown-item" href="../guide/index.html">
- <span class="dropdown-text">Overview</span></a>
+  <li class="nav-item">
+    <a class="nav-link active" href="../guide/index.html" aria-current="page"> 
+<span class="menu-text">Guide</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/quick-start.html">
- <span class="dropdown-text">1. Quick Start</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/package-data.html">
- <span class="dropdown-text">2. Package Data</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/columns.html">
- <span class="dropdown-text">3. Columns</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/row-styling.html">
- <span class="dropdown-text">4. Row Styling</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/cell-styling.html">
- <span class="dropdown-text">5. Cell Styling</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/row-groups.html">
- <span class="dropdown-text">6. Row Groups</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/titles.html">
- <span class="dropdown-text">7. Titles and Labels</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/visualizations/index.html">
- <span class="dropdown-text">8. Visualizations</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/visualizations/forest-plots.html">
- <span class="dropdown-text">9. Forest Plots</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/split-plots.html">
- <span class="dropdown-text">10. Split Plots</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/themes.html">
- <span class="dropdown-text">11. Themes</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/shiny.html">
- <span class="dropdown-text">12. Shiny Integration</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/export.html">
- <span class="dropdown-text">13. Export</span></a>
-  </li>  
-    </ul>
-  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-concepts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Concepts</span>
@@ -234,6 +171,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Clinical Examples</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../gallery/business.html">
+ <span class="dropdown-text">Business Examples</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../gallery/dashboards.html">
  <span class="dropdown-text">Dashboard Examples</span></a>
   </li>  
@@ -257,6 +198,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../reference/tabviz.html">
  <span class="dropdown-text">tabviz()</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../reference/forest_plot.html">
+ <span class="dropdown-text">forest_plot()</span></a>
+  </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
     <a class="dropdown-item" href="../reference/columns.html">
@@ -273,6 +218,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../reference/annotations.html">
  <span class="dropdown-text">Annotations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reference/interaction.html">
+ <span class="dropdown-text">Interaction Settings</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -315,13 +264,190 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guide/index.html">Overview</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/quick-start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Start</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Structure</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/columns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Column Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/row-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Row Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/titles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Titles &amp; Labels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/split-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Split Plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../guide/styling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Styling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/row-styling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Row Styling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/cell-styling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cell Styling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/themes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Themes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/fluent-api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fluent API</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../guide/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/forest-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Forest Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/bar-charts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bar Charts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Boxplots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/violin-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Violin Plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/interactivity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactivity</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">Integration</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/shiny.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Shiny</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/export.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Export</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/package-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package Data</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -456,7 +582,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td><a href="../guide/visualizations/forest-plots.html">Forest Plots</a></td>
-<td>Add interval visualizations with <code>col_forest()</code></td>
+<td>Add interval visualizations with <code>viz_forest()</code></td>
 </tr>
 <tr class="even">
 <td><a href="../guide/split-plots.html">Split Plots</a></td>
@@ -502,7 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_text</span>(<span class="st">"category"</span>),</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_numeric</span>(<span class="st">"value"</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>),</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_sparkline</span>(<span class="st">"trend"</span>)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1041,7 +1167,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Chapter <span class="pp">|</span> What You'll Learn <span class="pp">|</span></span>
 <span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------|-------------------|</span></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Forest Plots</span><span class="co">](visualizations/forest-plots.qmd)</span> <span class="pp">|</span> Add interval visualizations with <span class="in">`col_forest()`</span> <span class="pp">|</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Forest Plots</span><span class="co">](visualizations/forest-plots.qmd)</span> <span class="pp">|</span> Add interval visualizations with <span class="in">`viz_forest()`</span> <span class="pp">|</span></span>
 <span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Split Plots</span><span class="co">](split-plots.qmd)</span> <span class="pp">|</span> Sidebar navigation for subgroups <span class="pp">|</span></span>
 <span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="fu">### Customization &amp; Output</span></span>
@@ -1066,7 +1192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  <span class="at">columns =</span> <span class="fu">list</span>(</span>
 <span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_text</span>(<span class="st">"category"</span>),</span>
 <span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_numeric</span>(<span class="st">"value"</span>),</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>),</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lo"</span>, <span class="at">upper =</span> <span class="st">"hi"</span>),</span>
 <span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">col_sparkline</span>(<span class="st">"trend"</span>)</span>
 <span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>)</span>

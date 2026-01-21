@@ -75,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6d8a317f6d7170feb81ce6008a9cc2e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-86e1a688590f93f51b8053c58a4078b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -125,73 +125,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-guide" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Guide</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-guide">    
-        <li>
-    <a class="dropdown-item" href="../guide/index.html">
- <span class="dropdown-text">Overview</span></a>
+  <li class="nav-item">
+    <a class="nav-link active" href="../guide/index.html" aria-current="page"> 
+<span class="menu-text">Guide</span></a>
   </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/quick-start.html">
- <span class="dropdown-text">1. Quick Start</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/package-data.html">
- <span class="dropdown-text">2. Package Data</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/columns.html">
- <span class="dropdown-text">3. Columns</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/row-styling.html">
- <span class="dropdown-text">4. Row Styling</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/cell-styling.html">
- <span class="dropdown-text">5. Cell Styling</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/row-groups.html">
- <span class="dropdown-text">6. Row Groups</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/titles.html">
- <span class="dropdown-text">7. Titles and Labels</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/visualizations/index.html">
- <span class="dropdown-text">8. Visualizations</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/visualizations/forest-plots.html">
- <span class="dropdown-text">9. Forest Plots</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/split-plots.html">
- <span class="dropdown-text">10. Split Plots</span></a>
-  </li>  
-        <li><hr class="dropdown-divider"></li>
-        <li>
-    <a class="dropdown-item" href="../guide/themes.html">
- <span class="dropdown-text">11. Themes</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/shiny.html">
- <span class="dropdown-text">12. Shiny Integration</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../guide/export.html">
- <span class="dropdown-text">13. Export</span></a>
-  </li>  
-    </ul>
-  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-concepts" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Concepts</span>
@@ -230,6 +167,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="dropdown-text">Clinical Examples</span></a>
   </li>  
         <li>
+    <a class="dropdown-item" href="../gallery/business.html">
+ <span class="dropdown-text">Business Examples</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../gallery/dashboards.html">
  <span class="dropdown-text">Dashboard Examples</span></a>
   </li>  
@@ -253,6 +194,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../reference/tabviz.html">
  <span class="dropdown-text">tabviz()</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../reference/forest_plot.html">
+ <span class="dropdown-text">forest_plot()</span></a>
+  </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
     <a class="dropdown-item" href="../reference/columns.html">
@@ -269,6 +214,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../reference/annotations.html">
  <span class="dropdown-text">Annotations</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../reference/interaction.html">
+ <span class="dropdown-text">Interaction Settings</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -311,13 +260,190 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guide/shiny.html">Integration</a></li><li class="breadcrumb-item"><a href="../guide/shiny.html">Shiny</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/quick-start.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Quick Start</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Structure</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/columns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Column Types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/row-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Row Groups</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/titles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Titles &amp; Labels</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/split-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Split Plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../guide/styling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Styling</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/row-styling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Row Styling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/cell-styling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cell Styling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/themes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Themes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/fluent-api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fluent API</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../guide/visualizations/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/forest-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Forest Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/bar-charts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bar Charts</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Boxplots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/visualizations/violin-plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Violin Plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/interactivity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Interactivity</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Integration</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/shiny.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Shiny</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/export.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Export</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../guide/package-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Package Data</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -354,7 +480,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../guide/shiny.html">Integration</a></li><li class="breadcrumb-item"><a href="../guide/shiny.html">Shiny</a></li></ol></nav>
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Shiny Integration</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
@@ -392,7 +518,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabviz</span>(meta_data,</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      )</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    )</span>
@@ -448,7 +574,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabviz</span>(<span class="fu">filtered_data</span>(),</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      )</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    )</span>
@@ -477,7 +603,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabviz</span>(data,</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      ),</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">theme =</span> theme</span>
@@ -639,7 +765,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_dataset</span>(input<span class="sc">$</span>dataset_name),</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">.spec_only =</span> <span class="cn">TRUE</span></span>
@@ -763,7 +889,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
 <span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_numeric</span>(<span class="st">"n"</span>, <span class="st">"N"</span>),</span>
 <span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>),</span>
-<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">axis_label =</span> <span class="st">"Hazard Ratio"</span>)</span>
 <span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a>      ),</span>
 <span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>      <span class="at">theme =</span> <span class="fu">plot_theme</span>()</span>
@@ -1339,7 +1465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabviz</span>(meta_data,</span>
 <span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>      )</span>
 <span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    )</span>
@@ -1384,7 +1510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabviz</span>(<span class="fu">filtered_data</span>(),</span>
 <span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>      )</span>
 <span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>    )</span>
@@ -1416,7 +1542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tabviz</span>(data,</span>
 <span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>      <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>      ),</span>
 <span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>      <span class="at">theme =</span> theme</span>
@@ -1538,7 +1664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_dataset</span>(input<span class="sc">$</span>dataset_name),</span>
 <span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns =</span> <span class="fu">list</span>(</span>
-<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>      <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>      <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>                 <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>)</span>
 <span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">.spec_only =</span> <span class="cn">TRUE</span></span>
@@ -1670,7 +1796,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-361"><a href="#cb14-361" aria-hidden="true" tabindex="-1"></a>      <span class="at">columns =</span> <span class="fu">list</span>(</span>
 <span id="cb14-362"><a href="#cb14-362" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_numeric</span>(<span class="st">"n"</span>, <span class="st">"N"</span>),</span>
 <span id="cb14-363"><a href="#cb14-363" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_interval</span>(<span class="st">"HR (95% CI)"</span>, <span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>),</span>
-<span id="cb14-364"><a href="#cb14-364" aria-hidden="true" tabindex="-1"></a>        <span class="fu">col_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
+<span id="cb14-364"><a href="#cb14-364" aria-hidden="true" tabindex="-1"></a>        <span class="fu">viz_forest</span>(<span class="at">point =</span> <span class="st">"hr"</span>, <span class="at">lower =</span> <span class="st">"lower"</span>, <span class="at">upper =</span> <span class="st">"upper"</span>,</span>
 <span id="cb14-365"><a href="#cb14-365" aria-hidden="true" tabindex="-1"></a>                   <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">axis_label =</span> <span class="st">"Hazard Ratio"</span>)</span>
 <span id="cb14-366"><a href="#cb14-366" aria-hidden="true" tabindex="-1"></a>      ),</span>
 <span id="cb14-367"><a href="#cb14-367" aria-hidden="true" tabindex="-1"></a>      <span class="at">theme =</span> <span class="fu">plot_theme</span>()</span>
