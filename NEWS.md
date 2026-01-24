@@ -1,3 +1,26 @@
+# tabviz 0.4.1
+
+## Bug Fixes
+
+* **SVG export alignment**: Fixed multiple WYSIWYG issues between web view and SVG export:
+  - **VIZ_MARGIN consistency**: SVG now uses the same 12px margin as web view (was 30px)
+  - **Arrow positioning**: Fixed double offset causing arrows to be misaligned
+  - **Font size precision**: Rounded to 2 decimal places to avoid rendering artifacts
+
+* **SVG export resize**: Browser resize and manual column resize now correctly reflected in SVG export. Previously, forest column width was fixed regardless of user adjustments.
+
+* **SVG header spacing**: Fixed vertical padding in column group headers to match web view by accounting for `cellPaddingY` in multi-row headers.
+
+* **SVG footer spacing**: Reduced gap between axis and footnote from 72px to ~52px to match web view's layout.
+
+* **Column groups detection**: Fixed `hasGroups` check to include unified columns (not just legacy left/right positioned columns).
+
+## New Features
+
+* **Viz column SVG rendering**: Added SVG export support for `viz_bar`, `viz_boxplot`, and `viz_violin` column types (previously missing from SVG output).
+
+---
+
 # tabviz 0.4.0
 
 ## Breaking Changes
