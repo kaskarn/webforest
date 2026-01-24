@@ -766,13 +766,16 @@ function hasColumnGroups(columnDefs: ColumnDef[]): boolean {
   return columnDefs.some((c) => c.isGroup);
 }
 
-/** Parse font size from CSS string (e.g., "0.875rem" -> 14) */
+/** Parse font size from CSS string (e.g., "0.875rem" -> 14, "9pt" -> 12) */
 function parseFontSize(size: string): number {
   let value: number;
   if (size.endsWith("rem")) {
     value = parseFloat(size) * TYPOGRAPHY.REM_BASE;
   } else if (size.endsWith("px")) {
     value = parseFloat(size);
+  } else if (size.endsWith("pt")) {
+    // 1pt = 1/72 inch, at 96dpi that's 96/72 = 1.333 px
+    value = parseFloat(size) * TYPOGRAPHY.PT_TO_PX;
   } else {
     value = TYPOGRAPHY.DEFAULT_FONT_SIZE;
   }
@@ -1154,10 +1157,9 @@ function renderGroupHeader(
   // Row count (e.g., "(15)") - smaller muted text after label
   // Web CSS: font-weight: normal, color: muted, font-size: 0.75rem
   if (rowCount > 0) {
-    // Estimate label width for positioning count
-    const avgCharWidth = fontSize * TYPOGRAPHY.AVG_CHAR_WIDTH_RATIO;
-    const labelWidth = label.length * avgCharWidth;
-    const countX = labelX + labelWidth + 6; // 6px gap
+    // Use proper text width estimation for positioning count
+    const labelWidth = estimateTextWidth(label, fontSize);
+    const countX = labelX + labelWidth + 6; // 6px gap (matches web's flex gap)
     const countFontSize = parseFontSize(theme.typography.fontSizeSm ?? "0.75rem");
     lines.push(`<text class="cell-text" x="${countX}" y="${textY}"
       font-family="${theme.typography.fontFamily}"

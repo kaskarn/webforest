@@ -3,7 +3,11 @@
   width="500" height="319"
   viewBox="0 0 500 319">
 <style>
-  text { font-variant-numeric: tabular-nums; }
+  text {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Use dominant-baseline for cell text to match CSS flex centering */
+  .cell-text { dominant-baseline: central; }
 </style>
 <rect width="100%" height="100%" fill="#1e1e2e"/>
 <text x="12" y="32"
@@ -14,18 +18,18 @@
 <line x1="12" x2="488"
       y1="52" y2="52"
       stroke="#313244" stroke-width="2"/>
-<text x="22" y="72.9"
+<text class="cell-text" x="22" y="68"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="14.7px"
       font-weight="600"
       fill="#cdd6f4">Study</text>
-<text x="117" y="72.9"
+<text class="cell-text" x="117" y="68"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14.7px"
         font-weight="600"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="277" y="72.9"
+<text class="cell-text" x="277" y="68"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14.7px"
         font-weight="600"
@@ -96,13 +100,13 @@
       font-size="12px"
       font-weight="500"
       fill="#a6adc8">Effect</text></g>
-<text x="22" y="101.66666666666667"
+<text class="cell-text" x="22" y="97"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">SUSTAIN-6</text>
-<text x="277" y="101.66666666666667"
+<text class="cell-text" x="277" y="97"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
@@ -112,13 +116,13 @@
 <line x1="12" x2="488"
           y1="110" y2="110"
           stroke="#313244" stroke-width="1"/>
-<text x="22" y="127.66666666666667"
+<text class="cell-text" x="22" y="123"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">PIONEER 6</text>
-<text x="277" y="127.66666666666667"
+<text class="cell-text" x="277" y="123"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
@@ -128,13 +132,13 @@
 <line x1="12" x2="488"
           y1="136" y2="136"
           stroke="#313244" stroke-width="1"/>
-<text x="22" y="153.66666666666666"
+<text class="cell-text" x="22" y="149"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">LEADER</text>
-<text x="277" y="153.66666666666666"
+<text class="cell-text" x="277" y="149"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
@@ -144,13 +148,13 @@
 <line x1="12" x2="488"
           y1="162" y2="162"
           stroke="#313244" stroke-width="1"/>
-<text x="22" y="179.66666666666666"
+<text class="cell-text" x="22" y="175"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">REWIND</text>
-<text x="277" y="179.66666666666666"
+<text class="cell-text" x="277" y="175"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"

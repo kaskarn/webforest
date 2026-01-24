@@ -112,6 +112,9 @@ export const TYPOGRAPHY = {
   /** Base rem size for font calculations */
   REM_BASE: 16,
 
+  /** Point to pixel conversion factor (1pt = 1/72 inch, at 96dpi = 96/72 ≈ 1.333px) */
+  PT_TO_PX: 96 / 72,
+
   /**
    * Baseline adjustment factor for vertical text centering.
    * @deprecated Use dominant-baseline="central" in SVG instead for proper centering.
