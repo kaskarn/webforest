@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+  width="800" height="728"
+  viewBox="0 0 800 728">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="12" y="32"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="16px"
+      font-weight="600"
+      fill="#333333">Default Axis Handling</text>
+<text x="12" y="56"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="14px"
+      fill="#64748b">Automatic range with CI clipping</text>
+<line x1="12" x2="788"
+    y1="72" y2="72"
+    stroke="#e2e8f0" stroke-width="2"/>
+<text x="22" y="92.9"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="14.7px"
+      font-weight="500"
+      fill="#333333">Study</text>
+<text x="210" y="92.9"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#333333">N</text>
+<text x="290" y="92.9"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#333333">95% CI</text>
+<text x="366" y="92.9"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+    y1="104" y2="104"
+    stroke="#e2e8f0" stroke-width="2"/>
+<rect x="12" y="128"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="176"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="224"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="272"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="320"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="368"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="416"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="464"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="512"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<rect x="12" y="560"
+              width="776" height="24"
+              fill="#f8fafc"/>
+<line x1="588.7873557008961" x2="588.7873557008961" y1="104" y2="620"
+    stroke="#94a3b8" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
+
+        <g class="interval effect-0">
+          <line x1="555.3142810226452" x2="560.1735857532183" y1="116" y2="116"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="555.3142810226452" x2="555.3142810226452" y1="113" y2="119" stroke="#475569" stroke-width="1.5"/>
+          <line x1="560.1735857532183" x2="560.1735857532183" y1="113" y2="119" stroke="#475569" stroke-width="1.5"/>
+          <rect x="551.7094548016897" y="110" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="563.0730787241179" x2="567.4402068770326" y1="140" y2="140"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="563.0730787241179" x2="563.0730787241179" y1="137" y2="143" stroke="#475569" stroke-width="1.5"/>
+          <line x1="567.4402068770326" x2="567.4402068770326" y1="137" y2="143" stroke="#475569" stroke-width="1.5"/>
+          <rect x="559.2818400074841" y="134" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="566.8455832290148" x2="570.8172115915099" y1="164" y2="164"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="566.8455832290148" x2="566.8455832290148" y1="161" y2="167" stroke="#475569" stroke-width="1.5"/>
+          <line x1="570.8172115915099" x2="570.8172115915099" y1="161" y2="167" stroke="#475569" stroke-width="1.5"/>
+          <rect x="562.8522377312186" y="158" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="559.9172053498389" x2="565.7657505814889" y1="188" y2="188"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="559.9172053498389" x2="559.9172053498389" y1="185" y2="191" stroke="#475569" stroke-width="1.5"/>
+          <line x1="565.7657505814889" x2="565.7657505814889" y1="185" y2="191" stroke="#475569" stroke-width="1.5"/>
+          <rect x="556.8244470147881" y="182" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="570.1283422059382" x2="574.5188601425068" y1="212" y2="212"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="570.1283422059382" x2="570.1283422059382" y1="209" y2="215" stroke="#475569" stroke-width="1.5"/>
+          <line x1="574.5188601425068" x2="574.5188601425068" y1="209" y2="215" stroke="#475569" stroke-width="1.5"/>
+          <rect x="566.2927736487732" y="206" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="547.0090934623286" x2="557.5779685943569" y1="236" y2="236"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="547.0090934623286" x2="547.0090934623286" y1="233" y2="239" stroke="#475569" stroke-width="1.5"/>
+          <line x1="557.5779685943569" x2="557.5779685943569" y1="233" y2="239" stroke="#475569" stroke-width="1.5"/>
+          <rect x="546.3020224455328" y="230" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="575.938224379972" x2="585.9057833648108" y1="260" y2="260"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="575.938224379972" x2="575.938224379972" y1="257" y2="263" stroke="#475569" stroke-width="1.5"/>
+          <line x1="585.9057833648108" x2="585.9057833648108" y1="257" y2="263" stroke="#475569" stroke-width="1.5"/>
+          <rect x="574.8990960415574" y="254" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="552.4410442353513" x2="560.4292732357436" y1="284" y2="284"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="552.4410442353513" x2="552.4410442353513" y1="281" y2="287" stroke="#475569" stroke-width="1.5"/>
+          <line x1="560.4292732357436" x2="560.4292732357436" y1="281" y2="287" stroke="#475569" stroke-width="1.5"/>
+          <rect x="550.3862960169301" y="278" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="586.1979224882009" x2="600.6004997060102" y1="308" y2="308"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="586.1979224882009" x2="586.1979224882009" y1="305" y2="311" stroke="#475569" stroke-width="1.5"/>
+          <line x1="600.6004997060102" x2="600.6004997060102" y1="305" y2="311" stroke="#475569" stroke-width="1.5"/>
+          <rect x="587.4031155631407" y="302" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="572.7422011493336" x2="580.6932106263545" y1="332" y2="332"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="572.7422011493336" x2="572.7422011493336" y1="329" y2="335" stroke="#475569" stroke-width="1.5"/>
+          <line x1="580.6932106263545" x2="580.6932106263545" y1="329" y2="335" stroke="#475569" stroke-width="1.5"/>
+          <rect x="570.69376767316" y="326" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="518.7575752169731" x2="545.6755728730935" y1="356" y2="356"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="518.7575752169731" x2="518.7575752169731" y1="353" y2="359" stroke="#475569" stroke-width="1.5"/>
+          <line x1="545.6755728730935" x2="545.6755728730935" y1="353" y2="359" stroke="#475569" stroke-width="1.5"/>
+          <rect x="526.2293981857354" y="350" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="593.7628282054395" x2="626.0677986776938" y1="380" y2="380"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="593.7628282054395" x2="593.7628282054395" y1="377" y2="383" stroke="#475569" stroke-width="1.5"/>
+          <line x1="626.0677986776938" x2="626.0677986776938" y1="377" y2="383" stroke="#475569" stroke-width="1.5"/>
+          <rect x="603.8976976152637" y="374" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="527.286257629243" x2="559.9172053498389" y1="404" y2="404"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="527.286257629243" x2="527.286257629243" y1="401" y2="407" stroke="#475569" stroke-width="1.5"/>
+          <line x1="559.9172053498389" x2="559.9172053498389" y1="401" y2="407" stroke="#475569" stroke-width="1.5"/>
+          <rect x="537.563108144643" y="398" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="370.9528795811518" x2="741.0471204188482" y1="428" y2="428"
+            stroke="#475569" stroke-width="1.5"/>
+          <path d="M 370.9528795811518 428 L 375.9528795811518 425 L 375.9528795811518 431 Z" fill="#475569"/>
+          <path d="M 741.0471204188482 428 L 736.0471204188482 425 L 736.0471204188482 431 Z" fill="#475569"/>
+          <rect x="496.1023023847363" y="422" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="370.9528795811518" x2="741.0471204188482" y1="452" y2="452"
+            stroke="#475569" stroke-width="1.5"/>
+          <path d="M 370.9528795811518 452 L 375.9528795811518 449 L 375.9528795811518 455 Z" fill="#475569"/>
+          <path d="M 741.0471204188482 452 L 736.0471204188482 449 L 736.0471204188482 455 Z" fill="#475569"/>
+          <rect x="638.3945081178496" y="446" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="370.9528795811518" x2="741.0471204188482" y1="476" y2="476"
+            stroke="#475569" stroke-width="1.5"/>
+          <path d="M 370.9528795811518 476 L 375.9528795811518 473 L 375.9528795811518 479 Z" fill="#475569"/>
+          <path d="M 741.0471204188482 476 L 736.0471204188482 473 L 736.0471204188482 479 Z" fill="#475569"/>
+          <rect x="517.2126442991039" y="470" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="370.9528795811518" x2="680.1602209093996" y1="500" y2="500"
+            stroke="#475569" stroke-width="1.5"/>
+          <path d="M 370.9528795811518 500 L 375.9528795811518 497 L 375.9528795811518 503 Z" fill="#475569"/>
+          <line x1="680.1602209093996" x2="680.1602209093996" y1="497" y2="503" stroke="#475569" stroke-width="1.5"/>
+          <rect x="451.63793289731166" y="494" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="527.104849498974" x2="741.0471204188482" y1="524" y2="524"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="527.104849498974" x2="527.104849498974" y1="521" y2="527" stroke="#475569" stroke-width="1.5"/>
+          <path d="M 741.0471204188482 524 L 736.0471204188482 521 L 736.0471204188482 527 Z" fill="#475569"/>
+          <rect x="669.472409017056" y="518" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="585.1223063325007" x2="592.4978042436159" y1="548" y2="548"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="585.1223063325007" x2="585.1223063325007" y1="545" y2="551" stroke="#475569" stroke-width="1.5"/>
+          <line x1="592.4978042436159" x2="592.4978042436159" y1="545" y2="551" stroke="#475569" stroke-width="1.5"/>
+          <rect x="582.7873557008961" y="542" width="12" height="12" fill="#0891b2"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="582.2265393448272" x2="593.4031155631407" y1="572" y2="572"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="582.2265393448272" x2="582.2265393448272" y1="569" y2="575" stroke="#475569" stroke-width="1.5"/>
+          <line x1="593.4031155631407" x2="593.4031155631407" y1="569" y2="575" stroke="#475569" stroke-width="1.5"/>
+          <rect x="581.8365506026888" y="566" width="12" height="12" fill="#0891b2"/>
+        </g>
+<g transform="translate(0, 620)"><line x1="356" x2="756"
+    y1="0" y2="0" stroke="#e2e8f0" stroke-width="1"/>
+<line x1="370.9528795811518" x2="370.9528795811518" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="372.9528795811518" y="16" text-anchor="start"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">0.10</text>
+<line x1="523.2126442991039" x2="523.2126442991039" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="523.2126442991039" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">0.50</text>
+<line x1="588.7873557008961" x2="588.7873557008961" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="588.7873557008961" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">1.00</text>
+<line x1="654.3620671026883" x2="654.3620671026883" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="654.3620671026883" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">2.00</text>
+<line x1="741.0471204188482" x2="741.0471204188482" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="739.0471204188482" y="16" text-anchor="end"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">5.00</text>
+<text x="556" y="28"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      font-weight="500"
+      fill="#64748b">Hazard Ratio (log scale)</text></g>
+<text x="22" y="120.66666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Major Medical Center A</text>
+<text x="210" y="120.66666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">2500.00</text>
+<text x="290" y="120.66666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="128" y2="128"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="144.66666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">University Hospital B</text>
+<text x="210" y="144.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">1800.00</text>
+<text x="290" y="144.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="152" y2="152"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="168.66666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">National Institute C</text>
+<text x="210" y="168.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">3200.00</text>
+<text x="290" y="168.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="176" y2="176"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="192.66666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Regional Center D</text>
+<text x="210" y="192.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">1500.00</text>
+<text x="290" y="192.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="200" y2="200"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="216.66666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Metro Hospital E</text>
+<text x="210" y="216.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">2100.00</text>
+<text x="290" y="216.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="224" y2="224"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="240.66666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Community Hospital F</text>
+<text x="210" y="240.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">450.00</text>
+<text x="290" y="240.66666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="248" y2="248"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="264.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Clinic Network G</text>
+<text x="210" y="264.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">380.00</text>
+<text x="290" y="264.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="272" y2="272"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="288.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Research Center H</text>
+<text x="210" y="288.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">520.00</text>
+<text x="290" y="288.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="296" y2="296"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="312.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Teaching Hospital I</text>
+<text x="210" y="312.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">290.00</text>
+<text x="290" y="312.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="320" y2="320"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="336.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Medical Group J</text>
+<text x="210" y="336.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">410.00</text>
+<text x="290" y="336.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="344" y2="344"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="360.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Rural Clinic K</text>
+<text x="210" y="360.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">85.00</text>
+<text x="290" y="360.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="368" y2="368"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="384.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Small Practice L</text>
+<text x="210" y="384.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">62.00</text>
+<text x="290" y="384.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="392" y2="392"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="408.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Pilot Site M</text>
+<text x="210" y="408.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">48.00</text>
+<text x="290" y="408.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="416" y2="416"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="432.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Single-arm Study N</text>
+<text x="210" y="432.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">25.00</text>
+<text x="290" y="432.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="440" y2="440"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="456.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Case Series O</text>
+<text x="210" y="456.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">18.00</text>
+<text x="290" y="456.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="464" y2="464"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="480.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Exploratory P</text>
+<text x="210" y="480.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">12.00</text>
+<text x="290" y="480.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="488" y2="488"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="504.6666666666667"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Outlier Site Q</text>
+<text x="210" y="504.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">150.00</text>
+<text x="290" y="504.6666666666667"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="512" y2="512"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="528.6666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Extreme Effect R</text>
+<text x="210" y="528.6666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">95.00</text>
+<text x="290" y="528.6666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="536" y2="536"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="552.6666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Null Effect S</text>
+<text x="210" y="552.6666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">800.00</text>
+<text x="290" y="552.6666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="560" y2="560"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="22" y="576.6666666666666"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">Borderline T</text>
+<text x="210" y="576.6666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333">320.00</text>
+<text x="290" y="576.6666666666666"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="584" y2="584"
+          stroke="#e2e8f0" stroke-width="1"/>
+<text x="12" y="696"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">Note: Arrows indicate CIs extending beyond axis limits</text>
+</svg>

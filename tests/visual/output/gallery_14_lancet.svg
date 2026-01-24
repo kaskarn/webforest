@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+  width="800" height="456"
+  viewBox="0 0 800 456">
+<rect width="100%" height="100%" fill="#fdfcfb"/>
+<text x="12" y="32"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="16px"
+      font-weight="700"
+      fill="#1e3a5f">Figure 3: Efficacy Outcomes</text>
+<line x1="12" x2="788"
+    y1="52" y2="52"
+    stroke="#d4dce6" stroke-width="2"/>
+<text x="22" y="71.9"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="14.7px"
+      font-weight="500"
+      fill="#1e3a5f">Outcome</text>
+<text x="281" y="71.9"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#1e3a5f">Events (Tx/Ctrl)</text>
+<text x="427" y="71.9"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#1e3a5f">95% CI</text>
+<text x="507" y="71.9"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+    y1="82" y2="82"
+    stroke="#d4dce6" stroke-width="2"/>
+<rect x="12" y="106"
+              width="776" height="24"
+              fill="#f8f7f5"/>
+<rect x="12" y="142"
+              width="776" height="24"
+              fill="#f8f7f5"/>
+<rect x="12" y="190"
+              width="776" height="24"
+              fill="#f8f7f5"/>
+<rect x="12" y="226"
+              width="776" height="24"
+              fill="#f8f7f5"/>
+<rect x="12" y="274"
+              width="776" height="24"
+              fill="#f8f7f5"/>
+<line x1="705.369977987398" x2="705.369977987398" y1="82" y2="334"
+    stroke="#6b7c93" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
+
+
+        <g class="interval effect-0">
+          <line x1="547.630022012602" x2="634.634654215798" y1="118" y2="118"
+            stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="547.630022012602" x2="547.630022012602" y1="115" y2="121" stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="634.634654215798" x2="634.634654215798" y1="115" y2="121" stroke="#1e3a5f" stroke-width="1.25"/>
+          <rect x="586.0630255750478" y="113" width="10" height="10" fill="#00468b"/>
+        </g>
+
+
+
+        <g class="interval effect-0">
+          <line x1="580.6616962261766" x2="681.88054191408" y1="178" y2="178"
+            stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="580.6616962261766" x2="580.6616962261766" y1="175" y2="181" stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="681.88054191408" x2="681.88054191408" y1="175" y2="181" stroke="#1e3a5f" stroke-width="1.25"/>
+          <rect x="625.0330854786729" y="173" width="10" height="10" fill="#00468b"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="517.7228491630833" x2="625.3750543672757" y1="202" y2="202"
+            stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="517.7228491630833" x2="517.7228491630833" y1="199" y2="205" stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="625.3750543672757" x2="625.3750543672757" y1="199" y2="205" stroke="#1e3a5f" stroke-width="1.25"/>
+          <rect x="564.9673334604257" y="197" width="10" height="10" fill="#00468b"/>
+        </g>
+
+
+
+        <g class="interval effect-0">
+          <line x1="601.1869528124028" x2="712.8875458739308" y1="262" y2="262"
+            stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="601.1869528124028" x2="601.1869528124028" y1="259" y2="265" stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="712.8875458739308" x2="712.8875458739308" y1="259" y2="265" stroke="#1e3a5f" stroke-width="1.25"/>
+          <rect x="651.8412633821731" y="257" width="10" height="10" fill="#00468b"/>
+        </g>
+
+        <g class="interval effect-0">
+          <line x1="591.0630255750478" x2="697.7005298136949" y1="286" y2="286"
+            stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="591.0630255750478" x2="591.0630255750478" y1="283" y2="289" stroke="#1e3a5f" stroke-width="1.25"/>
+          <line x1="697.7005298136949" x2="697.7005298136949" y1="283" y2="289" stroke="#1e3a5f" stroke-width="1.25"/>
+          <rect x="638.6737663144208" y="281" width="10" height="10" fill="#00468b"/>
+        </g>
+<g transform="translate(0, 334)"><line x1="497" x2="756"
+    y1="0" y2="0" stroke="#d4dce6" stroke-width="1"/>
+<line x1="511.44791666666663" x2="511.44791666666663" y1="0" y2="4"
+      stroke="#d4dce6" stroke-width="1"/>
+<text x="513.4479166666666" y="16" text-anchor="start"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      fill="#3d5a80">0.60</text>
+<line x1="569.9673334604257" x2="569.9673334604257" y1="0" y2="4"
+      stroke="#d4dce6" stroke-width="1"/>
+<text x="569.9673334604257" y="16" text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      fill="#3d5a80">0.70</text>
+<line x1="620.6591580362377" x2="620.6591580362377" y1="0" y2="4"
+      stroke="#d4dce6" stroke-width="1"/>
+<text x="620.6591580362377" y="16" text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      fill="#3d5a80">0.80</text>
+<line x1="705.369977987398" x2="705.369977987398" y1="0" y2="4"
+      stroke="#d4dce6" stroke-width="1"/>
+<text x="705.369977987398" y="16" text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      fill="#3d5a80">1.00</text>
+<text x="626.5" y="28"
+      text-anchor="middle"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      font-weight="500"
+      fill="#3d5a80">Hazard Ratio (95% CI)</text></g>
+<text x="22" y="98.66666666666667"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="700"
+    font-style="normal"
+    fill="#1e3a5f">Primary endpoint</text>
+<text x="281" y="98.66666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="427" y="98.66666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="106" y2="106"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="34" y="122.66666666666667"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="700"
+    font-style="normal"
+    fill="#1e3a5f">  CV death or HF hospitalization</text>
+<text x="281" y="122.66666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f">894/1212</text>
+<text x="427" y="122.66666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="130" y2="130"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="22" y="140.66666666666666"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#1e3a5f"></text>
+<text x="281" y="140.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="427" y="140.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="22" y="158.66666666666666"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="700"
+    font-style="normal"
+    fill="#1e3a5f">Components</text>
+<text x="281" y="158.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="427" y="158.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="166" y2="166"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="34" y="182.66666666666666"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#1e3a5f">  Cardiovascular death</text>
+<text x="281" y="182.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f">312/398</text>
+<text x="427" y="182.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="190" y2="190"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="34" y="206.66666666666666"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#1e3a5f">  HF hospitalization</text>
+<text x="281" y="206.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f">582/814</text>
+<text x="427" y="206.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="214" y2="214"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="22" y="224.66666666666666"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#1e3a5f"></text>
+<text x="281" y="224.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="427" y="224.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="22" y="242.66666666666666"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="700"
+    font-style="normal"
+    fill="#1e3a5f">Secondary endpoints</text>
+<text x="281" y="242.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="427" y="242.66666666666666"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="250" y2="250"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="34" y="266.6666666666667"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#1e3a5f">  All-cause mortality</text>
+<text x="281" y="266.6666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f">445/508</text>
+<text x="427" y="266.6666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="274" y2="274"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="34" y="290.6666666666667"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#1e3a5f">  Change in KCCQ score</text>
+<text x="281" y="290.6666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<text x="427" y="290.6666666666667"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#1e3a5f"></text>
+<line x1="12" x2="788"
+          y1="298" y2="298"
+          stroke="#d4dce6" stroke-width="1"/>
+<text x="12" y="410"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      fill="#3d5a80">Primary endpoint shown in bold. HR&lt;1 favours treatment.</text>
+<text x="12" y="426"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="12px"
+      font-style="italic"
+      fill="#6b7c93">Cox proportional hazards model stratified by region.</text>
+</svg>

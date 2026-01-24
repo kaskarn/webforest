@@ -15,9 +15,14 @@ import type {
   ComputedLayout,
   EffectSpec,
   MarkerShape,
+  VizBarColumnOptions,
+  VizBoxplotColumnOptions,
+  VizViolinColumnOptions,
+  BoxplotStats,
+  KDEResult,
 } from "$types";
 import { niceDomain, DOMAIN_PADDING, getEffectValue } from "./scale-utils";
-import { computeAxis, generateTicks, type AxisComputation } from "./axis-utils";
+import { computeAxis, generateTicks, VIZ_MARGIN, type AxisComputation } from "./axis-utils";
 import { computeArrowDimensions, renderArrowPath } from "./arrow-utils";
 import {
   LAYOUT,
@@ -43,6 +48,12 @@ import {
   getColumnDisplayText,
 } from "./formatters";
 import { estimateTextWidth } from "./width-utils";
+import {
+  computeBoxplotStats,
+  computeKDE,
+  normalizeKDE,
+  kdeToViolinPath,
+} from "./viz-utils";
 
 // ============================================================================
 // Export Options
@@ -130,7 +141,8 @@ function calculateSvgAutoWidths(
   const fontSize = parseFontSize(spec.theme.typography.fontSizeBase);
   // Header cells use scaled font size (theme.typography.headerFontScale, default 1.05)
   const headerFontScale = spec.theme.typography.headerFontScale ?? 1.05;
-  const headerFontSize = fontSize * headerFontScale;
+  // Round to 2 decimal places to avoid floating point precision issues
+  const headerFontSize = Math.round(fontSize * headerFontScale * 100) / 100;
   const rows = spec.data.rows;
 
   // Padding values from theme (not hardcoded magic numbers)
@@ -735,13 +747,16 @@ function hasColumnGroups(columnDefs: ColumnDef[]): boolean {
 
 /** Parse font size from CSS string (e.g., "0.875rem" -> 14) */
 function parseFontSize(size: string): number {
+  let value: number;
   if (size.endsWith("rem")) {
-    return parseFloat(size) * TYPOGRAPHY.REM_BASE;
+    value = parseFloat(size) * TYPOGRAPHY.REM_BASE;
+  } else if (size.endsWith("px")) {
+    value = parseFloat(size);
+  } else {
+    value = TYPOGRAPHY.DEFAULT_FONT_SIZE;
   }
-  if (size.endsWith("px")) {
-    return parseFloat(size);
-  }
-  return TYPOGRAPHY.DEFAULT_FONT_SIZE;
+  // Round to 2 decimal places to avoid floating point precision issues
+  return Math.round(value * 100) / 100;
 }
 
 /** Calculate text X position and anchor based on alignment */
@@ -904,9 +919,9 @@ interface ScaleAndClip {
 
 function computeXScaleAndClip(spec: WebSpec, forestWidth: number, forestSettings: ForestColumnSettings, options?: ExportOptions): ScaleAndClip {
   const isLog = forestSettings.scale === "log";
-  const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
-  const rangeStart = axisLabelPadding;
-  const rangeEnd = Math.max(forestWidth - axisLabelPadding, rangeStart + 50);
+  // Use VIZ_MARGIN (12px) to match web rendering - this is the margin from forest column edges
+  const rangeStart = VIZ_MARGIN;
+  const rangeEnd = Math.max(forestWidth - VIZ_MARGIN, rangeStart + 50);
 
   // If pre-computed domain is provided, use it directly
   if (options?.xDomain) {
@@ -1438,9 +1453,9 @@ function renderInterval(
     } else {
       // Regular row: CI line with whiskers and marker
       // Detect clipping using domain values (clipBounds) if available, else fallback to pixel positions
-      const axisLabelPadding = SPACING.AXIS_LABEL_PADDING;
-      const minX = forestX + axisLabelPadding;
-      const maxX = forestX + forestWidth - axisLabelPadding;
+      // Use VIZ_MARGIN (12px) to match web rendering
+      const minX = forestX + VIZ_MARGIN;
+      const maxX = forestX + forestWidth - VIZ_MARGIN;
 
       // Use clipBounds for clipping detection (domain units), not pixel positions
       const clippedLeft = clipBounds ? effect.lower! < clipBounds[0] : x1 < minX;
@@ -1462,14 +1477,16 @@ function renderInterval(
       const arrowConfig = computeArrowDimensions(theme);
       const arrowHalfHeight = arrowConfig.height / 2;
 
+      // Arrow positions: use clipBounds-based positions when available (matching web view)
+      // Note: xScale already includes forestX offset (wrapped at call site), so don't add it again
+      const leftArrowX = clipBounds ? xScale(clipBounds[0]) : minX;
+      const rightArrowX = clipBounds ? xScale(clipBounds[1]) : maxX;
+
       // Build left end: whisker or arrow.
-      // Note: Arrow positioned at minX (= forestX + axisLabelPadding) because this
-      // renders in full document coordinate space. The web view (RowInterval.svelte)
-      // uses x=0 because its SVG container is scoped to the forest plot area.
       let leftEnd = "";
       if (clippedLeft) {
         // Arrow pointing left with scaled dimensions
-        leftEnd = `<path d="${renderArrowPath("left", minX, effectY, arrowConfig)}" fill="${arrowConfig.color}"/>`;
+        leftEnd = `<path d="${renderArrowPath("left", leftArrowX, effectY, arrowConfig)}" fill="${arrowConfig.color}"/>`;
       } else {
         // Normal whisker (use scaled whisker height matching arrow)
         leftEnd = `<line x1="${clampedX1}" x2="${clampedX1}" y1="${effectY - arrowHalfHeight}" y2="${effectY + arrowHalfHeight}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
@@ -1479,7 +1496,7 @@ function renderInterval(
       let rightEnd = "";
       if (clippedRight) {
         // Arrow pointing right with scaled dimensions
-        rightEnd = `<path d="${renderArrowPath("right", maxX, effectY, arrowConfig)}" fill="${arrowConfig.color}"/>`;
+        rightEnd = `<path d="${renderArrowPath("right", rightArrowX, effectY, arrowConfig)}" fill="${arrowConfig.color}"/>`;
       } else {
         // Normal whisker
         rightEnd = `<line x1="${clampedX2}" x2="${clampedX2}" y1="${effectY - arrowHalfHeight}" y2="${effectY + arrowHalfHeight}" stroke="${lineColor}" stroke-width="${lineWidth}"/>`;
@@ -1544,6 +1561,521 @@ function renderDiamond(
     fill="${theme.colors.summaryFill}"
     stroke="${theme.colors.summaryBorder}"
     stroke-width="1"/>`;
+}
+
+// ============================================================================
+// Viz Column Renderers (viz_bar, viz_boxplot, viz_violin)
+// ============================================================================
+
+/**
+ * Render a viz_bar column cell for a single row.
+ * Matches VizBar.svelte rendering.
+ */
+function renderVizBar(
+  row: Row,
+  yCenter: number,
+  rowHeight: number,
+  vizX: number,
+  vizWidth: number,
+  options: VizBarColumnOptions,
+  xScale: Scale,
+  theme: WebTheme
+): string {
+  const parts: string[] = [];
+  const effects = options.effects;
+  const numEffects = effects.length;
+
+  // Check if row has valid data
+  const hasValidData = effects.some(e => {
+    const val = row.metadata[e.value];
+    return val != null && !Number.isNaN(val as number);
+  });
+
+  if (!hasValidData) return "";
+
+  // Bar dimensions (matching VizBar.svelte)
+  const totalBarHeight = rowHeight * 0.7;
+  const barGap = numEffects > 1 ? 2 : 0;
+  const adjustedBarHeight = (totalBarHeight - barGap * (numEffects - 1)) / numEffects;
+  const barHeight = Math.max(4, adjustedBarHeight);
+
+  // Default colors from theme
+  const defaultColors = theme.shapes.effectColors ?? ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
+
+  effects.forEach((effect, idx) => {
+    const value = row.metadata[effect.value] as number | undefined;
+    if (value == null || Number.isNaN(value)) return;
+
+    const barY = yCenter - totalBarHeight / 2 + idx * (barHeight + barGap);
+    const barXStart = vizX + xScale(Math.min(0, value));
+    const barW = Math.abs(xScale(value) - xScale(0));
+    const color = effect.color ?? defaultColors[idx % defaultColors.length];
+    const opacity = effect.opacity ?? 0.85;
+
+    parts.push(`<rect
+      x="${barXStart}" y="${barY}"
+      width="${Math.max(1, barW)}" height="${barHeight}"
+      fill="${color}" fill-opacity="${opacity}" rx="2"
+      class="viz-bar-segment"/>`);
+  });
+
+  return parts.join("\n");
+}
+
+/**
+ * Render a viz_boxplot column cell for a single row.
+ * Matches VizBoxplot.svelte rendering.
+ */
+function renderVizBoxplot(
+  row: Row,
+  yCenter: number,
+  rowHeight: number,
+  vizX: number,
+  vizWidth: number,
+  options: VizBoxplotColumnOptions,
+  xScale: Scale,
+  theme: WebTheme
+): string {
+  const parts: string[] = [];
+  const effects = options.effects;
+  const numEffects = effects.length;
+
+  // Compute stats for each effect
+  const effectStats: (BoxplotStats | null)[] = effects.map(effect => {
+    // Mode 1: Array data - compute stats
+    if (effect.data) {
+      const data = row.metadata[effect.data] as number[] | undefined;
+      if (!data || !Array.isArray(data) || data.length === 0) {
+        return null;
+      }
+      return computeBoxplotStats(data);
+    }
+
+    // Mode 2: Pre-computed stats
+    if (effect.min && effect.q1 && effect.median && effect.q3 && effect.max) {
+      const min = row.metadata[effect.min] as number;
+      const q1 = row.metadata[effect.q1] as number;
+      const median = row.metadata[effect.median] as number;
+      const q3 = row.metadata[effect.q3] as number;
+      const max = row.metadata[effect.max] as number;
+
+      if ([min, q1, median, q3, max].some(v => v == null || Number.isNaN(v))) {
+        return null;
+      }
+
+      // Get outliers if specified
+      let outliers: number[] = [];
+      if (effect.outliers) {
+        const outliersData = row.metadata[effect.outliers] as number[] | undefined;
+        if (outliersData && Array.isArray(outliersData)) {
+          outliers = outliersData;
+        }
+      }
+
+      return { min, q1, median, q3, max, outliers };
+    }
+
+    return null;
+  });
+
+  // Check if we have valid data
+  const hasValidData = effectStats.some(s => s !== null);
+  if (!hasValidData) return "";
+
+  // Box dimensions (matching VizBoxplot.svelte)
+  const totalHeight = rowHeight * 0.7;
+  const boxGap = numEffects > 1 ? 2 : 0;
+  const boxHeight = Math.max(8, (totalHeight - (numEffects - 1) * boxGap) / numEffects);
+
+  // Default colors
+  const defaultColors = theme.shapes.effectColors ?? ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
+  const lineColor = theme.colors.foreground ?? "#1a1a1a";
+
+  effects.forEach((effect, idx) => {
+    const stats = effectStats[idx];
+    if (!stats) return;
+
+    const boxY = yCenter - totalHeight / 2 + idx * (boxHeight + boxGap);
+    const boxCenterY = boxY + boxHeight / 2;
+    const color = effect.color ?? defaultColors[idx % defaultColors.length];
+    const opacity = effect.fillOpacity ?? 0.7;
+
+    // Whisker lines
+    // Left whisker
+    parts.push(`<line
+      x1="${vizX + xScale(stats.min)}" x2="${vizX + xScale(stats.q1)}"
+      y1="${boxCenterY}" y2="${boxCenterY}"
+      stroke="${lineColor}" stroke-width="1"/>`);
+    // Left whisker cap
+    parts.push(`<line
+      x1="${vizX + xScale(stats.min)}" x2="${vizX + xScale(stats.min)}"
+      y1="${boxCenterY - boxHeight / 4}" y2="${boxCenterY + boxHeight / 4}"
+      stroke="${lineColor}" stroke-width="1"/>`);
+
+    // Right whisker
+    parts.push(`<line
+      x1="${vizX + xScale(stats.q3)}" x2="${vizX + xScale(stats.max)}"
+      y1="${boxCenterY}" y2="${boxCenterY}"
+      stroke="${lineColor}" stroke-width="1"/>`);
+    // Right whisker cap
+    parts.push(`<line
+      x1="${vizX + xScale(stats.max)}" x2="${vizX + xScale(stats.max)}"
+      y1="${boxCenterY - boxHeight / 4}" y2="${boxCenterY + boxHeight / 4}"
+      stroke="${lineColor}" stroke-width="1"/>`);
+
+    // Box (Q1 to Q3)
+    const boxW = Math.max(2, xScale(stats.q3) - xScale(stats.q1));
+    parts.push(`<rect
+      x="${vizX + xScale(stats.q1)}" y="${boxY}"
+      width="${boxW}" height="${boxHeight}"
+      fill="${color}" fill-opacity="${opacity}"
+      stroke="${lineColor}" stroke-width="1"/>`);
+
+    // Median line
+    parts.push(`<line
+      x1="${vizX + xScale(stats.median)}" x2="${vizX + xScale(stats.median)}"
+      y1="${boxY}" y2="${boxY + boxHeight}"
+      stroke="${lineColor}" stroke-width="2"/>`);
+
+    // Outliers
+    if (options.showOutliers !== false && stats.outliers.length > 0) {
+      for (const outlier of stats.outliers) {
+        parts.push(`<circle
+          cx="${vizX + xScale(outlier)}" cy="${boxCenterY}"
+          r="2.5"
+          fill="none" stroke="${color}" stroke-width="1.5"/>`);
+      }
+    }
+  });
+
+  return parts.join("\n");
+}
+
+/**
+ * Render a viz_violin column cell for a single row.
+ * Matches VizViolin.svelte rendering.
+ */
+function renderVizViolin(
+  row: Row,
+  yCenter: number,
+  rowHeight: number,
+  vizX: number,
+  vizWidth: number,
+  options: VizViolinColumnOptions,
+  xScale: Scale,
+  theme: WebTheme
+): string {
+  const parts: string[] = [];
+  const effects = options.effects;
+  const numEffects = effects.length;
+
+  // Compute KDE for each effect
+  const effectKDEs: (KDEResult | null)[] = effects.map(effect => {
+    const data = row.metadata[effect.data] as number[] | undefined;
+    if (!data || !Array.isArray(data) || data.length < 2) {
+      return null;
+    }
+    return computeKDE(data, options.bandwidth);
+  });
+
+  // Compute quartiles for median/quartile lines
+  const effectQuartiles: ({ q1: number; median: number; q3: number } | null)[] = effects.map(effect => {
+    const data = row.metadata[effect.data] as number[] | undefined;
+    if (!data || !Array.isArray(data) || data.length < 2) {
+      return null;
+    }
+    const sorted = data.filter(v => v != null && !Number.isNaN(v)).sort((a, b) => a - b);
+    if (sorted.length === 0) return null;
+    const n = sorted.length;
+    const quantile = (p: number): number => {
+      if (n === 1) return sorted[0];
+      const h = (n - 1) * p;
+      const lo = Math.floor(h);
+      const hi = Math.ceil(h);
+      if (lo === hi) return sorted[lo];
+      return sorted[lo] + (h - lo) * (sorted[hi] - sorted[lo]);
+    };
+    return { q1: quantile(0.25), median: quantile(0.5), q3: quantile(0.75) };
+  });
+
+  // Check if we have valid data
+  const hasValidData = effectKDEs.some(k => k !== null);
+  if (!hasValidData) return "";
+
+  // Violin dimensions (matching VizViolin.svelte)
+  const totalHeight = rowHeight * 0.8;
+  const violinGap = numEffects > 1 ? 2 : 0;
+  const violinHeight = Math.max(10, (totalHeight - (numEffects - 1) * violinGap) / numEffects);
+  const maxWidth = violinHeight / 2;
+
+  // Default colors
+  const defaultColors = theme.shapes.effectColors ?? ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
+  const lineColor = theme.colors.foreground ?? "#1a1a1a";
+
+  effects.forEach((effect, idx) => {
+    const kde = effectKDEs[idx];
+    const quartiles = effectQuartiles[idx];
+    if (!kde || kde.x.length < 2) return;
+
+    const violinCenterY = yCenter - totalHeight / 2 + violinHeight / 2 + idx * (violinHeight + violinGap);
+    const color = effect.color ?? defaultColors[idx % defaultColors.length];
+    const opacity = effect.fillOpacity ?? 0.5;
+
+    // Generate violin path
+    const normalized = normalizeKDE(kde, maxWidth);
+    const pathPoints: string[] = [];
+
+    // Right side (above center)
+    for (let i = 0; i < normalized.x.length; i++) {
+      const x = vizX + xScale(normalized.x[i]);
+      const y = violinCenterY - normalized.y[i];
+      pathPoints.push(i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`);
+    }
+
+    // Left side (below center, reversed)
+    for (let i = normalized.x.length - 1; i >= 0; i--) {
+      const x = vizX + xScale(normalized.x[i]);
+      const y = violinCenterY + normalized.y[i];
+      pathPoints.push(`L ${x} ${y}`);
+    }
+    pathPoints.push("Z");
+
+    parts.push(`<path
+      d="${pathPoints.join(" ")}"
+      fill="${color}" fill-opacity="${opacity}"
+      stroke="${lineColor}" stroke-width="0.5"/>`);
+
+    // Median line
+    if (options.showMedian !== false && quartiles) {
+      const medianX = vizX + xScale(quartiles.median);
+      parts.push(`<line
+        x1="${medianX}" x2="${medianX}"
+        y1="${violinCenterY - maxWidth * 0.6}" y2="${violinCenterY + maxWidth * 0.6}"
+        stroke="${lineColor}" stroke-width="2"/>`);
+    }
+
+    // Quartile lines
+    if (options.showQuartiles && quartiles) {
+      const q1X = vizX + xScale(quartiles.q1);
+      const q3X = vizX + xScale(quartiles.q3);
+      parts.push(`<line
+        x1="${q1X}" x2="${q1X}"
+        y1="${violinCenterY - maxWidth * 0.4}" y2="${violinCenterY + maxWidth * 0.4}"
+        stroke="${lineColor}" stroke-width="1" stroke-dasharray="2,2"/>`);
+      parts.push(`<line
+        x1="${q3X}" x2="${q3X}"
+        y1="${violinCenterY - maxWidth * 0.4}" y2="${violinCenterY + maxWidth * 0.4}"
+        stroke="${lineColor}" stroke-width="1" stroke-dasharray="2,2"/>`);
+    }
+  });
+
+  return parts.join("\n");
+}
+
+/**
+ * Compute shared scale for a viz_bar column across all rows.
+ */
+function computeVizBarScale(
+  rows: Row[],
+  options: VizBarColumnOptions,
+  vizWidth: number
+): Scale {
+  const isLog = options.scale === "log";
+  const padding = VIZ_MARGIN;
+
+  let domainMin = options.axisRange?.[0];
+  let domainMax = options.axisRange?.[1];
+
+  if (domainMin == null || domainMax == null) {
+    const allValues: number[] = [];
+    for (const row of rows) {
+      for (const effect of options.effects) {
+        const val = row.metadata[effect.value] as number | undefined;
+        if (val != null && !Number.isNaN(val)) {
+          allValues.push(val);
+        }
+      }
+    }
+    if (allValues.length > 0) {
+      domainMin = domainMin ?? Math.min(0, ...allValues);
+      domainMax = domainMax ?? Math.max(...allValues) * 1.1;
+    } else {
+      domainMin = domainMin ?? 0;
+      domainMax = domainMax ?? 100;
+    }
+  }
+
+  if (isLog) {
+    return createLogScale([Math.max(0.01, domainMin), domainMax], [padding, vizWidth - padding]);
+  }
+  return createLinearScale([domainMin, domainMax], [padding, vizWidth - padding]);
+}
+
+/**
+ * Compute shared scale for a viz_boxplot column across all rows.
+ */
+function computeVizBoxplotScale(
+  rows: Row[],
+  options: VizBoxplotColumnOptions,
+  vizWidth: number
+): Scale {
+  const isLog = options.scale === "log";
+  const padding = VIZ_MARGIN;
+
+  let domainMin = options.axisRange?.[0];
+  let domainMax = options.axisRange?.[1];
+
+  if (domainMin == null || domainMax == null) {
+    const allValues: number[] = [];
+    for (const row of rows) {
+      for (const effect of options.effects) {
+        // Array data mode
+        if (effect.data) {
+          const data = row.metadata[effect.data] as number[] | undefined;
+          if (data && Array.isArray(data)) {
+            const stats = computeBoxplotStats(data);
+            allValues.push(stats.min, stats.max);
+            if (options.showOutliers !== false) allValues.push(...stats.outliers);
+          }
+        }
+        // Pre-computed stats mode
+        else if (effect.min && effect.max) {
+          const min = row.metadata[effect.min] as number;
+          const max = row.metadata[effect.max] as number;
+          if (min != null && !Number.isNaN(min)) allValues.push(min);
+          if (max != null && !Number.isNaN(max)) allValues.push(max);
+        }
+      }
+    }
+    if (allValues.length > 0) {
+      const dataMin = Math.min(...allValues);
+      const dataMax = Math.max(...allValues);
+      const range = dataMax - dataMin;
+      domainMin = domainMin ?? dataMin - range * 0.05;
+      domainMax = domainMax ?? dataMax + range * 0.05;
+    } else {
+      domainMin = domainMin ?? 0;
+      domainMax = domainMax ?? 100;
+    }
+  }
+
+  if (isLog) {
+    return createLogScale([Math.max(0.01, domainMin), domainMax], [padding, vizWidth - padding]);
+  }
+  return createLinearScale([domainMin, domainMax], [padding, vizWidth - padding]);
+}
+
+/**
+ * Compute shared scale for a viz_violin column across all rows.
+ */
+function computeVizViolinScale(
+  rows: Row[],
+  options: VizViolinColumnOptions,
+  vizWidth: number
+): Scale {
+  const isLog = options.scale === "log";
+  const padding = VIZ_MARGIN;
+
+  let domainMin = options.axisRange?.[0];
+  let domainMax = options.axisRange?.[1];
+
+  if (domainMin == null || domainMax == null) {
+    const allValues: number[] = [];
+    for (const row of rows) {
+      for (const effect of options.effects) {
+        const data = row.metadata[effect.data] as number[] | undefined;
+        if (data && Array.isArray(data)) {
+          allValues.push(...data.filter(v => v != null && !Number.isNaN(v)));
+        }
+      }
+    }
+    if (allValues.length > 0) {
+      domainMin = domainMin ?? Math.min(...allValues);
+      domainMax = domainMax ?? Math.max(...allValues);
+      // Add padding for KDE tails
+      const range = (domainMax ?? 0) - (domainMin ?? 0);
+      domainMin = (domainMin ?? 0) - range * 0.1;
+      domainMax = (domainMax ?? 0) + range * 0.1;
+    } else {
+      domainMin = domainMin ?? 0;
+      domainMax = domainMax ?? 100;
+    }
+  }
+
+  if (isLog) {
+    return createLogScale([Math.max(0.01, domainMin), domainMax], [padding, vizWidth - padding]);
+  }
+  return createLinearScale([domainMin, domainMax], [padding, vizWidth - padding]);
+}
+
+/**
+ * Render axis for a viz column.
+ */
+function renderVizAxis(
+  xScale: Scale,
+  layout: InternalLayout,
+  theme: WebTheme,
+  axisLabel: string | undefined,
+  vizX: number,
+  vizWidth: number,
+  nullValue: number | undefined
+): string {
+  const lines: string[] = [];
+  const fontSize = parseFontSize(theme.typography.fontSizeSm);
+
+  const EDGE_THRESHOLD = AXIS.EDGE_THRESHOLD;
+
+  const getTextAnchor = (tickX: number): "start" | "middle" | "end" => {
+    if (tickX < EDGE_THRESHOLD) return "start";
+    if (tickX > vizWidth - EDGE_THRESHOLD) return "end";
+    return "middle";
+  };
+
+  const getTextXOffset = (tickX: number): number => {
+    if (tickX < EDGE_THRESHOLD) return 2;
+    if (tickX > vizWidth - EDGE_THRESHOLD) return -2;
+    return 0;
+  };
+
+  // Axis line
+  lines.push(`<line x1="${vizX}" x2="${vizX + vizWidth}"
+    y1="0" y2="0" stroke="${theme.colors.border}" stroke-width="1"/>`);
+
+  // Generate ticks from scale domain
+  const domain = xScale.domain();
+  const tickCount = 5;
+  const ticks: number[] = [];
+  const range = domain[1] - domain[0];
+  for (let i = 0; i <= tickCount; i++) {
+    ticks.push(domain[0] + (range * i) / tickCount);
+  }
+
+  // Tick marks and labels
+  for (const tick of ticks) {
+    const tickX = xScale(tick);
+    const x = vizX + tickX;
+    const textAnchor = getTextAnchor(tickX);
+    const xOffset = getTextXOffset(tickX);
+    const label = formatNumber(tick);
+
+    lines.push(`<line x1="${x}" x2="${x}" y1="0" y2="4" stroke="${theme.colors.border}" stroke-width="1"/>`);
+    lines.push(`<text x="${x + xOffset}" y="14"
+      text-anchor="${textAnchor}"
+      font-family="${theme.typography.fontFamily}"
+      font-size="${fontSize}px"
+      fill="${theme.colors.foreground}">${label}</text>`);
+  }
+
+  // Axis label
+  if (axisLabel) {
+    lines.push(`<text x="${vizX + vizWidth / 2}" y="28"
+      text-anchor="middle"
+      font-family="${theme.typography.fontFamily}"
+      font-size="${fontSize}px"
+      fill="${theme.colors.foreground}">${escapeXml(axisLabel)}</text>`);
+  }
+
+  return lines.join("\n");
 }
 
 /**
@@ -1633,7 +2165,8 @@ function renderUnifiedColumnHeaders(
   const lines: string[] = [];
   const baseFontSize = parseFontSize(theme.typography.fontSizeBase);
   const headerFontScale = theme.typography.headerFontScale ?? 1.05;
-  const fontSize = baseFontSize * headerFontScale;
+  // Round to 2 decimal places to avoid floating point precision issues
+  const fontSize = Math.round(baseFontSize * headerFontScale * 100) / 100;
   const fontWeight = theme.typography.fontWeightMedium;
   const boldWeight = theme.typography.fontWeightBold;
   const hasGroups = hasColumnGroups(columnDefs);
@@ -1820,8 +2353,8 @@ function renderUnifiedTableRow(
     const currentX = columnPositions[i];
     const width = getColWidth(col);
 
-    // Skip forest columns (rendered separately as SVG overlay)
-    if (col.type === "forest") {
+    // Skip forest and viz columns (rendered separately as SVG overlay)
+    if (col.type === "forest" || col.type === "viz_bar" || col.type === "viz_boxplot" || col.type === "viz_violin") {
       continue;
     }
 
@@ -2240,6 +2773,20 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
   }
   const hasForestColumns = forestColumnIndices.length > 0;
 
+  // Identify viz columns (viz_bar, viz_boxplot, viz_violin)
+  interface VizColumnInfo {
+    index: number;
+    type: "viz_bar" | "viz_boxplot" | "viz_violin";
+    column: ColumnSpec;
+  }
+  const vizColumns: VizColumnInfo[] = [];
+  for (let i = 0; i < allColumns.length; i++) {
+    const col = allColumns[i];
+    if (col.type === "viz_bar" || col.type === "viz_boxplot" || col.type === "viz_violin") {
+      vizColumns.push({ index: i, type: col.type as VizColumnInfo["type"], column: col });
+    }
+  }
+
   // Extract settings from first forest column
   const forestSettings = getForestColumnSettings(spec);
   const layout = computeLayout(spec, options, forestSettings.nullValue);
@@ -2253,6 +2800,19 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       // Forest column width: check col.width first, then options.forest.width, then layout default
       if (typeof col.width === "number") return col.width;
       return col.options?.forest?.width ?? layout.forestWidth;
+    }
+    // Viz column widths: check col.width first, then options width, then layout default
+    if (col.type === "viz_bar") {
+      if (typeof col.width === "number") return col.width;
+      return col.options?.vizBar?.width ?? layout.forestWidth;
+    }
+    if (col.type === "viz_boxplot") {
+      if (typeof col.width === "number") return col.width;
+      return col.options?.vizBoxplot?.width ?? layout.forestWidth;
+    }
+    if (col.type === "viz_violin") {
+      if (typeof col.width === "number") return col.width;
+      return col.options?.vizViolin?.width ?? layout.forestWidth;
     }
     const autoWidth = autoWidths.get(col.id);
     if (autoWidth !== undefined) return autoWidth;
@@ -2479,11 +3039,113 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     parts.push(renderForestAxis(xScale, layout, theme, fcAxisLabel, forestX, forestWidth, fcNullValue, baseTicks));
   }
 
+  // Render viz columns (viz_bar, viz_boxplot, viz_violin)
+  const allDataRows = spec.data.rows;
+  for (const vizColInfo of vizColumns) {
+    const col = vizColInfo.column;
+    const vizX = columnPositions[vizColInfo.index];
+    const vizWidth = getColWidth(col);
+
+    if (vizColInfo.type === "viz_bar") {
+      const opts = col.options?.vizBar as VizBarColumnOptions | undefined;
+      if (!opts) continue;
+
+      // Compute shared scale for all rows
+      const xScale = computeVizBarScale(allDataRows, opts, vizWidth);
+
+      // Render bars for each data row
+      displayRows.forEach((displayRow, i) => {
+        if (displayRow.type === "data") {
+          const yPos = plotY + rowPositions[i] + rowHeights[i] / 2;
+          const rowH = rowHeights[i];
+          parts.push(renderVizBar(
+            displayRow.row,
+            yPos,
+            rowH,
+            vizX,
+            vizWidth,
+            opts,
+            xScale,
+            theme
+          ));
+        }
+      });
+
+      // Render axis if showAxis is enabled
+      if (opts.showAxis !== false) {
+        parts.push(`<g transform="translate(0, ${plotY + layout.plotHeight})">`);
+        parts.push(renderVizAxis(xScale, layout, theme, opts.axisLabel, vizX, vizWidth, opts.nullValue));
+        parts.push("</g>");
+      }
+    } else if (vizColInfo.type === "viz_boxplot") {
+      const opts = col.options?.vizBoxplot as VizBoxplotColumnOptions | undefined;
+      if (!opts) continue;
+
+      // Compute shared scale for all rows
+      const xScale = computeVizBoxplotScale(allDataRows, opts, vizWidth);
+
+      // Render boxplots for each data row
+      displayRows.forEach((displayRow, i) => {
+        if (displayRow.type === "data") {
+          const yPos = plotY + rowPositions[i] + rowHeights[i] / 2;
+          const rowH = rowHeights[i];
+          parts.push(renderVizBoxplot(
+            displayRow.row,
+            yPos,
+            rowH,
+            vizX,
+            vizWidth,
+            opts,
+            xScale,
+            theme
+          ));
+        }
+      });
+
+      // Render axis if showAxis is enabled
+      if (opts.showAxis !== false) {
+        parts.push(`<g transform="translate(0, ${plotY + layout.plotHeight})">`);
+        parts.push(renderVizAxis(xScale, layout, theme, opts.axisLabel, vizX, vizWidth, opts.nullValue));
+        parts.push("</g>");
+      }
+    } else if (vizColInfo.type === "viz_violin") {
+      const opts = col.options?.vizViolin as VizViolinColumnOptions | undefined;
+      if (!opts) continue;
+
+      // Compute shared scale for all rows
+      const xScale = computeVizViolinScale(allDataRows, opts, vizWidth);
+
+      // Render violins for each data row
+      displayRows.forEach((displayRow, i) => {
+        if (displayRow.type === "data") {
+          const yPos = plotY + rowPositions[i] + rowHeights[i] / 2;
+          const rowH = rowHeights[i];
+          parts.push(renderVizViolin(
+            displayRow.row,
+            yPos,
+            rowH,
+            vizX,
+            vizWidth,
+            opts,
+            xScale,
+            theme
+          ));
+        }
+      });
+
+      // Render axis if showAxis is enabled
+      if (opts.showAxis !== false) {
+        parts.push(`<g transform="translate(0, ${plotY + layout.plotHeight})">`);
+        parts.push(renderVizAxis(xScale, layout, theme, opts.axisLabel, vizX, vizWidth, opts.nullValue));
+        parts.push("</g>");
+      }
+    }
+  }
+
   // Table rows - unified column rendering
   const rowsY = layout.mainY + layout.headerHeight;
 
   // Compute bar max values from all data rows for proper scaling
-  const allDataRows = spec.data.rows;
   const barMaxValues = computeBarMaxValues(allDataRows, allColumns);
 
   displayRows.forEach((displayRow, i) => {

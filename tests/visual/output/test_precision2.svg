@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+  width="800" height="184"
+  viewBox="0 0 800 184">
+<rect width="100%" height="100%" fill="#ffffff"/>
+
+<line x1="12" x2="788"
+    y1="12" y2="12"
+    stroke="#e2e8f0" stroke-width="2"/>
+<text x="22" y="32.9"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="14.7px"
+      font-weight="500"
+      fill="#333333">Study</text>
+<text x="85" y="32.9"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#333333">95% CI</text>
+<text x="161" y="32.9"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14.7px"
+        font-weight="500"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+    y1="44" y2="44"
+    stroke="#e2e8f0" stroke-width="2"/>
+<line x1="741.0306643952299" x2="741.0306643952299" y1="44" y2="104"
+    stroke="#94a3b8" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
+
+        <g class="interval effect-0">
+          <line x1="165.96933560476998" x2="420.43802740298855" y1="56" y2="56"
+            stroke="#475569" stroke-width="1.5"/>
+          <line x1="165.96933560476998" x2="165.96933560476998" y1="53" y2="59" stroke="#475569" stroke-width="1.5"/>
+          <line x1="420.43802740298855" x2="420.43802740298855" y1="53" y2="59" stroke="#475569" stroke-width="1.5"/>
+          <rect x="300.01356247074193" y="50" width="12" height="12" fill="#0891b2"/>
+        </g>
+<g transform="translate(0, 104)"><line x1="151" x2="756"
+    y1="0" y2="0" stroke="#e2e8f0" stroke-width="1"/>
+<line x1="165.96933560476998" x2="165.96933560476998" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="167.96933560476998" y="16" text-anchor="start"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">0.40</text>
+<line x1="306.01356247074193" x2="306.01356247074193" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="306.01356247074193" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">0.50</text>
+<line x1="420.43802740298855" x2="420.43802740298855" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="420.43802740298855" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">0.60</text>
+<line x1="517.1825340227398" x2="517.1825340227398" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="517.1825340227398" y="16" text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">0.70</text>
+<line x1="741.0306643952299" x2="741.0306643952299" y1="0" y2="4"
+      stroke="#e2e8f0" stroke-width="1"/>
+<text x="739.0306643952299" y="16" text-anchor="end"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      fill="#64748b">1.00</text>
+<text x="453.5" y="28"
+      text-anchor="middle"
+      font-family="system-ui, -apple-system, sans-serif"
+      font-size="12px"
+      font-weight="500"
+      fill="#64748b">Effect</text></g>
+<text x="22" y="60.666666666666664"
+    font-family="system-ui, -apple-system, sans-serif"
+    font-size="14px"
+    font-weight="400"
+    font-style="normal"
+    fill="#333333">A</text>
+<text x="85" y="60.666666666666664"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="14px"
+        font-weight="400"
+        font-style="normal"
+        text-anchor="start"
+        fill="#333333"></text>
+<line x1="12" x2="788"
+          y1="68" y2="68"
+          stroke="#e2e8f0" stroke-width="1"/>
+
+</svg>
