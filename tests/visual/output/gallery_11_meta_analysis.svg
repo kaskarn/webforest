@@ -2,6 +2,9 @@
 <svg xmlns="http://www.w3.org/2000/svg"
   width="800" height="452"
   viewBox="0 0 800 452">
+<style>
+  text { font-variant-numeric: tabular-nums; }
+</style>
 <rect width="100%" height="100%" fill="#fdfcfb"/>
 <text x="12" y="32"
       font-family="Georgia, 'Times New Roman', serif"

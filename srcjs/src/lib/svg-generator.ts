@@ -2103,6 +2103,7 @@ function renderVizAxis(
       text-anchor="middle"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
+      font-weight="${theme.typography.fontWeightMedium}"
       fill="${theme.colors.foreground}">${escapeXml(axisLabel)}</text>`);
   }
 
@@ -2170,7 +2171,7 @@ function renderForestAxis(
       text-anchor="middle"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
-      font-weight="500"
+      font-weight="${theme.typography.fontWeightMedium}"
       fill="${theme.colors.secondary}">${escapeXml(axisLabel)}</text>`);
   }
 
@@ -2375,7 +2376,7 @@ function renderUnifiedTableRow(
       text-anchor="middle"
       font-family="${theme.typography.fontFamily}"
       font-size="${badgeFontSize}px"
-      font-weight="500"
+      font-weight="${theme.typography.fontWeightMedium}"
       fill="${theme.colors.primary}">${escapeXml(badgeText)}</text>`);
   }
 
@@ -2465,7 +2466,7 @@ function renderUnifiedTableRow(
           text-anchor="middle"
           font-family="${theme.typography.fontFamily}"
           font-size="${badgeFontSize}px"
-          font-weight="500"
+          font-weight="${theme.typography.fontWeightMedium}"
           fill="${badgeTextColor}">${escapeXml(badgeText)}</text>`);
       }
     } else if (col.type === "stars") {
