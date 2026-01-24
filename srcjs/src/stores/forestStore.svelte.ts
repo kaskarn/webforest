@@ -1241,7 +1241,8 @@ export function createForestStore() {
         naturalHeight: totalRowsHeight + layout.headerHeight + layout.axisHeight,
 
         // Legacy fields for backwards compatibility
-        forestWidth: layout.forestWidth * zoom,
+        // Use actual first forest column width (may be resized) for consistent layout
+        forestWidth: (forestColumnsData[0]?.width ?? layout.forestWidth) * zoom,
         xDomain: domain,
         clipBounds: axisComputation.axisLimits,
         scale: zoom,
