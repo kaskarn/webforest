@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">Table-only with hierarchical org structure</text>
 <line x1="14" x2="786"
       y1="76" y2="76"
@@ -100,6 +101,7 @@
 <text x="440" y="132"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="600"
         text-anchor="end"
         fill="#18181b">24</text>
 <text x="460" y="132"
@@ -183,6 +185,7 @@
 <text x="440" y="177"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="600"
         text-anchor="end"
         fill="#18181b">32</text>
 <text x="460" y="177"
@@ -222,6 +225,7 @@
 <text x="440" y="207"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">45</text>
 <text x="460" y="207"
@@ -261,6 +265,7 @@
 <text x="440" y="237"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">28</text>
 <text x="460" y="237"
@@ -300,6 +305,7 @@
 <text x="440" y="267"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">18</text>
 <text x="460" y="267"
@@ -380,6 +386,7 @@
 <text x="440" y="312"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="600"
         text-anchor="end"
         fill="#18181b">28</text>
 <text x="460" y="312"
@@ -419,6 +426,7 @@
 <text x="440" y="342"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">35</text>
 <text x="460" y="342"
@@ -458,6 +466,7 @@
 <text x="440" y="372"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">22</text>
 <text x="460" y="372"
@@ -538,6 +547,7 @@
 <text x="440" y="417"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="600"
         text-anchor="end"
         fill="#18181b">18</text>
 <text x="460" y="417"
@@ -577,6 +587,7 @@
 <text x="440" y="447"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">22</text>
 <text x="460" y="447"
@@ -616,6 +627,7 @@
 <text x="440" y="477"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">12</text>
 <text x="460" y="477"
@@ -635,5 +647,6 @@
 <text x="14" y="616"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">Combining webtable() with row styling for org charts</text>
 </svg>

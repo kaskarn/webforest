@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">row_type, row_bold, row_indent, row_color, row_badge</text>
 <line x1="14" x2="786"
       y1="76" y2="76"
@@ -119,18 +120,21 @@
 <text x="430.82608695652175" y="16" text-anchor="start"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.60</text>
 <line x1="508.7267481881749" x2="508.7267481881749" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="508.7267481881749" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.80</text>
 <line x1="570.7025159085395" x2="570.7025159085395" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="570.7025159085395" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">1.00</text>
 <text x="513" y="28"
       text-anchor="middle"
@@ -173,7 +177,7 @@
       text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="12px"
-      font-weight="500"
+      font-weight="600"
       fill="#3b82f6">Primary</text>
 <text x="255" y="162"
         font-family="Inter, system-ui, -apple-system, sans-serif"
@@ -339,7 +343,7 @@
       text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="12px"
-      font-weight="500"
+      font-weight="600"
       fill="#3b82f6">Key</text>
 <text x="255" y="357"
         font-family="Inter, system-ui, -apple-system, sans-serif"
@@ -390,7 +394,7 @@
       text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="12px"
-      font-weight="500"
+      font-weight="600"
       fill="#3b82f6">Pooled</text>
 <text x="255" y="402"
         font-family="Inter, system-ui, -apple-system, sans-serif"
@@ -418,5 +422,6 @@
 <text x="14" y="541"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">Headers in blue, summary in green, with badges and indentation</text>
 </svg>

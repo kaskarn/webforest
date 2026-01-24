@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">col_bar() for magnitude, col_sparkline() for trends</text>
 <line x1="14" x2="881"
       y1="76" y2="76"
@@ -117,24 +118,28 @@
 <text x="682.8260869565217" y="16" text-anchor="start"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0</text>
 <line x1="731.8405797101449" x2="731.8405797101449" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="731.8405797101449" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">10.0</text>
 <line x1="782.8550724637681" x2="782.8550724637681" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="782.8550724637681" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">20.0</text>
 <line x1="833.8695652173913" x2="833.8695652173913" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="831.8695652173913" y="16" text-anchor="end"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">30.0</text>
 <text x="765" y="28"
       text-anchor="middle"
@@ -154,6 +159,7 @@
 <text x="238" y="132"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">45.20</text>
 <text x="258" y="132"
@@ -187,6 +193,7 @@
 <text x="238" y="162"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">28.50</text>
 <text x="258" y="162"
@@ -220,6 +227,7 @@
 <text x="238" y="192"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">125.80</text>
 <text x="258" y="192"
@@ -253,6 +261,7 @@
 <text x="238" y="222"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">52.10</text>
 <text x="258" y="222"
@@ -286,6 +295,7 @@
 <text x="238" y="252"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">18.90</text>
 <text x="258" y="252"
@@ -313,5 +323,6 @@
 <text x="14" y="391"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">Two sparkline columns showing different time series</text>
 </svg>

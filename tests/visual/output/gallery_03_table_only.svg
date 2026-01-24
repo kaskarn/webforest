@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">No forest plot - pure data table with bars and sparklines</text>
 <line x1="14" x2="786"
       y1="76" y2="76"
@@ -92,6 +93,7 @@
 <text x="365" y="162"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">18.50</text>
 <path d="M385.0,167.0L400.0,164.5L415.0,162.1L430.0,157.2L445.0,153.0L460.0,147.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -117,6 +119,7 @@
 <text x="365" y="192"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">22.10</text>
 <path d="M385.0,197.0L400.0,194.9L415.0,191.5L430.0,187.2L445.0,183.0L460.0,177.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -142,6 +145,7 @@
 <text x="365" y="222"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">28.40</text>
 <path d="M385.0,227.0L400.0,224.3L415.0,222.3L430.0,217.7L445.0,213.7L460.0,207.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -167,6 +171,7 @@
 <text x="365" y="252"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">35.20</text>
 <path d="M385.0,257.0L400.0,254.4L415.0,251.8L430.0,248.3L445.0,243.1L460.0,237.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -192,6 +197,7 @@
 <text x="365" y="282"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">42.80</text>
 <path d="M385.0,287.0L400.0,285.3L415.0,283.7L430.0,278.7L445.0,272.8L460.0,267.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -228,6 +234,7 @@
 <text x="365" y="342"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">21.60</text>
 <path d="M385.0,347.0L400.0,343.8L415.0,337.8L430.0,335.0L445.0,331.4L460.0,327.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -253,6 +260,7 @@
 <text x="365" y="372"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">-25</text>
 <path d="M385.0,357.0L400.0,361.3L415.0,367.0L430.0,371.3L445.0,374.1L460.0,377.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -278,6 +286,7 @@
 <text x="365" y="402"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">8.30</text>
 <path d="M385.0,407.0L400.0,403.0L415.0,399.0L430.0,395.0L445.0,391.0L460.0,387.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -303,6 +312,7 @@
 <text x="365" y="432"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">-10.80</text>
 <path d="M385.0,417.0L400.0,422.3L415.0,428.1L430.0,431.2L445.0,433.9L460.0,437.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -328,6 +338,7 @@
 <text x="365" y="462"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
+        font-weight="400"
         text-anchor="end"
         fill="#18181b">10.90</text>
 <path d="M385.0,467.0L400.0,463.5L415.0,458.8L430.0,455.8L445.0,451.7L460.0,447.0" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
@@ -340,5 +351,6 @@
 <text x="14" y="601"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">Using webtable() instead of forest_plot()</text>
 </svg>

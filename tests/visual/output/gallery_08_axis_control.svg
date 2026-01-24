@@ -14,6 +14,7 @@
 <text x="12" y="56"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
+      font-weight="400"
       fill="#64748b">Automatic range with CI clipping</text>
 <line x1="12" x2="788"
       y1="72" y2="72"
@@ -243,18 +244,21 @@
 <text x="372.90109890109886" y="16" text-anchor="start"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
+      font-weight="400"
       fill="#64748b">0.10</text>
 <line x1="471.07814838604133" x2="471.07814838604133" y1="0" y2="4"
       stroke="#e2e8f0" stroke-width="1"/>
 <text x="471.07814838604133" y="16" text-anchor="middle"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
+      font-weight="400"
       fill="#64748b">1.00</text>
 <line x1="541.0989010989011" x2="541.0989010989011" y1="0" y2="4"
       stroke="#e2e8f0" stroke-width="1"/>
 <text x="539.0989010989011" y="16" text-anchor="end"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
+      font-weight="400"
       fill="#64748b">5.00</text>
 <text x="456" y="28"
       text-anchor="middle"
@@ -728,5 +732,6 @@
 <text x="12" y="704"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
+      font-weight="400"
       fill="#64748b">Note: Arrows indicate CIs extending beyond axis limits</text>
 </svg>

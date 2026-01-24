@@ -109,18 +109,21 @@
 <text x="513.4309392265193" y="16" text-anchor="start"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#3d5a80">0.60</text>
 <line x1="592.6559208100783" x2="592.6559208100783" y1="0" y2="4"
       stroke="#d4dce6" stroke-width="1"/>
 <text x="592.6559208100783" y="16" text-anchor="middle"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#3d5a80">0.80</text>
 <line x1="655.6589111998412" x2="655.6589111998412" y1="0" y2="4"
       stroke="#d4dce6" stroke-width="1"/>
 <text x="655.6589111998412" y="16" text-anchor="middle"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#3d5a80">1.00</text>
 <text x="597" y="28"
       text-anchor="middle"
@@ -358,10 +361,12 @@
 <text x="12" y="418"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#3d5a80">Primary endpoint shown in bold. HR&lt;1 favours treatment.</text>
 <text x="12" y="434"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       font-style="italic"
       fill="#6b7c93">Cox proportional hazards model stratified by region.</text>
 </svg>

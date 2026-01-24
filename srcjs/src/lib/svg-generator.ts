@@ -1028,6 +1028,7 @@ function renderHeader(spec: WebSpec, layout: InternalLayout, theme: WebTheme): s
     lines.push(`<text x="${padding}" y="${layout.subtitleY}"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
+      font-weight="${theme.typography.fontWeightNormal}"
       fill="${theme.colors.secondary}">${escapeXml(spec.labels.subtitle)}</text>`);
   }
 
@@ -1054,6 +1055,7 @@ function renderFooter(spec: WebSpec, layout: InternalLayout, theme: WebTheme): s
     lines.push(`<text x="${padding}" y="${y}"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
+      font-weight="${theme.typography.fontWeightNormal}"
       fill="${theme.colors.secondary}">${escapeXml(spec.labels.caption)}</text>`);
     y += TYPOGRAPHY.CAPTION_HEIGHT;
   }
@@ -1063,6 +1065,7 @@ function renderFooter(spec: WebSpec, layout: InternalLayout, theme: WebTheme): s
     lines.push(`<text x="${padding}" y="${y}"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
+      font-weight="${theme.typography.fontWeightNormal}"
       font-style="italic"
       fill="${theme.colors.muted}">${escapeXml(spec.labels.footnote)}</text>`);
   }
@@ -2094,6 +2097,7 @@ function renderVizAxis(
       text-anchor="${textAnchor}"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
+      font-weight="${theme.typography.fontWeightNormal}"
       fill="${theme.colors.foreground}">${label}</text>`);
   }
 
@@ -2162,6 +2166,7 @@ function renderForestAxis(
     lines.push(`<text x="${x + xOffset}" y="16" text-anchor="${textAnchor}"
       font-family="${theme.typography.fontFamily}"
       font-size="${fontSize}px"
+      font-weight="${theme.typography.fontWeightNormal}"
       fill="${theme.colors.secondary}">${formatTick(tick)}</text>`);
   }
 
@@ -2376,7 +2381,7 @@ function renderUnifiedTableRow(
       text-anchor="middle"
       font-family="${theme.typography.fontFamily}"
       font-size="${badgeFontSize}px"
-      font-weight="${theme.typography.fontWeightMedium}"
+      font-weight="${theme.typography.fontWeightBold}"
       fill="${theme.colors.primary}">${escapeXml(badgeText)}</text>`);
   }
 
@@ -2405,12 +2410,19 @@ function renderUnifiedTableRow(
       const barAreaWidth = width - SPACING.TEXT_PADDING * 2 - textWidth;
       const barWidth = Math.min((barValue / maxValue) * barAreaWidth, barAreaWidth);
 
+      // Respect row styling for bar value text
+      const rowStyle = row.style;
+      const barFontWeight = (rowStyle?.bold || rowStyle?.emphasis)
+        ? theme.typography.fontWeightBold
+        : theme.typography.fontWeightNormal;
+
       lines.push(`<rect x="${currentX + SPACING.TEXT_PADDING}" y="${y + rowHeight / 2 - barHeight / 2}"
         width="${Math.max(0, barWidth)}" height="${barHeight}"
         fill="${barColor}" opacity="0.7" rx="2"/>`);
       lines.push(`<text x="${currentX + width - SPACING.TEXT_PADDING}" y="${textY}"
         font-family="${theme.typography.fontFamily}"
         font-size="${fontSize}px"
+        font-weight="${barFontWeight}"
         text-anchor="end"
         fill="${theme.colors.foreground}">${formatNumber(barValue)}</text>`);
     } else if (col.type === "sparkline" && Array.isArray(row.metadata[col.field])) {
@@ -2466,7 +2478,7 @@ function renderUnifiedTableRow(
           text-anchor="middle"
           font-family="${theme.typography.fontFamily}"
           font-size="${badgeFontSize}px"
-          font-weight="${theme.typography.fontWeightMedium}"
+          font-weight="${theme.typography.fontWeightBold}"
           fill="${badgeTextColor}">${escapeXml(badgeText)}</text>`);
       }
     } else if (col.type === "stars") {
@@ -2673,6 +2685,7 @@ function renderReferenceLine(
   y2: number,
   style: "solid" | "dashed" | "dotted",
   color: string,
+  theme: WebTheme,
   label?: string,
   width: number = 1,
   opacity: number = 0.6
@@ -2682,8 +2695,13 @@ function renderReferenceLine(
     stroke="${color}" stroke-width="${width}" stroke-opacity="${opacity}" stroke-dasharray="${dashArray}"/>`;
 
   if (label) {
+    // Web uses secondary color for annotation labels (ForestPlot.svelte:1161)
+    const labelColor = theme.colors.secondary;
     svg += `<text x="${x}" y="${y1 - 4}" text-anchor="middle"
-      font-size="10px" fill="${color}">${escapeXml(label)}</text>`;
+      font-family="${theme.typography.fontFamily}"
+      font-size="${theme.typography.fontSizeSm}"
+      font-weight="${theme.typography.fontWeightMedium}"
+      fill="${labelColor}">${escapeXml(label)}</text>`;
   }
 
   return svg;
@@ -3021,7 +3039,8 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       plotY,
       plotY + layout.plotHeight,
       "dashed",
-      theme.colors.muted
+      theme.colors.muted,
+      theme
     ));
 
     // Custom annotations for this forest column
@@ -3035,6 +3054,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
           plotY + layout.plotHeight,
           ann.style,
           ann.color ?? theme.colors.accent,
+          theme,
           ann.label,
           ann.width ?? 1,
           ann.opacity ?? 0.6
@@ -3053,6 +3073,7 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
           plotY + layout.plotHeight,
           ann.style,
           ann.color ?? theme.colors.accent,
+          theme,
           ann.label,
           ann.width ?? 1,
           ann.opacity ?? 0.6

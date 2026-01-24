@@ -134,18 +134,21 @@
 <text x="469.2208541950422" y="16" text-anchor="middle"
       font-family="Arial, Helvetica, sans-serif"
       font-size="14px"
+      font-weight="400"
       fill="#333333">0.60</text>
 <line x1="540.6441962931615" x2="540.6441962931615" y1="0" y2="4"
       stroke="#000000" stroke-width="1"/>
 <text x="540.6441962931615" y="16" text-anchor="middle"
       font-family="Arial, Helvetica, sans-serif"
       font-size="14px"
+      font-weight="400"
       fill="#333333">0.80</text>
 <line x1="596.0444444444445" x2="596.0444444444445" y1="0" y2="4"
       stroke="#000000" stroke-width="1"/>
 <text x="594.0444444444445" y="16" text-anchor="end"
       font-family="Arial, Helvetica, sans-serif"
       font-size="14px"
+      font-weight="400"
       fill="#333333">1.00</text>
 <text x="510" y="28"
       text-anchor="middle"
@@ -573,6 +576,7 @@
 <text x="6" y="400"
       font-family="Arial, Helvetica, sans-serif"
       font-size="14px"
+      font-weight="400"
       font-style="italic"
       fill="#555555">HR indicates hazard ratio. P values are for interaction.</text>
 </svg>

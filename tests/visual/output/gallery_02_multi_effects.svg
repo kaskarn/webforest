@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">5 sensitivity analyses displayed simultaneously</text>
 <line x1="14" x2="786"
       y1="76" y2="76"
@@ -239,18 +240,21 @@
 <text x="307.96101965121477" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.50</text>
 <line x1="363.95579873836596" x2="363.95579873836596" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="363.95579873836596" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.70</text>
 <line x1="423.3126565056681" x2="423.3126565056681" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="421.3126565056681" y="16" text-anchor="end"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">1.00</text>
 <text x="355" y="28"
       text-anchor="middle"
@@ -379,6 +383,7 @@
 <text x="14" y="456"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       font-style="italic"
       fill="#a1a1aa">Blue=ITT, Purple=MI, Green=CC, Orange=PP, Red=Tipping</text>
 </svg>

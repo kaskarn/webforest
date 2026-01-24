@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">forest_refline() adds labeled vertical lines</text>
 <line x1="14" x2="786"
       y1="76" y2="76"
@@ -54,10 +55,16 @@
     stroke="#a1a1aa" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
 <line x1="443.91192932022295" x2="443.91192932022295" y1="112" y2="307"
     stroke="#16a34a" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/><text x="443.91192932022295" y="108" text-anchor="middle"
-      font-size="10px" fill="#16a34a">Clinically meaningful</text>
+      font-family="Inter, system-ui, -apple-system, sans-serif"
+      font-size="0.8125rem"
+      font-weight="500"
+      fill="#52525b">Clinically meaningful</text>
 <line x1="383.01365680920014" x2="383.01365680920014" y1="112" y2="307"
     stroke="#dc2626" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="none"/><text x="383.01365680920014" y="108" text-anchor="middle"
-      font-size="10px" fill="#dc2626">Target effect</text>
+      font-family="Inter, system-ui, -apple-system, sans-serif"
+      font-size="0.8125rem"
+      font-weight="500"
+      fill="#52525b">Target effect</text>
 
         <g class="interval effect-0">
           <line x1="440.63150620416457" x2="482.7964189616738" y1="127" y2="127"
@@ -105,18 +112,21 @@
 <text x="318.82608695652175" y="16" text-anchor="start"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.30</text>
 <line x1="406.63702301190466" x2="406.63702301190466" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="406.63702301190466" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.60</text>
 <line x1="472.82459286458305" x2="472.82459286458305" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="470.82459286458305" y="16" text-anchor="end"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">1.00</text>
 <text x="401" y="28"
       text-anchor="middle"
@@ -245,5 +255,6 @@
 <text x="14" y="391"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">Green dashed = clinically meaningful threshold, Red solid = target</text>
 </svg>

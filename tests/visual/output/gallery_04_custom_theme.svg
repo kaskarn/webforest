@@ -14,6 +14,7 @@
 <text x="12" y="56"
       font-family="'Courier New', monospace"
       font-size="13.6px"
+      font-weight="400"
       fill="#008800">Built with set_colors(), set_typography(), set_spacing(), set_shapes()</text>
 <line x1="12" x2="788"
       y1="72" y2="72"
@@ -99,18 +100,21 @@
 <text x="447.8258521139877" y="16" text-anchor="middle"
       font-family="'Courier New', monospace"
       font-size="12px"
+      font-weight="400"
       fill="#008800">20.0</text>
 <line x1="505.52002235053084" x2="505.52002235053084" y1="0" y2="4"
       stroke="#003300" stroke-width="1"/>
 <text x="505.52002235053084" y="16" text-anchor="middle"
       font-family="'Courier New', monospace"
       font-size="12px"
+      font-weight="400"
       fill="#008800">40.0</text>
 <line x1="563.214192587074" x2="563.214192587074" y1="0" y2="4"
       stroke="#003300" stroke-width="1"/>
 <text x="561.214192587074" y="16" text-anchor="end"
       font-family="'Courier New', monospace"
       font-size="12px"
+      font-weight="400"
       fill="#008800">60.0</text>
 <text x="481" y="28"
       text-anchor="middle"
@@ -274,5 +278,6 @@
 <text x="12" y="370"
       font-family="'Courier New', monospace"
       font-size="12px"
+      font-weight="400"
       fill="#008800">Monospace font, green-on-black, zero border radius</text>
 </svg>

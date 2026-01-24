@@ -14,6 +14,7 @@
 <text x="14" y="58"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15px"
+      font-weight="400"
       fill="#52525b">Region &gt; Country &gt; Site (3 levels)</text>
 <line x1="14" x2="786"
       y1="76" y2="76"
@@ -167,18 +168,21 @@
 <text x="393.1073573647152" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.60</text>
 <line x1="462.97801811287536" x2="462.97801811287536" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="462.97801811287536" y="16" text-anchor="middle"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">0.80</text>
 <line x1="517.1739130434783" x2="517.1739130434783" y1="0" y2="4"
       stroke="#d4d4d8" stroke-width="1"/>
 <text x="515.1739130434783" y="16" text-anchor="end"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">1.00</text>
 <text x="433" y="28"
       text-anchor="middle"
@@ -556,5 +560,6 @@
 <text x="14" y="841"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
+      font-weight="400"
       fill="#52525b">Click any group header to collapse that branch and all children</text>
 </svg>

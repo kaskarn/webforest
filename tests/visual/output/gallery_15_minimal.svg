@@ -118,18 +118,21 @@
 <text x="480.4461533431359" y="16" text-anchor="middle"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#333333">0.60</text>
 <line x1="551.4748913412656" x2="551.4748913412656" y1="0" y2="4"
       stroke="#000000" stroke-width="1"/>
 <text x="551.4748913412656" y="16" text-anchor="middle"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#333333">0.80</text>
 <line x1="606.5690607734806" x2="606.5690607734806" y1="0" y2="4"
       stroke="#000000" stroke-width="1"/>
 <text x="604.5690607734806" y="16" text-anchor="end"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       fill="#333333">1.00</text>
 <text x="521" y="28"
       text-anchor="middle"
@@ -163,6 +166,7 @@
 <text x="335" y="91.66666666666667"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14px"
+        font-weight="400"
         text-anchor="end"
         fill="#000000">17.20</text>
 <text x="355" y="91.66666666666667"
@@ -201,6 +205,7 @@
 <text x="335" y="113.66666666666667"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14px"
+        font-weight="400"
         text-anchor="end"
         fill="#000000">16.80</text>
 <text x="355" y="113.66666666666667"
@@ -239,6 +244,7 @@
 <text x="335" y="135.66666666666666"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14px"
+        font-weight="400"
         text-anchor="end"
         fill="#000000">19.50</text>
 <text x="355" y="135.66666666666666"
@@ -277,6 +283,7 @@
 <text x="335" y="157.66666666666666"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14px"
+        font-weight="400"
         text-anchor="end"
         fill="#000000">21.20</text>
 <text x="355" y="157.66666666666666"
@@ -315,6 +322,7 @@
 <text x="335" y="179.66666666666666"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14px"
+        font-weight="400"
         text-anchor="end"
         fill="#000000">10.10</text>
 <text x="355" y="179.66666666666666"
@@ -353,6 +361,7 @@
 <text x="335" y="201.66666666666666"
         font-family="Georgia, 'Times New Roman', serif"
         font-size="14px"
+        font-weight="400"
         text-anchor="end"
         fill="#000000">15.20</text>
 <text x="355" y="201.66666666666666"
@@ -371,6 +380,7 @@
 <text x="10" y="325"
       font-family="Georgia, 'Times New Roman', serif"
       font-size="12px"
+      font-weight="400"
       font-style="italic"
       fill="#666666">Random-effects model. Weights from inverse variance.</text>
 </svg>
