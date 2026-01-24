@@ -451,14 +451,14 @@ export function createForestStore() {
     };
   });
 
-  // Derived: natural content width (intrinsic width based on column specs, not container)
-  // Used for fill mode scaling calculations
+  // Derived: natural content width (intrinsic width based on column specs and current layout)
+  // Used for fill mode scaling calculations and SVG export
+  // NOTE: This now uses layout.forestWidth for WYSIWYG export accuracy
   const naturalContentWidth = $derived.by((): number => {
     if (!spec) return 800;
 
     const DEFAULT_COLUMN_WIDTH = 100;
     const LABEL_COLUMN_WIDTH = 150;
-    const DEFAULT_FOREST_WIDTH = 250;
 
     // Calculate sum of all column widths (excluding forest columns which have separate width)
     let totalColumnWidth = 0;
@@ -473,13 +473,11 @@ export function createForestStore() {
     }
 
     // Add label column (always present)
-    totalColumnWidth += LABEL_COLUMN_WIDTH;
+    totalColumnWidth += columnWidths["__label__"] ?? LABEL_COLUMN_WIDTH;
 
-    // Add forest plot width if we have forest columns
-    const hasForest = forestColumns.length > 0;
-    const forestWidth = hasForest
-      ? (plotWidthOverride ?? DEFAULT_FOREST_WIDTH)
-      : 0;
+    // Use layout.forestWidth for consistent WYSIWYG export
+    // This ensures SVG total width matches what user sees on screen
+    const forestWidth = layout.forestWidth;
 
     // Add padding
     const padding = spec.theme.spacing.padding * 2;
