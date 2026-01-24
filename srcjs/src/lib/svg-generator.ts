@@ -422,14 +422,21 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
   const columns = Array.isArray(spec.columns) ? spec.columns : [];
 
   // Check if we have column groups (need taller header)
+  // Must check ALL columns including unified columns (without position)
   const leftColumnDefs = getColumnDefs(columns, "left");
   const rightColumnDefs = getColumnDefs(columns, "right");
-  const hasGroups = hasColumnGroups(leftColumnDefs) || hasColumnGroups(rightColumnDefs);
+  const hasGroups = hasColumnGroups(leftColumnDefs) || hasColumnGroups(rightColumnDefs) || hasColumnGroups(columns);
 
-  // Header height: taller when we have column groups (two-tier headers)
-  const headerHeight = hasGroups
-    ? theme.spacing.headerHeight * RENDERING.GROUP_HEADER_HEIGHT_MULTIPLIER
-    : theme.spacing.headerHeight;
+  // Header height calculation must match web view behavior:
+  // Web CSS: min-height: var(--wf-header-row-height) + padding: var(--wf-cell-padding-y) top+bottom
+  // For 2-tier headers (headerDepth=2), each row is:
+  //   headerHeight/2 (min-height) + cellPaddingY*2 (top+bottom padding)
+  const headerDepth = hasGroups ? 2 : 1;
+  const cellPaddingY = theme.spacing.cellPaddingY ?? 4;
+  const baseRowHeight = theme.spacing.headerHeight / headerDepth;
+  // Add cell padding for multi-row headers (browser renders padding inside the min-height)
+  const actualRowHeight = baseRowHeight + (hasGroups ? cellPaddingY * 2 : 0);
+  const headerHeight = actualRowHeight * headerDepth;
 
   // Text heights for header/footer
   const hasTitle = !!spec.labels?.title;
@@ -529,10 +536,12 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
   const neededWidth = padding * 2 + totalTableWidth + forestWidth + LAYOUT.COLUMN_GAP * 2;
   const totalWidth = Math.max(options.width ?? baseWidth, neededWidth);
 
-  // Total height: include axis label height and bottom margin
+  // Total height: match web view's axis height calculation (32 + axisGap)
+  const axisGap = theme.spacing.axisGap ?? 12;
+  const webAxisHeight = 32 + axisGap; // Matches web view's forestStore calculation
   const totalHeight = headerTextHeight + padding +
     headerHeight + plotHeight +
-    LAYOUT.AXIS_HEIGHT + LAYOUT.AXIS_LABEL_HEIGHT +
+    webAxisHeight +
     footerTextHeight +
     LAYOUT.BOTTOM_MARGIN;
 
@@ -553,7 +562,8 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
     titleY: padding + TYPOGRAPHY.TITLE_HEIGHT - 8, // Baseline adjustment
     subtitleY: padding + titleHeight + TYPOGRAPHY.SUBTITLE_HEIGHT - 4,
     mainY: headerTextHeight + padding,
-    footerY: headerTextHeight + padding + headerHeight + plotHeight + LAYOUT.AXIS_HEIGHT + LAYOUT.AXIS_LABEL_HEIGHT + padding,
+    // Footer Y: Match web view's layout (axisHeight + 8px footer padding-top)
+    footerY: headerTextHeight + padding + headerHeight + plotHeight + webAxisHeight + 8,
     autoWidths,
     labelWidth,
   };
@@ -2167,7 +2177,8 @@ function renderUnifiedColumnHeaders(
   const headerFontScale = theme.typography.headerFontScale ?? 1.05;
   // Round to 2 decimal places to avoid floating point precision issues
   const fontSize = Math.round(baseFontSize * headerFontScale * 100) / 100;
-  const fontWeight = theme.typography.fontWeightMedium;
+  // All header cells use bold weight to match web view CSS (.header-cell { font-weight: bold })
+  const fontWeight = theme.typography.fontWeightBold;
   const boldWeight = theme.typography.fontWeightBold;
   const hasGroups = hasColumnGroups(columnDefs);
 
