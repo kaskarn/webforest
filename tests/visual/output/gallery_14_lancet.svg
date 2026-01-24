@@ -43,13 +43,7 @@
 <rect x="12" y="106"
               width="776" height="24"
               fill="#f8f7f5"/>
-<rect x="12" y="142"
-              width="776" height="24"
-              fill="#f8f7f5"/>
 <rect x="12" y="190"
-              width="776" height="24"
-              fill="#f8f7f5"/>
-<rect x="12" y="226"
               width="776" height="24"
               fill="#f8f7f5"/>
 <rect x="12" y="274"
@@ -177,26 +171,6 @@
 <line x1="12" x2="788"
           y1="130" y2="130"
           stroke="#d4dce6" stroke-width="1"/>
-<text x="22" y="140.66666666666666"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="14px"
-    font-weight="400"
-    font-style="normal"
-    fill="#1e3a5f"></text>
-<text x="281" y="140.66666666666666"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
-<text x="427" y="140.66666666666666"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
 <text x="22" y="158.66666666666666"
     font-family="Georgia, 'Times New Roman', serif"
     font-size="14px"
@@ -266,26 +240,6 @@
 <line x1="12" x2="788"
           y1="214" y2="214"
           stroke="#d4dce6" stroke-width="1"/>
-<text x="22" y="224.66666666666666"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="14px"
-    font-weight="400"
-    font-style="normal"
-    fill="#1e3a5f"></text>
-<text x="281" y="224.66666666666666"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
-<text x="427" y="224.66666666666666"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
 <text x="22" y="242.66666666666666"
     font-family="Georgia, 'Times New Roman', serif"
     font-size="14px"

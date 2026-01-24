@@ -60,9 +60,6 @@
 <rect x="12" y="222"
               width="776" height="24"
               fill="#f8f7f5"/>
-<rect x="12" y="258"
-              width="776" height="24"
-              fill="#f8f7f5"/>
 <line x1="569.1676228239173" x2="569.1676228239173" y1="102" y2="318"
     stroke="#6b7c93" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
 <line x1="524.3534786622658" x2="524.3534786622658" y1="102" y2="318"
@@ -337,33 +334,6 @@
 <line x1="12" x2="788"
           y1="246" y2="246"
           stroke="#d4dce6" stroke-width="1"/>
-<text x="22" y="256.6666666666667"
-    font-family="Georgia, 'Times New Roman', serif"
-    font-size="14px"
-    font-weight="400"
-    font-style="normal"
-    fill="#1e3a5f"></text>
-<text x="175" y="256.6666666666667"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
-<text x="242" y="256.6666666666667"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
-<text x="342" y="256.6666666666667"
-        font-family="Georgia, 'Times New Roman', serif"
-        font-size="14px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#1e3a5f"></text>
 <text x="22" y="274.6666666666667"
     font-family="Georgia, 'Times New Roman', serif"
     font-size="14px"

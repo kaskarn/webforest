@@ -265,26 +265,6 @@
 <line x1="14" x2="786"
           y1="262" y2="262"
           stroke="#d4d4d8" stroke-width="1"/>
-<text x="24" y="274.5"
-    font-family="Inter, system-ui, -apple-system, sans-serif"
-    font-size="15px"
-    font-weight="400"
-    font-style="normal"
-    fill="#18181b"></text>
-<text x="255" y="274.5"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="15px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#18181b"></text>
-<text x="339" y="274.5"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="15px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#18181b"></text>
 <text x="24" y="297"
     font-family="Inter, system-ui, -apple-system, sans-serif"
     font-size="15px"
@@ -362,26 +342,6 @@
 <line x1="14" x2="786"
           y1="367" y2="367"
           stroke="#d4d4d8" stroke-width="1"/>
-<text x="24" y="379.5"
-    font-family="Inter, system-ui, -apple-system, sans-serif"
-    font-size="15px"
-    font-weight="400"
-    font-style="normal"
-    fill="#18181b"></text>
-<text x="255" y="379.5"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="15px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#18181b"></text>
-<text x="339" y="379.5"
-        font-family="Inter, system-ui, -apple-system, sans-serif"
-        font-size="15px"
-        font-weight="400"
-        font-style="normal"
-        text-anchor="start"
-        fill="#18181b"></text>
 <text x="24" y="402"
     font-family="Inter, system-ui, -apple-system, sans-serif"
     font-size="15px"

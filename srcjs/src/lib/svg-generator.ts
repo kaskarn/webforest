@@ -2972,10 +2972,14 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     displayRows.forEach((displayRow, i) => {
       if (displayRow.type === "data") {
         const row = displayRow.row;
-        const isSpacerRow = row.style?.type === "spacer";
+        // Styled rows (header, summary, spacer) are excluded from banding
+        // This matches web view's getRowClasses() logic
+        const isStyledRow = row.style?.type === "header" ||
+                           row.style?.type === "summary" ||
+                           row.style?.type === "spacer";
         const hasExplicitBg = row.style?.bg;
 
-        if (!isSpacerRow && !hasExplicitBg) {
+        if (!isStyledRow && !hasExplicitBg) {
           const y = plotY + rowPositions[i];
           const rowHeight = rowHeights[i];
           const isOddRow = i % 2 === 1;
@@ -3251,24 +3255,31 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       // Render data row
       const row = displayRow.row;
       const depth = displayRow.depth;
+      const isSpacerRow = row.style?.type === "spacer";
 
       // Note: Row banding is rendered earlier (before forest intervals) to avoid covering markers
 
-      // Render unified row (label + all columns in order)
-      parts.push(renderUnifiedTableRow(
-        row,
-        allColumns,
-        padding,
-        y,
-        rowHeight,
-        theme,
-        layout.labelWidth,
-        depth,
-        barMaxValues,
-        autoWidths,
-        getColWidth,
-        columnPositions
-      ));
+      // Skip content rendering for spacer rows (they're invisible in web view)
+      if (isSpacerRow) {
+        // Spacer rows don't render content - just occupy space
+        // The row height is already half-height from earlier calculation
+      } else {
+        // Render unified row (label + all columns in order)
+        parts.push(renderUnifiedTableRow(
+          row,
+          allColumns,
+          padding,
+          y,
+          rowHeight,
+          theme,
+          layout.labelWidth,
+          depth,
+          barMaxValues,
+          autoWidths,
+          getColWidth,
+          columnPositions
+        ));
+      }
     }
 
     // Row borders
