@@ -199,8 +199,6 @@ AxisConfig <- new_class(
 #' @param plot_position Position of forest plot: "left" or "right" (default: "right")
 #' @param table_width Width of table area: "auto" or numeric pixels (default: "auto")
 #' @param plot_width Width of plot area: "auto" or numeric pixels (default: "auto")
-#' @param row_border Show horizontal borders between rows (default: TRUE)
-#' @param row_border_style Style of row borders: "solid", "dashed", or "dotted" (default: "solid")
 #' @param container_border Show border around the plot container (default: FALSE)
 #' @param container_border_radius Corner radius for container in pixels (default: 8)
 #' @param banding Enable alternating row background colors (default: TRUE)
@@ -209,6 +207,9 @@ AxisConfig <- new_class(
 #' Note: `cell_padding_x` and `cell_padding_y` have been moved to the [Spacing] class.
 #' Use [set_spacing()] to modify cell padding.
 #'
+#' Note: Row borders are always rendered as solid 1px lines. The `row_border` and
+#' `row_border_style` properties were removed in v0.4.1 as they were never implemented.
+#'
 #' @export
 LayoutConfig <- new_class(
   "LayoutConfig",
@@ -216,8 +217,6 @@ LayoutConfig <- new_class(
     plot_position = new_property(class_character, default = "right"),
     table_width = new_property(class_any, default = "auto"),
     plot_width = new_property(class_any, default = "auto"),
-    row_border = new_property(class_logical, default = TRUE),
-    row_border_style = new_property(class_character, default = "solid"),
     container_border = new_property(class_logical, default = FALSE),
     container_border_radius = new_property(class_numeric, default = 8),
     banding = new_property(class_logical, default = TRUE)
@@ -225,10 +224,6 @@ LayoutConfig <- new_class(
   validator = function(self) {
     if (!self@plot_position %in% c("left", "right")) {
       return("plot_position must be 'left' or 'right'")
-    }
-    valid_styles <- c("solid", "dashed", "dotted")
-    if (!self@row_border_style %in% valid_styles) {
-      return(paste("row_border_style must be one of:", paste(valid_styles, collapse = ", ")))
     }
     NULL
   }
@@ -371,8 +366,6 @@ web_theme_minimal <- function() {
       effect_colors = c("#64748b", "#94a3b8", "#cbd5e1", "#475569", "#334155")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 0     # No rounded corners
     ),
@@ -445,8 +438,6 @@ web_theme_dark <- function() {
       effect_colors = c("#89b4fa", "#a6e3a1", "#fab387", "#f38ba8", "#cba6f7")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 8
     ),
@@ -977,8 +968,8 @@ current <- theme@axis
 #' @param plot_width Width of plot area: "auto" or numeric pixels (default: "auto")
 #' @param cell_padding_x Deprecated. Use [set_spacing()] instead.
 #' @param cell_padding_y Deprecated. Use [set_spacing()] instead.
-#' @param row_border Show horizontal borders between rows (default: TRUE)
-#' @param row_border_style Row border style: "solid", "dashed", or "dotted" (default: "solid")
+#' @param row_border Deprecated and ignored (removed in v0.4.1). Row borders are always rendered.
+#' @param row_border_style Deprecated and ignored (removed in v0.4.1).
 #' @param container_border Show border around the entire plot container (default: FALSE)
 #' @param container_border_radius Corner radius for container in pixels (default: 8).
 #'   Only visible when `container_border = TRUE`.
@@ -1025,7 +1016,6 @@ set_layout <- function(
   if (!is.null(plot_width)) current@plot_width <- plot_width
 
   # Deprecated: forward to spacing
-
   if (!is.null(cell_padding_x)) {
     cli_warn("cell_padding_x in set_layout() is deprecated. Use set_spacing(cell_padding_x = ...) instead.")
     theme@spacing@cell_padding_x <- cell_padding_x
@@ -1035,14 +1025,14 @@ set_layout <- function(
     theme@spacing@cell_padding_y <- cell_padding_y
   }
 
-  if (!is.null(row_border)) current@row_border <- row_border
-  if (!is.null(row_border_style)) {
-    valid_styles <- c("solid", "dashed", "dotted")
-    if (!row_border_style %in% valid_styles) {
-      cli_abort("row_border_style must be one of: {.val {valid_styles}}")
-    }
-    current@row_border_style <- row_border_style
+  # Deprecated: row_border and row_border_style were never implemented
+  if (!is.null(row_border)) {
+    cli_warn("row_border in set_layout() is deprecated and ignored. Row borders are always rendered.")
   }
+  if (!is.null(row_border_style)) {
+    cli_warn("row_border_style in set_layout() is deprecated and ignored.")
+  }
+
   if (!is.null(container_border)) current@container_border <- container_border
   if (!is.null(container_border_radius)) current@container_border_radius <- container_border_radius
   if (!is.null(banding)) current@banding <- banding
@@ -1187,8 +1177,6 @@ web_theme_jama <- function() {
       effect_colors = c("#1a1a1a", "#4a4a4a", "#7a7a7a", "#9a9a9a", "#bababa")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 0     # Sharp corners
     ),
@@ -1262,8 +1250,6 @@ web_theme_lancet <- function() {
       effect_colors = c("#00468b", "#ed0000", "#42b540", "#0099b4", "#925e9f")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 0   # No rounded corners
     ),
@@ -1339,8 +1325,6 @@ web_theme_modern <- function() {
       effect_colors = c("#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 12     # Prominent rounded corners
     ),
@@ -1414,7 +1398,6 @@ web_theme_presentation <- function() {
       effect_colors = c("#2563eb", "#16a34a", "#ea580c", "#dc2626", "#7c3aed")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
       container_border = FALSE,
       container_border_radius = 6
     ),
@@ -1489,8 +1472,6 @@ web_theme_cochrane <- function() {
       effect_colors = c("#0c4da2", "#dd5129", "#1a8a4f", "#6d4e92", "#e89a47")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,        # No outer border (Cochrane style)
       container_border_radius = 0
     ),
@@ -1566,8 +1547,6 @@ web_theme_nature <- function() {
       effect_colors = c("#e64b35", "#4dbbd5", "#00a087", "#3c5488", "#f39b7f")
     ),
     layout = LayoutConfig(
-      row_border = TRUE,
-      row_border_style = "solid",
       container_border = FALSE,
       container_border_radius = 2      # Minimal rounding
     ),

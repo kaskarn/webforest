@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="800" height="867"
-  viewBox="0 0 800 867">
+  width="800" height="879"
+  viewBox="0 0 800 879">
 <rect width="100%" height="100%" fill="#fafafa"/>
 <text x="14" y="34"
       font-family="Inter, system-ui, -apple-system, sans-serif"
@@ -13,29 +13,29 @@
       font-size="15px"
       fill="#52525b">Region &gt; Country &gt; Site (3 levels)</text>
 <line x1="14" x2="786"
-    y1="76" y2="76"
-    stroke="#d4d4d8" stroke-width="2"/>
+      y1="76" y2="76"
+      stroke="#d4d4d8" stroke-width="2"/>
 <text x="24" y="99.25"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15.75px"
-      font-weight="500"
+      font-weight="600"
       fill="#18181b">Site</text>
 <text x="199" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b">N</text>
 <text x="259" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b">95% CI</text>
 <text x="343" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b"></text>
 <line x1="14" x2="786"
@@ -547,7 +547,10 @@
 <line x1="14" x2="786"
           y1="712" y2="712"
           stroke="#d4d4d8" stroke-width="1"/>
-<text x="14" y="835"
+<line x1="14" x2="786"
+      y1="833" y2="833"
+      stroke="#d4d4d8" stroke-width="1"/>
+<text x="14" y="841"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
       fill="#52525b">Click any group header to collapse that branch and all children</text>

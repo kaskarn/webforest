@@ -299,8 +299,6 @@ serialize_theme <- function(theme) {
       plotPosition = theme@layout@plot_position,
       tableWidth = theme@layout@table_width,
       plotWidth = theme@layout@plot_width,
-      rowBorder = theme@layout@row_border,
-      rowBorderStyle = theme@layout@row_border_style,
       containerBorder = theme@layout@container_border,
       containerBorderRadius = theme@layout@container_border_radius,
       banding = theme@layout@banding

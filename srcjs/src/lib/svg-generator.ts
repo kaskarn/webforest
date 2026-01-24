@@ -417,6 +417,8 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
   const theme = spec.theme;
   const rowHeight = theme.spacing.rowHeight;
   const padding = theme.spacing.padding;
+  // Use theme's columnGap for spacing between columns (matches web view CSS grid column-gap)
+  const columnGap = theme.spacing.columnGap ?? 8;
 
   // Ensure columns is an array (guard against R serialization issues)
   const columns = Array.isArray(spec.columns) ? spec.columns : [];
@@ -528,17 +530,26 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
     forestWidth = spec.layout.plotWidth;
   } else {
     // Auto: use remaining space after tables, with minimum
-    const availableForForest = baseWidth - totalTableWidth - LAYOUT.COLUMN_GAP * 2 - padding * 2;
+    const availableForForest = baseWidth - totalTableWidth - columnGap * 2 - padding * 2;
     forestWidth = Math.max(availableForForest, LAYOUT.MIN_FOREST_WIDTH);
   }
 
   // Total width: expand if content needs more space than requested width
-  const neededWidth = padding * 2 + totalTableWidth + forestWidth + LAYOUT.COLUMN_GAP * 2;
+  const neededWidth = padding * 2 + totalTableWidth + forestWidth + columnGap * 2;
   const totalWidth = Math.max(options.width ?? baseWidth, neededWidth);
 
-  // Total height: match web view's axis height calculation (32 + axisGap)
+  // If totalWidth is larger than neededWidth and forest width wasn't explicitly set,
+  // expand forest to fill the remaining space (prevents gap on right side)
+  if (includeForest && totalWidth > neededWidth &&
+      typeof options.forestWidth !== "number" && typeof spec.layout.plotWidth !== "number") {
+    forestWidth = totalWidth - totalTableWidth - padding * 2 - columnGap * 2;
+  }
+
+  // Total height: include full axis area (ticks + labels + axis label + gap)
   const axisGap = theme.spacing.axisGap ?? 12;
-  const webAxisHeight = 32 + axisGap; // Matches web view's forestStore calculation
+  // Axis content: tick labels at y=16, axis label at y=28, plus text descenders ~4px = ~32px
+  // Full axis area: axisGap (between plot and axis) + axis content + some breathing room
+  const webAxisHeight = axisGap + LAYOUT.AXIS_HEIGHT + LAYOUT.AXIS_LABEL_HEIGHT; // ~76px total
   const totalHeight = headerTextHeight + padding +
     headerHeight + plotHeight +
     webAxisHeight +
@@ -1027,6 +1038,16 @@ function renderFooter(spec: WebSpec, layout: InternalLayout, theme: WebTheme): s
   const lines: string[] = [];
   const padding = theme.spacing.padding;
   let y = layout.footerY;
+
+  // Draw footer border (1px) when caption or footnote exists, matching web view's PlotFooter border-top
+  const hasFooter = !!spec.labels?.caption || !!spec.labels?.footnote;
+  if (hasFooter) {
+    // Border is 8px above the text (footerY includes the 8px padding gap)
+    const borderY = layout.footerY - 8;
+    lines.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
+      y1="${borderY}" y2="${borderY}"
+      stroke="${theme.colors.border}" stroke-width="1"/>`);
+  }
 
   if (spec.labels?.caption) {
     const fontSize = parseFontSize(theme.typography.fontSizeSm);
@@ -2234,11 +2255,11 @@ function renderUnifiedColumnHeaders(
       }
     }
 
-    // Draw borders under groups
+    // Draw borders under groups (matches web view: .group-row { border-bottom: 1px solid var(--wf-border) })
     for (const border of groupBorders) {
       lines.push(`<line x1="${border.x1}" x2="${border.x2}"
         y1="${y + row1Height}" y2="${y + row1Height}"
-        stroke="${theme.colors.border}" stroke-width="1" opacity="0.5"/>`);
+        stroke="${theme.colors.border}" stroke-width="1"/>`);
     }
 
     // Row 2: Sub-column headers
@@ -2495,25 +2516,40 @@ function renderUnifiedTableRow(
       }
     } else {
       // Default text rendering with cell styling
+      // Priority: per-cell style > row-level style > default
       const cellStyle = row.cellStyles?.[col.field];
-      let cellFontWeight = theme.typography.fontWeightNormal;
-      let cellFontStyle = "normal";
-      let cellColor = theme.colors.foreground;
+      const rowStyle = row.style;
 
-      if (cellStyle) {
-        if (cellStyle.bold || cellStyle.emphasis) {
-          cellFontWeight = theme.typography.fontWeightBold;
-        }
-        if (cellStyle.italic) {
-          cellFontStyle = "italic";
-        }
-        if (cellStyle.color) {
-          cellColor = cellStyle.color;
-        } else if (cellStyle.muted) {
-          cellColor = theme.colors.muted;
-        } else if (cellStyle.accent) {
-          cellColor = theme.colors.accent;
-        }
+      // Font weight: cell > row > default
+      let cellFontWeight = theme.typography.fontWeightNormal;
+      if (cellStyle?.bold || cellStyle?.emphasis) {
+        cellFontWeight = theme.typography.fontWeightBold;
+      } else if (rowStyle?.bold || rowStyle?.emphasis) {
+        cellFontWeight = theme.typography.fontWeightBold;
+      }
+
+      // Font style: cell > row > default
+      let cellFontStyle = "normal";
+      if (cellStyle?.italic) {
+        cellFontStyle = "italic";
+      } else if (rowStyle?.italic) {
+        cellFontStyle = "italic";
+      }
+
+      // Color: cell > row > default
+      let cellColor = theme.colors.foreground;
+      if (cellStyle?.color) {
+        cellColor = cellStyle.color;
+      } else if (cellStyle?.muted) {
+        cellColor = theme.colors.muted;
+      } else if (cellStyle?.accent) {
+        cellColor = theme.colors.accent;
+      } else if (rowStyle?.color) {
+        cellColor = rowStyle.color;
+      } else if (rowStyle?.muted) {
+        cellColor = theme.colors.muted;
+      } else if (rowStyle?.accent) {
+        cellColor = theme.colors.accent;
       }
 
       lines.push(`<text x="${textX}" y="${textY}"
@@ -2863,10 +2899,13 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
   // Header (title, subtitle)
   parts.push(renderHeader(spec, layout, theme));
 
-  // Table separator line (at top of table area, always present)
-  parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
-    y1="${layout.mainY}" y2="${layout.mainY}"
-    stroke="${theme.colors.border}" stroke-width="2"/>`);
+  // Table separator line (only when title/subtitle area is present, matching web view's .has-header)
+  const hasPlotHeader = !!spec.labels?.title || !!spec.labels?.subtitle;
+  if (hasPlotHeader) {
+    parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
+      y1="${layout.mainY}" y2="${layout.mainY}"
+      stroke="${theme.colors.border}" stroke-width="2"/>`);
+  }
 
   // Column headers - unified layout
   const headerY = layout.mainY;

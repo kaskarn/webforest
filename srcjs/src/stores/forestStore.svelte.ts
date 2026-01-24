@@ -18,7 +18,7 @@ import { niceDomain } from "$lib/scale-utils";
 import { computeAxis, type AxisComputation, VIZ_MARGIN } from "$lib/axis-utils";
 import { THEME_PRESETS, type ThemeName } from "$lib/theme-presets";
 import { getColumnDisplayText } from "$lib/formatters";
-import { AUTO_WIDTH, SPACING, GROUP_HEADER, TEXT_MEASUREMENT, BADGE } from "$lib/rendering-constants";
+import { AUTO_WIDTH, SPACING, GROUP_HEADER, TEXT_MEASUREMENT, BADGE, LAYOUT } from "$lib/rendering-constants";
 
 // Svelte 5 runes-based store
 export function createForestStore() {
@@ -397,7 +397,9 @@ export function createForestStore() {
     const rowHeight = spec.theme.spacing.rowHeight;
     const headerHeight = spec.theme.spacing.headerHeight;
     const axisGap = spec.theme.spacing.axisGap ?? TEXT_MEASUREMENT.DEFAULT_AXIS_GAP; // Gap between table and axis
-    const axisHeight = 32 + axisGap; // Axis content (32px) + configurable gap
+    // Axis height: gap + axis line/ticks + axis label text
+    // This ensures the axis label is not truncated at the bottom
+    const axisHeight = axisGap + LAYOUT.AXIS_HEIGHT + LAYOUT.AXIS_LABEL_HEIGHT; // ~76px total
     const hasForest = forestColumns.length > 0;
     // Use override if set, otherwise calculate default (25% of width, min 200px)
     const forestWidth = hasForest

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="800" height="567"
-  viewBox="0 0 800 567">
+  width="800" height="579"
+  viewBox="0 0 800 579">
 <rect width="100%" height="100%" fill="#fafafa"/>
 <text x="14" y="34"
       font-family="Inter, system-ui, -apple-system, sans-serif"
@@ -13,29 +13,29 @@
       font-size="15px"
       fill="#52525b">row_type, row_bold, row_indent, row_color, row_badge</text>
 <line x1="14" x2="786"
-    y1="76" y2="76"
-    stroke="#d4d4d8" stroke-width="2"/>
+      y1="76" y2="76"
+      stroke="#d4d4d8" stroke-width="2"/>
 <text x="24" y="99.25"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15.75px"
-      font-weight="500"
+      font-weight="600"
       fill="#18181b">Label</text>
 <text x="255" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b">Events</text>
 <text x="339" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b">95% CI</text>
 <text x="423" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b"></text>
 <line x1="14" x2="786"
@@ -144,17 +144,17 @@
 <text x="255" y="132"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
-        font-weight="400"
+        font-weight="600"
         font-style="normal"
         text-anchor="start"
-        fill="#18181b"></text>
+        fill="#2563eb"></text>
 <text x="339" y="132"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
-        font-weight="400"
+        font-weight="600"
         font-style="normal"
         text-anchor="start"
-        fill="#18181b"></text>
+        fill="#2563eb"></text>
 <line x1="14" x2="786"
           y1="142" y2="142"
           stroke="#d4d4d8" stroke-width="1"/>
@@ -287,17 +287,17 @@
 <text x="255" y="297"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
-        font-weight="400"
+        font-weight="600"
         font-style="normal"
         text-anchor="start"
-        fill="#18181b"></text>
+        fill="#2563eb"></text>
 <text x="339" y="297"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
-        font-weight="400"
+        font-weight="600"
         font-style="normal"
         text-anchor="start"
-        fill="#18181b"></text>
+        fill="#2563eb"></text>
 <line x1="14" x2="786"
           y1="307" y2="307"
           stroke="#d4d4d8" stroke-width="1"/>
@@ -392,24 +392,27 @@
 <text x="255" y="402"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
-        font-weight="400"
+        font-weight="600"
         font-style="normal"
         text-anchor="start"
-        fill="#18181b">1268.00</text>
+        fill="#16a34a">1268.00</text>
 <text x="339" y="402"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15px"
-        font-weight="400"
+        font-weight="600"
         font-style="normal"
         text-anchor="start"
-        fill="#18181b"></text>
+        fill="#16a34a"></text>
 <line x1="14" x2="786"
           y1="382" y2="382"
           stroke="#d4d4d8" stroke-width="2"/>
 <line x1="14" x2="786"
           y1="412" y2="412"
           stroke="#d4d4d8" stroke-width="1"/>
-<text x="14" y="535"
+<line x1="14" x2="786"
+      y1="533" y2="533"
+      stroke="#d4d4d8" stroke-width="1"/>
+<text x="14" y="541"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
       fill="#52525b">Headers in blue, summary in green, with badges and indentation</text>

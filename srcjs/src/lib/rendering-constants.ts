@@ -133,8 +133,7 @@ export const SPACING = {
   /** Default tick count for axis */
   DEFAULT_TICK_COUNT: 5,
 
-  /** Padding at edges of axis to prevent label clipping */
-  AXIS_LABEL_PADDING: 30,
+  // Note: AXIS_LABEL_PADDING (30px) was removed in v0.4.1 - use VIZ_MARGIN (12px) from axis-utils.ts instead
 } as const;
 
 // ============================================================================

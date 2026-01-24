@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="800" height="480"
-  viewBox="0 0 800 480">
+  width="800" height="492"
+  viewBox="0 0 800 492">
 <rect width="100%" height="100%" fill="#fafafa"/>
 <text x="14" y="34"
       font-family="Inter, system-ui, -apple-system, sans-serif"
@@ -13,29 +13,29 @@
       font-size="15px"
       fill="#52525b">5 sensitivity analyses displayed simultaneously</text>
 <line x1="14" x2="786"
-    y1="76" y2="76"
-    stroke="#d4d4d8" stroke-width="2"/>
+      y1="76" y2="76"
+      stroke="#d4d4d8" stroke-width="2"/>
 <text x="24" y="99.25"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="15.75px"
-      font-weight="500"
+      font-weight="600"
       fill="#18181b">Study</text>
 <text x="111" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b">N</text>
 <text x="181" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b">95% CI</text>
 <text x="265" y="99.25"
         font-family="Inter, system-ui, -apple-system, sans-serif"
         font-size="15.75px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#18181b"></text>
 <line x1="14" x2="786"
@@ -370,7 +370,10 @@
 <line x1="14" x2="786"
           y1="312" y2="312"
           stroke="#d4d4d8" stroke-width="1"/>
-<text x="14" y="450"
+<line x1="14" x2="786"
+      y1="448" y2="448"
+      stroke="#d4d4d8" stroke-width="1"/>
+<text x="14" y="456"
       font-family="Inter, system-ui, -apple-system, sans-serif"
       font-size="13px"
       font-style="italic"

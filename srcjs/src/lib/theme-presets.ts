@@ -83,8 +83,6 @@ const DEFAULT_THEME: WebTheme = {
     plotPosition: "right",
     tableWidth: "auto",
     plotWidth: "auto",
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 8,
     banding: true,
@@ -159,8 +157,6 @@ const MINIMAL_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 0,    // No rounded corners
   },
@@ -216,8 +212,6 @@ const DARK_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 8,
   },
@@ -275,8 +269,6 @@ const JAMA_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 0,      // Sharp corners
   },
@@ -334,8 +326,6 @@ const LANCET_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 0,        // No rounded corners
   },
@@ -393,8 +383,6 @@ const MODERN_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 12,       // Prominent rounded corners
   },
@@ -452,7 +440,6 @@ const PRESENTATION_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
     containerBorder: false,
     containerBorderRadius: 6,
   },
@@ -510,8 +497,6 @@ const COCHRANE_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,          // No outer border (Cochrane style)
     containerBorderRadius: 0,
   },
@@ -569,8 +554,6 @@ const NATURE_THEME: WebTheme = {
   },
   layout: {
     ...DEFAULT_THEME.layout,
-    rowBorder: true,
-    rowBorderStyle: "solid",
     containerBorder: false,
     containerBorderRadius: 2,        // Minimal rounding
   },

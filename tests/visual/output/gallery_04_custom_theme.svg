@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="800" height="394"
-  viewBox="0 0 800 394">
+  width="800" height="406"
+  viewBox="0 0 800 406">
 <rect width="100%" height="100%" fill="#0c0c0c"/>
 <text x="12" y="32"
       font-family="'Courier New', monospace"
@@ -13,35 +13,35 @@
       font-size="13.6px"
       fill="#008800">Built with set_colors(), set_typography(), set_spacing(), set_shapes()</text>
 <line x1="12" x2="788"
-    y1="72" y2="72"
-    stroke="#003300" stroke-width="2"/>
+      y1="72" y2="72"
+      stroke="#003300" stroke-width="2"/>
 <text x="22" y="92.76"
       font-family="'Courier New', monospace"
       font-size="14.28px"
-      font-weight="500"
+      font-weight="600"
       fill="#00ff00">Process</text>
 <text x="136" y="92.76"
         font-family="'Courier New', monospace"
         font-size="14.28px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#00ff00">Uptime %</text>
 <text x="226" y="92.76"
         font-family="'Courier New', monospace"
         font-size="14.28px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#00ff00">RPS</text>
 <text x="317" y="92.76"
         font-family="'Courier New', monospace"
         font-size="14.28px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#00ff00">95% CI</text>
 <text x="391" y="92.76"
         font-family="'Courier New', monospace"
         font-size="14.28px"
-        font-weight="500"
+        font-weight="600"
         text-anchor="start"
         fill="#00ff00"></text>
 <line x1="12" x2="788"
@@ -265,7 +265,10 @@
 <line x1="12" x2="788"
           y1="244" y2="244"
           stroke="#003300" stroke-width="1"/>
-<text x="12" y="362"
+<line x1="12" x2="788"
+      y1="362" y2="362"
+      stroke="#003300" stroke-width="1"/>
+<text x="12" y="370"
       font-family="'Courier New', monospace"
       font-size="12px"
       fill="#008800">Monospace font, green-on-black, zero border radius</text>

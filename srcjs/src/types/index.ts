@@ -444,8 +444,6 @@ export interface LayoutConfig {
   plotPosition: "left" | "right";
   tableWidth: number | "auto";
   plotWidth: number | "auto";
-  rowBorder: boolean;
-  rowBorderStyle: "solid" | "dashed" | "dotted";
   containerBorder: boolean;
   containerBorderRadius: number;
   banding: boolean;  // Alternating row backgrounds (default: true)

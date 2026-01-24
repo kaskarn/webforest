@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="848" height="815"
-  viewBox="0 0 848 815">
+  width="832" height="843"
+  viewBox="0 0 832 843">
 <rect width="100%" height="100%" fill="#1e1e2e"/>
 <text x="12" y="32"
       font-family="system-ui, -apple-system, sans-serif"
@@ -12,234 +12,234 @@
       font-family="system-ui, -apple-system, sans-serif"
       font-size="14px"
       fill="#a6adc8">Nested groups + 3 effects + sparklines + weights + annotations + custom theme</text>
-<line x1="12" x2="836"
-    y1="72" y2="72"
-    stroke="#313244" stroke-width="2"/>
-<text x="22" y="92.9"
+<line x1="12" x2="820"
+      y1="72" y2="72"
+      stroke="#313244" stroke-width="2"/>
+<text x="22" y="100.9"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="14.7px"
-      font-weight="500"
+      font-weight="600"
       fill="#cdd6f4">Study</text>
-<text x="215" y="92.9"
+<text x="215" y="100.9"
           font-family="system-ui, -apple-system, sans-serif"
           font-size="14.7px"
-          font-weight="500"
+          font-weight="600"
           text-anchor="start"
           fill="#cdd6f4">N</text>
-<text x="275" y="92.9"
+<text x="275" y="100.9"
           font-family="system-ui, -apple-system, sans-serif"
           font-size="14.7px"
-          font-weight="500"
+          font-weight="600"
           text-anchor="start"
           fill="#cdd6f4">Weight</text>
-<text x="438.5" y="84.9"
+<text x="438.5" y="88.9"
           font-family="system-ui, -apple-system, sans-serif"
           font-size="14.7px"
           font-weight="600"
           text-anchor="middle"
           fill="#cdd6f4">Results</text>
-<text x="522" y="92.9"
+<text x="522" y="100.9"
           font-family="system-ui, -apple-system, sans-serif"
           font-size="14.7px"
-          font-weight="500"
+          font-weight="600"
           text-anchor="start"
           fill="#cdd6f4">Trend</text>
-<text x="614" y="92.9"
+<text x="614" y="100.9"
           font-family="system-ui, -apple-system, sans-serif"
           font-size="14.7px"
-          font-weight="500"
+          font-weight="600"
           text-anchor="start"
           fill="#cdd6f4"></text>
 <line x1="365" x2="512"
-        y1="88" y2="88"
-        stroke="#313244" stroke-width="1" opacity="0.5"/>
-<text x="375" y="100.9"
+        y1="96" y2="96"
+        stroke="#313244" stroke-width="1"/>
+<text x="375" y="112.9"
               font-family="system-ui, -apple-system, sans-serif"
               font-size="14.7px"
-              font-weight="500"
+              font-weight="600"
               text-anchor="start"
               fill="#cdd6f4">95% CI</text>
-<text x="451" y="100.9"
+<text x="451" y="112.9"
               font-family="system-ui, -apple-system, sans-serif"
               font-size="14.7px"
-              font-weight="500"
+              font-weight="600"
               text-anchor="start"
               fill="#cdd6f4">P</text>
-<line x1="12" x2="836"
-    y1="104" y2="104"
+<line x1="12" x2="820"
+    y1="120" y2="120"
     stroke="#313244" stroke-width="2"/>
-<rect x="12" y="218"
-              width="824" height="38"
+<rect x="12" y="234"
+              width="808" height="38"
               fill="#232334"/>
-<rect x="12" y="370"
-              width="824" height="38"
+<rect x="12" y="386"
+              width="808" height="38"
               fill="#232334"/>
-<rect x="12" y="522"
-              width="824" height="38"
+<rect x="12" y="538"
+              width="808" height="38"
               fill="#232334"/>
-<rect x="12" y="598"
-              width="824" height="38"
+<rect x="12" y="614"
+              width="808" height="38"
               fill="#232334"/>
-<line x1="760.8535150062036" x2="760.8535150062036" y1="104" y2="693"
+<line x1="760.8535150062036" x2="760.8535150062036" y1="120" y2="709"
     stroke="#6c7086" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
-<line x1="716.2856024058798" x2="716.2856024058798" y1="104" y2="693"
-    stroke="#a855f7" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/><text x="716.2856024058798" y="100" text-anchor="middle"
+<line x1="716.2856024058798" x2="716.2856024058798" y1="120" y2="709"
+    stroke="#a855f7" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/><text x="716.2856024058798" y="116" text-anchor="middle"
       font-size="10px" fill="#a855f7">Target</text>
 
         <g class="interval effect-0">
-          <line x1="659.5467585648421" x2="742.8000127715519" y1="193" y2="193"
+          <line x1="659.5467585648421" x2="742.8000127715519" y1="209" y2="209"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="659.5467585648421" x2="659.5467585648421" y1="190" y2="196" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="742.8000127715519" x2="742.8000127715519" y1="190" y2="196" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="695.5608229915508" y="187.45441558772842" width="11.091168824543143" height="11.091168824543143" fill="#22c55e"/>
+          <line x1="659.5467585648421" x2="659.5467585648421" y1="206" y2="212" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="742.8000127715519" x2="742.8000127715519" y1="206" y2="212" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="695.5608229915508" y="203.45441558772842" width="11.091168824543143" height="11.091168824543143" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="671.0276186608006" x2="749.6108113227823" y1="199" y2="199"
+          <line x1="671.0276186608006" x2="749.6108113227823" y1="215" y2="215"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="671.0276186608006" x2="671.0276186608006" y1="196" y2="202" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="749.6108113227823" x2="749.6108113227823" y1="196" y2="202" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="709.9614297925357" cy="199" r="5.545584412271571" fill="#3b82f6"/>
+          <line x1="671.0276186608006" x2="671.0276186608006" y1="212" y2="218" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="749.6108113227823" x2="749.6108113227823" y1="212" y2="218" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="709.9614297925357" cy="215" r="5.545584412271571" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="701.1064074038223" x2="769.8805759643413" y1="205" y2="205"
+          <line x1="701.1064074038223" x2="769.8805759643413" y1="221" y2="221"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="701.1064074038223" x2="701.1064074038223" y1="202" y2="208" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="769.8805759643413" x2="769.8805759643413" y1="202" y2="208" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="735.675966109864,199.45441558772842 741.2215505221355,205 735.675966109864,210.54558441227158 730.1303816975925,205" fill="#f59e0b"/>
+          <line x1="701.1064074038223" x2="701.1064074038223" y1="218" y2="224" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="769.8805759643413" x2="769.8805759643413" y1="218" y2="224" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="735.675966109864,215.45441558772842 741.2215505221355,221 735.675966109864,226.54558441227158 730.1303816975925,221" fill="#f59e0b"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="671.0276186608006" x2="749.6108113227823" y1="231" y2="231"
+          <line x1="671.0276186608006" x2="749.6108113227823" y1="247" y2="247"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="671.0276186608006" x2="671.0276186608006" y1="228" y2="234" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="749.6108113227823" x2="749.6108113227823" y1="228" y2="234" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="704.5802536125775" y="225.61882382004188" width="10.762352359916264" height="10.762352359916264" fill="#22c55e"/>
+          <line x1="671.0276186608006" x2="671.0276186608006" y1="244" y2="250" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="749.6108113227823" x2="749.6108113227823" y1="244" y2="250" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="704.5802536125775" y="241.61882382004188" width="10.762352359916264" height="10.762352359916264" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="681.7160436998381" x2="754.5293423928595" y1="237" y2="237"
+          <line x1="681.7160436998381" x2="754.5293423928595" y1="253" y2="253"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="681.7160436998381" x2="681.7160436998381" y1="234" y2="240" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="754.5293423928595" x2="754.5293423928595" y1="234" y2="240" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="718.337562415537" cy="237" r="5.381176179958132" fill="#3b82f6"/>
+          <line x1="681.7160436998381" x2="681.7160436998381" y1="250" y2="256" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="754.5293423928595" x2="754.5293423928595" y1="250" y2="256" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="718.337562415537" cy="253" r="5.381176179958132" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="709.9614297925357" x2="772.7763745912748" y1="243" y2="243"
+          <line x1="709.9614297925357" x2="772.7763745912748" y1="259" y2="259"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="709.9614297925357" x2="709.9614297925357" y1="240" y2="246" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="772.7763745912748" x2="772.7763745912748" y1="240" y2="246" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="741.0494775828698,237.61882382004188 746.430653762828,243 741.0494775828698,248.38117617995812 735.6683014029117,243" fill="#f59e0b"/>
+          <line x1="709.9614297925357" x2="709.9614297925357" y1="256" y2="262" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="772.7763745912748" x2="772.7763745912748" y1="256" y2="262" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="741.0494775828698,253.61882382004188 746.430653762828,259 741.0494775828698,264.3811761799581 735.6683014029117,259" fill="#f59e0b"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="653.4706576071405" x2="735.675966109864" y1="345" y2="345"
+          <line x1="653.4706576071405" x2="735.675966109864" y1="361" y2="361"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="653.4706576071405" x2="653.4706576071405" y1="342" y2="348" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="735.675966109864" x2="735.675966109864" y1="342" y2="348" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="686.8949430870425" y="337.7786258161589" width="14.442748367682174" height="14.442748367682174" fill="#22c55e"/>
+          <line x1="653.4706576071405" x2="653.4706576071405" y1="358" y2="364" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="735.675966109864" x2="735.675966109864" y1="358" y2="364" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="686.8949430870425" y="353.7786258161589" width="14.442748367682174" height="14.442748367682174" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="662.4977185652783" x2="744.5309884985772" y1="351" y2="351"
+          <line x1="662.4977185652783" x2="744.5309884985772" y1="367" y2="367"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="662.4977185652783" x2="662.4977185652783" y1="348" y2="354" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="744.5309884985772" x2="744.5309884985772" y1="348" y2="354" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="703.3680638606411" cy="351" r="7.221374183841087" fill="#3b82f6"/>
+          <line x1="662.4977185652783" x2="662.4977185652783" y1="364" y2="370" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="744.5309884985772" x2="744.5309884985772" y1="364" y2="370" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="703.3680638606411" cy="367" r="7.221374183841087" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="694.1163172708837" x2="766.929615963905" y1="357" y2="357"
+          <line x1="694.1163172708837" x2="766.929615963905" y1="373" y2="373"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="694.1163172708837" x2="694.1163172708837" y1="354" y2="360" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="766.929615963905" x2="766.929615963905" y1="354" y2="360" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="730.109353518773,349.7786258161589 737.3307277026141,357 730.109353518773,364.2213741838411 722.8879793349319,357" fill="#f59e0b"/>
+          <line x1="694.1163172708837" x2="694.1163172708837" y1="370" y2="376" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="766.929615963905" x2="766.929615963905" y1="370" y2="376" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="730.109353518773,365.7786258161589 737.3307277026141,373 730.109353518773,380.2213741838411 722.8879793349319,373" fill="#f59e0b"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="668.2361788898485" x2="747.935976460965" y1="383" y2="383"
+          <line x1="668.2361788898485" x2="747.935976460965" y1="399" y2="399"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="668.2361788898485" x2="668.2361788898485" y1="380" y2="386" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="747.935976460965" x2="747.935976460965" y1="380" y2="386" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="700.9762945554046" y="376.18162338159266" width="13.636753236814714" height="13.636753236814714" fill="#22c55e"/>
+          <line x1="668.2361788898485" x2="668.2361788898485" y1="396" y2="402" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="747.935976460965" x2="747.935976460965" y1="396" y2="402" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="700.9762945554046" y="392.18162338159266" width="13.636753236814714" height="13.636753236814714" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="679.112272898954" x2="752.9071211215787" y1="389" y2="389"
+          <line x1="679.112272898954" x2="752.9071211215787" y1="405" y2="405"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="679.112272898954" x2="679.112272898954" y1="386" y2="392" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="752.9071211215787" x2="752.9071211215787" y1="386" y2="392" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="716.2856024058798" cy="389" r="6.818376618407357" fill="#3b82f6"/>
+          <line x1="679.112272898954" x2="679.112272898954" y1="402" y2="408" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="752.9071211215787" x2="752.9071211215787" y1="402" y2="408" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="716.2856024058798" cy="405" r="6.818376618407357" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="703.3680638606411" x2="771.3352412609477" y1="395" y2="395"
+          <line x1="703.3680638606411" x2="771.3352412609477" y1="411" y2="411"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="703.3680638606411" x2="703.3680638606411" y1="392" y2="398" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="771.3352412609477" x2="771.3352412609477" y1="392" y2="398" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="737.4879249625421,388.18162338159266 744.3063015809495,395 737.4879249625421,401.81837661840734 730.6695483441348,395" fill="#f59e0b"/>
+          <line x1="703.3680638606411" x2="703.3680638606411" y1="408" y2="414" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="771.3352412609477" x2="771.3352412609477" y1="408" y2="414" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="737.4879249625421,404.18162338159266 744.3063015809495,411 737.4879249625421,417.81837661840734 730.6695483441348,411" fill="#f59e0b"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="676.4639910459475" x2="752.9071211215787" y1="421" y2="421"
+          <line x1="676.4639910459475" x2="752.9071211215787" y1="437" y2="437"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="676.4639910459475" x2="676.4639910459475" y1="418" y2="424" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="752.9071211215787" x2="752.9071211215787" y1="418" y2="424" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="707.1811761277079" y="413.9750776405004" width="14.049844718999244" height="14.049844718999244" fill="#22c55e"/>
+          <line x1="676.4639910459475" x2="676.4639910459475" y1="434" y2="440" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="752.9071211215787" x2="752.9071211215787" y1="434" y2="440" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="707.1811761277079" y="429.9750776405004" width="14.049844718999244" height="14.049844718999244" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="686.7958665240432" x2="757.7236971265439" y1="427" y2="427"
+          <line x1="686.7958665240432" x2="757.7236971265439" y1="443" y2="443"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="686.7958665240432" x2="686.7958665240432" y1="424" y2="430" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="757.7236971265439" x2="757.7236971265439" y1="424" y2="430" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="722.3617033635812" cy="427" r="7.024922359499622" fill="#3b82f6"/>
+          <line x1="686.7958665240432" x2="686.7958665240432" y1="440" y2="446" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="757.7236971265439" x2="757.7236971265439" y1="440" y2="446" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="722.3617033635812" cy="443" r="7.024922359499622" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="709.9614297925357" x2="775.6190362889115" y1="433" y2="433"
+          <line x1="709.9614297925357" x2="775.6190362889115" y1="449" y2="449"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="709.9614297925357" x2="709.9614297925357" y1="430" y2="436" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="775.6190362889115" x2="775.6190362889115" y1="430" y2="436" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="742.8000127715519,425.9750776405004 749.8249351310516,433 742.8000127715519,440.0249223594996 735.7750904120522,433" fill="#f59e0b"/>
+          <line x1="709.9614297925357" x2="709.9614297925357" y1="446" y2="452" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="775.6190362889115" x2="775.6190362889115" y1="446" y2="452" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="742.8000127715519,441.9750776405004 749.8249351310516,449 742.8000127715519,456.0249223594996 735.7750904120522,449" fill="#f59e0b"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="686.7958665240432" x2="757.7236971265439" y1="535" y2="535"
+          <line x1="686.7958665240432" x2="757.7236971265439" y1="551" y2="551"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="686.7958665240432" x2="686.7958665240432" y1="532" y2="538" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="757.7236971265439" x2="757.7236971265439" y1="532" y2="538" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="716.5156534694297" y="529.1539501058485" width="11.692099788303082" height="11.692099788303082" fill="#22c55e"/>
+          <line x1="686.7958665240432" x2="686.7958665240432" y1="548" y2="554" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="757.7236971265439" x2="757.7236971265439" y1="548" y2="554" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="716.5156534694297" y="545.1539501058485" width="11.692099788303082" height="11.692099788303082" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="696.481564982546" x2="763.9213522025616" y1="541" y2="541"
+          <line x1="696.481564982546" x2="763.9213522025616" y1="557" y2="557"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="696.481564982546" x2="696.481564982546" y1="538" y2="544" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="763.9213522025616" x2="763.9213522025616" y1="538" y2="544" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="730.109353518773" cy="541" r="5.846049894151541" fill="#3b82f6"/>
+          <line x1="696.481564982546" x2="696.481564982546" y1="554" y2="560" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="763.9213522025616" x2="763.9213522025616" y1="554" y2="560" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="730.109353518773" cy="557" r="5.846049894151541" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="716.2856024058798" x2="779.7875581568618" y1="547" y2="547"
+          <line x1="716.2856024058798" x2="779.7875581568618" y1="563" y2="563"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="716.2856024058798" x2="716.2856024058798" y1="544" y2="550" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="779.7875581568618" x2="779.7875581568618" y1="544" y2="550" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="747.935976460965,541.1539501058485 753.7820263551165,547 747.935976460965,552.8460498941515 742.0899265668135,547" fill="#f59e0b"/>
+          <line x1="716.2856024058798" x2="716.2856024058798" y1="560" y2="566" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="779.7875581568618" x2="779.7875581568618" y1="560" y2="566" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="747.935976460965,557.1539501058485 753.7820263551165,563 747.935976460965,568.8460498941515 742.0899265668135,563" fill="#f59e0b"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="662.4977185652783" x2="744.5309884985772" y1="611" y2="611"
+          <line x1="662.4977185652783" x2="744.5309884985772" y1="627" y2="627"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="662.4977185652783" x2="662.4977185652783" y1="608" y2="614" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="744.5309884985772" x2="744.5309884985772" y1="608" y2="614" stroke="#9399b2" stroke-width="1.5"/>
-          <rect x="696.8823788490544" y="604.5143149884133" width="12.97137002317335" height="12.97137002317335" fill="#22c55e"/>
+          <line x1="662.4977185652783" x2="662.4977185652783" y1="624" y2="630" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="744.5309884985772" x2="744.5309884985772" y1="624" y2="630" stroke="#9399b2" stroke-width="1.5"/>
+          <rect x="696.8823788490544" y="620.5143149884133" width="12.97137002317335" height="12.97137002317335" fill="#22c55e"/>
         </g>
         <g class="interval effect-1">
-          <line x1="673.7696498152133" x2="751.26773316893" y1="617" y2="617"
+          <line x1="673.7696498152133" x2="751.26773316893" y1="633" y2="633"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="673.7696498152133" x2="673.7696498152133" y1="614" y2="620" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="751.26773316893" x2="751.26773316893" y1="614" y2="620" stroke="#9399b2" stroke-width="1.5"/>
-          <circle cx="712.0983011311731" cy="617" r="6.485685011586675" fill="#3b82f6"/>
+          <line x1="673.7696498152133" x2="673.7696498152133" y1="630" y2="636" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="751.26773316893" x2="751.26773316893" y1="630" y2="636" stroke="#9399b2" stroke-width="1.5"/>
+          <circle cx="712.0983011311731" cy="633" r="6.485685011586675" fill="#3b82f6"/>
         </g>
         <g class="interval effect-2">
-          <line x1="698.8112437086668" x2="768.4121221655814" y1="623" y2="623"
+          <line x1="698.8112437086668" x2="768.4121221655814" y1="639" y2="639"
             stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="698.8112437086668" x2="698.8112437086668" y1="620" y2="626" stroke="#9399b2" stroke-width="1.5"/>
-          <line x1="768.4121221655814" x2="768.4121221655814" y1="620" y2="626" stroke="#9399b2" stroke-width="1.5"/>
-          <polygon points="733.8425634595397,616.5143149884133 740.3282484711265,623 733.8425634595397,629.4856850115867 727.356878447953,623" fill="#f59e0b"/>
+          <line x1="698.8112437086668" x2="698.8112437086668" y1="636" y2="642" stroke="#9399b2" stroke-width="1.5"/>
+          <line x1="768.4121221655814" x2="768.4121221655814" y1="636" y2="642" stroke="#9399b2" stroke-width="1.5"/>
+          <polygon points="733.8425634595397,632.5143149884133 740.3282484711265,639 733.8425634595397,645.4856850115867 727.356878447953,639" fill="#f59e0b"/>
         </g>
-<g transform="translate(0, 693)"><line x1="604" x2="804"
+<g transform="translate(0, 709)"><line x1="604" x2="804"
     y1="0" y2="0" stroke="#313244" stroke-width="1"/>
 <line x1="653.4706576071405" x2="653.4706576071405" y1="0" y2="4"
       stroke="#313244" stroke-width="1"/>
@@ -265,385 +265,388 @@
       font-size="12px"
       font-weight="500"
       fill="#a6adc8">Hazard Ratio</text></g>
-<rect x="12" y="104"
-    width="824" height="38"
+<rect x="12" y="120"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.15)"/>
-<text x="22" y="128"
+<text x="22" y="144"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="15px"
     font-weight="600"
     fill="#cdd6f4">Program a</text>
-<line x1="12" x2="836"
-        y1="142" y2="142"
+<line x1="12" x2="820"
+        y1="158" y2="158"
         stroke="#313244" stroke-width="1"/>
-<rect x="12" y="142"
-    width="824" height="38"
+<rect x="12" y="158"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.1)"/>
-<text x="40" y="165.66666666666666"
+<text x="40" y="181.66666666666666"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="500"
     fill="#cdd6f4">Phase II</text>
-<line x1="12" x2="836"
-        y1="180" y2="180"
+<line x1="12" x2="820"
+        y1="196" y2="196"
         stroke="#313244" stroke-width="1"/>
-<text x="46" y="203.66666666666666"
+<text x="46" y="219.66666666666666"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">ALPHA-01</text>
-<rect x="111.5" y="189.4" width="32.64" height="19.200000000000003"
+<rect x="111.5" y="205.4" width="32.64" height="19.200000000000003"
       rx="3" fill="#f59e0b" opacity="0.15"/>
-<text x="127.82" y="202.92"
+<text x="127.82" y="218.92"
       text-anchor="middle"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="11.200000000000001px"
       font-weight="500"
       fill="#f59e0b">Lead</text>
-<text x="215" y="203.66666666666666"
+<text x="215" y="219.66666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">420</text>
-<rect x="275" y="193"
+<rect x="275" y="209"
         width="10.90909090909091" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="203.66666666666666"
+<text x="355" y="219.66666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">8</text>
-<text x="375" y="203.66666666666666"
+<text x="375" y="219.66666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="203.66666666666666"
+<text x="451" y="219.66666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.0080</text>
-<path d="M522.0,189.0L546.0,197.2L570.0,204.3L594.0,209.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="218" y2="218"
+<path d="M522.0,205.0L546.0,213.2L570.0,220.3L594.0,225.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="234" y2="234"
           stroke="#313244" stroke-width="1"/>
-<text x="46" y="241.66666666666666"
+<text x="46" y="257.6666666666667"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">ALPHA-02</text>
-<text x="215" y="241.66666666666666"
+<text x="215" y="257.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">380</text>
-<rect x="275" y="231"
+<rect x="275" y="247"
         width="9.545454545454545" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="241.66666666666666"
+<text x="355" y="257.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">7</text>
-<text x="375" y="241.66666666666666"
+<text x="375" y="257.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="241.66666666666666"
+<text x="451" y="257.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.015</text>
-<path d="M522.0,227.0L546.0,234.5L570.0,242.0L594.0,247.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="256" y2="256"
+<path d="M522.0,243.0L546.0,250.5L570.0,258.0L594.0,263.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="272" y2="272"
           stroke="#313244" stroke-width="1"/>
-<rect x="12" y="256"
-    width="824" height="38"
+<rect x="12" y="272"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.15)"/>
-<text x="22" y="280"
+<text x="22" y="296"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="15px"
     font-weight="600"
     fill="#cdd6f4">Program b</text>
-<line x1="12" x2="836"
-        y1="294" y2="294"
+<line x1="12" x2="820"
+        y1="310" y2="310"
         stroke="#313244" stroke-width="1"/>
-<rect x="12" y="294"
-    width="824" height="38"
+<rect x="12" y="310"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.1)"/>
-<text x="40" y="317.6666666666667"
+<text x="40" y="333.6666666666667"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="500"
     fill="#cdd6f4">Phase III</text>
-<line x1="12" x2="836"
-        y1="332" y2="332"
+<line x1="12" x2="820"
+        y1="348" y2="348"
         stroke="#313244" stroke-width="1"/>
-<text x="46" y="355.6666666666667"
+<text x="46" y="371.6666666666667"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">BETA-01</text>
-<rect x="103.80000000000001" y="341.4" width="46.64000000000001" height="19.200000000000003"
+<rect x="103.80000000000001" y="357.4" width="46.64000000000001" height="19.200000000000003"
       rx="3" fill="#f59e0b" opacity="0.15"/>
-<text x="127.12000000000002" y="354.92"
+<text x="127.12000000000002" y="370.92"
       text-anchor="middle"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="11.200000000000001px"
       font-weight="500"
       fill="#f59e0b">Pivotal</text>
-<text x="215" y="355.6666666666667"
+<text x="215" y="371.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">1,250</text>
-<rect x="275" y="345"
+<rect x="275" y="361"
         width="30" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="355.6666666666667"
+<text x="355" y="371.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">22</text>
-<text x="375" y="355.6666666666667"
+<text x="375" y="371.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="355.6666666666667"
+<text x="451" y="371.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.0010</text>
-<path d="M522.0,341.0L546.0,349.2L570.0,356.3L594.0,361.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="370" y2="370"
+<path d="M522.0,357.0L546.0,365.2L570.0,372.3L594.0,377.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="386" y2="386"
           stroke="#313244" stroke-width="1"/>
-<text x="46" y="393.6666666666667"
+<text x="46" y="409.6666666666667"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">BETA-02</text>
-<text x="215" y="393.6666666666667"
+<text x="215" y="409.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">980</text>
-<rect x="275" y="383"
+<rect x="275" y="399"
         width="24.545454545454547" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="393.6666666666667"
+<text x="355" y="409.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">18</text>
-<text x="375" y="393.6666666666667"
+<text x="375" y="409.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="393.6666666666667"
+<text x="451" y="409.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.0040</text>
-<path d="M522.0,379.0L546.0,387.0L570.0,393.7L594.0,399.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="408" y2="408"
+<path d="M522.0,395.0L546.0,403.0L570.0,409.7L594.0,415.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="424" y2="424"
           stroke="#313244" stroke-width="1"/>
-<text x="46" y="431.6666666666667"
+<text x="46" y="447.6666666666667"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">BETA-03</text>
-<text x="215" y="431.6666666666667"
+<text x="215" y="447.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">1,100</text>
-<rect x="275" y="421"
+<rect x="275" y="437"
         width="27.272727272727273" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="431.6666666666667"
+<text x="355" y="447.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">20</text>
-<text x="375" y="431.6666666666667"
+<text x="375" y="447.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="431.6666666666667"
+<text x="451" y="447.6666666666667"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.012</text>
-<path d="M522.0,417.0L546.0,425.6L570.0,431.3L594.0,437.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="446" y2="446"
+<path d="M522.0,433.0L546.0,441.6L570.0,447.3L594.0,453.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="462" y2="462"
           stroke="#313244" stroke-width="1"/>
-<rect x="12" y="446"
-    width="824" height="38"
+<rect x="12" y="462"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.15)"/>
-<text x="22" y="470"
+<text x="22" y="486"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="15px"
     font-weight="600"
     fill="#cdd6f4">Program c</text>
-<line x1="12" x2="836"
-        y1="484" y2="484"
+<line x1="12" x2="820"
+        y1="500" y2="500"
         stroke="#313244" stroke-width="1"/>
-<rect x="12" y="484"
-    width="824" height="38"
+<rect x="12" y="500"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.1)"/>
-<text x="40" y="507.6666666666667"
+<text x="40" y="523.6666666666666"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="500"
     fill="#cdd6f4">Phase II</text>
-<line x1="12" x2="836"
-        y1="522" y2="522"
+<line x1="12" x2="820"
+        y1="538" y2="538"
         stroke="#313244" stroke-width="1"/>
-<text x="46" y="545.6666666666666"
+<text x="46" y="561.6666666666666"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">GAMMA-01</text>
-<text x="215" y="545.6666666666666"
+<text x="215" y="561.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">560</text>
-<rect x="275" y="535"
+<rect x="275" y="551"
         width="13.636363636363637" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="545.6666666666666"
+<text x="355" y="561.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">10</text>
-<text x="375" y="545.6666666666666"
+<text x="375" y="561.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="545.6666666666666"
+<text x="451" y="561.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.042</text>
-<path d="M522.0,531.0L546.0,536.7L570.0,542.4L594.0,551.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="560" y2="560"
+<path d="M522.0,547.0L546.0,552.7L570.0,558.4L594.0,567.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="576" y2="576"
           stroke="#313244" stroke-width="1"/>
-<rect x="12" y="560"
-    width="824" height="38"
+<rect x="12" y="576"
+    width="808" height="38"
     fill="rgba(245, 158, 11, 0.1)"/>
-<text x="40" y="583.6666666666666"
+<text x="40" y="599.6666666666666"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="500"
     fill="#cdd6f4">Phase III</text>
-<line x1="12" x2="836"
-        y1="598" y2="598"
+<line x1="12" x2="820"
+        y1="614" y2="614"
         stroke="#313244" stroke-width="1"/>
-<text x="46" y="621.6666666666666"
+<text x="46" y="637.6666666666666"
     font-family="system-ui, -apple-system, sans-serif"
     font-size="14px"
     font-weight="400"
     font-style="normal"
     fill="#cdd6f4">GAMMA-02</text>
-<rect x="123.4" y="607.4" width="67.36000000000001" height="19.200000000000003"
+<rect x="123.4" y="623.4" width="67.36000000000001" height="19.200000000000003"
       rx="3" fill="#f59e0b" opacity="0.15"/>
-<text x="157.08" y="620.92"
+<text x="157.08" y="636.92"
       text-anchor="middle"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="11.200000000000001px"
       font-weight="500"
       fill="#f59e0b">Fast Track</text>
-<text x="215" y="621.6666666666666"
+<text x="215" y="637.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">890</text>
-<rect x="275" y="611"
+<rect x="275" y="627"
         width="20.454545454545453" height="12"
         fill="#f59e0b" opacity="0.7" rx="2"/>
-<text x="355" y="621.6666666666666"
+<text x="355" y="637.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         text-anchor="end"
         fill="#cdd6f4">15</text>
-<text x="375" y="621.6666666666666"
+<text x="375" y="637.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4"></text>
-<text x="451" y="621.6666666666666"
+<text x="451" y="637.6666666666666"
         font-family="system-ui, -apple-system, sans-serif"
         font-size="14px"
         font-weight="400"
         font-style="normal"
         text-anchor="start"
         fill="#cdd6f4">0.0030</text>
-<path d="M522.0,607.0L546.0,615.0L570.0,621.7L594.0,627.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
-<line x1="12" x2="836"
-          y1="636" y2="636"
+<path d="M522.0,623.0L546.0,631.0L570.0,637.7L594.0,643.0" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+<line x1="12" x2="820"
+          y1="652" y2="652"
           stroke="#313244" stroke-width="1"/>
-<text x="12" y="769"
+<line x1="12" x2="820"
+      y1="785" y2="785"
+      stroke="#313244" stroke-width="1"/>
+<text x="12" y="793"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
       fill="#a6adc8">Every major feature combined in one visualization</text>
-<text x="12" y="785"
+<text x="12" y="809"
       font-family="system-ui, -apple-system, sans-serif"
       font-size="12px"
       font-style="italic"
