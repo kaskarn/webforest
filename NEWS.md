@@ -1,3 +1,20 @@
+# tabviz 0.4.2
+
+## Bug Fixes
+
+* **Axis height truncation**: Fixed web view axis area being truncated (was 44px, now 76px to match SVG). Axis labels are no longer cut off.
+
+* **Column gap**: SVG now uses theme's `columnGap` (default 8px) instead of hardcoded 16px, matching web view spacing.
+
+* **SVG font styling** (comprehensive visual audit):
+  - Added `font-variant-numeric: tabular-nums` to SVG for consistent number alignment
+  - Badge text now uses `fontWeightBold` (600) to match web CSS
+  - Added missing `font-weight` to subtitle, caption, footnote, axis tick labels
+  - Bar value text respects row styling (`row_bold`, `row_emphasis`)
+  - Annotation labels now use theme typography (font-family, font-size-sm, font-weight-medium) and secondary color
+
+---
+
 # tabviz 0.4.1
 
 ## Bug Fixes
