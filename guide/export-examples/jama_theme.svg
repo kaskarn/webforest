@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-  width="500" height="243"
-  viewBox="0 0 500 243">
+  width="500" height="223"
+  viewBox="0 0 500 223">
 <rect width="100%" height="100%" fill="#ffffff"/>
 <text x="6" y="26"
       font-family="Arial, Helvetica, sans-serif"
@@ -13,19 +13,19 @@
     stroke="#000000" stroke-width="2"/>
 <text x="16" y="56.9"
       font-family="Arial, Helvetica, sans-serif"
-      font-size="14.700000000000001px"
-      font-weight="500"
+      font-size="14.7px"
+      font-weight="700"
       fill="#000000">Study</text>
 <text x="107" y="56.9"
         font-family="Arial, Helvetica, sans-serif"
-        font-size="14.700000000000001px"
-        font-weight="500"
+        font-size="14.7px"
+        font-weight="700"
         text-anchor="start"
         fill="#000000"></text>
 <text x="267" y="56.9"
         font-family="Arial, Helvetica, sans-serif"
-        font-size="14.700000000000001px"
-        font-weight="500"
+        font-size="14.7px"
+        font-weight="700"
         text-anchor="start"
         fill="#000000">HR (95% CI)</text>
 <line x1="6" x2="494"
@@ -37,51 +37,51 @@
 <rect x="6" y="118"
               width="488" height="18"
               fill="#f9fafb"/>
-<line x1="205.34085243545988" x2="205.34085243545988" y1="64" y2="163"
+<line x1="215.54355931222545" x2="215.54355931222545" y1="64" y2="163"
     stroke="#555555" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="6,4"/>
 
         <g class="interval effect-0">
-          <line x1="144.89739862841492" x2="199.649298920783" y1="73" y2="73"
+          <line x1="133.34046213464427" x2="207.80304653226486" y1="73" y2="73"
             stroke="#000000" stroke-width="1.25"/>
-          <line x1="144.89739862841492" x2="144.89739862841492" y1="70" y2="76" stroke="#000000" stroke-width="1.25"/>
-          <line x1="199.649298920783" x2="199.649298920783" y1="70" y2="76" stroke="#000000" stroke-width="1.25"/>
-          <rect x="167.9299403545741" y="69" width="8" height="8" fill="#1a1a1a"/>
+          <line x1="133.34046213464427" x2="133.34046213464427" y1="70" y2="76" stroke="#000000" stroke-width="1.25"/>
+          <line x1="207.80304653226486" x2="207.80304653226486" y1="70" y2="76" stroke="#000000" stroke-width="1.25"/>
+          <rect x="166.10471888222077" y="69" width="8" height="8" fill="#1a1a1a"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="142.9675940498632" x2="216.92074058853186" y1="91" y2="91"
+          <line x1="130.71592790781395" x2="231.2922072004033" y1="91" y2="91"
             stroke="#000000" stroke-width="1.25"/>
-          <line x1="142.9675940498632" x2="142.9675940498632" y1="88" y2="94" stroke="#000000" stroke-width="1.25"/>
-          <line x1="216.92074058853186" x2="216.92074058853186" y1="88" y2="94" stroke="#000000" stroke-width="1.25"/>
-          <rect x="175.18487450776192" y="87" width="8" height="8" fill="#1a1a1a"/>
+          <line x1="130.71592790781395" x2="130.71592790781395" y1="88" y2="94" stroke="#000000" stroke-width="1.25"/>
+          <line x1="231.2922072004033" x2="231.2922072004033" y1="88" y2="94" stroke="#000000" stroke-width="1.25"/>
+          <rect x="175.9714293305562" y="87" width="8" height="8" fill="#1a1a1a"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="177.77133989660447" x2="201.96106933741925" y1="109" y2="109"
+          <line x1="178.0490222593821" x2="210.94705429889018" y1="109" y2="109"
             stroke="#000000" stroke-width="1.25"/>
-          <line x1="177.77133989660447" x2="177.77133989660447" y1="106" y2="112" stroke="#000000" stroke-width="1.25"/>
-          <line x1="201.96106933741925" x2="201.96106933741925" y1="106" y2="112" stroke="#000000" stroke-width="1.25"/>
-          <rect x="185.8881988623727" y="105" width="8" height="8" fill="#1a1a1a"/>
+          <line x1="178.0490222593821" x2="178.0490222593821" y1="106" y2="112" stroke="#000000" stroke-width="1.25"/>
+          <line x1="210.94705429889018" x2="210.94705429889018" y1="106" y2="112" stroke="#000000" stroke-width="1.25"/>
+          <rect x="190.52795045282684" y="105" width="8" height="8" fill="#1a1a1a"/>
         </g>
 
         <g class="interval effect-0">
-          <line x1="179.18487450776192" x2="204.22565745659023" y1="127" y2="127"
+          <line x1="179.9714293305562" x2="214.02689414096272" y1="127" y2="127"
             stroke="#000000" stroke-width="1.25"/>
-          <line x1="179.18487450776192" x2="179.18487450776192" y1="124" y2="130" stroke="#000000" stroke-width="1.25"/>
-          <line x1="204.22565745659023" x2="204.22565745659023" y1="124" y2="130" stroke="#000000" stroke-width="1.25"/>
-          <rect x="187.15633799556318" y="123" width="8" height="8" fill="#1a1a1a"/>
+          <line x1="179.9714293305562" x2="179.9714293305562" y1="124" y2="130" stroke="#000000" stroke-width="1.25"/>
+          <line x1="214.02689414096272" x2="214.02689414096272" y1="124" y2="130" stroke="#000000" stroke-width="1.25"/>
+          <rect x="192.2526196739659" y="123" width="8" height="8" fill="#1a1a1a"/>
         </g>
 <g transform="translate(0, 163)"><line x1="97" x2="257"
     y1="0" y2="0" stroke="#000000" stroke-width="1"/>
-<line x1="148.65914756454012" x2="148.65914756454012" y1="0" y2="4"
+<line x1="138.45644068777455" x2="138.45644068777455" y1="0" y2="4"
       stroke="#000000" stroke-width="1"/>
-<text x="148.65914756454012" y="16" text-anchor="middle"
+<text x="138.45644068777455" y="16" text-anchor="middle"
       font-family="Arial, Helvetica, sans-serif"
       font-size="14px"
       fill="#333333">0.60</text>
-<line x1="205.34085243545988" x2="205.34085243545988" y1="0" y2="4"
+<line x1="215.54355931222545" x2="215.54355931222545" y1="0" y2="4"
       stroke="#000000" stroke-width="1"/>
-<text x="205.34085243545988" y="16" text-anchor="middle"
+<text x="215.54355931222545" y="16" text-anchor="middle"
       font-family="Arial, Helvetica, sans-serif"
       font-size="14px"
       fill="#333333">1.00</text>
