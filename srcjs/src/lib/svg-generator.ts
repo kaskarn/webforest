@@ -1062,7 +1062,7 @@ function renderHeader(spec: WebSpec, layout: InternalLayout, theme: WebTheme): s
     const separatorY = layout.subtitleY - 10; // Above subtitle text
     lines.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
       y1="${separatorY}" y2="${separatorY}"
-      stroke="${theme.colors.border}" stroke-width="1"/>`);
+      stroke="${theme.colors.border}" stroke-width="1" opacity="0.3"/>`);
   }
 
   return lines.join("\n");

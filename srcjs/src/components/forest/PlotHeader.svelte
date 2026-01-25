@@ -75,7 +75,7 @@
 
   /* Subtle separator above subtitle when both title and subtitle exist */
   .has-both .plot-subtitle {
-    border-top: 1px solid var(--wf-border, #e2e8f0);
+    border-top: 1px solid color-mix(in srgb, var(--wf-border, #e2e8f0) 30%, transparent);
     padding-top: 6px;
     margin-top: 6px;
   }

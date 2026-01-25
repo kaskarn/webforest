@@ -50,7 +50,7 @@ ${a}
       font-weight="${r.typography.fontWeightNormal}"
       fill="${r.colors.secondary}">${on(t.labels.subtitle)}</text>`)}if((c=t.labels)!=null&&c.title&&((f=t.labels)!=null&&f.subtitle)){const l=e.subtitleY-10;o.push(`<line x1="${a}" x2="${e.totalWidth-a}"
       y1="${l}" y2="${l}"
-      stroke="${r.colors.border}" stroke-width="1"/>`)}return o.join(`
+      stroke="${r.colors.border}" stroke-width="1" opacity="0.3"/>`)}return o.join(`
 `)}function qg(t,e,r){var c,f,l,u;const o=[],a=r.spacing.padding;let i=e.footerY;if(!!((c=t.labels)!=null&&c.caption)||!!((f=t.labels)!=null&&f.footnote)){const h=e.footerY-8;o.push(`<line x1="${a}" x2="${e.totalWidth-a}"
       y1="${h}" y2="${h}"
       stroke="${r.colors.border}" stroke-width="1"/>`)}if((l=t.labels)!=null&&l.caption){const h=Rn(r.typography.fontSizeSm);o.push(`<text x="${a}" y="${i}"

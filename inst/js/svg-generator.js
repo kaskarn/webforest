@@ -8,7 +8,7 @@
       font-weight="${o.typography.fontWeightNormal}"
       fill="${o.colors.secondary}">${j(t.labels.subtitle)}</text>`)}if((f=t.labels)!=null&&f.title&&((c=t.labels)!=null&&c.subtitle)){const a=n.subtitleY-10;e.push(`<line x1="${i}" x2="${n.totalWidth-i}"
       y1="${a}" y2="${a}"
-      stroke="${o.colors.border}" stroke-width="1"/>`)}return e.join(`
+      stroke="${o.colors.border}" stroke-width="1" opacity="0.3"/>`)}return e.join(`
 `)}function zn(t,n,o){var f,c,a,s;const e=[],i=o.spacing.padding;let r=n.footerY;if(!!((f=t.labels)!=null&&f.caption)||!!((c=t.labels)!=null&&c.footnote)){const u=n.footerY-8;e.push(`<line x1="${i}" x2="${n.totalWidth-i}"
       y1="${u}" y2="${u}"
       stroke="${o.colors.border}" stroke-width="1"/>`)}if((a=t.labels)!=null&&a.caption){const u=Q(o.typography.fontSizeSm);e.push(`<text x="${i}" y="${r}"
