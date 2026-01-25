@@ -34,7 +34,7 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
-    padding: 8px 8px 4px 2px;
+    padding: 12px 8px 4px 2px;
   }
 
   .title-area {

@@ -592,7 +592,7 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
     showOverallSummary: hasOverall,
     headerTextHeight,
     footerTextHeight,
-    titleY: padding + TYPOGRAPHY.TITLE_HEIGHT - 8, // Baseline adjustment
+    titleY: padding + TYPOGRAPHY.TITLE_HEIGHT - 4, // Baseline adjustment (matches web 12px top padding)
     subtitleY: padding + titleHeight + TYPOGRAPHY.SUBTITLE_HEIGHT - 4,
     mainY: headerTextHeight + padding,
     // Footer Y: Match web view's layout (axisHeight + 8px footer padding-top)
@@ -2983,9 +2983,9 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
   // Header (title, subtitle)
   parts.push(renderHeader(spec, layout, theme));
 
-  // Table separator line (only when title/subtitle area is present, matching web view's .has-header)
-  const hasPlotHeader = !!spec.labels?.title || !!spec.labels?.subtitle;
-  if (hasPlotHeader) {
+  // Table separator line (only when subtitle is present - title alone uses container border)
+  const hasSubtitle = !!spec.labels?.subtitle;
+  if (hasSubtitle) {
     parts.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
       y1="${layout.mainY}" y2="${layout.mainY}"
       stroke="${theme.colors.border}" stroke-width="2"/>`);
