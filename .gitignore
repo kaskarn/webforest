@@ -31,3 +31,7 @@ examples_output/
 docs/_site/
 .quarto/
 cran-comments.md
+
+# Test artifacts
+srcjs/*.html
+tests/visual/output/
