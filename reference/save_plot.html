@@ -325,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Export a forest plot, webtable, or split forest to static file formats.</p>
+<p>Export a tabviz widget or split table to static file formats.</p>
 <section id="usage" class="level2">
 <h2 class="anchored" data-anchor-id="usage">Usage</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_plot</span>(</span>
@@ -352,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td><code>x</code></td>
-<td>A <code>WebSpec</code>, <code>SplitForest</code>, or htmlwidget from <code>forest_plot()</code>/<code>webtable()</code></td>
+<td>A <code>WebSpec</code>, <code>SplitForest</code>, or htmlwidget from <code>tabviz()</code></td>
 </tr>
 <tr class="even">
 <td><code>file</code></td>
@@ -964,7 +964,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tabviz)</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>Export a forest plot, webtable, or split forest to static file formats.</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>Export a tabviz widget or split table to static file formats.</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Usage</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
@@ -982,7 +982,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Description <span class="pp">|</span></span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`x`</span> <span class="pp">|</span> A <span class="in">`WebSpec`</span>, <span class="in">`SplitForest`</span>, or htmlwidget from <span class="in">`forest_plot()`</span>/<span class="in">`webtable()`</span> <span class="pp">|</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`x`</span> <span class="pp">|</span> A <span class="in">`WebSpec`</span>, <span class="in">`SplitForest`</span>, or htmlwidget from <span class="in">`tabviz()`</span> <span class="pp">|</span></span>
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`file`</span> <span class="pp">|</span> Output file path (or directory for SplitForest). Extension determines format: <span class="in">`.svg`</span>, <span class="in">`.pdf`</span>, or <span class="in">`.png`</span> <span class="pp">|</span></span>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`width`</span> <span class="pp">|</span> Width in pixels (default: 800) <span class="pp">|</span></span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`height`</span> <span class="pp">|</span> Height in pixels (auto-calculated if NULL) <span class="pp">|</span></span>

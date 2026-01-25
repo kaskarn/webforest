@@ -475,19 +475,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../reference/columns.html#viz_forest"><code>web_effect()</code></a></td>
+<td><a href="../reference/columns.html#viz_forest"><code>effect_forest()</code></a></td>
 <td>Define effect for multi-effect forest plots</td>
 </tr>
 <tr class="even">
-<td><a href="../reference/columns.html#viz_bar"><code>viz_bar_effect()</code></a></td>
+<td><a href="../reference/columns.html#viz_bar"><code>effect_bar()</code></a></td>
 <td>Define bar in <code>viz_bar()</code></td>
 </tr>
 <tr class="odd">
-<td><a href="../reference/columns.html#viz_boxplot"><code>viz_boxplot_effect()</code></a></td>
+<td><a href="../reference/columns.html#viz_boxplot"><code>effect_boxplot()</code></a></td>
 <td>Define boxplot in <code>viz_boxplot()</code></td>
 </tr>
 <tr class="even">
-<td><a href="../reference/columns.html#viz_violin"><code>viz_violin_effect()</code></a></td>
+<td><a href="../reference/columns.html#viz_violin"><code>effect_violin()</code></a></td>
 <td>Define violin in <code>viz_violin()</code></td>
 </tr>
 </tbody>
@@ -665,7 +665,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../reference/annotations.html#forest_refline"><code>forest_refline()</code></a></td>
+<td><a href="../reference/annotations.html#refline"><code>refline()</code></a></td>
 <td>Add reference line</td>
 </tr>
 <tr class="even">
@@ -1316,10 +1316,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span></span>
 <span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`web_effect()`</span><span class="co">](columns.qmd#viz_forest)</span> <span class="pp">|</span> Define effect for multi-effect forest plots <span class="pp">|</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`viz_bar_effect()`</span><span class="co">](columns.qmd#viz_bar)</span> <span class="pp">|</span> Define bar in <span class="in">`viz_bar()`</span> <span class="pp">|</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`viz_boxplot_effect()`</span><span class="co">](columns.qmd#viz_boxplot)</span> <span class="pp">|</span> Define boxplot in <span class="in">`viz_boxplot()`</span> <span class="pp">|</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`viz_violin_effect()`</span><span class="co">](columns.qmd#viz_violin)</span> <span class="pp">|</span> Define violin in <span class="in">`viz_violin()`</span> <span class="pp">|</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`effect_forest()`</span><span class="co">](columns.qmd#viz_forest)</span> <span class="pp">|</span> Define effect for multi-effect forest plots <span class="pp">|</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`effect_bar()`</span><span class="co">](columns.qmd#viz_bar)</span> <span class="pp">|</span> Define bar in <span class="in">`viz_bar()`</span> <span class="pp">|</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`effect_boxplot()`</span><span class="co">](columns.qmd#viz_boxplot)</span> <span class="pp">|</span> Define boxplot in <span class="in">`viz_boxplot()`</span> <span class="pp">|</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`effect_violin()`</span><span class="co">](columns.qmd#viz_violin)</span> <span class="pp">|</span> Define violin in <span class="in">`viz_violin()`</span> <span class="pp">|</span></span>
 <span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="fu">### Column Groups</span></span>
 <span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
@@ -1387,7 +1387,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span></span>
 <span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|-------------|</span></span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`forest_refline()`</span><span class="co">](annotations.qmd#forest_refline)</span> <span class="pp">|</span> Add reference line <span class="pp">|</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`refline()`</span><span class="co">](annotations.qmd#refline)</span> <span class="pp">|</span> Add reference line <span class="pp">|</span></span>
 <span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">`forest_annotation()`</span><span class="co">](annotations.qmd#forest_annotation)</span> <span class="pp">|</span> Custom annotation <span class="pp">|</span></span>
 <span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interaction Settings</span></span>

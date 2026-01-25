@@ -280,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#reference-lines" id="toc-reference-lines" class="nav-link active" data-scroll-target="#reference-lines">Reference Lines</a>
   <ul class="collapse">
-  <li><a href="#forest_refline" id="toc-forest_refline" class="nav-link" data-scroll-target="#forest_refline">forest_refline</a></li>
+  <li><a href="#refline" id="toc-refline" class="nav-link" data-scroll-target="#refline">refline</a></li>
   </ul></li>
   <li><a href="#custom-annotations" id="toc-custom-annotations" class="nav-link" data-scroll-target="#custom-annotations">Custom Annotations</a>
   <ul class="collapse">
@@ -319,10 +319,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Annotation functions for adding visual elements to forest plots.</p>
 <section id="reference-lines" class="level2">
 <h2 class="anchored" data-anchor-id="reference-lines">Reference Lines</h2>
-<section id="forest_refline" class="level3">
-<h3 class="anchored" data-anchor-id="forest_refline">forest_refline</h3>
+<section id="refline" class="level3">
+<h3 class="anchored" data-anchor-id="refline">refline</h3>
 <p>Add a vertical reference line at a specific x-axis position. Commonly used to mark the null effect or clinically meaningful thresholds.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_refline</span>(x, <span class="at">label =</span> <span class="cn">NULL</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="cn">NULL</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">refline</span>(x, <span class="at">label =</span> <span class="cn">NULL</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="cn">NULL</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="dv">1</span>, <span class="at">opacity =</span> <span class="fl">0.6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <thead>
@@ -360,10 +360,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p><strong>Examples</strong>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic null line</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_refline</span>(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">refline</span>(<span class="dv">1</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Labeled threshold with custom styling</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_refline</span>(<span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"Clinically meaningful"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">refline</span>(<span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"Clinically meaningful"</span>,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">style =</span> <span class="st">"solid"</span>, <span class="at">width =</span> <span class="dv">2</span>, <span class="at">opacity =</span> <span class="fl">0.8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
@@ -434,8 +434,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">scale =</span> <span class="st">"log"</span>,</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">annotations =</span> <span class="fu">list</span>(</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">forest_refline</span>(<span class="dv">1</span>, <span class="st">"No effect"</span>, <span class="at">style =</span> <span class="st">"solid"</span>),</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">forest_refline</span>(<span class="fl">0.75</span>, <span class="st">"Clinically meaningful"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">refline</span>(<span class="dv">1</span>, <span class="st">"No effect"</span>, <span class="at">style =</span> <span class="st">"solid"</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">refline</span>(<span class="fl">0.75</span>, <span class="st">"Clinically meaningful"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>)</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
@@ -919,12 +919,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reference Lines</span></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### forest_refline {#forest_refline}</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### refline {#refline}</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>Add a vertical reference line at a specific x-axis position. Commonly used to mark the null effect or clinically meaningful thresholds.</span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_refline</span>(x, <span class="at">label =</span> <span class="cn">NULL</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">refline</span>(x, <span class="at">label =</span> <span class="cn">NULL</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="cn">NULL</span>,</span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">width =</span> <span class="dv">1</span>, <span class="at">opacity =</span> <span class="fl">0.6</span>)</span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
@@ -941,10 +941,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic null line</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_refline</span>(<span class="dv">1</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="fu">refline</span>(<span class="dv">1</span>)</span>
 <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Labeled threshold with custom styling</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">forest_refline</span>(<span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"Clinically meaningful"</span>,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">refline</span>(<span class="fl">0.5</span>, <span class="at">label =</span> <span class="st">"Clinically meaningful"</span>,</span>
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>               <span class="at">style =</span> <span class="st">"solid"</span>, <span class="at">width =</span> <span class="dv">2</span>, <span class="at">opacity =</span> <span class="fl">0.8</span>)</span>
 <span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
@@ -990,8 +990,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="st">"study"</span>,</span>
 <span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>  <span class="at">null_value =</span> <span class="dv">1</span>, <span class="at">scale =</span> <span class="st">"log"</span>,</span>
 <span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>  <span class="at">annotations =</span> <span class="fu">list</span>(</span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">forest_refline</span>(<span class="dv">1</span>, <span class="st">"No effect"</span>, <span class="at">style =</span> <span class="st">"solid"</span>),</span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    <span class="fu">forest_refline</span>(<span class="fl">0.75</span>, <span class="st">"Clinically meaningful"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>)</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">refline</span>(<span class="dv">1</span>, <span class="st">"No effect"</span>, <span class="at">style =</span> <span class="st">"solid"</span>),</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    <span class="fu">refline</span>(<span class="fl">0.75</span>, <span class="st">"Clinically meaningful"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>)</span>
 <span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>

@@ -410,17 +410,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td><code>viz_bar()</code></td>
 <td>Bar charts with axis</td>
-<td><code>viz_bar(viz_bar_effect("value"))</code></td>
+<td><code>viz_bar(effect_bar("value"))</code></td>
 </tr>
 <tr class="odd">
 <td><code>viz_boxplot()</code></td>
 <td>Box-and-whisker plots</td>
-<td><code>viz_boxplot(viz_boxplot_effect(data = "values"))</code></td>
+<td><code>viz_boxplot(effect_boxplot(data = "values"))</code></td>
 </tr>
 <tr class="even">
 <td><code>viz_violin()</code></td>
 <td>Violin/density plots</td>
-<td><code>viz_violin(viz_violin_effect(data = "values"))</code></td>
+<td><code>viz_violin(effect_violin(data = "values"))</code></td>
 </tr>
 </tbody>
 </table>
@@ -739,8 +739,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tabviz</span>(data, <span class="at">label =</span> <span class="st">"study"</span>, <span class="at">columns =</span> <span class="fu">list</span>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_forest</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">effects =</span> <span class="fu">list</span>(</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">web_effect</span>(<span class="st">"itt_hr"</span>, <span class="st">"itt_lo"</span>, <span class="st">"itt_hi"</span>, <span class="at">label =</span> <span class="st">"ITT"</span>, <span class="at">color =</span> <span class="st">"#2563eb"</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">web_effect</span>(<span class="st">"pp_hr"</span>, <span class="st">"pp_lo"</span>, <span class="st">"pp_hi"</span>, <span class="at">label =</span> <span class="st">"Per-Protocol"</span>, <span class="at">color =</span> <span class="st">"#16a34a"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">effect_forest</span>(<span class="st">"itt_hr"</span>, <span class="st">"itt_lo"</span>, <span class="st">"itt_hi"</span>, <span class="at">label =</span> <span class="st">"ITT"</span>, <span class="at">color =</span> <span class="st">"#2563eb"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">effect_forest</span>(<span class="st">"pp_hr"</span>, <span class="st">"pp_lo"</span>, <span class="st">"pp_hi"</span>, <span class="at">label =</span> <span class="st">"Per-Protocol"</span>, <span class="at">color =</span> <span class="st">"#16a34a"</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  )</span>
@@ -751,24 +751,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="distribution-visualizations">Distribution Visualizations</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar chart</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_bar</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_bar_effect</span>(<span class="st">"value"</span>, <span class="at">color =</span> <span class="st">"#3b82f6"</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_bar</span>(<span class="st">"value"</span>, <span class="at">color =</span> <span class="st">"#3b82f6"</span>),</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot from array data</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_boxplot</span>(</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_boxplot_effect</span>(<span class="at">data =</span> <span class="st">"measurements"</span>, <span class="at">color =</span> <span class="st">"#8b5cf6"</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_boxplot</span>(<span class="at">data =</span> <span class="st">"measurements"</span>, <span class="at">color =</span> <span class="st">"#8b5cf6"</span>),</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_outliers =</span> <span class="cn">TRUE</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot from pre-computed stats</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_boxplot</span>(</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_boxplot_effect</span>(<span class="at">min =</span> <span class="st">"min"</span>, <span class="at">q1 =</span> <span class="st">"q1"</span>, <span class="at">median =</span> <span class="st">"median"</span>, <span class="at">q3 =</span> <span class="st">"q3"</span>, <span class="at">max =</span> <span class="st">"max"</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_boxplot</span>(<span class="at">min =</span> <span class="st">"min"</span>, <span class="at">q1 =</span> <span class="st">"q1"</span>, <span class="at">median =</span> <span class="st">"median"</span>, <span class="at">q3 =</span> <span class="st">"q3"</span>, <span class="at">max =</span> <span class="st">"max"</span>)</span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Violin plot</span></span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_violin</span>(</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_violin_effect</span>(<span class="at">data =</span> <span class="st">"scores"</span>, <span class="at">color =</span> <span class="st">"#f59e0b"</span>),</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_violin</span>(<span class="at">data =</span> <span class="st">"scores"</span>, <span class="at">color =</span> <span class="st">"#f59e0b"</span>),</span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_median =</span> <span class="cn">TRUE</span>, <span class="at">show_quartiles =</span> <span class="cn">TRUE</span></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
@@ -776,7 +776,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="annotations" class="level2">
 <h2 class="anchored" data-anchor-id="annotations">Annotations</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>annotations <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forest_refline</span>(<span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"Threshold"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#e11d48"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">refline</span>(<span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"Threshold"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#e11d48"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
@@ -1355,9 +1355,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Purpose <span class="pp">|</span> Example <span class="pp">|</span></span>
 <span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="pp">|----------|---------|---------|</span></span>
 <span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_forest()`</span> <span class="pp">|</span> Forest plots with CI <span class="pp">|</span> <span class="in">`viz_forest(point = "hr", lower = "lo", upper = "hi", scale = "log")`</span> <span class="pp">|</span></span>
-<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_bar()`</span> <span class="pp">|</span> Bar charts with axis <span class="pp">|</span> <span class="in">`viz_bar(viz_bar_effect("value"))`</span> <span class="pp">|</span></span>
-<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_boxplot()`</span> <span class="pp">|</span> Box-and-whisker plots <span class="pp">|</span> <span class="in">`viz_boxplot(viz_boxplot_effect(data = "values"))`</span> <span class="pp">|</span></span>
-<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_violin()`</span> <span class="pp">|</span> Violin/density plots <span class="pp">|</span> <span class="in">`viz_violin(viz_violin_effect(data = "values"))`</span> <span class="pp">|</span></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_bar()`</span> <span class="pp">|</span> Bar charts with axis <span class="pp">|</span> <span class="in">`viz_bar(effect_bar("value"))`</span> <span class="pp">|</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_boxplot()`</span> <span class="pp">|</span> Box-and-whisker plots <span class="pp">|</span> <span class="in">`viz_boxplot(effect_boxplot(data = "values"))`</span> <span class="pp">|</span></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`viz_violin()`</span> <span class="pp">|</span> Violin/density plots <span class="pp">|</span> <span class="in">`viz_violin(effect_violin(data = "values"))`</span> <span class="pp">|</span></span>
 <span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a></span>
@@ -1499,8 +1499,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a><span class="fu">tabviz</span>(data, <span class="at">label =</span> <span class="st">"study"</span>, <span class="at">columns =</span> <span class="fu">list</span>(</span>
 <span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_forest</span>(</span>
 <span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a>    <span class="at">effects =</span> <span class="fu">list</span>(</span>
-<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>      <span class="fu">web_effect</span>(<span class="st">"itt_hr"</span>, <span class="st">"itt_lo"</span>, <span class="st">"itt_hi"</span>, <span class="at">label =</span> <span class="st">"ITT"</span>, <span class="at">color =</span> <span class="st">"#2563eb"</span>),</span>
-<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>      <span class="fu">web_effect</span>(<span class="st">"pp_hr"</span>, <span class="st">"pp_lo"</span>, <span class="st">"pp_hi"</span>, <span class="at">label =</span> <span class="st">"Per-Protocol"</span>, <span class="at">color =</span> <span class="st">"#16a34a"</span>)</span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>      <span class="fu">effect_forest</span>(<span class="st">"itt_hr"</span>, <span class="st">"itt_lo"</span>, <span class="st">"itt_hi"</span>, <span class="at">label =</span> <span class="st">"ITT"</span>, <span class="at">color =</span> <span class="st">"#2563eb"</span>),</span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>      <span class="fu">effect_forest</span>(<span class="st">"pp_hr"</span>, <span class="st">"pp_lo"</span>, <span class="st">"pp_hi"</span>, <span class="at">label =</span> <span class="st">"Per-Protocol"</span>, <span class="at">color =</span> <span class="st">"#16a34a"</span>)</span>
 <span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> <span class="st">"log"</span>, <span class="at">null_value =</span> <span class="dv">1</span></span>
 <span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a>  )</span>
@@ -1514,24 +1514,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar chart</span></span>
 <span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_bar</span>(</span>
-<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_bar_effect</span>(<span class="st">"value"</span>, <span class="at">color =</span> <span class="st">"#3b82f6"</span>),</span>
+<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_bar</span>(<span class="st">"value"</span>, <span class="at">color =</span> <span class="st">"#3b82f6"</span>),</span>
 <span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
 <span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot from array data</span></span>
 <span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_boxplot</span>(</span>
-<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_boxplot_effect</span>(<span class="at">data =</span> <span class="st">"measurements"</span>, <span class="at">color =</span> <span class="st">"#8b5cf6"</span>),</span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_boxplot</span>(<span class="at">data =</span> <span class="st">"measurements"</span>, <span class="at">color =</span> <span class="st">"#8b5cf6"</span>),</span>
 <span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_outliers =</span> <span class="cn">TRUE</span></span>
 <span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot from pre-computed stats</span></span>
 <span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_boxplot</span>(</span>
-<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_boxplot_effect</span>(<span class="at">min =</span> <span class="st">"min"</span>, <span class="at">q1 =</span> <span class="st">"q1"</span>, <span class="at">median =</span> <span class="st">"median"</span>, <span class="at">q3 =</span> <span class="st">"q3"</span>, <span class="at">max =</span> <span class="st">"max"</span>)</span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_boxplot</span>(<span class="at">min =</span> <span class="st">"min"</span>, <span class="at">q1 =</span> <span class="st">"q1"</span>, <span class="at">median =</span> <span class="st">"median"</span>, <span class="at">q3 =</span> <span class="st">"q3"</span>, <span class="at">max =</span> <span class="st">"max"</span>)</span>
 <span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a><span class="co"># Violin plot</span></span>
 <span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a><span class="fu">viz_violin</span>(</span>
-<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">viz_violin_effect</span>(<span class="at">data =</span> <span class="st">"scores"</span>, <span class="at">color =</span> <span class="st">"#f59e0b"</span>),</span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">effect_violin</span>(<span class="at">data =</span> <span class="st">"scores"</span>, <span class="at">color =</span> <span class="st">"#f59e0b"</span>),</span>
 <span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_median =</span> <span class="cn">TRUE</span>, <span class="at">show_quartiles =</span> <span class="cn">TRUE</span></span>
 <span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1542,7 +1542,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a>annotations <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forest_refline</span>(<span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"Threshold"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#e11d48"</span>)</span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">refline</span>(<span class="fl">0.8</span>, <span class="at">label =</span> <span class="st">"Threshold"</span>, <span class="at">style =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"#e11d48"</span>)</span>
 <span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a></span>
