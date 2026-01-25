@@ -22,26 +22,28 @@ meta_analysis <- tibble(
   rindent = c(0, 1, 1, 1, 1, 1, 0, 0)
 )
 
-forest_plot(
+tabviz(
   meta_analysis,
-  point = "or", lower = "lower", upper = "upper",
   label = "study",
-  weight = "weight",  # Scale marker sizes by study weight
+  marker_size = "weight",  # Scale marker sizes by study weight
   columns = list(
     col_n("n"),
     col_bar("weight"),
-    col_interval("OR (95% CI)")
-  ),
-  annotations = list(
-    forest_refline(0.75, label = "Pooled", style = "solid", color = "#2563eb")
+    col_interval("OR (95% CI)"),
+    viz_forest(
+      point = "or", lower = "lower", upper = "upper",
+      scale = "log", null_value = 1,
+      axis_label = "Odds Ratio (95% CI)",
+      annotations = list(
+        refline(0.75, label = "Pooled", style = "solid", color = "#2563eb")
+      )
+    )
   ),
   row_type = "rtype", row_bold = "rbold", row_indent = "rindent",
   theme = web_theme_lancet(),
-  scale = "log", null_value = 1,
   axis_range = c(0.4, 1.2),
   axis_ticks = c(0.5, 0.75, 1.0),
   axis_gridlines = TRUE,
-  axis_label = "Odds Ratio (95% CI)",
   title = "Publication Meta-Analysis",
   subtitle = "Weight column + reference line + custom axis",
   caption = "Pooled estimate shown as reference line; I2 = 32%",

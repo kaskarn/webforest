@@ -22,7 +22,7 @@ table_data <- tibble(
   )
 )
 
-webtable(
+tabviz(
   table_data,
   label = "metric", group = "category",
   columns = list(
@@ -33,5 +33,5 @@ webtable(
   theme = web_theme_modern(),
   title = "Table-Only Mode",
   subtitle = "No forest plot - pure data table with bars and sparklines",
-  caption = "Using webtable() instead of forest_plot()"
+  caption = "Tables without visualization columns work seamlessly"
 )

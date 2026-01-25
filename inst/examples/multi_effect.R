@@ -1,5 +1,5 @@
 # Example: Multiple stacked effects per row
-# Demonstrates: web_effect() for displaying multiple related estimates on same axis
+# Demonstrates: effect_forest() for displaying multiple related estimates on same axis
 
 library(tabviz)
 library(dplyr)
@@ -48,13 +48,13 @@ forest_plot(
   ),
   # Define multiple effects to display stacked on same axis
   effects = list(
-    web_effect("itt_or", "itt_lower", "itt_upper",
+    effect_forest("itt_or", "itt_lower", "itt_upper",
                label = "Intention-to-Treat",
                color = "#2563eb"),
-    web_effect("pp_or", "pp_lower", "pp_upper",
+    effect_forest("pp_or", "pp_lower", "pp_upper",
                label = "Per-Protocol",
                color = "#16a34a"),
-    web_effect("at_or", "at_lower", "at_upper",
+    effect_forest("at_or", "at_lower", "at_upper",
                label = "As-Treated",
                color = "#dc2626")
   ),

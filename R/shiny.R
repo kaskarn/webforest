@@ -194,7 +194,7 @@ splitForestOutput <- function(outputId, width = "100%", height = "600px") {
 #' output$split_plot <- renderSplitForest({
 #'   data |>
 #'     tabviz(label = "study", columns = list(
-#'       col_forest(point = "or", lower = "lower", upper = "upper")
+#'       viz_forest(point = "or", lower = "lower", upper = "upper")
 #'     )) |>
 #'     split_table(by = input$split_var) |>
 #'     forest_plot()

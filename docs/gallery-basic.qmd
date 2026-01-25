@@ -95,11 +95,11 @@ tabviz(
     col_interval("Primary OR", point = "itt_or", lower = "itt_lo", upper = "itt_hi"),
     viz_forest(
       effects = list(
-        web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT (Primary)", color = "#2563eb"),
-        web_effect("mi_or", "mi_lo", "mi_hi", label = "Multiple Imputation", color = "#7c3aed"),
-        web_effect("cc_or", "cc_lo", "cc_hi", label = "Complete Case", color = "#059669"),
-        web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#d97706"),
-        web_effect("tip_or", "tip_lo", "tip_hi", label = "Tipping Point", color = "#dc2626")
+        effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT (Primary)", color = "#2563eb"),
+        effect_forest("mi_or", "mi_lo", "mi_hi", label = "Multiple Imputation", color = "#7c3aed"),
+        effect_forest("cc_or", "cc_lo", "cc_hi", label = "Complete Case", color = "#059669"),
+        effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#d97706"),
+        effect_forest("tip_or", "tip_lo", "tip_hi", label = "Tipping Point", color = "#dc2626")
       ),
       scale = "log", null_value = 1, axis_label = "Odds Ratio (95% CI)"
     )
@@ -414,15 +414,15 @@ tabviz(
     col_numeric("dose_mg", "Dose (mg)"),
     col_interval("OR (95% CI)", point = "or", lower = "lower", upper = "upper"),
     viz_forest(point = "or", lower = "lower", upper = "upper",
-               scale = "log", null_value = 1, axis_label = "Odds Ratio")
-  ),
-  annotations = list(
-    forest_refline(0.80, label = "Clinically meaningful", style = "dashed", color = "#16a34a"),
-    forest_refline(0.50, label = "Target effect", style = "solid", color = "#dc2626")
+               scale = "log", null_value = 1, axis_label = "Odds Ratio",
+               annotations = list(
+                 refline(0.80, label = "Clinically meaningful", style = "dashed", color = "#16a34a"),
+                 refline(0.50, label = "Target effect", style = "solid", color = "#dc2626")
+               ))
   ),
   theme = web_theme_modern(),
   title = "Annotations & Reference Lines",
-  subtitle = "forest_refline() adds labeled vertical lines",
+  subtitle = "refline() adds labeled vertical lines",
   caption = "Green dashed = clinically meaningful threshold, Red solid = target"
 )
 ```

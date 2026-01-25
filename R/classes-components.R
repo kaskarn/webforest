@@ -133,7 +133,7 @@ web_col <- function(
     align <- "left"
   }
 
-  # Handle width: NULL → "auto", "auto" → "auto", numeric → numeric
+  # Handle width: NULL -> "auto", "auto" -> "auto", numeric -> numeric
   width_val <- if (is.null(width)) {
     "auto"
   } else if (identical(width, "auto")) {
@@ -299,7 +299,7 @@ col_n <- function(field = "n", header = "N", width = NULL, decimals = 0,
 #' @param decimals Number of decimal places (default 2)
 #' @param sep Separator between point and CI (default " ")
 #' @param imprecise_threshold When upper/lower ratio exceeds this threshold,
-#'   the interval is considered imprecise and displayed as "—" instead.
+#'   the interval is considered imprecise and displayed as "--" instead.
 #'   Default is NULL (no threshold).
 #' @param ... Additional arguments passed to `web_col()`, including cell styling:
 #'   `bold`, `italic`, `color`, `bg`, `emphasis`, `muted`, `accent` (column names)
@@ -347,8 +347,8 @@ col_interval <- function(point = NULL, lower = NULL, upper = NULL,
 #' Column helper: P-value
 #'
 #' Display p-values with optional significance stars and smart formatting.
-#' Very small values are displayed using Unicode superscript notation
-#' (e.g., 1.2\enc{×}{x}10\enc{⁻⁵}{^-5}) for improved readability.
+#' Very small values are displayed in scientific notation
+#' (e.g., 1.2e-5) for improved readability.
 #'
 #' @param field Field name (default "pvalue")
 #' @param header Column header (default "P-value")
@@ -694,7 +694,7 @@ col_badge <- function(
 
 #' Column helper: Star rating
 #'
-#' Display star ratings using Unicode stars (\enc{★}{*} filled, \enc{☆}{o} empty).
+#' Display star ratings using Unicode stars (filled and empty).
 #'
 #' @param field Field name containing numeric rating (1-5 or custom range)
 #' @param header Column header (default NULL, uses field name)
@@ -750,7 +750,7 @@ col_stars <- function(
 #' @param width Column width in pixels (NULL for auto-sizing based on content)
 #' @param height Image height in pixels (default NULL, uses row height - 4)
 #' @param max_width Maximum image width (default NULL, uses column width)
-#' @param fallback Fallback text or icon if image fails to load (default "📷")
+#' @param fallback Fallback text or icon if image fails to load (default "[img]")
 #' @param shape Image shape: "square", "circle", or "rounded" (default "square")
 #' @param ... Additional arguments passed to `web_col()`, including cell styling:
 #'   `bold`, `italic`, `color`, `bg`, `emphasis`, `muted`, `accent` (column names)
@@ -775,7 +775,7 @@ col_img <- function(
     width = NULL,
     height = NULL,
     max_width = NULL,
-    fallback = "\U0001F4F7",
+    fallback = "[img]",
     shape = c("square", "circle", "rounded"),
     ...) {
   shape <- match.arg(shape)
@@ -856,8 +856,8 @@ col_reference <- function(
 #' # Simple range: "18 - 65"
 #' col_range("age_min", "age_max", "Age Range")
 #'
-#' # Custom separator: "18–65"
-#' col_range("min", "max", separator = "–")
+#' # Custom separator: "18-65"
+#' col_range("min", "max", separator = "-")
 #'
 #' # With decimals: "1.5 - 3.2"
 #' col_range("ci_lower", "ci_upper", decimals = 1)
@@ -900,14 +900,14 @@ col_range <- function(
 #'
 #' Each `viz_forest()` fully owns its effect definitions - no global effects
 #' list is needed. Use either inline column references (point/lower/upper) for
-#' a single effect, or a list of `web_effect()` objects for multiple effects.
+#' a single effect, or a list of `effect_forest()` objects for multiple effects.
 #'
 #' @param header Column header (default NULL, typically no header for plot)
 #' @param width Column width in pixels (NULL for auto-sizing based on available space)
 #' @param point Column name for point estimate. Use for single-effect plots.
 #' @param lower Column name for lower bound. Use for single-effect plots.
 #' @param upper Column name for upper bound. Use for single-effect plots.
-#' @param effects List of `web_effect()` objects for multi-effect display
+#' @param effects List of `effect_forest()` objects for multi-effect display
 #'   (multiple markers overlaid in same column). Cannot be used with point/lower/upper.
 #' @param scale Scale type: "linear" (default) or "log"
 #' @param null_value Reference line value. Default is 0 for linear scale, 1 for log scale.
@@ -939,8 +939,8 @@ col_range <- function(
 #' # Multiple effects overlaid in one column
 #' viz_forest(
 #'   effects = list(
-#'     web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-#'     web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+#'     effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+#'     effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
 #'   ),
 #'   scale = "log",
 #'   null_value = 1,
@@ -983,7 +983,7 @@ viz_forest <- function(
     cli_abort(c(
       "Forest column requires effect specification",
       "i" = "Provide either {.arg point}/{.arg lower}/{.arg upper} columns,",
-      "i" = "or {.arg effects} = list(web_effect(...), ...) for multiple effects."
+      "i" = "or {.arg effects} = list(effect_forest(...), ...) for multiple effects."
     ))
   }
 
@@ -1068,61 +1068,6 @@ viz_forest <- function(
     width = width,
     sortable = FALSE,  # Forest columns are not sortable by default
     options = opts,
-    ...
-  )
-}
-
-#' Column helper: Forest plot column (deprecated)
-#'
-#' @description
-#' `r lifecycle::badge("deprecated")`
-#'
-#' `col_forest()` was renamed to [viz_forest()] to better reflect its role as a
-#' focal visualization column with its own axis/scale (as opposed to `col_*`
-#' functions which render inline cell content).
-#'
-#' @inheritParams viz_forest
-#' @export
-#' @keywords internal
-col_forest <- function(
-    header = NULL,
-    width = NULL,
-    point = NULL,
-    lower = NULL,
-    upper = NULL,
-    effects = NULL,
-    scale = c("linear", "log"),
-    null_value = NULL,
-    axis_label = "Effect",
-    axis_range = NULL,
-    axis_ticks = NULL,
-    axis_gridlines = FALSE,
-    show_axis = TRUE,
-    annotations = NULL,
-    shared_axis = NULL,
-    ...) {
-  lifecycle::deprecate_warn(
-    "0.2.0",
-    "col_forest()",
-    "viz_forest()",
-    id = "col_forest"
-  )
-  viz_forest(
-    header = header,
-    width = width,
-    point = point,
-    lower = lower,
-    upper = upper,
-    effects = effects,
-    scale = scale,
-    null_value = null_value,
-    axis_label = axis_label,
-    axis_range = axis_range,
-    axis_ticks = axis_ticks,
-    axis_gridlines = axis_gridlines,
-    show_axis = show_axis,
-    annotations = annotations,
-    shared_axis = shared_axis,
     ...
   )
 }
@@ -1331,7 +1276,8 @@ VizBarEffect <- new_class(
 
 #' Create a bar effect specification
 #'
-#' Defines a single bar effect for viz_bar columns.
+#' Defines a single bar effect for `viz_bar()` columns.
+#' Used to display multiple bars per row (grouped bars).
 #'
 #' @param value Column name containing the bar value
 #' @param label Display label (defaults to value column name)
@@ -1340,7 +1286,7 @@ VizBarEffect <- new_class(
 #'
 #' @return A VizBarEffect object
 #' @export
-viz_bar_effect <- function(value, label = NULL, color = NULL, opacity = NULL) {
+effect_bar <- function(value, label = NULL, color = NULL, opacity = NULL) {
   VizBarEffect(
     value = value,
     label = label %||% value,
@@ -1400,8 +1346,9 @@ VizBoxplotEffect <- new_class(
 
 #' Create a boxplot effect specification
 #'
-#' Defines a boxplot effect. Use either `data` for raw array data (quartiles
-#' computed automatically), or provide pre-computed summary statistics.
+#' Defines a boxplot effect for `viz_boxplot()` columns. Use either `data`
+#' for raw array data (quartiles computed automatically), or provide
+#' pre-computed summary statistics.
 #'
 #' @param data Column name containing array data (raw values)
 #' @param min Column name for pre-computed minimum
@@ -1416,7 +1363,7 @@ VizBoxplotEffect <- new_class(
 #'
 #' @return A VizBoxplotEffect object
 #' @export
-viz_boxplot_effect <- function(
+effect_boxplot <- function(
     data = NULL,
     min = NULL, q1 = NULL, median = NULL, q3 = NULL, max = NULL,
     outliers = NULL,
@@ -1463,7 +1410,8 @@ VizViolinEffect <- new_class(
 
 #' Create a violin effect specification
 #'
-#' Defines a violin effect. Requires array data column for KDE computation.
+#' Defines a violin effect for `viz_violin()` columns. Requires array data
+#' column for KDE computation.
 #'
 #' @param data Column name containing array data (required)
 #' @param label Display label (optional)
@@ -1472,7 +1420,7 @@ VizViolinEffect <- new_class(
 #'
 #' @return A VizViolinEffect object
 #' @export
-viz_violin_effect <- function(data, label = NULL, color = NULL, fill_opacity = 0.5) {
+effect_violin <- function(data, label = NULL, color = NULL, fill_opacity = 0.5) {
   VizViolinEffect(
     data = data,
     label = label %||% NA_character_,
@@ -1490,7 +1438,7 @@ viz_violin_effect <- function(data, label = NULL, color = NULL, fill_opacity = 0
 #' Renders horizontal bar charts with support for multiple effects (grouped bars).
 #' Each row displays one or more bars based on data values.
 #'
-#' @param ... One or more `viz_bar_effect()` objects defining the bars to display
+#' @param ... One or more `effect_bar()` objects defining the bars to display
 #' @param header Column header (default "")
 #' @param width Column width in pixels (default 150)
 #' @param scale Scale type: "linear" (default) or "log"
@@ -1507,12 +1455,12 @@ viz_violin_effect <- function(data, label = NULL, color = NULL, fill_opacity = 0
 #'
 #' @examples
 #' # Single bar per row
-#' viz_bar(viz_bar_effect("value"))
+#' viz_bar(effect_bar("value"))
 #'
 #' # Multiple bars per row (grouped)
 #' viz_bar(
-#'   viz_bar_effect("baseline", label = "Baseline", color = "#3b82f6"),
-#'   viz_bar_effect("followup", label = "Follow-up", color = "#22c55e")
+#'   effect_bar("baseline", label = "Baseline", color = "#3b82f6"),
+#'   effect_bar("followup", label = "Follow-up", color = "#22c55e")
 #' )
 viz_bar <- function(
     ...,
@@ -1530,13 +1478,13 @@ viz_bar <- function(
 
   # Validate effects
   if (length(effects) == 0) {
-    cli_abort("viz_bar requires at least one viz_bar_effect()")
+    cli_abort("viz_bar requires at least one effect_bar()")
   }
 
   for (i in seq_along(effects)) {
     if (!S7_inherits(effects[[i]], VizBarEffect)) {
       cli_abort(c(
-        "All arguments to viz_bar must be {.fn viz_bar_effect} objects",
+        "All arguments to viz_bar must be {.fn effect_bar} objects",
         "i" = "Argument {i} is not a VizBarEffect"
       ))
     }
@@ -1583,7 +1531,7 @@ viz_bar <- function(
 #' Renders box-and-whisker plots. Supports either raw array data (quartiles
 #' computed automatically) or pre-computed summary statistics.
 #'
-#' @param ... One or more `viz_boxplot_effect()` objects defining the boxplots
+#' @param ... One or more `effect_boxplot()` objects defining the boxplots
 #' @param header Column header (default "")
 #' @param width Column width in pixels (default 150)
 #' @param scale Scale type: "linear" (default) or "log"
@@ -1602,18 +1550,18 @@ viz_bar <- function(
 #'
 #' @examples
 #' # Boxplot from array data (quartiles computed automatically)
-#' viz_boxplot(viz_boxplot_effect(data = "values"))
+#' viz_boxplot(effect_boxplot(data = "values"))
 #'
 #' # Boxplot from pre-computed statistics
-#' viz_boxplot(viz_boxplot_effect(
+#' viz_boxplot(effect_boxplot(
 #'   min = "min_val", q1 = "q1_val", median = "median_val",
 #'   q3 = "q3_val", max = "max_val"
 #' ))
 #'
 #' # Multiple boxplots per row
 #' viz_boxplot(
-#'   viz_boxplot_effect(data = "group_a", label = "Group A", color = "#3b82f6"),
-#'   viz_boxplot_effect(data = "group_b", label = "Group B", color = "#22c55e")
+#'   effect_boxplot(data = "group_a", label = "Group A", color = "#3b82f6"),
+#'   effect_boxplot(data = "group_b", label = "Group B", color = "#22c55e")
 #' )
 viz_boxplot <- function(
     ...,
@@ -1634,13 +1582,13 @@ viz_boxplot <- function(
 
   # Validate effects
   if (length(effects) == 0) {
-    cli_abort("viz_boxplot requires at least one viz_boxplot_effect()")
+    cli_abort("viz_boxplot requires at least one effect_boxplot()")
   }
 
   for (i in seq_along(effects)) {
     if (!S7_inherits(effects[[i]], VizBoxplotEffect)) {
       cli_abort(c(
-        "All arguments to viz_boxplot must be {.fn viz_boxplot_effect} objects",
+        "All arguments to viz_boxplot must be {.fn effect_boxplot} objects",
         "i" = "Argument {i} is not a VizBoxplotEffect"
       ))
     }
@@ -1701,7 +1649,7 @@ viz_boxplot <- function(
 #' Renders violin plots (kernel density estimation). Requires raw array data
 #' for each row.
 #'
-#' @param ... One or more `viz_violin_effect()` objects defining the violins
+#' @param ... One or more `effect_violin()` objects defining the violins
 #' @param header Column header (default "")
 #' @param width Column width in pixels (default 150)
 #' @param scale Scale type: "linear" (default) or "log"
@@ -1721,12 +1669,12 @@ viz_boxplot <- function(
 #'
 #' @examples
 #' # Single violin per row
-#' viz_violin(viz_violin_effect(data = "values"))
+#' viz_violin(effect_violin(data = "values"))
 #'
 #' # Multiple violins per row
 #' viz_violin(
-#'   viz_violin_effect(data = "treatment", label = "Treatment", color = "#3b82f6"),
-#'   viz_violin_effect(data = "control", label = "Control", color = "#22c55e"),
+#'   effect_violin(data = "treatment", label = "Treatment", color = "#3b82f6"),
+#'   effect_violin(data = "control", label = "Control", color = "#22c55e"),
 #'   show_median = TRUE,
 #'   show_quartiles = TRUE
 #' )
@@ -1749,13 +1697,13 @@ viz_violin <- function(
 
   # Validate effects
   if (length(effects) == 0) {
-    cli_abort("viz_violin requires at least one viz_violin_effect()")
+    cli_abort("viz_violin requires at least one effect_violin()")
   }
 
   for (i in seq_along(effects)) {
     if (!S7_inherits(effects[[i]], VizViolinEffect)) {
       cli_abort(c(
-        "All arguments to viz_violin must be {.fn viz_violin_effect} objects",
+        "All arguments to viz_violin must be {.fn effect_violin} objects",
         "i" = "Argument {i} is not a VizViolinEffect"
       ))
     }

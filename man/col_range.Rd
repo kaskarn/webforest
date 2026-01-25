@@ -43,8 +43,8 @@ Display min-max ranges like "18-65" or "2.5 - 10.0".
 # Simple range: "18 - 65"
 col_range("age_min", "age_max", "Age Range")
 
-# Custom separator: "18–65"
-col_range("min", "max", separator = "–")
+# Custom separator: "18-65"
+col_range("min", "max", separator = "-")
 
 # With decimals: "1.5 - 3.2"
 col_range("ci_lower", "ci_upper", decimals = 1)

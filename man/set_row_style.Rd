@@ -21,7 +21,7 @@ set_row_style(
 )
 }
 \arguments{
-\item{x}{A WebSpec object or an htmlwidget created by forest_plot/webtable}
+\item{x}{A WebSpec object or an htmlwidget created by tabviz()}
 
 \item{bold}{Column name containing logical values for row-level bold}
 

@@ -36,7 +36,7 @@ ReferenceLine <- new_class(
 
 #' Create a reference line annotation
 #'
-#' Adds a vertical reference line to the forest plot at a specified x-axis
+#' Adds a vertical reference line to a viz_* column at a specified x-axis
 #' position. Commonly used to mark the null effect (e.g., 0 for differences,
 #' 1 for ratios) or other clinically meaningful thresholds.
 #'
@@ -51,14 +51,14 @@ ReferenceLine <- new_class(
 #'
 #' @examples
 #' # Basic null line
-#' forest_refline(1)
+#' refline(1)
 #'
 #' # Labeled threshold with custom styling
-#' forest_refline(0.5, label = "Clinically meaningful", style = "solid",
-#'                width = 2, opacity = 0.8)
+#' refline(0.5, label = "Clinically meaningful", style = "solid",
+#'         width = 2, opacity = 0.8)
 #'
 #' @export
-forest_refline <- function(
+refline <- function(
     x,
     label = NULL,
     style = c("dashed", "solid", "dotted"),

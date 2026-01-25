@@ -15,7 +15,7 @@ tabviz uses [S7](https://rconsortium.github.io/S7/), R's modern object-oriented 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                          WebSpec                                 │
-│  The root specification object passed to forest_plot/webtable   │
+│  The root specification object passed to tabviz()               │
 ├─────────────────────────────────────────────────────────────────┤
 │  data          │ data.frame with point/interval values          │
 │  columns       │ List<ColumnSpec | ColumnGroup>                 │

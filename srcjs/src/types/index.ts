@@ -520,7 +520,6 @@ export interface PlotLabels {
 export interface WebSpec {
   data: WebData;
   columns: ColumnDef[];
-  annotations: Annotation[];
   theme: WebTheme;
   interaction: InteractionSpec;
   layout: LayoutSpec;

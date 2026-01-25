@@ -3,7 +3,7 @@
 #' Serialize a WebSpec to a JSON-ready list
 #'
 #' @param spec A WebSpec object
-#' @param include_forest Whether to include forest plot data (TRUE for forest_plot, FALSE for webtable)
+#' @param include_forest Whether to include forest plot data in serialization
 #' @return A nested list suitable for jsonlite::toJSON
 #' @keywords internal
 serialize_spec <- function(spec, include_forest = TRUE) {
@@ -12,7 +12,6 @@ serialize_spec <- function(spec, include_forest = TRUE) {
   list(
     data = serialize_data(spec, include_forest),
     columns = lapply(spec@columns, serialize_column),
-    annotations = lapply(spec@annotations, serialize_annotation),
     theme = serialize_theme(theme),
     interaction = serialize_interaction(spec@interaction),
     labels = serialize_labels(spec@labels),

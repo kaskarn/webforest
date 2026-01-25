@@ -66,7 +66,7 @@ save_plot(p, "forest.svg")
 # Save a SplitForest to a directory
 split_result <- data |>
   tabviz(label = "study", columns = list(
-    col_forest(point = "estimate", lower = "lower", upper = "upper")
+    viz_forest(point = "estimate", lower = "lower", upper = "upper")
   )) |>
   split_table(by = c("sex", "age_group"))
 

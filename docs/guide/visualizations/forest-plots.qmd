@@ -140,14 +140,14 @@ tabviz(multi_data, label = "study", title = "Sensitivity Analysis Comparison",
     viz_forest(
       scale = "log", null_value = 1,
       effects = list(
-        web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-        web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+        effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+        effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
       ))
   )
 )
 ```
 
-### web_effect() Arguments
+### effect_forest() Arguments
 
 | Argument | Description |
 |----------|-------------|
@@ -193,7 +193,7 @@ tabviz(comparison_data, label = "study",
 - Showing different populations (ITT vs as-treated)
 - Outcomes have different clinical meaning
 
-**Use multi-effect overlays (`web_effect()`) when:**
+**Use multi-effect overlays (`effect_forest()`) when:**
 
 - Comparing the same outcome across different analyses
 - Sensitivity analyses (e.g., with/without imputation)
@@ -291,7 +291,7 @@ tabviz(axis_demo, label = "study", columns = list(
 
 ## Reference Lines
 
-The `null_value` parameter draws a dashed vertical reference line. Add custom reference lines with `forest_refline()`:
+The `null_value` parameter draws a dashed vertical reference line. Add custom reference lines with `refline()`:
 
 ```{r}
 tabviz(axis_demo, label = "study", title = "With Custom Reference Line",
@@ -299,7 +299,7 @@ tabviz(axis_demo, label = "study", title = "With Custom Reference Line",
     viz_forest(point = "hr", lower = "lower", upper = "upper",
                scale = "log", null_value = 1,
                annotations = list(
-                 forest_refline(0.8, label = "Threshold", style = "dashed", color = "#e11d48")
+                 refline(0.8, label = "Threshold", style = "dashed", color = "#e11d48")
                ))
   )
 )
@@ -313,14 +313,14 @@ tabviz(axis_demo, label = "study", title = "Clinical Thresholds",
     viz_forest(point = "hr", lower = "lower", upper = "upper",
                scale = "log", null_value = 1,
                annotations = list(
-                 forest_refline(0.5, label = "Strong", style = "solid", color = "#16a34a"),
-                 forest_refline(0.8, label = "Moderate", style = "dashed", color = "#f59e0b")
+                 refline(0.5, label = "Strong", style = "solid", color = "#16a34a"),
+                 refline(0.8, label = "Moderate", style = "dashed", color = "#f59e0b")
                ))
   )
 )
 ```
 
-### forest_refline() Arguments
+### refline() Arguments
 
 | Argument | Description |
 |----------|-------------|

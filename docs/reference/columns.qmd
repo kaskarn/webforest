@@ -119,7 +119,7 @@ viz_forest(
 | `point` | Column name for point estimates (single effect mode) |
 | `lower` | Column name for lower CI bounds (single effect mode) |
 | `upper` | Column name for upper CI bounds (single effect mode) |
-| `effects` | List of `web_effect()` objects (multi-effect mode) |
+| `effects` | List of `effect_forest()` objects (multi-effect mode) |
 | `header` | Column header text |
 | `width` | Column width in pixels (default: 200) |
 | `scale` | `"linear"` or `"log"` |
@@ -128,11 +128,8 @@ viz_forest(
 | `axis_range` | Fixed range as `c(min, max)` |
 | `axis_ticks` | Custom tick positions |
 | `axis_gridlines` | Show vertical gridlines |
-| `annotations` | List of `forest_refline()` objects |
+| `annotations` | List of `refline()` objects |
 
-::: {.callout-note}
-`col_forest()` is available as an alias for backward compatibility.
-:::
 
 ### viz_bar {#viz_bar}
 
@@ -150,7 +147,7 @@ viz_bar(
 
 | Argument | Description |
 |----------|-------------|
-| `effects` | List of `viz_bar_effect()` objects |
+| `effects` | List of `effect_bar()` objects |
 | `header` | Column header text |
 | `width` | Column width in pixels (default: 150) |
 | `scale` | `"linear"` or `"log"` |
@@ -163,7 +160,7 @@ viz_bar(
 **Effect helper:**
 
 ```r
-viz_bar_effect(value, label = NULL, color = NULL, opacity = 0.85)
+effect_bar(value, label = NULL, color = NULL, opacity = 0.85)
 ```
 
 ### viz_boxplot {#viz_boxplot}
@@ -183,7 +180,7 @@ viz_boxplot(
 
 | Argument | Description |
 |----------|-------------|
-| `effects` | List of `viz_boxplot_effect()` objects |
+| `effects` | List of `effect_boxplot()` objects |
 | `header` | Column header text |
 | `width` | Column width in pixels (default: 150) |
 | `scale` | `"linear"` or `"log"` |
@@ -199,10 +196,10 @@ viz_boxplot(
 
 ```r
 # Mode 1: From array data (auto-compute stats)
-viz_boxplot_effect(data = "values_column", label = NULL, color = NULL, fill_opacity = 0.7)
+effect_boxplot(data = "values_column", label = NULL, color = NULL, fill_opacity = 0.7)
 
 # Mode 2: From pre-computed summary stats
-viz_boxplot_effect(min = "min_col", q1 = "q1_col", median = "med_col",
+effect_boxplot(min = "min_col", q1 = "q1_col", median = "med_col",
                    q3 = "q3_col", max = "max_col", outliers = "outliers_col",
                    label = NULL, color = NULL, fill_opacity = 0.7)
 ```
@@ -224,7 +221,7 @@ viz_violin(
 
 | Argument | Description |
 |----------|-------------|
-| `effects` | List of `viz_violin_effect()` objects |
+| `effects` | List of `effect_violin()` objects |
 | `header` | Column header text |
 | `width` | Column width in pixels (default: 150) |
 | `scale` | `"linear"` or `"log"` |
@@ -240,7 +237,7 @@ viz_violin(
 **Effect helper:**
 
 ```r
-viz_violin_effect(data, label = NULL, color = NULL, fill_opacity = 0.5)
+effect_violin(data, label = NULL, color = NULL, fill_opacity = 0.5)
 ```
 
 ---

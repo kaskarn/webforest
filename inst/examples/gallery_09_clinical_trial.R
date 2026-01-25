@@ -40,8 +40,8 @@ forest_plot(
     col_interval("ITT HR (95% CI)")
   ),
   effects = list(
-    web_effect("itt_hr", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-    web_effect("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+    effect_forest("itt_hr", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+    effect_forest("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
   ),
   row_badge = "badge",
   theme = web_theme_dark(),

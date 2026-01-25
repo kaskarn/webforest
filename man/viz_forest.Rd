@@ -34,7 +34,7 @@ viz_forest(
 
 \item{upper}{Column name for upper bound. Use for single-effect plots.}
 
-\item{effects}{List of \code{web_effect()} objects for multi-effect display
+\item{effects}{List of \code{effect_forest()} objects for multi-effect display
 (multiple markers overlaid in same column). Cannot be used with point/lower/upper.}
 
 \item{scale}{Scale type: "linear" (default) or "log"}
@@ -73,7 +73,7 @@ the column layout and supports multiple forest columns per table.
 \details{
 Each \code{viz_forest()} fully owns its effect definitions - no global effects
 list is needed. Use either inline column references (point/lower/upper) for
-a single effect, or a list of \code{web_effect()} objects for multiple effects.
+a single effect, or a list of \code{effect_forest()} objects for multiple effects.
 }
 \examples{
 # Single forest column with inline effect definition
@@ -86,8 +86,8 @@ viz_forest(point = "hr", lower = "hr_lo", upper = "hr_hi",
 # Multiple effects overlaid in one column
 viz_forest(
   effects = list(
-    web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-    web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+    effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+    effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
   ),
   scale = "log",
   null_value = 1,

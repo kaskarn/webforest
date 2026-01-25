@@ -32,7 +32,7 @@ col_interval(
 \item{sep}{Separator between point and CI (default " ")}
 
 \item{imprecise_threshold}{When upper/lower ratio exceeds this threshold,
-the interval is considered imprecise and displayed as "—" instead.
+the interval is considered imprecise and displayed as "--" instead.
 Default is NULL (no threshold).}
 
 \item{...}{Additional arguments passed to \code{web_col()}, including cell styling:

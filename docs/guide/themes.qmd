@@ -257,7 +257,7 @@ set_colors(
 ## Semantic Color Tips
 - Set `interval` and `primary` to the same value for a cohesive look
 - Use a slightly darker `interval_line` than `interval` for subtle depth
-- For conditional coloring (e.g., significant vs non-significant), add a color column to your data and map it with `marker_color` in `web_effect()`
+- For conditional coloring (e.g., significant vs non-significant), add a color column to your data and map it with `marker_color` in `effect_forest()`
 :::
 
 ### Typography

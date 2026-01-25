@@ -10,7 +10,7 @@ col_img(
   width = NULL,
   height = NULL,
   max_width = NULL,
-  fallback = "📷",
+  fallback = "[img]",
   shape = c("square", "circle", "rounded"),
   ...
 )
@@ -26,7 +26,7 @@ col_img(
 
 \item{max_width}{Maximum image width (default NULL, uses column width)}
 
-\item{fallback}{Fallback text or icon if image fails to load (default "📷")}
+\item{fallback}{Fallback text or icon if image fails to load (default "\link[htmltools:builder]{htmltools::img}")}
 
 \item{shape}{Image shape: "square", "circle", or "rounded" (default "square")}
 

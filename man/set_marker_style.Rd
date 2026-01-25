@@ -7,7 +7,7 @@
 set_marker_style(x, color = NULL, shape = NULL, opacity = NULL, size = NULL)
 }
 \arguments{
-\item{x}{A WebSpec object or an htmlwidget created by forest_plot/webtable}
+\item{x}{A WebSpec object or an htmlwidget created by tabviz()}
 
 \item{color}{Column name containing CSS color strings for marker fill color}
 
@@ -23,7 +23,7 @@ The modified WebSpec object (or widget)
 \description{
 Provides a fluent API for setting marker styling (color, shape, opacity, size)
 based on column values. These styles apply to the primary effect's markers.
-For multi-effect plots, additional effects use their \code{web_effect()} properties.
+For multi-effect plots, additional effects use their \code{effect_forest()} properties.
 }
 \examples{
 \dontrun{

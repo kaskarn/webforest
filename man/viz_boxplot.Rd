@@ -19,7 +19,7 @@ viz_boxplot(
 )
 }
 \arguments{
-\item{...}{One or more \code{viz_boxplot_effect()} objects defining the boxplots}
+\item{...}{One or more \code{effect_boxplot()} objects defining the boxplots}
 
 \item{header}{Column header (default "")}
 
@@ -52,17 +52,17 @@ computed automatically) or pre-computed summary statistics.
 }
 \examples{
 # Boxplot from array data (quartiles computed automatically)
-viz_boxplot(viz_boxplot_effect(data = "values"))
+viz_boxplot(effect_boxplot(data = "values"))
 
 # Boxplot from pre-computed statistics
-viz_boxplot(viz_boxplot_effect(
+viz_boxplot(effect_boxplot(
   min = "min_val", q1 = "q1_val", median = "median_val",
   q3 = "q3_val", max = "max_val"
 ))
 
 # Multiple boxplots per row
 viz_boxplot(
-  viz_boxplot_effect(data = "group_a", label = "Group A", color = "#3b82f6"),
-  viz_boxplot_effect(data = "group_b", label = "Group B", color = "#22c55e")
+  effect_boxplot(data = "group_a", label = "Group A", color = "#3b82f6"),
+  effect_boxplot(data = "group_b", label = "Group B", color = "#22c55e")
 )
 }

@@ -37,7 +37,7 @@ col_stars(
 A ColumnSpec object
 }
 \description{
-Display star ratings using Unicode stars (\enc{★}{*} filled, \enc{☆}{o} empty).
+Display star ratings using Unicode stars (filled and empty).
 }
 \examples{
 # Default 5-star rating

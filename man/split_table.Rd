@@ -2,7 +2,6 @@
 % Please edit documentation in R/split_table.R
 \name{split_table}
 \alias{split_table}
-\alias{split_forest}
 \title{Split a forest plot by variable values}
 \usage{
 split_table(x, by, shared_axis = FALSE, ...)
@@ -37,21 +36,21 @@ comparing results across subgroups, regions, or other categorical variables.
 # Split by a single variable
 data |>
   tabviz(label = "study", columns = list(
-    col_forest(point = "or", lower = "lower", upper = "upper")
+    viz_forest(point = "or", lower = "lower", upper = "upper")
   )) |>
   split_table(by = "region")
 
 # Split by multiple variables (hierarchical navigation)
 data |>
   tabviz(label = "study", columns = list(
-    col_forest(point = "or", lower = "lower", upper = "upper")
+    viz_forest(point = "or", lower = "lower", upper = "upper")
   )) |>
   split_table(by = c("sex", "age_group"))
 
 # With shared axis for easier comparison
 data |>
   tabviz(label = "study", columns = list(
-    col_forest(point = "or", lower = "lower", upper = "upper")
+    viz_forest(point = "or", lower = "lower", upper = "upper")
   )) |>
   split_table(by = "treatment_arm", shared_axis = TRUE)
 }

@@ -111,8 +111,8 @@ tabviz(multi_effect,
     col_n("n"),
     viz_forest(
       effects = list(
-        web_effect("itt_hr", "itt_lo", "itt_hi", label = "ITT"),
-        web_effect("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol")
+        effect_forest("itt_hr", "itt_lo", "itt_hi", label = "ITT"),
+        effect_forest("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol")
       ),
       scale = "log", null_value = 1,
       axis_label = "Hazard Ratio"
@@ -171,14 +171,14 @@ tabviz(
     col_events("events", "n", "Events"),
     viz_forest(point = "hr", lower = "lower", upper = "upper",
                scale = "log", null_value = 1,
-               axis_gridlines = TRUE),
+               axis_gridlines = TRUE,
+               annotations = list(
+                 refline(1, label = "No effect", style = "solid"),
+                 refline(0.85, label = "Pooled", style = "dashed", color = "#2563eb")
+               )),
     col_interval("HR [95% CI]", point = "hr", lower = "lower", upper = "upper")
   ),
   theme = web_theme_cochrane(),
-  annotations = list(
-    forest_refline(1, label = "No effect", style = "solid"),
-    forest_refline(0.85, label = "Pooled", style = "dashed", color = "#2563eb")
-  ),
   title = "Cardiovascular Outcomes with Reference Lines"
 )
 ```

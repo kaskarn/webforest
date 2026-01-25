@@ -9,7 +9,7 @@ serialize_spec(spec, include_forest = TRUE)
 \arguments{
 \item{spec}{A WebSpec object}
 
-\item{include_forest}{Whether to include forest plot data (TRUE for forest_plot, FALSE for webtable)}
+\item{include_forest}{Whether to include forest plot data in serialization}
 }
 \value{
 A nested list suitable for jsonlite::toJSON

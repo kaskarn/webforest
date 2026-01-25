@@ -7,7 +7,7 @@
 set_theme(x, theme)
 }
 \arguments{
-\item{x}{A WebSpec object or an htmlwidget created by forest_plot/webtable}
+\item{x}{A WebSpec object or an htmlwidget created by tabviz()}
 
 \item{theme}{Either a WebTheme object or a string matching a built-in theme name:
 "default", "minimal", "dark", "jama", "lancet", "modern", "presentation",

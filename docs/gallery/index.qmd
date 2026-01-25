@@ -86,7 +86,7 @@ tabviz(dashboard_data, label = "department",
   columns = list(
     col_n("headcount", "FTEs"),
     viz_bar(
-      viz_bar_effect("satisfaction"),
+      effect_bar("satisfaction"),
       header = "Satisfaction",
       axis_range = c(0, 5)
     ),
@@ -96,7 +96,7 @@ tabviz(dashboard_data, label = "department",
       header = "Budget Var"
     ),
     viz_boxplot(
-      viz_boxplot_effect(data = "response_dist"),
+      effect_boxplot(data = "response_dist"),
       header = "Performance",
       show_outliers = TRUE
     ),

@@ -11,14 +11,19 @@
 
 ## Why tabviz?
 
-- **One function, any table**: `tabviz()` creates tables with any combination of 16+ column types—forest plots are just one option.
-- **Granular customization**: Precise control at the cell, row, and column levels.
-- **Themable**: Full theming system with presets for JAMA, Lancet, Cochrane, Nature, and more.
-- **Rich column types**: Badges, star ratings, sparklines, images, p-values, intervals, bars, and more.
-- **No JavaScript required**: Complete control from R.
-- **Fluent API**: Use direct arguments or pipe-friendly `set_*()` modifiers.
-- **Portable graphics**: Export as interactive HTML or static images (SVG/PDF/PNG).
-- **Shiny-ready**: Full Shiny integration with proxy updates.
+**Web-first architecture**: Built on Svelte 5 and TypeScript, tabviz renders entirely in the browser with reactive updates. This makes it naturally fast and ideal for Shiny applications, R Markdown, Quarto, and standalone HTML.
+
+**WYSIWYG static export**: Tables export to SVG/PDF/PNG exactly as displayed, preserving fonts, spacing, and styling. Exports are vector-based and print-ready—no screenshots.
+
+**Native Shiny integration**: Full Shiny bindings with `tabvizOutput()`/`renderTabviz()` and reactive updates without full re-renders.
+
+### Features at a glance
+
+- **One function, any table**: `tabviz()` creates tables with 16+ column types—forest plots, sparklines, badges, and more
+- **Focal visualizations**: `viz_forest()`, `viz_bar()`, `viz_boxplot()`, `viz_violin()` for comparative displays
+- **Publication themes**: JAMA, Lancet, Cochrane, Nature presets, plus full customization via S7 classes
+- **Fluent API**: Direct arguments or pipe-friendly `set_*()` modifiers
+- **Granular styling**: Control at cell, row, and column levels with conditional formatting
 
 ## Installation
 
@@ -40,26 +45,24 @@ tabviz(
   columns = list(
     col_group("Study Info",
       col_text("drug", "Drug"),
-      col_n("n"),
-      position = "left"
+      col_n("n")
     ),
-    col_forest(                                      # forest plot column
+    viz_forest(                                      # forest plot column
       point = "hr", lower = "lower", upper = "upper",
       scale = "log", null_value = 1,
       axis_range = c(0.4, 1.5),
       axis_ticks = c(0.5, 0.75, 1.0, 1.25),
       axis_gridlines = TRUE,
-      axis_label = "Hazard Ratio (95% CI)"
+      axis_label = "Hazard Ratio (95% CI)",
+      annotations = list(
+        refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
+      )
     ),
     col_group("Results",
       col_events("events", "n", "Events"),           # "42/156" format
       col_interval("HR (95% CI)"),                   # "0.82 (0.72, 0.94)"
-      col_pvalue("pvalue", "P"),                     # smart formatting
-      position = "right"
+      col_pvalue("pvalue", "P")                      # smart formatting
     )
-  ),
-  annotations = list(
-    forest_refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
   ),
   row_type = "row_type", row_bold = "row_bold",      # row styling from data
   theme = web_theme_nature(),                        # publication theme
@@ -123,7 +126,7 @@ Full control over row appearance and marker shapes:
 
 ```r
 tabviz(data, label = "study",
-  columns = list(col_forest(point = "hr", lower = "lo", upper = "hi")),
+  columns = list(viz_forest(point = "hr", lower = "lo", upper = "hi")),
   # Row styling
   row_type = "type",        # "header", "data", "summary", "spacer"
   row_bold = "is_primary",  # Bold important rows

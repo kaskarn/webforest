@@ -58,7 +58,7 @@ tabviz(violin_data, label = "group",
   columns = list(
     col_n("n"),
     viz_violin(
-      viz_violin_effect(data = "scores", color = "#f59e0b"),
+      effect_violin(data = "scores", color = "#f59e0b"),
       header = "Score Distribution",
       width = 250,
       show_median = TRUE,
@@ -94,8 +94,8 @@ compare_violin <- data.frame(
 tabviz(compare_violin, label = "condition",
   columns = list(
     viz_violin(
-      viz_violin_effect(data = "biomarker_a", label = "Biomarker A", color = "#3b82f6"),
-      viz_violin_effect(data = "biomarker_b", label = "Biomarker B", color = "#ef4444"),
+      effect_violin(data = "biomarker_a", label = "Biomarker A", color = "#3b82f6"),
+      effect_violin(data = "biomarker_b", label = "Biomarker B", color = "#ef4444"),
       header = "Biomarker Distributions",
       width = 280,
       show_median = TRUE
@@ -123,7 +123,7 @@ tabviz(compare_violin, label = "condition",
 | `axis_label` | Label text below axis | `"Value"` |
 | `show_axis` | Show the axis | `TRUE` |
 
-## viz_violin_effect() Arguments
+## effect_violin() Arguments
 
 | Argument | Description |
 |----------|-------------|

@@ -54,8 +54,8 @@ tabviz(
     col_sparkline("trend", "HR Trend"),
     viz_forest(
       effects = list(
-        web_effect("itt_hr", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-        web_effect("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+        effect_forest("itt_hr", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+        effect_forest("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
       ),
       scale = "log", null_value = 1,
       axis_label = "Hazard Ratio"
@@ -148,15 +148,15 @@ tabviz(
                axis_range = c(0.4, 1.5),
                axis_ticks = c(0.5, 0.75, 1.0, 1.25),
                axis_gridlines = TRUE,
-               axis_label = "Hazard Ratio (95% CI)"),
+               axis_label = "Hazard Ratio (95% CI)",
+               annotations = list(
+                 refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
+               )),
     col_group("Results",
       col_events("events", "n", "Events"),
       col_interval(point = "hr", lower = "lower", upper = "upper", header = "HR (95% CI)"),
       col_pvalue("pvalue", "P")
     )
-  ),
-  annotations = list(
-    forest_refline(0.85, label = "Pooled HR", style = "dashed", color = "#00407a")
   ),
   row_type = "row_type", row_bold = "row_bold",
   theme = web_theme_lancet(),
@@ -218,22 +218,22 @@ tabviz(
     col_bar("weight"),
     viz_forest(
       effects = list(
-        web_effect("primary_hr", "primary_lo", "primary_hi", label = "Primary", color = "#22c55e"),
-        web_effect("secondary_hr", "secondary_lo", "secondary_hi", label = "Secondary", color = "#3b82f6"),
-        web_effect("safety_hr", "safety_lo", "safety_hi", label = "Safety", color = "#f59e0b")
+        effect_forest("primary_hr", "primary_lo", "primary_hi", label = "Primary", color = "#22c55e"),
+        effect_forest("secondary_hr", "secondary_lo", "secondary_hi", label = "Secondary", color = "#3b82f6"),
+        effect_forest("safety_hr", "safety_lo", "safety_hi", label = "Safety", color = "#f59e0b")
       ),
       scale = "log", null_value = 1,
       axis_range = c(0.4, 1.2),
-      axis_label = "Hazard Ratio"
+      axis_label = "Hazard Ratio",
+      annotations = list(
+        refline(0.75, label = "Target", style = "dashed", color = "#a855f7")
+      )
     ),
     col_group("Results",
       col_interval(point = "primary_hr", lower = "primary_lo", upper = "primary_hi", header = "HR (95% CI)"),
       col_pvalue("pvalue", "P")
     ),
     col_sparkline("trend", "Trend")
-  ),
-  annotations = list(
-    forest_refline(0.75, label = "Target", style = "dashed", color = "#a855f7")
   ),
   row_badge = "badge",
   theme = monty_theme,
@@ -693,8 +693,8 @@ tabviz(
     col_n("n"),
     viz_forest(
       effects = list(
-        web_effect("hr", "lower", "upper", label = "Primary", color = "#2563eb"),
-        web_effect("hr_sens", "lower_sens", "upper_sens", label = "Sensitivity", color = "#f59e0b")
+        effect_forest("hr", "lower", "upper", label = "Primary", color = "#2563eb"),
+        effect_forest("hr_sens", "lower_sens", "upper_sens", label = "Sensitivity", color = "#f59e0b")
       ),
       scale = "log", null_value = 1,
       axis_label = "Hazard Ratio"

@@ -20,7 +20,7 @@ viz_violin(
 )
 }
 \arguments{
-\item{...}{One or more \code{viz_violin_effect()} objects defining the violins}
+\item{...}{One or more \code{effect_violin()} objects defining the violins}
 
 \item{header}{Column header (default "")}
 
@@ -55,12 +55,12 @@ for each row.
 }
 \examples{
 # Single violin per row
-viz_violin(viz_violin_effect(data = "values"))
+viz_violin(effect_violin(data = "values"))
 
 # Multiple violins per row
 viz_violin(
-  viz_violin_effect(data = "treatment", label = "Treatment", color = "#3b82f6"),
-  viz_violin_effect(data = "control", label = "Control", color = "#22c55e"),
+  effect_violin(data = "treatment", label = "Treatment", color = "#3b82f6"),
+  effect_violin(data = "control", label = "Control", color = "#22c55e"),
   show_median = TRUE,
   show_quartiles = TRUE
 )

@@ -45,7 +45,6 @@ tabviz(
   label_header = "Study",
   group = NULL,
   columns = NULL,
-  annotations = NULL,
   title = NULL,
   subtitle = NULL,
   caption = NULL,
@@ -106,7 +105,6 @@ tabviz(
 
 | Argument | Type | Description |
 |----------|------|-------------|
-| `annotations` | list | List of annotation objects (`forest_refline()`, etc.) |
 | `title` | string | Plot title |
 | `subtitle` | string | Plot subtitle |
 | `caption` | string | Plot caption |

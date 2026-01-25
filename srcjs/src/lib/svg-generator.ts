@@ -3127,28 +3127,9 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
       theme
     ));
 
-    // Custom annotations for this forest column
+    // Custom annotations for this forest column (column-level only)
     const annotations = forestOpts?.annotations ?? [];
     for (const ann of annotations) {
-      if (ann.type === "reference_line") {
-        const annX = forestX + xScale(ann.x);
-        parts.push(renderReferenceLine(
-          annX,
-          plotY,
-          plotY + layout.plotHeight,
-          ann.style,
-          ann.color ?? theme.colors.accent,
-          theme,
-          ann.label,
-          ann.width ?? 1,
-          ann.opacity ?? 0.6
-        ));
-      }
-    }
-
-    // Also check top-level annotations
-    const topAnnotations = Array.isArray(spec.annotations) ? spec.annotations : [];
-    for (const ann of topAnnotations) {
       if (ann.type === "reference_line") {
         const annX = forestX + xScale(ann.x);
         parts.push(renderReferenceLine(

@@ -12,7 +12,7 @@ validate_forest_columns(columns, data)
 \item{data}{The data frame}
 }
 \description{
-Checks all col_forest() columns in the columns list (including nested groups)
+Checks all viz_forest() columns in the columns list (including nested groups)
 and verifies their point/lower/upper columns exist in the data.
 For multi-effect forest columns, validates all effect column references.
 }

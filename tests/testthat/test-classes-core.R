@@ -13,16 +13,16 @@ test_that("WebSpec validates forest column data exists", {
       data = data,
       label = "label",
       columns = list(
-        col_forest(point = "point", lower = "lower", upper = "upper")
+        viz_forest(point = "point", lower = "lower", upper = "upper")
       )
     ),
     "upper"
   )
 })
 
-test_that("col_forest validates scale value", {
+test_that("viz_forest validates scale value", {
   expect_error(
-    col_forest(point = "point", lower = "lower", upper = "upper", scale = "invalid"),
+    viz_forest(point = "point", lower = "lower", upper = "upper", scale = "invalid"),
     "arg.*should be one of"
   )
 })
@@ -39,7 +39,7 @@ test_that("WebSpec creates valid object with defaults", {
     data = data,
     label = "study",
     columns = list(
-      col_forest(point = "point", lower = "lower", upper = "upper")
+      viz_forest(point = "point", lower = "lower", upper = "upper")
     )
   )
 
@@ -49,8 +49,8 @@ test_that("WebSpec creates valid object with defaults", {
   expect_true(any(vapply(spec@columns, function(c) c@type == "forest", logical(1))))
 })
 
-test_that("col_forest accepts log scale with positive null_value", {
-  forest_col <- col_forest(
+test_that("viz_forest accepts log scale with positive null_value", {
+  forest_col <- viz_forest(
     point = "point",
     lower = "lower",
     upper = "upper",

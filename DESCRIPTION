@@ -30,7 +30,6 @@ Collate:
     'split_table.R'
     'save_plot.R'
     'forest_plot.R'
-    'webtable.R'
     'shiny.R'
     'regenerate_examples.R'
     'screenshot.R'

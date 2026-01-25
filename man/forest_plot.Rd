@@ -37,7 +37,7 @@ data frame and \code{effects} is not provided.}
 \item{upper}{Column name for upper bounds of intervals (string). Required when x is a
 data frame and \code{effects} is not provided.}
 
-\item{effects}{List of \code{web_effect()} objects for multi-effect plots. When provided,
+\item{effects}{List of \code{effect_forest()} objects for multi-effect plots. When provided,
 \code{point}, \code{lower}, and \code{upper} are ignored.}
 
 \item{label}{Column name for row labels (optional string)}
@@ -57,7 +57,7 @@ These are added alongside the auto-generated forest column.}
 
 \item{...}{Additional arguments passed to \code{tabviz()}.
 See \code{?tabviz} for all available options including row styling, marker styling,
-annotations, labels, and rendering options.}
+labels, and rendering options.}
 
 \item{split_by}{Column name(s) to split data into separate plots with sidebar navigation.}
 
@@ -76,7 +76,7 @@ An htmlwidget object
 \description{
 \code{forest_plot()} is a convenience wrapper around \code{tabviz()} that automatically
 creates a forest plot column from point/lower/upper arguments. For full control
-over columns and layout, use \code{tabviz()} directly with \code{col_forest()}.
+over columns and layout, use \code{tabviz()} directly with \code{viz_forest()}.
 }
 \details{
 Forest plots display point estimates with confidence intervals alongside tabular data.
@@ -104,8 +104,8 @@ forest_plot(
   data,
   label = "study",
   effects = list(
-    web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-    web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+    effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+    effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
   ),
   scale = "log", null_value = 1
 )
@@ -116,7 +116,7 @@ tabviz(
   label = "study",
   columns = list(
     col_text("study"),
-    col_forest(point = "hr", lower = "lower", upper = "upper",
+    viz_forest(point = "hr", lower = "lower", upper = "upper",
                scale = "log", null_value = 1),
     col_numeric("n", header = "N")
   )
@@ -125,5 +125,5 @@ tabviz(
 
 }
 \seealso{
-\code{\link[=tabviz]{tabviz()}} for full control, \code{\link[=col_forest]{col_forest()}} for forest column options
+\code{\link[=tabviz]{tabviz()}} for full control, \code{\link[=viz_forest]{viz_forest()}} for forest column options
 }

@@ -29,7 +29,7 @@ save_plot(
 
 | Argument | Type | Description |
 |----------|------|-------------|
-| `x` | widget | A tabviz widget from `tabviz()`, `forest_plot()`, or `webtable()` |
+| `x` | widget | A tabviz widget from `tabviz()` |
 | `file` | string | Output file path. Extension determines format: `.svg`, `.png`, or `.pdf` |
 | `width` | integer | Width in pixels (default: 800) |
 | `height` | integer | Height in pixels (auto-calculated if NULL) |

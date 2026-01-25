@@ -38,11 +38,11 @@ forest_plot(
     col_interval("Primary OR")
   ),
   effects = list(
-    web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT (Primary)", color = "#2563eb"),
-    web_effect("mi_or", "mi_lo", "mi_hi", label = "Multiple Imputation", color = "#7c3aed"),
-    web_effect("cc_or", "cc_lo", "cc_hi", label = "Complete Case", color = "#059669"),
-    web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#d97706"),
-    web_effect("tip_or", "tip_lo", "tip_hi", label = "Tipping Point", color = "#dc2626")
+    effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT (Primary)", color = "#2563eb"),
+    effect_forest("mi_or", "mi_lo", "mi_hi", label = "Multiple Imputation", color = "#7c3aed"),
+    effect_forest("cc_or", "cc_lo", "cc_hi", label = "Complete Case", color = "#059669"),
+    effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#d97706"),
+    effect_forest("tip_or", "tip_lo", "tip_hi", label = "Tipping Point", color = "#dc2626")
   ),
   theme = web_theme_modern() |> set_spacing(row_height = 40),
   scale = "log", null_value = 1,

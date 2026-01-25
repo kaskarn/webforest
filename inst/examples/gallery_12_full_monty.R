@@ -40,11 +40,10 @@ monty_theme <- web_theme_dark() |>
   set_spacing(row_height = 38) |>
   set_axis(gridlines = TRUE, gridline_style = "dotted")
 
-forest_plot(
+tabviz(
   full_monty,
-  point = "primary_hr", lower = "primary_lo", upper = "primary_hi",
   label = "study", group = c("program", "phase"),
-  weight = "weight",  # Explicit weight column for marker sizing
+  marker_size = "weight",  # Explicit weight column for marker sizing
   columns = list(
     col_n("n"),
     col_bar("weight"),
@@ -52,21 +51,23 @@ forest_plot(
       col_interval("HR (95% CI)"),
       col_pvalue("pvalue", "P")
     ),
-    col_sparkline("trend", "Trend")
-  ),
-  effects = list(
-    web_effect("primary_hr", "primary_lo", "primary_hi", label = "Primary", color = "#22c55e"),
-    web_effect("secondary_hr", "secondary_lo", "secondary_hi", label = "Secondary", color = "#3b82f6"),
-    web_effect("safety_hr", "safety_lo", "safety_hi", label = "Safety", color = "#f59e0b")
-  ),
-  annotations = list(
-    forest_refline(0.75, label = "Target", style = "dashed", color = "#a855f7")
+    col_sparkline("trend", "Trend"),
+    viz_forest(
+      effects = list(
+        effect_forest("primary_hr", "primary_lo", "primary_hi", label = "Primary", color = "#22c55e"),
+        effect_forest("secondary_hr", "secondary_lo", "secondary_hi", label = "Secondary", color = "#3b82f6"),
+        effect_forest("safety_hr", "safety_lo", "safety_hi", label = "Safety", color = "#f59e0b")
+      ),
+      scale = "log", null_value = 1,
+      axis_label = "Hazard Ratio",
+      annotations = list(
+        refline(0.75, label = "Target", style = "dashed", color = "#a855f7")
+      )
+    )
   ),
   row_badge = "badge",
   theme = monty_theme,
-  scale = "log", null_value = 1,
   axis_range = c(0.4, 1.2),
-  axis_label = "Hazard Ratio",
   title = "The Full Monty",
   subtitle = "Nested groups + 3 effects + sparklines + weights + annotations + custom theme",
   caption = "Every major feature combined in one visualization",

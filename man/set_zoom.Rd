@@ -14,7 +14,7 @@ set_zoom(
 )
 }
 \arguments{
-\item{x}{An htmlwidget created by \code{forest_plot()} or \code{webtable()}}
+\item{x}{An htmlwidget created by \code{tabviz()}}
 
 \item{zoom}{Zoom level (0.5 to 2.0, default 1.0)}
 

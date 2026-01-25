@@ -11,7 +11,6 @@ tabviz(
   label_header = "Study",
   group = NULL,
   columns = NULL,
-  annotations = NULL,
   title = NULL,
   subtitle = NULL,
   caption = NULL,
@@ -70,9 +69,7 @@ to innermost, e.g., \code{c("region", "country")} creates region > country
 }}
 
 \item{columns}{List of column specifications (use \verb{col_*()} helpers).
-Include \code{col_forest()} to add a forest plot column.}
-
-\item{annotations}{List of annotation objects (use \code{forest_refline()}, \code{forest_annotation()})}
+Include \code{viz_forest()} to add a forest plot column.}
 
 \item{title}{Main title (displayed above the plot)}
 
@@ -167,13 +164,13 @@ the RStudio viewer.
 \details{
 Use \verb{col_*()} helpers in the \code{columns} argument to define what to display:
 \itemize{
-\item \code{col_forest()} for forest plot intervals (point + CI)
+\item \code{viz_forest()} for forest plot intervals (point + CI)
 \item \code{col_text()}, \code{col_numeric()}, \code{col_pvalue()} for formatted values
 \item \code{col_bar()}, \code{col_sparkline()} for inline visualizations
 \item \code{col_badge()}, \code{col_icon()}, \code{col_stars()} for categorical displays
 }
 
-For multi-effect forest plots, pass a list of \code{web_effect()} objects to \code{col_forest()}.
+For multi-effect forest plots, pass a list of \code{effect_forest()} objects to \code{viz_forest()}.
 }
 \examples{
 \dontrun{
@@ -191,7 +188,7 @@ tabviz(
   label = "study",
   columns = list(
     col_text("study"),
-    col_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi"),
+    viz_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi"),
     col_numeric("n", header = "N")
   )
 )
@@ -201,7 +198,7 @@ tabviz(
   data,
   label = "study",
   columns = list(
-    col_forest(
+    viz_forest(
       point = "estimate", lower = "ci_lo", upper = "ci_hi",
       scale = "log", null_value = 1, axis_label = "Odds Ratio"
     )
@@ -210,7 +207,7 @@ tabviz(
 
 # Get the spec object for manipulation
 spec <- tabviz(data, label = "study",
-  columns = list(col_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi")),
+  columns = list(viz_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi")),
   .spec_only = TRUE
 )
 print(spec)

@@ -7,7 +7,7 @@ title: "save_plot"
 library(tabviz)
 ```
 
-Export a forest plot, webtable, or split forest to static file formats.
+Export a tabviz widget or split table to static file formats.
 
 ## Usage
 
@@ -25,7 +25,7 @@ save_plot(
 
 | Argument | Description |
 |----------|-------------|
-| `x` | A `WebSpec`, `SplitForest`, or htmlwidget from `forest_plot()`/`webtable()` |
+| `x` | A `WebSpec`, `SplitForest`, or htmlwidget from `tabviz()` |
 | `file` | Output file path (or directory for SplitForest). Extension determines format: `.svg`, `.pdf`, or `.png` |
 | `width` | Width in pixels (default: 800) |
 | `height` | Height in pixels (auto-calculated if NULL) |

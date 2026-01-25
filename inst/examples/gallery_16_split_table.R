@@ -32,7 +32,7 @@ hierarchical_split <- effect_sizes |>
     columns = list(
       col_text("phase", header = "Phase"),
       col_numeric("n", header = "N"),
-      col_forest(
+      viz_forest(
         point = "hr", lower = "lower", upper = "upper",
         scale = "log", null_value = 1,
         axis_label = "Hazard Ratio (95% CI)"
@@ -53,7 +53,7 @@ shared_axis_split <- effect_sizes |>
   web_spec(
     label = "study",
     columns = list(
-      col_forest(
+      viz_forest(
         point = "hr", lower = "lower", upper = "upper",
         scale = "log", null_value = 1,
         axis_label = "Hazard Ratio"
@@ -75,7 +75,7 @@ treatment_split <- effect_sizes |>
     columns = list(
       col_text("region", header = "Region"),
       col_text("phase", header = "Phase"),
-      col_forest(
+      viz_forest(
         point = "hr", lower = "lower", upper = "upper",
         scale = "log", null_value = 1,
         axis_label = "Hazard Ratio (95% CI)"

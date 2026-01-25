@@ -10,12 +10,12 @@ test_that("split_table creates valid SplitForest from WebSpec", {
     group = c("A", "A", "A", "B", "B", "B")
   )
 
-  # Create WebSpec using new col_forest() API
+  # Create WebSpec using new viz_forest() API
   spec <- web_spec(
     test_data,
     label = "study",
     columns = list(
-      col_forest(point = "effect", lower = "lower", upper = "upper")
+      viz_forest(point = "effect", lower = "lower", upper = "upper")
     )
   )
 
@@ -39,7 +39,7 @@ test_that("split_table validates missing columns", {
     test_data,
     label = "study",
     columns = list(
-      col_forest(point = "effect", lower = "lower", upper = "upper")
+      viz_forest(point = "effect", lower = "lower", upper = "upper")
     )
   )
 
@@ -63,7 +63,7 @@ test_that("split_table works with data.frame input", {
     by = "group",
     label = "study",
     columns = list(
-      col_forest(point = "effect", lower = "lower", upper = "upper")
+      viz_forest(point = "effect", lower = "lower", upper = "upper")
     )
   )
 
@@ -84,7 +84,7 @@ test_that("split_table with shared_axis flag", {
     test_data,
     label = "study",
     columns = list(
-      col_forest(point = "effect", lower = "lower", upper = "upper")
+      viz_forest(point = "effect", lower = "lower", upper = "upper")
     )
   )
 
@@ -109,7 +109,7 @@ test_that("split_table handles multiple split columns", {
     test_data,
     label = "study",
     columns = list(
-      col_forest(point = "effect", lower = "lower", upper = "upper")
+      viz_forest(point = "effect", lower = "lower", upper = "upper")
     )
   )
 

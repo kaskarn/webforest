@@ -60,7 +60,7 @@ effect_sizes |>
   web_spec(
     label = "study",
     columns = list(
-      col_forest(point = "hr", lower = "lower", upper = "upper", scale = "log")
+      viz_forest(point = "hr", lower = "lower", upper = "upper", scale = "log")
     )
   ) |>
   split_table(by = c("outcome", "treatment")) |>

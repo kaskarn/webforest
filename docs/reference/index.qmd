@@ -59,10 +59,10 @@ forest_plot(data, point = "hr", lower = "lo", upper = "hi", label = "study")
 
 | Function | Description |
 |----------|-------------|
-| [`web_effect()`](columns.qmd#viz_forest) | Define effect for multi-effect forest plots |
-| [`viz_bar_effect()`](columns.qmd#viz_bar) | Define bar in `viz_bar()` |
-| [`viz_boxplot_effect()`](columns.qmd#viz_boxplot) | Define boxplot in `viz_boxplot()` |
-| [`viz_violin_effect()`](columns.qmd#viz_violin) | Define violin in `viz_violin()` |
+| [`effect_forest()`](columns.qmd#viz_forest) | Define effect for multi-effect forest plots |
+| [`effect_bar()`](columns.qmd#viz_bar) | Define bar in `viz_bar()` |
+| [`effect_boxplot()`](columns.qmd#viz_boxplot) | Define boxplot in `viz_boxplot()` |
+| [`effect_violin()`](columns.qmd#viz_violin) | Define violin in `viz_violin()` |
 
 ### Column Groups
 
@@ -130,7 +130,7 @@ Use direct arguments when configuration is known upfront. Use the fluent API whe
 
 | Function | Description |
 |----------|-------------|
-| [`forest_refline()`](annotations.qmd#forest_refline) | Add reference line |
+| [`refline()`](annotations.qmd#refline) | Add reference line |
 | [`forest_annotation()`](annotations.qmd#forest_annotation) | Custom annotation |
 
 ## Interaction Settings

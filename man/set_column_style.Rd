@@ -16,7 +16,7 @@ set_column_style(
 )
 }
 \arguments{
-\item{x}{A WebSpec object or an htmlwidget created by forest_plot/webtable}
+\item{x}{A WebSpec object or an htmlwidget created by tabviz()}
 
 \item{column}{The field name of the column to style}
 

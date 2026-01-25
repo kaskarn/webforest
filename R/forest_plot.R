@@ -2,7 +2,7 @@
 #'
 #' `forest_plot()` is a convenience wrapper around `tabviz()` that automatically
 #' creates a forest plot column from point/lower/upper arguments. For full control
-#' over columns and layout, use `tabviz()` directly with `col_forest()`.
+#' over columns and layout, use `tabviz()` directly with `viz_forest()`.
 #'
 #' Forest plots display point estimates with confidence intervals alongside tabular data.
 #' While commonly used for meta-analysis, they work for any data with
@@ -15,7 +15,7 @@
 #'   data frame and `effects` is not provided.
 #' @param upper Column name for upper bounds of intervals (string). Required when x is a
 #'   data frame and `effects` is not provided.
-#' @param effects List of `web_effect()` objects for multi-effect plots. When provided,
+#' @param effects List of `effect_forest()` objects for multi-effect plots. When provided,
 #'   `point`, `lower`, and `upper` are ignored.
 #' @param label Column name for row labels (optional string)
 #' @param group Grouping column name(s) or list of `web_group()` objects
@@ -27,7 +27,7 @@
 #' @param theme Theme object (use `web_theme_*()` functions)
 #' @param ... Additional arguments passed to `tabviz()`.
 #'   See `?tabviz` for all available options including row styling, marker styling,
-#'   annotations, labels, and rendering options.
+#'   labels, and rendering options.
 #' @param split_by Column name(s) to split data into separate plots with sidebar navigation.
 #' @param shared_axis When `split_by` is used, whether to use the same axis range
 #'   across all split plots. Default is `FALSE`.
@@ -58,8 +58,8 @@
 #'   data,
 #'   label = "study",
 #'   effects = list(
-#'     web_effect("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-#'     web_effect("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+#'     effect_forest("itt_or", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+#'     effect_forest("pp_or", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
 #'   ),
 #'   scale = "log", null_value = 1
 #' )
@@ -70,14 +70,14 @@
 #'   label = "study",
 #'   columns = list(
 #'     col_text("study"),
-#'     col_forest(point = "hr", lower = "lower", upper = "upper",
+#'     viz_forest(point = "hr", lower = "lower", upper = "upper",
 #'                scale = "log", null_value = 1),
 #'     col_numeric("n", header = "N")
 #'   )
 #' )
 #' }
 #'
-#' @seealso [tabviz()] for full control, [col_forest()] for forest column options
+#' @seealso [tabviz()] for full control, [viz_forest()] for forest column options
 #'
 #' @export
 forest_plot <- function(

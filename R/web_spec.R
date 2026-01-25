@@ -5,12 +5,12 @@
 #' the RStudio viewer.
 #'
 #' Use `col_*()` helpers in the `columns` argument to define what to display:
-#' - `col_forest()` for forest plot intervals (point + CI)
+#' - `viz_forest()` for forest plot intervals (point + CI)
 #' - `col_text()`, `col_numeric()`, `col_pvalue()` for formatted values
 #' - `col_bar()`, `col_sparkline()` for inline visualizations
 #' - `col_badge()`, `col_icon()`, `col_stars()` for categorical displays
 #'
-#' For multi-effect forest plots, pass a list of `web_effect()` objects to `col_forest()`.
+#' For multi-effect forest plots, pass a list of `effect_forest()` objects to `viz_forest()`.
 #'
 #' @importFrom stats complete.cases
 #'
@@ -23,8 +23,7 @@
 #'     to innermost, e.g., `c("region", "country")` creates region > country
 #'   - List of `web_group()` objects for explicit control over labels and structure
 #' @param columns List of column specifications (use `col_*()` helpers).
-#'   Include `col_forest()` to add a forest plot column.
-#' @param annotations List of annotation objects (use `forest_refline()`, `forest_annotation()`)
+#'   Include `viz_forest()` to add a forest plot column.
 #' @param title Main title (displayed above the plot)
 #' @param subtitle Subtitle (displayed below the title)
 #' @param caption Caption (displayed below the plot)
@@ -86,7 +85,7 @@
 #'   label = "study",
 #'   columns = list(
 #'     col_text("study"),
-#'     col_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi"),
+#'     viz_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi"),
 #'     col_numeric("n", header = "N")
 #'   )
 #' )
@@ -96,7 +95,7 @@
 #'   data,
 #'   label = "study",
 #'   columns = list(
-#'     col_forest(
+#'     viz_forest(
 #'       point = "estimate", lower = "ci_lo", upper = "ci_hi",
 #'       scale = "log", null_value = 1, axis_label = "Odds Ratio"
 #'     )
@@ -105,7 +104,7 @@
 #'
 #' # Get the spec object for manipulation
 #' spec <- tabviz(data, label = "study",
-#'   columns = list(col_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi")),
+#'   columns = list(viz_forest(point = "estimate", lower = "ci_lo", upper = "ci_hi")),
 #'   .spec_only = TRUE
 #' )
 #' print(spec)
@@ -119,7 +118,6 @@ tabviz <- function(
     label_header = "Study",
     group = NULL,
     columns = NULL,
-    annotations = NULL,
     title = NULL,
     subtitle = NULL,
     caption = NULL,
@@ -159,6 +157,40 @@ tabviz <- function(
     split_by = NULL,
     shared_axis = FALSE,
     .spec_only = FALSE) {
+  # Handle WebSpec input (from fluent API modifiers)
+  if (S7_inherits(data, WebSpec)) {
+    spec <- data
+    # Serialize the spec and create widget directly
+    payload <- serialize_spec(spec)
+    payload$zoom <- zoom
+    payload$autoFit <- auto_fit
+    payload$maxWidth <- max_width
+    payload$maxHeight <- max_height
+    payload$showZoomControls <- show_zoom_controls
+
+    widget <- htmlwidgets::createWidget(
+      name = "tabviz",
+      x = payload,
+      width = width,
+      height = height,
+      package = "tabviz",
+      elementId = elementId,
+      sizingPolicy = htmlwidgets::sizingPolicy(
+        defaultWidth = "100%",
+        defaultHeight = 400,
+        viewer.fill = TRUE,
+        browser.fill = TRUE,
+        knitr.figure = FALSE,
+        knitr.defaultWidth = "100%",
+        knitr.defaultHeight = 400
+      )
+    )
+
+    attr(widget, "webspec") <- spec
+    attr(widget, "widget_type") <- "tabviz"
+    return(widget)
+  }
+
   # Convert data to data.frame
   data <- as.data.frame(data)
 
@@ -308,12 +340,6 @@ tabviz <- function(
     )
   }
 
-  # Process annotations list
-  annotations_list <- list()
-  if (!is.null(annotations)) {
-    annotations_list <- annotations
-  }
-
   # Resolve row styling expressions (supports formulas like ~ p_value < 0.05)
   # This modifies `data` if computed columns are needed
   style_resolved <- resolve_row_style_exprs(
@@ -357,7 +383,6 @@ tabviz <- function(
     theme = theme,
     interaction = interaction,
     labels = labels,
-    annotations = annotations_list,
     row_bold_col = style_resolved$row_bold,
     row_italic_col = style_resolved$row_italic,
     row_color_col = style_resolved$row_color,
@@ -498,7 +523,7 @@ method(as.data.frame, WebSpec) <- function(x, ...) {
 
 #' Validate forest column data columns exist
 #'
-#' Checks all col_forest() columns in the columns list (including nested groups)
+#' Checks all viz_forest() columns in the columns list (including nested groups)
 #' and verifies their point/lower/upper columns exist in the data.
 #' For multi-effect forest columns, validates all effect column references.
 #'

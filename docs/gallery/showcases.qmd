@@ -56,8 +56,8 @@ performance_data <- data.frame(
 tabviz(performance_data, label = "department",
   columns = list(
     viz_bar(
-      viz_bar_effect("q1_score", label = "Q1"),
-      viz_bar_effect("q2_score", label = "Q2"),
+      effect_bar("q1_score", label = "Q1"),
+      effect_bar("q2_score", label = "Q2"),
       header = "Performance Score",
       axis_range = c(0, 100)
     ),
@@ -94,8 +94,8 @@ lab_data <- data.frame(
 tabviz(lab_data, label = "biomarker",
   columns = list(
     viz_boxplot(
-      viz_boxplot_effect(data = "treatment", label = "Treatment"),
-      viz_boxplot_effect(data = "control", label = "Control"),
+      effect_boxplot(data = "treatment", label = "Treatment"),
+      effect_boxplot(data = "control", label = "Control"),
       header = "Distribution (mg/L)",
       show_outliers = TRUE
     )
@@ -125,7 +125,7 @@ survey_data <- data.frame(
 tabviz(survey_data, label = "question",
   columns = list(
     viz_violin(
-      viz_violin_effect(data = "responses"),
+      effect_violin(data = "responses"),
       header = "Score Distribution",
       show_median = TRUE,
       show_quartiles = TRUE
@@ -218,12 +218,12 @@ tabviz(
   columns = list(
     viz_forest(point = "hr", lower = "lower", upper = "upper",
                scale = "log", null_value = 1,
-               axis_gridlines = TRUE)
-  ),
-  annotations = list(
-    forest_refline(1, label = "No effect", style = "solid"),
-    forest_refline(0.85, label = "Pooled estimate", style = "dashed", color = "#2563eb"),
-    forest_refline(0.75, label = "Clinical threshold", style = "dotted", color = "#dc2626")
+               axis_gridlines = TRUE,
+               annotations = list(
+                 refline(1, label = "No effect", style = "solid"),
+                 refline(0.85, label = "Pooled estimate", style = "dashed", color = "#2563eb"),
+                 refline(0.75, label = "Clinical threshold", style = "dotted", color = "#dc2626")
+               ))
   ),
   theme = web_theme_minimal(),
   title = "Reference Lines"
@@ -472,12 +472,12 @@ clinical_dashboard <- data.frame(
 tabviz(clinical_dashboard, label = "site",
   columns = list(
     viz_bar(
-      viz_bar_effect("enrollment"),
+      effect_bar("enrollment"),
       header = "Enrolled",
       axis_range = c(0, 350)
     ),
     viz_bar(
-      viz_bar_effect("completion_rate"),
+      effect_bar("completion_rate"),
       header = "Completion",
       axis_range = c(0, 1)
     ),
@@ -485,7 +485,7 @@ tabviz(clinical_dashboard, label = "site",
                scale = "log", null_value = 1,
                header = "Treatment Effect"),
     viz_violin(
-      viz_violin_effect(data = "response_times"),
+      effect_violin(data = "response_times"),
       header = "Response (days)",
       show_median = TRUE
     )
@@ -522,7 +522,7 @@ tabviz(combined_analysis, label = "study",
                scale = "log", null_value = 1,
                header = "Frequentist CI"),
     viz_violin(
-      viz_violin_effect(data = "posterior"),
+      effect_violin(data = "posterior"),
       header = "Bayesian Posterior",
       show_median = TRUE,
       show_quartiles = TRUE,
@@ -556,8 +556,8 @@ tabviz(multi_arm_data, label = "endpoint",
   columns = list(
     viz_forest(
       effects = list(
-        web_effect("std_hr", "std_lo", "std_hi", label = "Standard Dose"),
-        web_effect("high_hr", "high_lo", "high_hi", label = "High Dose")
+        effect_forest("std_hr", "std_lo", "std_hi", label = "Standard Dose"),
+        effect_forest("high_hr", "high_lo", "high_hi", label = "High Dose")
       ),
       scale = "log", null_value = 1,
       header = "Hazard Ratio"

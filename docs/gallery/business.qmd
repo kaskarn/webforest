@@ -29,11 +29,11 @@ tabviz(survey_results, label = "question",
   columns = list(
     viz_bar(
       # Likert scale requires semantic colors: red=disagree, yellow=neutral, green=agree
-      viz_bar_effect("strongly_disagree", label = "Strongly Disagree", color = "#ef4444"),
-      viz_bar_effect("disagree", label = "Disagree", color = "#f97316"),
-      viz_bar_effect("neutral", label = "Neutral", color = "#eab308"),
-      viz_bar_effect("agree", label = "Agree", color = "#84cc16"),
-      viz_bar_effect("strongly_agree", label = "Strongly Agree", color = "#22c55e"),
+      effect_bar("strongly_disagree", label = "Strongly Disagree", color = "#ef4444"),
+      effect_bar("disagree", label = "Disagree", color = "#f97316"),
+      effect_bar("neutral", label = "Neutral", color = "#eab308"),
+      effect_bar("agree", label = "Agree", color = "#84cc16"),
+      effect_bar("strongly_agree", label = "Strongly Agree", color = "#22c55e"),
       header = "Response Distribution (%)",
       axis_range = c(0, 100)
     ),
@@ -75,7 +75,7 @@ tabviz(product_metrics, label = "product",
     col_percent("growth", "YoY"),
     col_percent("margin", "Margin"),
     viz_bar(
-      viz_bar_effect("units_sold"),
+      effect_bar("units_sold"),
       header = "Units Sold",
       axis_range = c(0, 20000)
     ),
@@ -163,12 +163,12 @@ tabviz(team_data, label = "team",
     col_n("headcount", "Size"),
     col_numeric("avg_tenure", "Tenure (yr)", decimals = 1),
     viz_bar(
-      viz_bar_effect("satisfaction"),
+      effect_bar("satisfaction"),
       header = "Satisfaction",
       axis_range = c(0, 5)
     ),
     viz_boxplot(
-      viz_boxplot_effect(data = "productivity"),
+      effect_boxplot(data = "productivity"),
       header = "Productivity Score",
       show_outliers = TRUE
     ),
@@ -207,7 +207,7 @@ tabviz(pipeline_data, label = "opportunity",
       )),
     col_n("value", "Value", abbreviate = TRUE),
     viz_bar(
-      viz_bar_effect("probability"),
+      effect_bar("probability"),
       header = "Win Prob",
       axis_range = c(0, 1)
     ),
@@ -237,7 +237,7 @@ tabviz(funnel_data, label = "stage",
   columns = list(
     col_n("users", "Users", abbreviate = TRUE),
     viz_bar(
-      viz_bar_effect("users"),
+      effect_bar("users"),
       header = "Volume",
       axis_range = c(0, 100000)
     ),
@@ -277,7 +277,7 @@ tabviz(financial_data, label = "division",
     ),
     col_percent("budget_var", "Var %"),
     viz_bar(
-      viz_bar_effect("margin"),
+      effect_bar("margin"),
       header = "Margin",
       axis_range = c(0, 0.5)
     )

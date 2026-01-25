@@ -17,7 +17,7 @@ viz_bar(
 )
 }
 \arguments{
-\item{...}{One or more \code{viz_bar_effect()} objects defining the bars to display}
+\item{...}{One or more \code{effect_bar()} objects defining the bars to display}
 
 \item{header}{Column header (default "")}
 
@@ -46,11 +46,11 @@ Each row displays one or more bars based on data values.
 }
 \examples{
 # Single bar per row
-viz_bar(viz_bar_effect("value"))
+viz_bar(effect_bar("value"))
 
 # Multiple bars per row (grouped)
 viz_bar(
-  viz_bar_effect("baseline", label = "Baseline", color = "#3b82f6"),
-  viz_bar_effect("followup", label = "Follow-up", color = "#22c55e")
+  effect_bar("baseline", label = "Baseline", color = "#3b82f6"),
+  effect_bar("followup", label = "Follow-up", color = "#22c55e")
 )
 }

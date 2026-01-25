@@ -67,7 +67,7 @@ bar_data <- data.frame(
 
 p_bar <- tabviz(bar_data, label = "department",
   columns = list(
-    viz_bar(viz_bar_effect("enrollment", color = "#3b82f6"),
+    viz_bar(effect_bar("enrollment", color = "#3b82f6"),
             header = "Enrollment", width = 180, axis_range = c(0, 350)),
     col_numeric("enrollment", "N")
   ),

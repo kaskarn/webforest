@@ -58,7 +58,7 @@ When \code{range_min}/\code{range_max} are NA (auto), the axis range is calculat
 \item Apply nice rounding for clean tick values
 }
 
-CIs extending beyond ci_clip_factor \enc{×}{x} estimate_range are clipped
+CIs extending beyond ci_clip_factor * estimate_range are clipped
 with arrow indicators rather than expanding the axis.
 }
 

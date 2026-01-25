@@ -79,9 +79,10 @@ EffectSpec <- new_class(
   }
 )
 
-#' Create an effect specification
+#' Create a forest effect specification
 #'
 #' Defines a single effect (point + interval) for multi-effect forest plots.
+#' Used with `viz_forest()` to display multiple effects per row.
 #'
 #' @param point Column name for point estimates
 #' @param lower Column name for lower bounds
@@ -93,8 +94,8 @@ EffectSpec <- new_class(
 #'
 #' @return An EffectSpec object
 #' @export
-web_effect <- function(point, lower, upper, label = NULL, color = NULL,
-                       shape = NULL, opacity = NULL) {
+effect_forest <- function(point, lower, upper, label = NULL, color = NULL,
+                          shape = NULL, opacity = NULL) {
   EffectSpec(
     id = point,
     point_col = point,
@@ -170,7 +171,7 @@ PlotLabels <- new_class(
 #' @param label_col Column name for row labels
 #' @param group_col Column name for grouping (optional, deepest level)
 #' @param group_cols All group column names for hierarchical grouping (for composite ID building)
-#' @param columns List of ColumnSpec objects defining table columns (including col_forest)
+#' @param columns List of ColumnSpec objects defining table columns (including viz_forest)
 #' @param groups List of GroupSpec objects
 #' @param summaries List of GroupSummary objects
 #' @param overall_summary Optional overall summary (GroupSummary)
@@ -197,7 +198,6 @@ WebSpec <- new_class(
     theme = new_property(class_any, default = NULL),  # Set in web_spec()
     interaction = new_property(class_any, default = NULL),  # Set in web_spec()
     labels = new_property(class_any, default = NULL),  # PlotLabels for title/subtitle/etc
-    annotations = new_property(class_list, default = list()),  # ReferenceLine, CustomAnnotation, etc.
     # Row-level style column mappings
     row_bold_col = new_property(class_character, default = NA_character_),
     row_italic_col = new_property(class_character, default = NA_character_),

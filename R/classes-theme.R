@@ -143,7 +143,7 @@ Shapes <- new_class(
 #' 4. Optionally make symmetric around null (if `symmetric = TRUE`)
 #' 5. Apply nice rounding for clean tick values
 #'
-#' CIs extending beyond ci_clip_factor \enc{×}{x} estimate_range are clipped
+#' CIs extending beyond ci_clip_factor * estimate_range are clipped
 #' with arrow indicators rather than expanding the axis.
 #'
 #' @param range_min Minimum value for axis (NA = auto from data)
@@ -577,8 +577,8 @@ web_theme <- function(
 #' Several colors cascade when not explicitly set, making custom themes easier
 #' to create:
 #'
-#' - **Background colors:** `background` → `row_bg` → `alt_bg`
-#' - **Marker colors:** `primary` → `interval` → `summary_fill`
+#' - **Background colors:** `background` -> `row_bg` -> `alt_bg`
+#' - **Marker colors:** `primary` -> `interval` -> `summary_fill`
 #'
 #' For example, setting `primary = "#ff0000"` will automatically use red for
 #' markers and summary diamonds unless you override `interval` or `summary_fill`.

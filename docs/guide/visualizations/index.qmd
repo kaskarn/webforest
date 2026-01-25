@@ -58,8 +58,6 @@ Compact visualizations that fit within cells without dedicated axes:
 ## Naming Convention
 - **`viz_*`** functions create focal visualization columns with their own axes and scales
 - **`col_*`** functions create inline cell content (text, numbers, simple graphics)
-
-The previous `col_forest()` function is now `viz_forest()` (with `col_forest()` still available as an alias for backward compatibility).
 :::
 
 ## Common Features

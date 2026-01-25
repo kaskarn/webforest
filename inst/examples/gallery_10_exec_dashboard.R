@@ -33,7 +33,7 @@ exec_dashboard <- tibble(
   rcolor = c("#16a34a", NA, "#2563eb", NA, NA, NA, NA, "#2563eb", NA, NA, NA, "#2563eb", NA, NA)
 )
 
-webtable(
+tabviz(
   exec_dashboard,
   label = "department",
   columns = list(
@@ -47,5 +47,5 @@ webtable(
   theme = web_theme_modern(),
   title = "Executive Dashboard",
   subtitle = "Table-only with hierarchical org structure",
-  caption = "Combining webtable() with row styling for org charts"
+  caption = "Row styling for hierarchical org charts"
 )

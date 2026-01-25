@@ -41,7 +41,7 @@ the split hierarchy. Each sub-plot is saved as a separate file.
 # Create a split forest
 split_result <- data |>
   tabviz(label = "study", columns = list(
-    col_forest(point = "or", lower = "lower", upper = "upper")
+    viz_forest(point = "or", lower = "lower", upper = "upper")
   )) |>
   split_table(by = c("sex", "age_group"))
 

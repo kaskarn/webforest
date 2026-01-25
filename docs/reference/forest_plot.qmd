@@ -129,8 +129,8 @@ multi_data <- data.frame(
 forest_plot(multi_data,
   label = "study",
   effects = list(
-    web_effect("itt_hr", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
-    web_effect("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
+    effect_forest("itt_hr", "itt_lo", "itt_hi", label = "ITT", color = "#2563eb"),
+    effect_forest("pp_hr", "pp_lo", "pp_hi", label = "Per-Protocol", color = "#16a34a")
   ),
   scale = "log",
   null_value = 1
@@ -216,5 +216,5 @@ Use `tabviz()` directly when you need:
 
 - [`tabviz()`](tabviz.qmd) — Main entry point with full control
 - [`viz_forest()`](columns.qmd#viz_forest) — Forest column specification
-- [`web_effect()`](columns.qmd#viz_forest) — Multi-effect specification
+- [`effect_forest()`](columns.qmd#viz_forest) — Multi-effect specification
 - [Forest Plots Guide](../guide/visualizations/forest-plots.qmd) — Detailed guide

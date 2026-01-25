@@ -23,21 +23,21 @@
 #' # Split by a single variable
 #' data |>
 #'   tabviz(label = "study", columns = list(
-#'     col_forest(point = "or", lower = "lower", upper = "upper")
+#'     viz_forest(point = "or", lower = "lower", upper = "upper")
 #'   )) |>
 #'   split_table(by = "region")
 #'
 #' # Split by multiple variables (hierarchical navigation)
 #' data |>
 #'   tabviz(label = "study", columns = list(
-#'     col_forest(point = "or", lower = "lower", upper = "upper")
+#'     viz_forest(point = "or", lower = "lower", upper = "upper")
 #'   )) |>
 #'   split_table(by = c("sex", "age_group"))
 #'
 #' # With shared axis for easier comparison
 #' data |>
 #'   tabviz(label = "study", columns = list(
-#'     col_forest(point = "or", lower = "lower", upper = "upper")
+#'     viz_forest(point = "or", lower = "lower", upper = "upper")
 #'   )) |>
 #'   split_table(by = "treatment_arm", shared_axis = TRUE)
 #' }
@@ -400,7 +400,6 @@ create_subset_spec <- function(base_spec, subset_data, label) {
     theme = base_spec@theme,
     interaction = base_spec@interaction,
     labels = new_labels,
-    annotations = base_spec@annotations,
     row_bold_col = base_spec@row_bold_col,
     row_italic_col = base_spec@row_italic_col,
     row_color_col = base_spec@row_color_col,
@@ -587,12 +586,4 @@ nice_linear_domain <- function(domain) {
 
   # Round to fix floating point precision issues
   c(round(nice_min * 1e10) / 1e10, round(nice_max * 1e10) / 1e10)
-}
-
-#' @rdname split_table
-#' @usage NULL
-#' @export
-split_forest <- function(...) {
- lifecycle::deprecate_warn("0.4.0", "split_forest()", "split_table()")
- split_table(...)
 }

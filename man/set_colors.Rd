@@ -77,8 +77,8 @@ Pipe-friendly function to modify specific color properties of a theme.
 Several colors cascade when not explicitly set, making custom themes easier
 to create:
 \itemize{
-\item \strong{Background colors:} \code{background} → \code{row_bg} → \code{alt_bg}
-\item \strong{Marker colors:} \code{primary} → \code{interval} → \code{summary_fill}
+\item \strong{Background colors:} \code{background} -> \code{row_bg} -> \code{alt_bg}
+\item \strong{Marker colors:} \code{primary} -> \code{interval} -> \code{summary_fill}
 }
 
 For example, setting \code{primary = "#ff0000"} will automatically use red for

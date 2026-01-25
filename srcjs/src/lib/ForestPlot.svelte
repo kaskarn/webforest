@@ -1136,9 +1136,9 @@
               stroke-dasharray="4,4"
             />
 
-            <!-- Custom annotations (reference lines) - combine spec-level and column-level -->
+            <!-- Custom annotations (reference lines) - column-level only -->
             {#if true}
-              {@const allAnnotations = [...(spec.annotations ?? []), ...(forestOpts?.annotations ?? [])]}
+              {@const allAnnotations = forestOpts?.annotations ?? []}
               {@const annotationLabelOffsets = computeAnnotationLabelOffsets(allAnnotations)}
               {#each allAnnotations as annotation (annotation.id)}
               {#if annotation.type === "reference_line"}

@@ -32,7 +32,7 @@ bar_data <- data.frame(
 
 tabviz(bar_data, label = "metric",
   columns = list(
-    viz_bar(viz_bar_effect("value"), header = "Rate (%)", axis_range = c(0, 100)),
+    viz_bar(effect_bar("value"), header = "Rate (%)", axis_range = c(0, 100)),
     col_numeric("value", "%")
   )
 )
@@ -49,7 +49,7 @@ box_data <- data.frame(
 
 tabviz(box_data, label = "group",
   columns = list(
-    viz_boxplot(viz_boxplot_effect(data = "values", color = "#8b5cf6"), header = "Distribution")
+    viz_boxplot(effect_boxplot(data = "values", color = "#8b5cf6"), header = "Distribution")
   )
 )
 ```
@@ -65,7 +65,7 @@ violin_data <- data.frame(
 
 tabviz(violin_data, label = "group",
   columns = list(
-    viz_violin(viz_violin_effect(data = "scores", color = "#f59e0b"), header = "Scores", show_median = TRUE)
+    viz_violin(effect_violin(data = "scores", color = "#f59e0b"), header = "Scores", show_median = TRUE)
   )
 )
 ```
@@ -93,19 +93,19 @@ combined_data <- data.frame(
 tabviz(combined_data, label = "site",
   columns = list(
     viz_bar(
-      viz_bar_effect("enrollment", color = "#3b82f6"),
+      effect_bar("enrollment", color = "#3b82f6"),
       header = "Enrollment",
       width = 140,
       axis_range = c(0, 350)
     ),
     viz_bar(
-      viz_bar_effect("completion_rate", color = "#22c55e"),
+      effect_bar("completion_rate", color = "#22c55e"),
       header = "Completion",
       width = 120,
       axis_range = c(0, 1)
     ),
     viz_violin(
-      viz_violin_effect(data = "response_times", color = "#f59e0b"),
+      effect_violin(data = "response_times", color = "#f59e0b"),
       header = "Response Time (days)",
       width = 180,
       show_median = TRUE

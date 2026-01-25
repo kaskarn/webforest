@@ -61,7 +61,7 @@ tabviz(boxplot_data, label = "treatment",
   columns = list(
     col_n("n"),
     viz_boxplot(
-      viz_boxplot_effect(data = "response", color = "#8b5cf6"),
+      effect_boxplot(data = "response", color = "#8b5cf6"),
       header = "Response Distribution",
       width = 250,
       show_outliers = TRUE
@@ -90,7 +90,7 @@ summary_data <- data.frame(
 tabviz(summary_data, label = "study",
   columns = list(
     viz_boxplot(
-      viz_boxplot_effect(
+      effect_boxplot(
         min = "min", q1 = "q1", median = "median", q3 = "q3", max = "max",
         color = "#22c55e"
       ),
@@ -124,8 +124,8 @@ multi_box_data <- data.frame(
 tabviz(multi_box_data, label = "timepoint",
   columns = list(
     viz_boxplot(
-      viz_boxplot_effect(data = "placebo", label = "Placebo", color = "#94a3b8"),
-      viz_boxplot_effect(data = "treatment", label = "Treatment", color = "#3b82f6"),
+      effect_boxplot(data = "placebo", label = "Placebo", color = "#94a3b8"),
+      effect_boxplot(data = "treatment", label = "Treatment", color = "#3b82f6"),
       header = "Score by Treatment Arm",
       width = 280,
       show_outliers = TRUE
@@ -152,7 +152,7 @@ tabviz(multi_box_data, label = "timepoint",
 | `axis_label` | Label text below axis | `"Value"` |
 | `show_axis` | Show the axis | `TRUE` |
 
-## viz_boxplot_effect() Arguments
+## effect_boxplot() Arguments
 
 | Argument | Description |
 |----------|-------------|

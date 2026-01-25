@@ -6,7 +6,7 @@
 #' Provides a fluent API for setting row-level styling based on column values.
 #' Style values are read from the specified columns at render time.
 #'
-#' @param x A WebSpec object or an htmlwidget created by forest_plot/webtable
+#' @param x A WebSpec object or an htmlwidget created by tabviz()
 #' @param bold Column name containing logical values for row-level bold
 #' @param italic Column name containing logical values for row-level italic
 #' @param color Column name containing CSS color strings for row text color
@@ -71,11 +71,7 @@ set_row_style <- function(
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
     # Re-create widget with updated spec
-    if (identical(attr(x, "widget_type"), "webtable")) {
-      webtable(spec)
-    } else {
-      forest_plot(spec)
-    }
+    tabviz(spec)
   } else {
     spec
   }
@@ -86,7 +82,7 @@ set_row_style <- function(
 #' Provides a fluent API for setting per-cell styling on specific columns.
 #' The styling is based on values from other columns in the data.
 #'
-#' @param x A WebSpec object or an htmlwidget created by forest_plot/webtable
+#' @param x A WebSpec object or an htmlwidget created by tabviz()
 #' @param column The field name of the column to style
 #' @param bold Column name containing logical values for cell-level bold
 #' @param italic Column name containing logical values for cell-level italic
@@ -164,11 +160,7 @@ set_column_style <- function(
 
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
-    if (identical(attr(x, "widget_type"), "webtable")) {
-      webtable(spec)
-    } else {
-      forest_plot(spec)
-    }
+    tabviz(spec)
   } else {
     spec
   }
@@ -178,9 +170,9 @@ set_column_style <- function(
 #'
 #' Provides a fluent API for setting marker styling (color, shape, opacity, size)
 #' based on column values. These styles apply to the primary effect's markers.
-#' For multi-effect plots, additional effects use their `web_effect()` properties.
+#' For multi-effect plots, additional effects use their `effect_forest()` properties.
 #'
-#' @param x A WebSpec object or an htmlwidget created by forest_plot/webtable
+#' @param x A WebSpec object or an htmlwidget created by tabviz()
 #' @param color Column name containing CSS color strings for marker fill color
 #' @param shape Column name containing shape values ("square", "circle", "diamond", "triangle")
 #' @param opacity Column name containing numeric values (0-1) for marker opacity
@@ -221,11 +213,7 @@ set_marker_style <- function(
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
     # Re-create widget with updated spec
-    if (identical(attr(x, "widget_type"), "webtable")) {
-      webtable(spec)
-    } else {
-      forest_plot(spec)
-    }
+    tabviz(spec)
   } else {
     spec
   }
@@ -236,7 +224,7 @@ set_marker_style <- function(
 #' Provides a fluent API for setting or changing the theme on a WebSpec or widget.
 #' Accepts either a theme name (string) or a WebTheme object.
 #'
-#' @param x A WebSpec object or an htmlwidget created by forest_plot/webtable
+#' @param x A WebSpec object or an htmlwidget created by tabviz()
 #' @param theme Either a WebTheme object or a string matching a built-in theme name:
 #'   "default", "minimal", "dark", "jama", "lancet", "modern", "presentation",
 #'   "cochrane", or "nature"
@@ -304,11 +292,7 @@ set_theme <- function(x, theme) {
   # Return same type as input
   if (inherits(x, "htmlwidget")) {
     # Re-create widget with updated spec
-    if (identical(attr(x, "widget_type"), "webtable")) {
-      webtable(spec)
-    } else {
-      forest_plot(spec)
-    }
+    tabviz(spec)
   } else {
     spec
   }
@@ -318,7 +302,7 @@ set_theme <- function(x, theme) {
 #'
 #' Provides a fluent API for controlling zoom level and container size constraints.
 #'
-#' @param x An htmlwidget created by `forest_plot()` or `webtable()`
+#' @param x An htmlwidget created by `tabviz()`
 #' @param zoom Zoom level (0.5 to 2.0, default 1.0)
 #' @param auto_fit When TRUE (default), shrink content to fit container if too large.
 #'   Never enlarges content. When FALSE, render at zoom level with scrollbars if needed.
@@ -352,7 +336,7 @@ set_zoom <- function(
     max_height = NULL,
     show_controls = TRUE) {
   if (!inherits(x, "htmlwidget")) {
-    cli_abort("{.fn set_zoom} only works on htmlwidgets from {.fn forest_plot} or {.fn webtable}")
+    cli_abort("{.fn set_zoom} only works on htmlwidgets from {.fn tabviz}")
   }
 
   checkmate::assert_number(zoom, lower = 0.5, upper = 2.0)
