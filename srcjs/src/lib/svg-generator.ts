@@ -431,6 +431,8 @@ interface InternalLayout extends ComputedLayout {
   subtitleY: number;
   mainY: number;
   footerY: number;
+  axisGap: number;                  // Gap between plot rows and axis
+  rowsHeight: number;               // Height of display rows only (excludes overall summary)
   autoWidths: Map<string, number>;  // Add auto-widths to layout
   labelWidth: number;               // Calculated label column width
 }
@@ -452,14 +454,15 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
   const hasGroups = hasColumnGroups(leftColumnDefs) || hasColumnGroups(rightColumnDefs) || hasColumnGroups(columns);
 
   // Header height calculation must match web view behavior:
-  // Web CSS: min-height: var(--wf-header-row-height) + padding: var(--wf-cell-padding-y) top+bottom
-  // For 2-tier headers (headerDepth=2), each row is:
-  //   headerHeight/2 (min-height) + cellPaddingY*2 (top+bottom padding)
+  // Web CSS: .header-cell { min-height: var(--wf-header-row-height); padding: var(--wf-cell-padding-y) ... }
+  // CSS always adds padding to header cells, so we must always include it here.
+  // For 2-tier headers (headerDepth=2), each row is: headerHeight/2 (min-height) + cellPaddingY*2
+  // For 1-tier headers (headerDepth=1), each row is: headerHeight (min-height) + cellPaddingY*2
   const headerDepth = hasGroups ? 2 : 1;
   const cellPaddingY = theme.spacing.cellPaddingY ?? 4;
   const baseRowHeight = theme.spacing.headerHeight / headerDepth;
-  // Add cell padding for multi-row headers (browser renders padding inside the min-height)
-  const actualRowHeight = baseRowHeight + (hasGroups ? cellPaddingY * 2 : 0);
+  // Always add cell padding (CSS applies padding regardless of header depth)
+  const actualRowHeight = baseRowHeight + cellPaddingY * 2;
   const headerHeight = actualRowHeight * headerDepth;
 
   // Text heights for header/footer
@@ -470,7 +473,10 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
 
   const titleHeight = hasTitle ? TYPOGRAPHY.TITLE_HEIGHT : 0;
   const subtitleHeight = hasSubtitle ? TYPOGRAPHY.SUBTITLE_HEIGHT : 0;
-  const headerTextHeight = titleHeight + subtitleHeight + (hasTitle || hasSubtitle ? padding : 0);
+  // When both title and subtitle exist, web CSS adds extra spacing via .has-both:
+  // margin-top: 6px + border-top: 1px + padding-top: 6px = 13px
+  const titleSubtitleGap = (hasTitle && hasSubtitle) ? 13 : 0;
+  const headerTextHeight = titleHeight + titleSubtitleGap + subtitleHeight + (hasTitle || hasSubtitle ? padding : 0);
 
   const captionHeight = hasCaption ? TYPOGRAPHY.CAPTION_HEIGHT : 0;
   const footnoteHeight = hasFootnote ? TYPOGRAPHY.FOOTNOTE_HEIGHT : 0;
@@ -480,15 +486,15 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
   const displayRows = buildDisplayRows(spec);
   const hasOverall = !!spec.data.overall;
 
-  // Calculate plot height accounting for spacer rows (half height)
-  let plotHeight = 0;
+  // Calculate rows height (display rows only, not including overall summary)
+  // This matches web view's rowsAreaHeight which excludes overall
+  let rowsHeight = 0;
   for (const dr of displayRows) {
     const isSpacerRow = dr.type === "data" && dr.row.style?.type === "spacer";
-    plotHeight += isSpacerRow ? rowHeight / 2 : rowHeight;
+    rowsHeight += isSpacerRow ? rowHeight / 2 : rowHeight;
   }
-  if (hasOverall) {
-    plotHeight += rowHeight * RENDERING.OVERALL_ROW_HEIGHT_MULTIPLIER;
-  }
+  // plotHeight includes overall summary area (for total height calculations)
+  const plotHeight = rowsHeight + (hasOverall ? rowHeight * RENDERING.OVERALL_ROW_HEIGHT_MULTIPLIER : 0);
 
   // Calculate auto-widths for columns
   // Support both legacy (left/right position) and new unified (no position) column models
@@ -593,10 +599,12 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
     headerTextHeight,
     footerTextHeight,
     titleY: padding + TYPOGRAPHY.TITLE_HEIGHT - 4, // Baseline adjustment (matches web 12px top padding)
-    subtitleY: padding + titleHeight + TYPOGRAPHY.SUBTITLE_HEIGHT - 4,
+    subtitleY: padding + titleHeight + titleSubtitleGap + TYPOGRAPHY.SUBTITLE_HEIGHT - 4,
     mainY: headerTextHeight + padding,
     // Footer Y: Match web view's layout (axisHeight + 8px footer padding-top)
     footerY: headerTextHeight + padding + headerHeight + plotHeight + webAxisHeight + 8,
+    axisGap,
+    rowsHeight,
     autoWidths,
     labelWidth,
   };
@@ -1058,8 +1066,12 @@ function renderHeader(spec: WebSpec, layout: InternalLayout, theme: WebTheme): s
   }
 
   // Thin separator line between title and subtitle (only when both exist)
+  // Web CSS has 6px padding-top on subtitle after the border, so position separator
+  // to leave 6px gap between it and the subtitle text top
   if (spec.labels?.title && spec.labels?.subtitle) {
-    const separatorY = layout.subtitleY - 10; // Above subtitle text
+    const subtitleFontSize = parseFontSize(theme.typography.fontSizeBase);
+    const subtitleAscent = subtitleFontSize * 0.75; // Approximate ascent (text top from baseline)
+    const separatorY = layout.subtitleY - subtitleAscent - 6; // 6px gap like web CSS padding-top
     lines.push(`<line x1="${padding}" x2="${layout.totalWidth - padding}"
       y1="${separatorY}" y2="${separatorY}"
       stroke="${theme.colors.border}" stroke-width="1" opacity="0.3"/>`);
@@ -2233,7 +2245,10 @@ function renderForestAxis(
       fill="${theme.colors.secondary}">${escapeXml(axisLabel)}</text>`);
   }
 
-  return `<g transform="translate(0, ${layout.mainY + layout.headerHeight + layout.plotHeight})">${lines.join("\n")}</g>`;
+  // Position axis at: mainY + headerHeight + rowsHeight + axisGap
+  // This matches web view which positions axis at rowsAreaHeight + axisGap
+  // (rowsHeight excludes overall summary, just like web's rowsAreaHeight)
+  return `<g transform="translate(0, ${layout.mainY + layout.headerHeight + layout.rowsHeight + layout.axisGap})">${lines.join("\n")}</g>`;
 }
 
 /**
@@ -3116,12 +3131,12 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     };
     const { scale: xScale, clipBounds, ticks: baseTicks } = computeXScaleAndClip(spec, forestWidth, fcSettings, options);
 
-    // Reference line (null value)
+    // Reference line (null value) - stops at rowsHeight (not plotHeight) to match web view
     const nullX = forestX + xScale(fcNullValue);
     parts.push(renderReferenceLine(
       nullX,
       plotY,
-      plotY + layout.plotHeight,
+      plotY + layout.rowsHeight,
       "dashed",
       theme.colors.muted,
       theme
@@ -3132,10 +3147,11 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
     for (const ann of annotations) {
       if (ann.type === "reference_line") {
         const annX = forestX + xScale(ann.x);
+        // Reflines stop at rowsHeight (not plotHeight) to match web view
         parts.push(renderReferenceLine(
           annX,
           plotY,
-          plotY + layout.plotHeight,
+          plotY + layout.rowsHeight,
           ann.style,
           ann.color ?? theme.colors.accent,
           theme,
