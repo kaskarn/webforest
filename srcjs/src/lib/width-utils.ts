@@ -51,9 +51,9 @@ import { AUTO_WIDTH, SPACING, GROUP_HEADER, TEXT_MEASUREMENT, BADGE } from "./re
  */
 export function estimateTextWidth(text: string, fontSize: number): number {
   // Character width categories (proportions of fontSize):
-  // Very narrow: superscript/subscript characters (0.3)
+  // Very narrow: superscript/subscript characters (0.15) - rendered at ~50% size and narrower
   // Narrow: i, l, I, 1, punctuation, space (0.35)
-  // Math operators: ×, − (0.5)
+  // Math operators: ×, − (0.4) - typically narrower than digits in sans-serif fonts
   // Normal lowercase: a-z except i,l,m,w (0.55)
   // Digits: 0-9 tabular (0.6)
   // Uppercase: A-Z except I,M,W (0.68) - capitals are wider than lowercase
@@ -66,11 +66,11 @@ export function estimateTextWidth(text: string, fontSize: number): number {
   let width = 0;
   for (const char of text) {
     if (SUPERSCRIPTS.includes(char)) {
-      width += fontSize * 0.3;
+      width += fontSize * 0.15;
     } else if (NARROW.includes(char)) {
       width += fontSize * 0.35;
     } else if ("×−".includes(char)) {
-      width += fontSize * 0.5;
+      width += fontSize * 0.4;
     } else if (WIDE.includes(char)) {
       width += fontSize * 0.85;
     } else if (char >= "0" && char <= "9") {

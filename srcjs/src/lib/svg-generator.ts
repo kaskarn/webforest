@@ -441,8 +441,9 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
   const theme = spec.theme;
   const rowHeight = theme.spacing.rowHeight;
   const padding = theme.spacing.padding;
-  // Use theme's columnGap for spacing between columns (matches web view CSS grid column-gap)
-  const columnGap = theme.spacing.columnGap ?? 8;
+  // Note: columnGap is NOT used in the actual layout - columns are placed back-to-back
+  // The CSS variable --wf-column-gap is defined in web view but never applied
+  // So we don't add any column gap to the width calculation
 
   // Ensure columns is an array (guard against R serialization issues)
   const columns = Array.isArray(spec.columns) ? spec.columns : [];
@@ -558,19 +559,19 @@ function computeLayout(spec: WebSpec, options: ExportOptions, nullValue: number 
     forestWidth = spec.layout.plotWidth;
   } else {
     // Auto: use remaining space after tables, with minimum
-    const availableForForest = baseWidth - totalTableWidth - columnGap * 2 - padding * 2;
+    const availableForForest = baseWidth - totalTableWidth - padding * 2;
     forestWidth = Math.max(availableForForest, LAYOUT.MIN_FOREST_WIDTH);
   }
 
   // Total width: expand if content needs more space than requested width
-  const neededWidth = padding * 2 + totalTableWidth + forestWidth + columnGap * 2;
+  const neededWidth = padding * 2 + totalTableWidth + forestWidth;
   const totalWidth = Math.max(options.width ?? baseWidth, neededWidth);
 
   // If totalWidth is larger than neededWidth and forest width wasn't explicitly set,
   // expand forest to fill the remaining space (prevents gap on right side)
   if (includeForest && totalWidth > neededWidth &&
       typeof options.forestWidth !== "number" && typeof spec.layout.plotWidth !== "number") {
-    forestWidth = totalWidth - totalTableWidth - padding * 2 - columnGap * 2;
+    forestWidth = totalWidth - totalTableWidth - padding * 2;
   }
 
   // Total height: include full axis area (ticks + labels + axis label + gap)
