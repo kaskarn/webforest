@@ -33,6 +33,7 @@ Collate:
     'shiny.R'
     'regenerate_examples.R'
     'screenshot.R'
+    'visual_tests.R'
     'data.R'
     'zzz.R'
 Imports:
