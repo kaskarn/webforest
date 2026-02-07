@@ -1,0 +1,70 @@
+<script lang="ts">
+  import type { ProgressColumnOptions } from "$types";
+
+  interface Props {
+    value: number | undefined | null;
+    options?: ProgressColumnOptions;
+  }
+
+  let { value, options }: Props = $props();
+
+  const maxValue = $derived(options?.maxValue ?? 100);
+  const showLabel = $derived(options?.showLabel ?? true);
+  const barColor = $derived(options?.color ?? "var(--wf-primary, #2563eb)");
+
+  const percentage = $derived.by(() => {
+    if (value === undefined || value === null || maxValue <= 0) return 0;
+    return Math.min(100, Math.max(0, (value / maxValue) * 100));
+  });
+
+  const formattedLabel = $derived.by(() => {
+    if (value === undefined || value === null) return "";
+    return `${Math.round(percentage)}%`;
+  });
+</script>
+
+{#if value !== undefined && value !== null}
+  <div class="cell-progress">
+    <div class="progress-track">
+      <div
+        class="progress-fill"
+        style:width="{percentage}%"
+        style:background-color={barColor}
+      ></div>
+    </div>
+    {#if showLabel}
+      <span class="progress-label">{formattedLabel}</span>
+    {/if}
+  </div>
+{/if}
+
+<style>
+  .cell-progress {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 60px;
+    width: 100%;
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 10px;
+    background: color-mix(in srgb, var(--wf-border, #e2e8f0) 50%, transparent);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.2s ease-out;
+  }
+
+  .progress-label {
+    font-size: var(--wf-font-size-sm, 0.75rem);
+    font-variant-numeric: tabular-nums;
+    min-width: 32px;
+    text-align: right;
+  }
+</style>

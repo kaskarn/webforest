@@ -52,6 +52,7 @@ ColumnSpec <- new_class(
   validator = function(self) {
     valid_types <- c("text", "numeric", "interval", "bar", "pvalue", "sparkline",
                      "icon", "badge", "stars", "img", "reference", "range", "forest",
+                     "heatmap", "progress",
                      "viz_bar", "viz_boxplot", "viz_violin", "custom")
     if (!self@type %in% valid_types) {
       return(paste("type must be one of:", paste(valid_types, collapse = ", ")))
@@ -106,6 +107,7 @@ web_col <- function(
     header = NULL,
     type = c("text", "numeric", "interval", "bar", "pvalue", "sparkline",
              "icon", "badge", "stars", "img", "reference", "range", "forest",
+             "heatmap", "progress",
              "viz_bar", "viz_boxplot", "viz_violin", "custom"),
     width = NULL,
     align = NULL,
@@ -886,6 +888,167 @@ col_range <- function(
   synthetic_field <- paste0("_range_", min_field, "_", max_field)
   web_col(synthetic_field, header, type = "range", width = width,
           align = "right", options = opts, ...)
+}
+
+# ============================================================================
+# Heatmap, Progress, Currency, and Date Column Helpers
+# ============================================================================
+
+#' Column helper: Heatmap (color intensity)
+#'
+#' Display a number with interpolated background color based on value.
+#' Useful for showing magnitude via color intensity.
+#'
+#' @param field Field name containing numeric values
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (NULL for auto-sizing based on content)
+#' @param palette Character vector of 2+ hex colors for interpolation
+#'   (default: light blue to dark blue)
+#' @param min_value Minimum value for color scale (NULL = auto from data)
+#' @param max_value Maximum value for color scale (NULL = auto from data)
+#' @param decimals Number of decimal places (default 2)
+#' @param show_value Show the numeric value over the color (default TRUE)
+#' @param ... Additional arguments passed to `web_col()`, including cell styling:
+#'   `bold`, `italic`, `color`, `bg`, `emphasis`, `muted`, `accent` (column names)
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Default blue gradient
+#' col_heatmap("correlation")
+#'
+#' # Custom red-yellow-green palette
+#' col_heatmap("score", palette = c("#d73027", "#fee08b", "#1a9850"))
+#'
+#' # Fixed range
+#' col_heatmap("pct", min_value = 0, max_value = 100)
+#'
+#' # Hide numeric value (color only)
+#' col_heatmap("value", show_value = FALSE)
+col_heatmap <- function(field, header = NULL, width = NULL,
+                        palette = c("#f7fbff", "#08306b"),
+                        min_value = NULL, max_value = NULL,
+                        decimals = 2, show_value = TRUE, ...) {
+  checkmate::assert_character(palette, min.len = 2)
+  checkmate::assert_number(min_value, null.ok = TRUE)
+  checkmate::assert_number(max_value, null.ok = TRUE)
+  checkmate::assert_number(decimals, lower = 0, upper = 10)
+  checkmate::assert_flag(show_value)
+  opts <- list(
+    heatmap = list(palette = palette, minValue = min_value,
+                   maxValue = max_value, decimals = decimals,
+                   showValue = show_value)
+  )
+  web_col(field, header, type = "heatmap", width = width, options = opts, ...)
+}
+
+#' Column helper: Progress bar
+#'
+#' Display a progress bar filled proportionally to the value.
+#'
+#' @param field Field name containing numeric values (0 to max_value)
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (NULL for auto-sizing based on content)
+#' @param max_value Maximum value for the progress bar (default 100)
+#' @param color Bar fill color (NULL = theme primary color)
+#' @param show_label Show percentage label (default TRUE)
+#' @param ... Additional arguments passed to `web_col()`, including cell styling:
+#'   `bold`, `italic`, `color`, `bg`, `emphasis`, `muted`, `accent` (column names)
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Default 0-100 progress
+#' col_progress("completion")
+#'
+#' # Custom max and color
+#' col_progress("score", max_value = 10, color = "#22c55e")
+#'
+#' # No label
+#' col_progress("pct", show_label = FALSE)
+col_progress <- function(field, header = NULL, width = NULL,
+                         max_value = 100, color = NULL,
+                         show_label = TRUE, ...) {
+  checkmate::assert_number(max_value, lower = 0)
+  checkmate::assert_string(color, null.ok = TRUE)
+  checkmate::assert_flag(show_label)
+  opts <- list(
+    progress = list(maxValue = max_value, color = color, showLabel = show_label)
+  )
+  web_col(field, header, type = "progress", width = width, options = opts, ...)
+}
+
+#' Column helper: Currency formatting
+#'
+#' Display numeric values with currency symbol. This is a convenience wrapper
+#' around `col_numeric()` that adds prefix/suffix formatting.
+#'
+#' @param field Field name containing numeric values
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (NULL for auto-sizing based on content)
+#' @param symbol Currency symbol (default "$")
+#' @param decimals Number of decimal places (default 2)
+#' @param thousands_sep Use thousands separator (default TRUE)
+#' @param position Symbol position: "prefix" (default, e.g., "$100") or "suffix" (e.g., "100EUR")
+#' @param ... Additional arguments passed to `web_col()`, including cell styling:
+#'   `bold`, `italic`, `color`, `bg`, `emphasis`, `muted`, `accent` (column names)
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Default USD
+#' col_currency("price")
+#'
+#' # Euro suffix
+#' col_currency("amount", symbol = "\u20ac", position = "suffix")
+#'
+#' # No thousands separator
+#' col_currency("cost", thousands_sep = FALSE)
+col_currency <- function(field, header = NULL, width = NULL,
+                         symbol = "$", decimals = 2, thousands_sep = TRUE,
+                         position = c("prefix", "suffix"), ...) {
+  position <- match.arg(position)
+  checkmate::assert_string(symbol)
+  checkmate::assert_number(decimals, lower = 0, upper = 10)
+  checkmate::assert_flag(thousands_sep)
+  opts <- list(
+    numeric = list(decimals = decimals,
+                   thousandsSep = if (thousands_sep) "," else FALSE,
+                   prefix = if (position == "prefix") symbol else NULL,
+                   suffix = if (position == "suffix") symbol else NULL)
+  )
+  web_col(field, header, type = "numeric", width = width, align = "right",
+          options = opts, ...)
+}
+
+#' Column helper: Date formatting
+#'
+#' Display dates with custom formatting. Dates are formatted on the R side
+#' during serialization, then displayed as text.
+#'
+#' @param field Field name containing Date or POSIXct values
+#' @param header Column header (default NULL, uses field name)
+#' @param width Column width in pixels (NULL for auto-sizing based on content)
+#' @param format Date format string (default "%Y-%m-%d"). See [strftime()] for codes.
+#' @param ... Additional arguments passed to `web_col()`, including cell styling:
+#'   `bold`, `italic`, `color`, `bg`, `emphasis`, `muted`, `accent` (column names)
+#'
+#' @return A ColumnSpec object
+#' @export
+#' @examples
+#' # Default ISO format
+#' col_date("date")
+#'
+#' # US format
+#' col_date("date", format = "%m/%d/%Y")
+#'
+#' # Abbreviated month
+#' col_date("enrollment_date", format = "%b %d, %Y")
+col_date <- function(field, header = NULL, width = NULL,
+                     format = "%Y-%m-%d", ...) {
+  checkmate::assert_string(format)
+  opts <- list(date = list(format = format))
+  web_col(field, header, type = "text", width = width, options = opts, ...)
 }
 
 # ============================================================================

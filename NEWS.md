@@ -1,3 +1,36 @@
+# tabviz 0.5.0
+
+## New Column Types
+
+* **`col_heatmap()`**: Color intensity column that interpolates background color from a palette based on numeric values. Supports custom palettes (2+ colors), fixed min/max ranges, configurable decimal places, and optional value display. Auto-contrasts text color for readability.
+
+* **`col_progress()`**: Progress bar column that renders a filled bar proportional to a value. Supports custom max value, color, and optional percentage label.
+
+* **`col_currency()`**: Currency formatting wrapper around `col_numeric()` with prefix/suffix symbol positioning (e.g., `$100` or `100€`), configurable decimals and thousands separator.
+
+* **`col_date()`**: Date formatting column that formats `Date`/`POSIXct` values R-side during serialization using `format()`. Supports any R date format string (e.g., `"%b %d, %Y"`).
+
+## Frontend
+
+* **CellHeatmap component**: New Svelte component for heatmap cells with d3-style color interpolation and luminance-based text contrast.
+
+* **CellProgress component**: New Svelte component for progress bar cells with CSS variable theming.
+
+* **Numeric prefix/suffix**: `formatNumber()` now supports `prefix` and `suffix` options for currency and other formatted numeric displays.
+
+* **SVG export**: Heatmap and progress column types are now rendered in SVG export (colored rect backgrounds for heatmap, track + fill bars for progress).
+
+## Gallery Examples
+
+* **gallery_17**: Dashboard-style table showcasing `col_heatmap()`, `col_progress()`, `col_currency()`, `col_date()`.
+* **gallery_18**: Demonstrates `viz_bar()`, `viz_boxplot()`, `viz_violin()` side by side.
+
+## Test Coverage
+
+* Added test suites for column types, modifiers, viz columns, save_plot, and annotations.
+
+---
+
 # tabviz 0.4.2
 
 ## Bug Fixes

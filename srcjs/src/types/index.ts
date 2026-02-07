@@ -319,8 +319,22 @@ export interface KDEResult {
   y: number[];
 }
 
+export interface HeatmapColumnOptions {
+  palette?: string[];
+  minValue?: number | null;
+  maxValue?: number | null;
+  decimals?: number;
+  showValue?: boolean;
+}
+
+export interface ProgressColumnOptions {
+  maxValue?: number;
+  color?: string | null;
+  showLabel?: boolean;
+}
+
 export interface ColumnOptions {
-  numeric?: NumericColumnOptions;
+  numeric?: NumericColumnOptions & { prefix?: string | null; suffix?: string | null };
   percent?: PercentColumnOptions;
   events?: EventsColumnOptions;
   bar?: BarColumnOptions;
@@ -334,6 +348,9 @@ export interface ColumnOptions {
   reference?: ReferenceColumnOptions;
   range?: RangeColumnOptions;
   forest?: ForestColumnOptions;
+  heatmap?: HeatmapColumnOptions;
+  progress?: ProgressColumnOptions;
+  date?: { format?: string };
   // New viz column types
   vizBar?: VizBarColumnOptions;
   vizBoxplot?: VizBoxplotColumnOptions;
@@ -345,7 +362,7 @@ export interface ColumnSpec {
   id: string;
   header: string;
   field: string;
-  type: "text" | "numeric" | "interval" | "bar" | "pvalue" | "sparkline" | "icon" | "badge" | "stars" | "img" | "reference" | "range" | "forest" | "viz_bar" | "viz_boxplot" | "viz_violin" | "custom";
+  type: "text" | "numeric" | "interval" | "bar" | "pvalue" | "sparkline" | "icon" | "badge" | "stars" | "img" | "reference" | "range" | "forest" | "heatmap" | "progress" | "viz_bar" | "viz_boxplot" | "viz_violin" | "custom";
   width?: number | "auto" | null;  // "auto" for content-based width calculation
   align: "left" | "center" | "right";
   headerAlign?: "left" | "center" | "right" | null;  // Header alignment (defaults to align if not specified)

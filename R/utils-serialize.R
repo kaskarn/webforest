@@ -29,6 +29,28 @@ serialize_data <- function(spec, include_forest = TRUE) {
   df <- spec@data
   n <- nrow(df)
 
+  # Pre-format date columns: detect columns with date options and format Date/POSIXct values
+  date_columns <- list()
+  for (col in spec@columns) {
+    if (S7_inherits(col, ColumnSpec) && !is.null(col@options$date)) {
+      date_fmt <- col@options$date$format %||% "%Y-%m-%d"
+      field <- col@field
+      if (field %in% names(df) && (inherits(df[[field]], "Date") || inherits(df[[field]], "POSIXct"))) {
+        df[[field]] <- format(df[[field]], date_fmt)
+      }
+    } else if (S7_inherits(col, ColumnGroup)) {
+      for (child in col@columns) {
+        if (S7_inherits(child, ColumnSpec) && !is.null(child@options$date)) {
+          date_fmt <- child@options$date$format %||% "%Y-%m-%d"
+          field <- child@field
+          if (field %in% names(df) && (inherits(df[[field]], "Date") || inherits(df[[field]], "POSIXct"))) {
+            df[[field]] <- format(df[[field]], date_fmt)
+          }
+        }
+      }
+    }
+  }
+
   # Build rows - data now lives entirely in metadata
   rows <- lapply(seq_len(n), function(i) {
     row <- df[i, , drop = FALSE]

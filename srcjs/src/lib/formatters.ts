@@ -124,6 +124,12 @@ export function formatNumber(value: number | undefined | null, options?: ColumnO
     formatted = addThousandsSep(formatted, thousandsSep);
   }
 
+  // Apply prefix/suffix (e.g., for currency: "$100" or "100EUR")
+  const prefix = options?.numeric?.prefix;
+  const suffix = options?.numeric?.suffix;
+  if (prefix) formatted = prefix + formatted;
+  if (suffix) formatted = formatted + suffix;
+
   return formatted;
 }
 
@@ -280,6 +286,20 @@ export function getColumnDisplayText(
 
     case "percent":
       return formatNumber(row.metadata[field] as number, options);
+
+    case "heatmap": {
+      const hmValue = row.metadata[field] as number;
+      if (hmValue === undefined || hmValue === null) return "";
+      const hmDecimals = options?.heatmap?.decimals ?? 2;
+      return hmValue.toFixed(hmDecimals);
+    }
+
+    case "progress": {
+      const progValue = row.metadata[field] as number;
+      if (progValue === undefined || progValue === null) return "";
+      const progMax = options?.progress?.maxValue ?? 100;
+      return `${Math.round(Math.min(100, Math.max(0, (progValue / progMax) * 100)))}%`;
+    }
 
     // Visual column types - these render SVG/visual elements, not text
     // Return empty string so auto-sizing uses header width + visual element min-width

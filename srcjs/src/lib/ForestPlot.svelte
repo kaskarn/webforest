@@ -20,6 +20,8 @@
   import CellImg from "$components/table/CellImg.svelte";
   import CellReference from "$components/table/CellReference.svelte";
   import CellRange from "$components/table/CellRange.svelte";
+  import CellHeatmap from "$components/table/CellHeatmap.svelte";
+  import CellProgress from "$components/table/CellProgress.svelte";
   import ControlToolbar from "$components/ui/ControlToolbar.svelte";
   import VizBar from "$components/viz/VizBar.svelte";
   import VizBoxplot from "$components/viz/VizBoxplot.svelte";
@@ -910,6 +912,18 @@
             metadata={row.metadata}
             options={column.options?.range}
           />
+        {:else if column.type === "heatmap"}
+          <CellHeatmap
+            value={row.metadata[column.field] as number}
+            options={column.options?.heatmap}
+            minValue={getMinValueForColumn(visibleRows, column)}
+            maxValue={getMaxValueForColumn(visibleRows, column)}
+          />
+        {:else if column.type === "progress"}
+          <CellProgress
+            value={row.metadata[column.field] as number}
+            options={column.options?.progress}
+          />
         {:else if column.type === "numeric"}
           <CellContent value={formatNumber(row.metadata[column.field] as number, column.options)} {cellStyle} />
         {:else if column.type === "custom" && column.options?.events}
@@ -1403,6 +1417,9 @@
     if (column.options?.bar?.maxValue) {
       return column.options.bar.maxValue;
     }
+    if (column.options?.heatmap?.maxValue != null) {
+      return column.options.heatmap.maxValue;
+    }
     // Otherwise compute from data
     let max = 0;
     for (const row of rows) {
@@ -1412,6 +1429,22 @@
       }
     }
     return max || 100;
+  }
+
+  function getMinValueForColumn(rows: Row[], column: ColumnSpec): number {
+    // Use explicit minValue from options if provided
+    if (column.options?.heatmap?.minValue != null) {
+      return column.options.heatmap.minValue;
+    }
+    // Otherwise compute from data
+    let min = Infinity;
+    for (const row of rows) {
+      const val = row.metadata[column.field];
+      if (typeof val === "number" && val < min) {
+        min = val;
+      }
+    }
+    return min === Infinity ? 0 : min;
   }
 
   function getRowClasses(

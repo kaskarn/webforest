@@ -2406,7 +2406,8 @@ function renderUnifiedTableRow(
   barMaxValues: Map<string, number>,
   autoWidths: Map<string, number>,
   getColWidth: (col: ColumnSpec) => number,
-  columnPositions: number[]
+  columnPositions: number[],
+  allRows: Row[] = []
 ): string {
   const lines: string[] = [];
   const fontSize = parseFontSize(theme.typography.fontSizeBase);
@@ -2597,6 +2598,92 @@ function renderUnifiedTableRow(
           const color = isFilled ? starColor : emptyColor;
           lines.push(`<path d="${starPath(cx, cy, starSize)}" fill="${color}"/>`);
           starX += starSize + starGap;
+        }
+      }
+    } else if (col.type === "heatmap") {
+      // Render heatmap cell with colored background
+      const hmValue = row.metadata[col.field] as number;
+      if (hmValue !== undefined && hmValue !== null && !Number.isNaN(hmValue)) {
+        const hmOpts = col.options?.heatmap;
+        const palette = hmOpts?.palette ?? ["#f7fbff", "#08306b"];
+        const hmDecimals = hmOpts?.decimals ?? 2;
+        const showValue = hmOpts?.showValue ?? true;
+
+        // Compute min/max from all rows if not specified
+        let hmMin = hmOpts?.minValue;
+        let hmMax = hmOpts?.maxValue;
+        if (hmMin == null || hmMax == null) {
+          const allVals = allRows
+            .map(r => r.metadata[col.field] as number)
+            .filter(v => v != null && !Number.isNaN(v));
+          if (hmMin == null) hmMin = allVals.length > 0 ? Math.min(...allVals) : 0;
+          if (hmMax == null) hmMax = allVals.length > 0 ? Math.max(...allVals) : 1;
+        }
+
+        // Normalize to [0, 1]
+        const range = (hmMax as number) - (hmMin as number);
+        const normalized = range === 0 ? 0.5 : Math.max(0, Math.min(1, (hmValue - (hmMin as number)) / range));
+
+        // Interpolate color
+        const parseHex = (hex: string) => {
+          const h = hex.replace("#", "");
+          return [parseInt(h.substring(0, 2), 16), parseInt(h.substring(2, 4), 16), parseInt(h.substring(4, 6), 16)];
+        };
+        const stops = palette.length - 1;
+        const segment = Math.min(Math.floor(normalized * stops), stops - 1);
+        const t = normalized * stops - segment;
+        const c1 = parseHex(palette[segment]);
+        const c2 = parseHex(palette[segment + 1]);
+        const r = Math.round(c1[0] + (c2[0] - c1[0]) * t);
+        const g = Math.round(c1[1] + (c2[1] - c1[1]) * t);
+        const b = Math.round(c1[2] + (c2[2] - c1[2]) * t);
+        const bgColor = `rgb(${r},${g},${b})`;
+        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        const textColor = luminance > 0.5 ? theme.colors.foreground : "#ffffff";
+
+        // Background rect
+        lines.push(`<rect x="${currentX + 2}" y="${y + 2}" width="${width - 4}" height="${rowHeight - 4}"
+          fill="${bgColor}" rx="2"/>`);
+
+        if (showValue) {
+          lines.push(`<text class="cell-text" x="${currentX + width / 2}" y="${textY}"
+            font-family="${theme.typography.fontFamily}"
+            font-size="${fontSize * 0.9}px"
+            font-weight="${theme.typography.fontWeightNormal}"
+            text-anchor="middle"
+            fill="${textColor}">${hmValue.toFixed(hmDecimals)}</text>`);
+        }
+      }
+    } else if (col.type === "progress") {
+      // Render progress bar
+      const progValue = row.metadata[col.field] as number;
+      if (progValue !== undefined && progValue !== null && !Number.isNaN(progValue)) {
+        const progOpts = col.options?.progress;
+        const progMax = progOpts?.maxValue ?? 100;
+        const progColor = progOpts?.color ?? theme.colors.primary;
+        const progShowLabel = progOpts?.showLabel ?? true;
+        const pct = Math.min(100, Math.max(0, (progValue / progMax) * 100));
+
+        const barHeight = 10;
+        const barY = y + (rowHeight - barHeight) / 2;
+        const labelWidth = progShowLabel ? 40 : 0;
+        const barAreaWidth = width - SPACING.TEXT_PADDING * 2 - labelWidth;
+        const barWidth = (pct / 100) * barAreaWidth;
+
+        // Track
+        lines.push(`<rect x="${currentX + SPACING.TEXT_PADDING}" y="${barY}" width="${barAreaWidth}" height="${barHeight}"
+          fill="${theme.colors.border}" opacity="0.5" rx="5"/>`);
+        // Fill
+        lines.push(`<rect x="${currentX + SPACING.TEXT_PADDING}" y="${barY}" width="${Math.max(0, barWidth)}" height="${barHeight}"
+          fill="${progColor}" rx="5"/>`);
+
+        if (progShowLabel) {
+          lines.push(`<text class="cell-text" x="${currentX + width - SPACING.TEXT_PADDING}" y="${textY}"
+            font-family="${theme.typography.fontFamily}"
+            font-size="${fontSize * 0.9}px"
+            font-weight="${theme.typography.fontWeightNormal}"
+            text-anchor="end"
+            fill="${theme.colors.foreground}">${Math.round(pct)}%</text>`);
         }
       }
     } else {
@@ -3356,7 +3443,8 @@ export function generateSVG(spec: WebSpec, options: ExportOptions = {}): string 
           barMaxValues,
           autoWidths,
           getColWidth,
-          columnPositions
+          columnPositions,
+          allDataRows
         ));
       }
     }
