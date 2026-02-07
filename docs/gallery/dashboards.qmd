@@ -8,69 +8,107 @@ library(tabviz)
 library(dplyr)
 ```
 
-Business dashboards, KPI displays, and data tables with embedded visualizations.
+Business dashboards, KPI displays, and data tables with embedded visualizations. These examples combine multiple column types for rich, information-dense views.
 
-## NBA Player Efficiency
+## Product Metrics Dashboard
 
-Performance dashboard using Player Efficiency Rating (PER):
+Track product KPIs with sparklines, bars, stars, currency, and trend indicators:
 
 ```{r}
-data(nba_efficiency)
+product_metrics <- data.frame(
+  product = c("Widget Pro", "Widget Lite", "Widget Plus", "Widget Max", "Widget Mini"),
+  revenue = c(2450000, 1890000, 3200000, 1560000, 980000),
+  growth = c(0.12, -0.05, 0.28, 0.08, 0.15),
+  margin = c(0.35, 0.42, 0.28, 0.38, 0.45),
+  units_sold = c(12500, 9800, 18200, 7800, 15600),
+  satisfaction = c(4.2, 3.8, 4.5, 4.1, 4.3)
+)
 
-tabviz(
-  nba_efficiency,
-  label = "player",
+product_metrics$trend <- list(
+  c(180, 195, 210, 205, 225, 240, 235, 250, 260, 275, 290, 305),
+  c(220, 215, 205, 210, 200, 195, 190, 185, 188, 182, 180, 178),
+  c(200, 220, 240, 260, 290, 320, 340, 360, 380, 400, 420, 440),
+  c(120, 125, 130, 128, 135, 140, 138, 145, 150, 148, 155, 160),
+  c(60, 68, 75, 82, 88, 95, 100, 108, 115, 122, 128, 135)
+)
+
+tabviz(product_metrics, label = "product",
   columns = list(
-    col_text("team", "Team"),
-    col_text("position", "Pos"),
-    col_numeric("ppg", "PPG", decimals = 1),
-    col_numeric("games", "GP"),
-    viz_forest(point = "per", lower = "per_lower", upper = "per_upper",
-               scale = "linear", null_value = 15,
-               axis_label = "PER"),
-    col_interval("PER (95% CI)", point = "per", lower = "per_lower", upper = "per_upper"),
-    col_badge("award", "Award")
+    col_currency("revenue", "Revenue", decimals = 0),
+    col_percent("growth", "YoY"),
+    col_percent("margin", "Margin"),
+    viz_bar(
+      effect_bar("units_sold"),
+      header = "Units Sold",
+      axis_range = c(0, 20000)
+    ),
+    col_sparkline("trend", "12M Trend"),
+    col_stars("satisfaction", "Rating", max_stars = 5)
   ),
-  row_bold = ~ per > 25,
+  row_color = ~ ifelse(growth < 0, "#dc2626", "#64748b"),
   theme = web_theme_modern(),
-  title = "Player Efficiency Rating Dashboard"
+  title = "Product Performance Dashboard"
 )
 ```
 
-## Climate Temperature Anomalies
+---
 
-Scientific data showing temperature anomaly trends:
+## A/B Test Results
+
+Compare conversion rates across experiment variants with confidence intervals and winner badges:
 
 ```{r}
-data(climate_temps)
+ab_test_results <- data.frame(
+  variant = c("Control", "Variant A", "Variant B", "Variant C"),
+  visitors = c(50000, 48500, 51200, 47800),
+  conversions = c(2500, 2910, 2816, 2629),
+  rate = c(0.050, 0.060, 0.055, 0.055),
+  lift = c(0, 0.20, 0.10, 0.10),
+  lower = c(NA, 0.08, -0.02, -0.03),
+  upper = c(NA, 0.32, 0.22, 0.23),
+  pvalue = c(NA, 0.002, 0.12, 0.15),
+  verdict = c("Baseline", "Winner", "Inconclusive", "Inconclusive"),
+  row_type = c("summary", "data", "data", "data"),
+  row_bold = c(TRUE, FALSE, FALSE, FALSE)
+)
 
-tabviz(
-  climate_temps,
-  label = "region",
+tabviz(ab_test_results, label = "variant",
   columns = list(
-    col_text("period", "Period"),
-    col_numeric("anomaly", "Anomaly (°C)", decimals = 2),
-    viz_forest(point = "anomaly", lower = "lower", upper = "upper",
-               scale = "linear", null_value = 0,
-               axis_label = "Temperature Anomaly"),
-    col_interval("95% CI", point = "anomaly", lower = "lower", upper = "upper"),
-    col_text("certainty", "Confidence"),
-    col_badge("category", "Type")
+    col_n("visitors", "Visitors", abbreviate = TRUE),
+    col_n("conversions", "Conv"),
+    col_percent("rate", "CVR"),
+    viz_forest(
+      point = "lift", lower = "lower", upper = "upper",
+      null_value = 0,
+      axis_label = "Lift vs Control"
+    ),
+    col_percent("lift", "Lift"),
+    col_pvalue("pvalue", "P", stars = TRUE),
+    col_badge("verdict", "Verdict",
+      variants = list(
+        Baseline = "info",
+        Winner = "success",
+        Inconclusive = "warning"
+      ))
   ),
-  row_color = ~ ifelse(anomaly > 1.5, "#dc2626", "#64748b"),
-  theme = web_theme_minimal(),
-  title = "Global Temperature Anomalies"
+  row_type = "row_type",
+  row_bold = "row_bold",
+  marker_color = ~ ifelse(is.na(lower), "#64748b",
+                          ifelse(lower > 0, "#16a34a", "#64748b")),
+  theme = web_theme_nature(),
+  title = "Homepage Redesign A/B Test"
 )
 ```
+
+---
 
 ## Airline Performance
 
-Airline delay metrics analysis:
+Airline delay metrics with heatmaps for on-time percentage and progress bars for satisfaction:
 
 ```{r}
 data(airline_delays)
 
-# Show one row per carrier (first month)
 airline_summary <- airline_delays |>
   filter(month == "Apr") |>
   select(carrier, carrier_type, on_time_pct, delay_vs_avg, satisfaction, flights, trend)
@@ -79,16 +117,24 @@ tabviz(
   airline_summary,
   label = "carrier",
   columns = list(
-    col_text("carrier_type", "Type"),
-    col_numeric("flights", "Flights", abbreviate = TRUE),
-    col_percent("on_time_pct", "On-Time"),
+    col_badge("carrier_type", "Type",
+      variants = list(
+        Legacy = "info",
+        `Low-Cost` = "success",
+        `Ultra Low-Cost` = "warning"
+      )),
+    col_n("flights", "Flights", abbreviate = TRUE),
+    col_heatmap("on_time_pct", "On-Time %",
+      palette = c("#fee2e2", "#dcfce7"),
+      min_value = 0.65, max_value = 0.95,
+      decimals = 2, show_value = TRUE),
+    col_progress("satisfaction", "Satisfaction", max_value = 5),
     col_numeric("delay_vs_avg", "Delay vs Avg", decimals = 1),
-    col_sparkline("trend", "12-Month Trend"),
-    col_numeric("satisfaction", "Rating", decimals = 1)
+    col_sparkline("trend", "12-Month Trend")
   ),
   row_bg = ~ case_when(
-    on_time_pct > 85 ~ "#dcfce7",
-    on_time_pct < 75 ~ "#fee2e2",
+    on_time_pct > 0.85 ~ "#dcfce7",
+    on_time_pct < 0.75 ~ "#fee2e2",
     TRUE ~ NA_character_
   ),
   theme = web_theme_modern(),
@@ -96,82 +142,95 @@ tabviz(
 )
 ```
 
-## Executive Summary Table
+---
 
-Minimal table for C-suite presentations:
+## Executive Summary
+
+A visually rich C-suite dashboard using progress bars, heatmaps, sparklines, and badges:
 
 ```{r}
 exec_data <- data.frame(
-  metric = c("Revenue", "Profit", "Customers", "Retention", "NPS"),
-  current = c("$142M", "$28M", "45.2K", "92%", "72"),
-  change = c(12.5, 8.3, 15.2, 2.1, 5),
+  metric = c("Revenue", "Profit Margin", "Customer Count", "Retention Rate",
+             "Net Promoter Score", "Employee Satisfaction"),
+  current_val = c(142000000, 0.197, 45200, 0.92, 72, 4.1),
+  target_val = c(150000000, 0.200, 50000, 0.95, 75, 4.5),
+  pct_to_target = c(0.947, 0.985, 0.904, 0.968, 0.960, 0.911),
+  health = c(88, 92, 78, 95, 85, 72),
+  status = c("On Track", "On Track", "Behind", "On Track", "On Track", "At Risk"),
   trend = I(list(
-    c(120, 125, 130, 128, 135, 142),
-    c(22, 24, 23, 26, 27, 28),
-    c(38, 40, 41, 43, 44, 45.2),
-    c(88, 89, 90, 91, 91, 92),
-    c(65, 67, 68, 70, 71, 72)
-  )),
-  status = c("above", "above", "above", "on_track", "above")
+    c(120, 125, 130, 128, 135, 138, 140, 142),
+    c(0.18, 0.185, 0.19, 0.188, 0.192, 0.195, 0.196, 0.197),
+    c(38, 40, 41, 42, 43, 44, 44.5, 45.2),
+    c(0.88, 0.89, 0.90, 0.91, 0.91, 0.92, 0.92, 0.92),
+    c(65, 67, 68, 70, 71, 72, 72, 72),
+    c(3.8, 3.9, 3.9, 4.0, 4.0, 4.1, 4.1, 4.1)
+  ))
 )
 
 tabviz(exec_data,
   label = "metric",
   columns = list(
-    col_text("current", "Current"),
-    col_percent("change", "YoY Change"),
-    col_sparkline("trend", "6-Month Trend"),
-    col_badge("status", "Status")
+    col_badge("status", "Status",
+      variants = list(
+        `On Track` = "success",
+        Behind = "warning",
+        `At Risk` = "error"
+      )),
+    col_progress("pct_to_target", "Progress to Target", max_value = 1),
+    col_heatmap("health", "Health",
+      palette = c("#fef3c7", "#dcfce7"),
+      min_value = 60, max_value = 100, decimals = 0),
+    col_sparkline("trend", "8-Quarter Trend")
   ),
-  row_color = ~ ifelse(change > 10, "#16a34a", "#64748b"),
   theme = web_theme_presentation(),
   title = "Q4 Executive Summary"
 )
 ```
 
+---
+
 ## Dark Mode Dashboard
 
-Modern dark theme for monitoring displays:
+A server monitoring dashboard using the dark theme with heatmaps, progress bars, badges, and sparklines:
 
 ```{r}
-tabviz(
-  nba_efficiency[1:8, ],
-  label = "player",
+set.seed(42)
+server_data <- data.frame(
+  server = c("prod-web-01", "prod-web-02", "prod-api-01",
+             "prod-db-01", "prod-cache-01", "staging-01"),
+  status = c("Healthy", "Healthy", "Warning", "Healthy", "Critical", "Maintenance"),
+  cpu_load = c(42, 67, 88, 35, 95, 12),
+  memory_pct = c(0.58, 0.72, 0.91, 0.45, 0.97, 0.22),
+  disk_pct = c(0.45, 0.62, 0.78, 0.88, 0.93, 0.31),
+  uptime_days = c(142, 142, 89, 365, 23, 3),
+  requests = I(list(
+    c(1200, 1350, 1500, 1420, 1600, 1550, 1700, 1650, 1800, 1750, 1900, 1850),
+    c(1100, 1250, 1400, 1350, 1500, 1450, 1600, 1550, 1700, 1650, 1800, 1750),
+    c(800, 900, 950, 1100, 1300, 1500, 1800, 2100, 2400, 2600, 2800, 3000),
+    c(500, 520, 510, 530, 540, 535, 550, 545, 560, 555, 570, 565),
+    c(400, 420, 450, 480, 520, 580, 650, 750, 900, 1100, 1400, 1800),
+    c(50, 60, 55, 45, 40, 35, 30, 25, 20, 15, 10, 8)
+  ))
+)
+
+tabviz(server_data, label = "server",
   columns = list(
-    col_text("team", "Team"),
-    col_numeric("ppg", "PPG"),
-    viz_forest(point = "per", lower = "per_lower", upper = "per_upper",
-               scale = "linear", null_value = 15),
-    col_interval("PER", point = "per", lower = "per_lower", upper = "per_upper"),
-    col_badge("award", "Award")
+    col_badge("status", "Status",
+      variants = list(
+        Healthy = "success",
+        Warning = "warning",
+        Critical = "error",
+        Maintenance = "info"
+      )),
+    col_heatmap("cpu_load", "CPU %",
+      palette = c("#dcfce7", "#fee2e2"),
+      min_value = 0, max_value = 100, decimals = 0),
+    col_progress("memory_pct", "Memory", max_value = 1),
+    col_progress("disk_pct", "Disk", max_value = 1),
+    col_n("uptime_days", "Uptime (d)"),
+    col_sparkline("requests", "Traffic (12h)")
   ),
   theme = web_theme_dark(),
-  title = "Live Performance Monitor"
-)
-```
-
-## Comparison Table
-
-Side-by-side product/feature comparison:
-
-```{r}
-comparison_data <- data.frame(
-  feature = c("Price", "Storage", "CPU Cores", "Memory", "Support", "Rating"),
-  plan_a = c("$99/mo", "100 GB", "4", "16 GB", "Email", "4.2"),
-  plan_b = c("$199/mo", "500 GB", "8", "32 GB", "24/7 Phone", "4.7"),
-  plan_c = c("$399/mo", "2 TB", "16", "64 GB", "Dedicated", "4.9"),
-  recommendation = c(NA, NA, "Best Value", NA, NA, "Highest Rated")
-)
-
-tabviz(comparison_data,
-  label = "feature",
-  columns = list(
-    col_text("plan_a", "Basic"),
-    col_text("plan_b", "Pro"),
-    col_text("plan_c", "Enterprise"),
-    col_badge("recommendation", "Note")
-  ),
-  theme = web_theme_minimal(),
-  title = "Plan Comparison"
+  title = "Infrastructure Monitor"
 )
 ```

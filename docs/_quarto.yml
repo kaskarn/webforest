@@ -28,8 +28,6 @@ website:
           - text: "---"
           - text: "Clinical Examples"
             href: gallery/clinical.qmd
-          - text: "Business Examples"
-            href: gallery/business.qmd
           - text: "Dashboard Examples"
             href: gallery/dashboards.qmd
           - text: "Feature Showcases"
